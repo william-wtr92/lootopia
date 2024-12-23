@@ -4,14 +4,11 @@
   "description": "Lootopia is an innovative platform, structured as an immersive ecosystem, dedicated to the participation and organisation of treasure hunts.",
   "scripts": {
     "prepare": "husky",
-
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "format:check": "prettier -c \"**/*.{ts,tsx,md}\"",
     "lint": "pnpm --filter @lootopia/client run lint && pnpm --filter @lootopia/server run lint",
-
     "dev:client": "pnpm --filter @lootopia/client run dev",
     "build:client": "pnpm --filter @lootopia/client run build",
-    
     "dev:server": "pnpm --filter @lootopia/server run dev",
     "build:server": "pnpm --filter @lootopia/server run build",
     "start:server": "pnpm --filter @lootopia/server run start"
@@ -20,6 +17,7 @@
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
     "husky": "^9.1.7",
+    "lint-staged": "^15.2.11",
     "prettier": "^3.4.2"
   },
   "packageManager": "pnpm@9.15.1",

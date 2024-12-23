@@ -1,0 +1,35 @@
+services:
+  client:
+    build: 
+      context: ../..
+      dockerfile: docker/dev/Dockerfile.client
+      target: dev
+    ports:
+      - "3000:3000"
+    networks:
+      - lootopia_network
+    
+  server:
+    build: 
+      context: ../..
+      dockerfile: docker/dev/Dockerfile.server
+      target: dev
+    ports:
+      - "3001:3001"
+    networks:
+      - lootopia_network
+
+  db:
+    image: "postgres:17.2"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: lootopia
+    ports:
+      - "5432:5432"
+    networks:
+      - lootopia_network
+
+networks:
+  lootopia_network:
+    driver: bridge

@@ -12,9 +12,15 @@
 
 .git
 .gitattributes
-.github
-
-.husky
+.prettierrc
+.prettierignore
+.lintstagedrc.json
+.npmrc
+.commitlintrc.json
+Makefile
 
 docs
 docker
+.husky
+.github
+.vscode

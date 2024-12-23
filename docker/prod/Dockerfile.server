@@ -14,7 +14,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 COPY apps/server ./apps/server
 
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile --ignore-scripts
 
 WORKDIR /usr/src/app/apps/server
 RUN pnpm build
@@ -32,7 +32,7 @@ COPY --from=build --chown=hono:nodejs /usr/src/app/pnpm-workspace.yaml ./pnpm-wo
 COPY --from=build --chown=hono:nodejs /usr/src/app/apps/server/package.json ./apps/server/package.json
 COPY --from=build --chown=hono:nodejs /usr/src/app/apps/server/dist ./apps/server/dist
 
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile --ignore-scripts
 
 USER hono
 EXPOSE 3001

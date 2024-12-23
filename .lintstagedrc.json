@@ -1,0 +1,6 @@
+{
+  "**/*.{ts,tsx,js,jsx,json,md}": [
+    "pnpm run format:check",
+    "pnpm run lint"
+  ]
+}
