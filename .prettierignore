@@ -5,6 +5,11 @@ public/
 .husky/ 
 .github/
 
+.commitlintrc.json
+.lintstagedrc.json
+.npmrc
+.prettierrc
+.prettierignore
 package.json
 pnpm-lock.yaml
 CHANGELOG.md
