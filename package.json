@@ -1,0 +1,30 @@
+{
+  "name": "lootopia",
+  "version": "1.0.0",
+  "description": "lootopia is an innovative platform, structured as an immersive ecosystem, dedicated to the participation and organisation of treasure hunts.",
+  "scripts": {
+    "postinstall": "husky install",
+
+    "dev:client": "pnpm --filter @lootopia/client run dev",
+    "build:client": "pnpm --filter @lootopia/client run build",
+    "dev:server": "pnpm --filter @lootopia/server run dev",
+    "build:server": "pnpm --filter @lootopia/server run build",
+    "start:server": "pnpm --filter @lootopia/server run start"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "husky": "^9.1.7"
+  },
+  "packageManager": "pnpm@9.15.1",
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "NextJS",
+    "TypeScript",
+    "HonoJS"
+  ],
+  "author": "William W., Pascal L., Delphine B.",
+  "license": "All rights reserved"
+}
