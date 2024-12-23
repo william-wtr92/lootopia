@@ -1,0 +1,41 @@
+FROM node:20-slim AS base
+
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+ENV PNPM_POSTINSTALL_ENABLE=false
+ENV NEXT_TELEMETRY_DISABLED 1
+
+RUN corepack enable
+
+WORKDIR /usr/src/app
+
+FROM base AS build
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY apps/client ./apps/client
+# Neccessary for the Hono RPC type import to build the client
+COPY apps/server ./apps/server
+
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+
+WORKDIR /usr/src/app/apps/client
+
+FROM base AS dev
+
+WORKDIR /usr/src/app
+
+ENV COREPACK_HOME=/usr/src/app/.cache/corepack
+RUN mkdir -p $COREPACK_HOME && chmod -R 777 $COREPACK_HOME
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 next
+
+COPY --from=build /usr/src/app /usr/src/app
+
+RUN chown -R next:nodejs /usr/src/app
+
+USER next
+EXPOSE 3000
+
+WORKDIR /usr/src/app/apps/client
+CMD pnpm run dev

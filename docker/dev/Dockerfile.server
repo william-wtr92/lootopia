@@ -1,0 +1,39 @@
+FROM node:20-slim AS base
+
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+ENV PNPM_POSTINSTALL_ENABLE=false
+
+RUN corepack enable
+
+WORKDIR /usr/src/app
+
+FROM base AS build
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+
+COPY apps/server ./apps/server
+
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+
+WORKDIR /usr/src/app/apps/server
+
+FROM base AS dev
+
+WORKDIR /usr/src/app
+
+ENV COREPACK_HOME=/usr/src/app/.cache/corepack
+RUN mkdir -p $COREPACK_HOME && chmod -R 777 $COREPACK_HOME
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 hono
+
+COPY --from=build /usr/src/app /usr/src/app
+
+RUN chown -R hono:nodejs /usr/src/app
+
+USER hono
+EXPOSE 3001
+
+WORKDIR /usr/src/app/apps/server
+CMD pnpm run dev
