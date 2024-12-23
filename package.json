@@ -7,15 +7,19 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "format:check": "prettier -c \"**/*.{ts,tsx,md}\"",
     "lint": "pnpm --filter @lootopia/client run lint && pnpm --filter @lootopia/server run lint",
-    "dev:client": "pnpm --filter @lootopia/client run dev",
-    "build:client": "pnpm --filter @lootopia/client run build",
-    "dev:server": "pnpm --filter @lootopia/server run dev",
-    "build:server": "pnpm --filter @lootopia/server run build",
-    "start:server": "pnpm --filter @lootopia/server run start"
+
+    "dev:client": "dotenv -e .env -- pnpm --filter @lootopia/client run dev",
+    "build:client": "dotenv -e .env --  pnpm --filter @lootopia/client run build",
+    "start:client": "dotenv -e .env -- pnpm --filter @lootopia/client run start",
+
+    "dev:server": "dotenv -e .env -- pnpm --filter @lootopia/server run dev",
+    "build:server": "dotenv -e .env -- cross-env NODE_ENV=production pnpm --filter @lootopia/server run build",
+    "start:server": "dotenv -e .env -- pnpm --filter @lootopia/server run start"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
+    "dotenv-cli": "^8.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.11",
     "prettier": "^3.4.2"

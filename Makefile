@@ -1,6 +1,7 @@
 SERVICE ?= dev
 COMPOSE_FILE=$(if $(filter $(SERVICE),prod),docker/prod/docker-compose.prod.yml,docker/dev/docker-compose.dev.yml)
-DC=docker-compose -f $(COMPOSE_FILE)
+ENV_FILE=.env
+DC=docker-compose --env-file $(ENV_FILE) -f $(COMPOSE_FILE)
 
 help: ## Display this help message
 	@echo "List of available commands:"

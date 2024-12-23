@@ -10,7 +10,66 @@ Lootopia is an innovative platform, structured as an immersive ecosystem, dedica
 
 ## 🔨 Setup
 
-// TODO
+### 🐳 From Docker environment
+
+- Make sure you have **Docker** installed on your machine.
+- Setup ur **.env** file with the following
+  variables -> [See example](https://github.com/william-wtr92/instamint/blob/main/.env.example).
+
+- To run this project clone this repository and run it locally using **docker commands**. <br><br>
+
+  - **🚀 Production:** <br>
+    **Start the project:**
+    ```bash
+    make SERVICE=prod up
+    ```
+
+    **Stop the project:**
+
+    ```bash
+    make SERVICE=prod stop
+    ```
+
+  - **⚙️ Development:** <br>
+    **Start the project:**
+
+    ```bash
+    make up
+    ```
+
+    **Stop the project:**
+
+    ```bash
+    make stop
+    ```
+
+### 🔑 From the local environment
+
+- You need to have **PNPM** installed, if not you can install it by following
+  the [instructions](https://pnpm.io/installation).
+- Setup ur **.env** file with the following
+  variables -> [See example](https://github.com/william-wtr92/lootopia/blob/main/.env.example).
+- Install [PostgreSQL](https://www.postgresql.org/download/) & [Redis](https://redis.io/docs/install/install-redis/) on
+  your local machine.
+- Install the dependencies by running `pnpm install` at `root`.
+- Start the `development server` by running the following commands at `root`:
+
+  ##### **🖥️ Front - Instamint Webapp:**
+
+  ```bash
+  pnpm run dev:client
+  ```
+
+  ##### **🖥️ Back - Instamint Business:**
+
+  ```bash
+  pnpm run dev:server
+  ```
+
+### **🔗 Access the project:** <br>
+
+- **[Front - Lootopia Client](http://localhost:3000)** run on port `3000`
+- **[Back - Lootopia Server](http://localhost:3001)** run on port `3001`
 
 ## ⭐️ Tech Stack
 
