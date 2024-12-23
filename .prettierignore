@@ -1,0 +1,11 @@
+.next/
+dist/
+node_modules/
+public/
+.husky/ 
+.github/
+
+package.json
+pnpm-lock.yaml
+CHANGELOG.md
+LICENSE.md
