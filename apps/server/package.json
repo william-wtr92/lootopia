@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "lint": "eslint",
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js"
@@ -13,7 +14,10 @@
     "hono": "^4.6.14"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@lootopia/eslint-config-server": "workspace:*",
     "@types/node": "^20.11.17",
+    "eslint": "^9",
     "tsx": "^4.7.1",
     "typescript": "^5"
   }

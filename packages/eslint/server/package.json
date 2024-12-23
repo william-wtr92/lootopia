@@ -1,0 +1,20 @@
+{
+  "name": "@lootopia/eslint-config-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Eslint configuration for server side code - HonoJS",
+  "main": "index.js",
+  "keywords": [
+    "eslint",
+    "config"
+  ],
+  "author": "William - @william-wtr92",
+  "license": "All Rights Reserved",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.18.1",
+    "@typescript-eslint/parser": "^8.18.1",
+    "eslint": "^9",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.31.0"
+  }
+}
