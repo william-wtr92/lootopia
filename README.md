@@ -14,7 +14,7 @@ Lootopia is an innovative platform, structured as an immersive ecosystem, dedica
 
 - Make sure you have **Docker** installed on your machine.
 - Setup ur **.env** file with the following
-  variables -> [See example](https://github.com/william-wtr92/instamint/blob/main/.env.example).
+  variables -> [See example](https://github.com/william-wtr92/lootopia/blob/main/.env.example).
 
 - To run this project clone this repository and run it locally using **docker commands**. <br><br>
 
