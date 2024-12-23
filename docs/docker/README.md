@@ -29,3 +29,45 @@
 
 - `docker system prune -a --volumes` : Remove all unused containers, networks, images (both dangling and unreferenced),
   and volumes.
+
+## 🧠 Compose: Environnements
+
+**To be able to deploy** our app from a **Compose file** and on different environments `Dev` & `Production`, we used the
+feature that allows us to put targets in **Compose** and aliases in **DockerFiles**.
+
+- _**DockerFile**_ structure for **various environments** :
+
+> Source of example:`docker/{prod, dev}/Dockerfile.{ressource} (client, server)`
+
+```Dockerfile
+FROM base AS dev
+```
+
+```Dockerfile
+FROM base AS production
+```
+
+You can see that we have two targets `dev` and `production` in the **DockerFile**, we can use these targets in the Compose
+file to
+specify which target to use when building the image.
+
+- _**Compose file**_ structure for **various environments** :
+
+```yaml
+services:
+  client:
+    build:
+      context: .
+      target: dev
+```
+
+```yaml
+services:
+  server:
+    build:
+      context: .
+      target: production
+```
+
+You can see that we have specified the target to use when building the image in the **Compose file**, this allows us to
+build different images for **different environments**.
