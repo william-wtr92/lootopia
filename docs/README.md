@@ -6,6 +6,8 @@
 
 - [📝 Documentation](README.md)
   - [📦 Docker](./docker/README.md)
+  - [🌐 Infra](./infra/README.md)
+    - [🚀 K3s](./infra/k3s/README.md)
 
 ## 📝 License
 
