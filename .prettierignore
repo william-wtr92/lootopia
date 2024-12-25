@@ -5,12 +5,14 @@ public/
 .husky/ 
 .github/
 docs/
+packages/drizzle/migrations/
 
 .commitlintrc.json
 .lintstagedrc.json
 .npmrc
 .prettierrc
 .prettierignore
+tsconfig.json
 package.json
 pnpm-lock.yaml
 CHANGELOG.md
