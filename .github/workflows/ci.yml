@@ -11,8 +11,8 @@ on:
       - ".github/workflows/**"
       - "apps/client/**"
       - "apps/server/**"
-      - "docker/**"
-      - "docker-compose.yml"
+      - "packages/ui/**"
+      - "docker/prod/**"
   pull_request:
     branches:
       - "main"
@@ -20,8 +20,8 @@ on:
       - ".github/workflows/**"
       - "apps/client/**"
       - "apps/server/**"
-      - "docker/**"
-      - "docker-compose.yml"
+      - "packages/ui/**"
+      - "docker/prod/**"
 
 jobs:
   lint:

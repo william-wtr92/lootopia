@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@lootopia/server": "workspace:*",
+    "@lootopia/ui": "workspace:*",
     "hono": "^4.6.14",
     "next": "15.1.2",
     "react": "^19.0.0",

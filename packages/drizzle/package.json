@@ -13,17 +13,7 @@
     "build": "tsc && tsc-alias",
     "prepare": "pnpm run build"
   },
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "drizzle",
-    "migration",
-    "kit"
-  ],
-  "author": "William - @william-wtr92",
-  "license": "All Rights Reserved",
-  "dependencies": {
+   "dependencies": {
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.2",
     "postgres": "^3.4.5",
@@ -34,5 +24,15 @@
     "drizzle-kit": "^0.30.1",
     "tsc-alias": "^1.8.10",
     "typescript": "^5"
-  }
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "drizzle",
+    "migration",
+    "kit"
+  ],
+  "author": "William - @william-wtr92",
+  "license": "All Rights Reserved"
 }
