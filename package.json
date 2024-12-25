@@ -6,7 +6,7 @@
     "prepare": "husky",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "format:check": "prettier -c \"**/*.{ts,tsx,md}\"",
-    "lint": "pnpm --filter @lootopia/client run lint && pnpm --filter @lootopia/server run lint",
+    "lint": "pnpm --filter @lootopia/client run lint && pnpm --filter @lootopia/server run lint && pnpm --filter @lootopia/ui run lint",
 
     "dev:client": "dotenv -e .env -- pnpm --filter @lootopia/client run dev",
     "build:client": "dotenv -e .env.prod --  pnpm --filter @lootopia/client run build",

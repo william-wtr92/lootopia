@@ -8,6 +8,7 @@ docs/
 packages/drizzle/migrations/
 
 .commitlintrc.json
+components.json
 .lintstagedrc.json
 .npmrc
 .prettierrc
