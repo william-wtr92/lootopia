@@ -1,0 +1,38 @@
+{
+  "name": "@lootopia/drizzle",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Drizzle Migration Kit",
+  "main": "dist/index.js",
+  "scripts": {
+    "db:generate:custom": "pnpm exec drizzle-kit generate --custom",
+    "db:generate": "pnpm exec drizzle-kit generate",
+    "db:migrate": "pnpm exec drizzle-kit migrate",
+    "db:drop": "pnpm exec drizzle-kit drop",
+    "build": "tsc && tsc-alias",
+    "prepare": "pnpm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "drizzle",
+    "migration",
+    "kit"
+  ],
+  "author": "William - @william-wtr92",
+  "license": "All Rights Reserved",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.38.2",
+    "postgres": "^3.4.5",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "drizzle-kit": "^0.30.1",
+    "tsc-alias": "^1.8.10",
+    "typescript": "^5"
+  }
+}

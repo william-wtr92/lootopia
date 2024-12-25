@@ -54,13 +54,13 @@ Lootopia is an innovative platform, structured as an immersive ecosystem, dedica
 - Install the dependencies by running `pnpm install` at `root`.
 - Start the `development server` by running the following commands at `root`:
 
-  ##### **🖥️ Front - Instamint Webapp:**
+  ##### **🖥️ Front - Lootopia Client:**
 
   ```bash
   pnpm run dev:client
   ```
 
-  ##### **🖥️ Back - Instamint Business:**
+  ##### **🖥️ Back - Lootopia Server:**
 
   ```bash
   pnpm run dev:server

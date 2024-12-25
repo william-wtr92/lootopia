@@ -15,6 +15,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/client ./apps/client
 # Neccessary for the Hono RPC type import to build the client
 COPY apps/server ./apps/server
+COPY packages/eslint/client ./packages/eslint/client
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile --ignore-scripts
 

@@ -9,11 +9,17 @@
     "lint": "pnpm --filter @lootopia/client run lint && pnpm --filter @lootopia/server run lint",
 
     "dev:client": "dotenv -e .env -- pnpm --filter @lootopia/client run dev",
-    "build:client": "dotenv -e .env --  pnpm --filter @lootopia/client run build",
+    "build:client": "dotenv -e .env.prod --  pnpm --filter @lootopia/client run build",
     "start:client": "dotenv -e .env -- pnpm --filter @lootopia/client run start",
 
+    "build:drizzle": "dotenv -e .env -- pnpm --filter @lootopia/drizzle run build",
+    "db:generate": "dotenv -e .env -- pnpm --filter @lootopia/drizzle run db:generate",
+    "db:generate:custom": "dotenv -e .env -- pnpm --filter @lootopia/drizzle run db:generate:custom",
+    "db:migrate": "dotenv -e .env -- pnpm --filter @lootopia/drizzle run db:migrate",
+    "db:drop": "dotenv -e .env -- pnpm --filter @lootopia/drizzle run db:drop",
+    
     "dev:server": "dotenv -e .env -- pnpm --filter @lootopia/server run dev",
-    "build:server": "dotenv -e .env -- cross-env NODE_ENV=production pnpm --filter @lootopia/server run build",
+    "build:server": "dotenv -e .env -- pnpm --filter @lootopia/server run build",
     "start:server": "dotenv -e .env -- pnpm --filter @lootopia/server run start"
   },
   "devDependencies": {

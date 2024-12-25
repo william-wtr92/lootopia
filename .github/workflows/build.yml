@@ -50,6 +50,17 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-server:${{ github.sha }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-server:latest
 
+      - name: 🔨 Build and push Docker image (migrations)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/prod/Dockerfile.migrations
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-migrations:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-migrations:latest
+
       - name: 🔨 Build and push Docker image (client)
         uses: docker/build-push-action@v6
         with:
