@@ -1,0 +1,15 @@
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+
+# certificatesResolvers:
+#   default:
+#     acme:
+#       email: admin@mydomain.com
+#       storage: /data/acme.json
+#       caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+#       httpChallenge:
+#         entryPoint: web
+

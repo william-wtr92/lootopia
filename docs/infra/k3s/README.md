@@ -180,6 +180,31 @@ To avoid shutting down the VM, scale deployments as needed:
 
 ---
 
+## 🔐 Apply TLS to Traefik
+
+1. Make the scripts executable:
+   ```bash
+   chmod +x infra/kubernetes/traefik/update.sh
+   chmod +x infra/kubernetes/traefik/local-tls.sh
+   ```
+
+2. Run the `update.sh` script to install or update Traefik:
+   ```bash
+   ./infra/kubernetes/traefik/update.sh
+   ```
+
+3. Run the `local-tls.sh` script to set up local TLS:
+   ```bash
+   ./infra/kubernetes/traefik/local-tls.sh
+   ```
+
+4. Verify the Ingress configuration:
+   ```bash
+   kubectl describe ingress -n production
+   ```
+
+---
+
 ## 🔍 Additional Notes
 
 - **Multipass VM Maintenance**: If you need to clean up unused VMs, use:
@@ -187,4 +212,3 @@ To avoid shutting down the VM, scale deployments as needed:
   multipass delete k3s-vm && multipass purge
   ```
 - **Debugging**: Use `kubectl describe` on resources to get detailed information about any issues.
-
