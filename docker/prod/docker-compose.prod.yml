@@ -4,6 +4,8 @@ services:
       context: ../..
       dockerfile: docker/prod/Dockerfile.client
       target: production
+    environment:
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
     ports:
       - "3000:3000"
     networks:
