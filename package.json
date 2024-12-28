@@ -4,6 +4,10 @@
   "description": "Lootopia is an innovative platform, structured as an immersive ecosystem, dedicated to the participation and organisation of treasure hunts.",
   "scripts": {
     "prepare": "husky",
+
+    "clean": "rm -rf node_modules && pnpm -r exec rm -rf node_modules",
+    "check:deps": "pnpm outdated",
+    "sync:env": "cp -n .env.example .env || echo '.env already exists'",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "format:check": "prettier -c \"**/*.{ts,tsx,md}\"",
     "lint": "pnpm --filter @lootopia/client run lint && pnpm --filter @lootopia/server run lint && pnpm --filter @lootopia/ui run lint",
