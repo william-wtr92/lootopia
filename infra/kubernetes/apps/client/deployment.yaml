@@ -22,5 +22,10 @@ spec:
           image: ghcr.io/william-wtr92/lootopia-client:latest
           ports:
             - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: NEXT_PUBLIC_API_URL
+              value: "http://server.production.svc.cluster.local:3001"
       imagePullSecrets:
         - name: github-regcred

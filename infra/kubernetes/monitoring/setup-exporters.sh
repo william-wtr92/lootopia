@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Namespace
 NAMESPACE="monitoring"
 
 echo "⏳ Creating namespace $NAMESPACE if it doesn't exist..."

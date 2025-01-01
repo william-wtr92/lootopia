@@ -2,3 +2,6 @@ node_modules
 dist
 .env
 .env.prod
+tls.key
+tls.crt
+.DS_Store
