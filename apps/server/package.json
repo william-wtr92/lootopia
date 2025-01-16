@@ -12,6 +12,7 @@
   "dependencies": {
     "@hono/node-server": "^1.13.7",
     "@hono/zod-validator": "^0.4.2",
+    "@lootopia/common": "workspace:*",
     "@lootopia/drizzle": "workspace:*",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.2",

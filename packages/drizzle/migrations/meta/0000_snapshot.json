@@ -1,5 +1,5 @@
 {
-  "id": "02caafe4-bbae-41e4-baf2-8301c6ce75a7",
+  "id": "98b0d95a-b461-4766-afe1-06d3593071bb",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -51,18 +51,33 @@
           "primaryKey": false,
           "notNull": true
         },
-        "interests": {
-          "name": "interests",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "rating": {
-          "name": "rating",
-          "type": "integer",
+        "email_validated": {
+          "name": "email_validated",
+          "type": "boolean",
           "primaryKey": false,
           "notNull": true,
-          "default": 0
+          "default": false
+        },
+        "gdpr_validated": {
+          "name": "gdpr_validated",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "active": {
+          "name": "active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'user'"
         },
         "created_at": {
           "name": "created_at",
@@ -110,8 +125,8 @@
           "method": "btree",
           "with": {}
         },
-        "name_idx": {
-          "name": "name_idx",
+        "nickname_idx": {
+          "name": "nickname_idx",
           "columns": [
             {
               "expression": "nickname",

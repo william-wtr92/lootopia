@@ -14,6 +14,7 @@
     "prepare": "pnpm run build"
   },
    "dependencies": {
+    "@lootopia/common": "workspace:*",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.2",
     "postgres": "^3.4.5",

@@ -26,7 +26,7 @@ app.use(
   prettyJSON()
 )
 //eslint-disable-next-line @typescript-eslint/no-unused-vars
-const appRouter = app.route(router.users, routes.users)
+const appRouter = app.route(router.auth, routes.auth)
 
 serve({
   fetch: app.fetch,

@@ -6,8 +6,10 @@ CREATE TABLE "users" (
 	"password_hash" text NOT NULL,
 	"password_salt" text NOT NULL,
 	"birthdate" timestamp NOT NULL,
-	"interests" varchar(255) NOT NULL,
-	"rating" integer DEFAULT 0 NOT NULL,
+	"email_validated" boolean DEFAULT false NOT NULL,
+	"gdpr_validated" boolean DEFAULT false NOT NULL,
+	"active" boolean DEFAULT true NOT NULL,
+	"role" text DEFAULT 'user' NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "users_nickname_unique" UNIQUE("nickname"),
@@ -17,4 +19,4 @@ CREATE TABLE "users" (
 --> statement-breakpoint
 CREATE UNIQUE INDEX "email_idx" ON "users" USING btree ("email");--> statement-breakpoint
 CREATE UNIQUE INDEX "phone_idx" ON "users" USING btree ("phone");--> statement-breakpoint
-CREATE UNIQUE INDEX "name_idx" ON "users" USING btree ("nickname");
+CREATE UNIQUE INDEX "nickname_idx" ON "users" USING btree ("nickname");

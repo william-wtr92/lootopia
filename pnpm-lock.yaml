@@ -108,6 +108,9 @@ importers:
       '@hono/zod-validator':
         specifier: ^0.4.2
         version: 0.4.2(hono@4.6.15)(zod@3.24.1)
+      '@lootopia/common':
+        specifier: workspace:*
+        version: link:../../packages/common
       '@lootopia/drizzle':
         specifier: workspace:*
         version: link:../../packages/drizzle
@@ -149,8 +152,27 @@ importers:
         specifier: ^5
         version: 5.7.2
 
+  packages/common:
+    dependencies:
+      zod:
+        specifier: ^3.24.1
+        version: 3.24.1
+    devDependencies:
+      '@types/node':
+        specifier: ^22.10.2
+        version: 22.10.2
+      tsc-alias:
+        specifier: ^1.8.10
+        version: 1.8.10
+      typescript:
+        specifier: ^5
+        version: 5.7.2
+
   packages/drizzle:
     dependencies:
+      '@lootopia/common':
+        specifier: workspace:*
+        version: link:../common
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
