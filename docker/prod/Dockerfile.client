@@ -17,6 +17,8 @@ COPY apps/client ./apps/client
 COPY apps/server ./apps/server
 COPY packages/eslint/client ./packages/eslint/client
 COPY packages/ui/ ./packages/ui
+COPY packages/common ./packages/common
+COPY packages/drizzle ./packages/drizzle
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile --ignore-scripts
 

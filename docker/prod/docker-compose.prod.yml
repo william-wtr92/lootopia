@@ -29,6 +29,10 @@ services:
       - REDIS_USERNAME=${REDIS_USERNAME_DOCKER}
       - REDIS_PASSWORD=${REDIS_PASSWORD_DOCKER}
       - REDIS_DB=${REDIS_DB_DOCKER}
+      - AZURE_ACCOUNT_NAME=${AZURE_ACCOUNT_NAME}
+      - AZURE_ACCOUNT_KEY=${AZURE_ACCOUNT_KEY}
+      - AZURE_BLOB_CONTAINER=${AZURE_BLOB_CONTAINER}
+      - AZURE_BLOB_CONNECTION=${AZURE_BLOB_CONNECTION_DOCKER}
       - SECURITY_JWT_SECRET=${SECURITY_JWT_SECRET}
       - SECURITY_PASSWORD_PEPPER=${SECURITY_PASSWORD_PEPPER}
       - SECURITY_COOKIE_SECRET=${SECURITY_COOKIE_SECRET}
@@ -40,6 +44,7 @@ services:
     depends_on:
       - db
       - redis
+      - azurite
 
   migrations:
     build: 
@@ -83,6 +88,20 @@ services:
       - "6379:6379"
     networks:
       - lootopia_network
+  
+  azurite:
+    image: "mcr.microsoft.com/azure-storage/azurite"
+    hostname: azurite
+    restart: always
+    command: 'azurite --loose --blobHost 0.0.0.0 --blobPort 10000 --queueHost 0.0.0.0 --queuePort 10001 --location /workspace --debug /workspace/debug.log'
+    ports:
+      - "10000:10000"
+      - "10001:10001"
+    volumes:
+      - ./azurite:/workspace
+    networks:
+      - lootopia_network
+
 
 networks:
   lootopia_network:

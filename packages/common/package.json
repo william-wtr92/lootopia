@@ -4,9 +4,10 @@
   "private": true,
   "type": "module",
   "description": "Common package for Lootopia",
-  "main": "index.ts",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "tsc && tsc-alias"
+    "build": "tsc && tsc-alias",
+    "prepare": "pnpm run build"
   },
   "dependencies": {
     "zod": "^3.24.1"
@@ -16,6 +17,9 @@
     "tsc-alias": "^1.8.10",
     "typescript": "^5"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "types"
   ],

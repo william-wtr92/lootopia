@@ -5,6 +5,7 @@
 **.DS_Store**
 **.gitignore**
 **.dockerignore**
+**eslint.config.mjs**
 
 **dist**
 **node_modules**
