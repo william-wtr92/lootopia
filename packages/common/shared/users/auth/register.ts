@@ -2,6 +2,7 @@ import { z } from "zod"
 
 export const registerSchema = z
   .object({
+    avatar: z.instanceof(File),
     nickname: z
       .string()
       .min(1, "Nickname is required.")
@@ -25,9 +26,12 @@ export const registerSchema = z
     birthdate: z.string().refine((val) => !isNaN(Date.parse(val)), {
       message: "Birthdate must be a valid date.",
     }),
-    gdprValidated: z.boolean().refine((val) => val === true, {
-      message: "You must accept the terms and conditions (GDPR).",
-    }),
+    gdprValidated: z
+      .string()
+      .transform((val) => val === "true")
+      .refine((val) => val === true, {
+        message: "You must accept the terms and conditions (GDPR).",
+      }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match.",
@@ -35,7 +39,4 @@ export const registerSchema = z
   })
 
 export type RegisterSchema = z.infer<typeof registerSchema>
-export type InsertUser = Omit<
-  z.infer<typeof registerSchema>,
-  "password" | "confirmPassword"
->
+export type InsertUser = Omit<RegisterSchema, "password" | "confirmPassword">

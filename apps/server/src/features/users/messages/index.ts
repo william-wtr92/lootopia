@@ -25,6 +25,16 @@ export const passwordNotMatch = {
   key: "passwordNotMatch",
 } as const
 
+export const avatarTooLarge = {
+  result: "Avatar is too large.",
+  key: "avatarTooLarge",
+} as const
+
+export const invalidImage = {
+  result: "Invalid image.",
+  key: "invalidImage",
+} as const
+
 // SUCCESS MESSAGES
 
 export const registerSuccess = {

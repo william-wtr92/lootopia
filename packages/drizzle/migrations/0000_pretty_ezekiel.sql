@@ -6,6 +6,7 @@ CREATE TABLE "users" (
 	"password_hash" text NOT NULL,
 	"password_salt" text NOT NULL,
 	"birthdate" timestamp NOT NULL,
+	"avatar" text,
 	"email_validated" boolean DEFAULT false NOT NULL,
 	"gdpr_validated" boolean DEFAULT false NOT NULL,
 	"active" boolean DEFAULT true NOT NULL,

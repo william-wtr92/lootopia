@@ -16,6 +16,7 @@ node_modules/
 .env.production
 
 # logs
+azurite/
 logs/
 *.log
 npm-debug.log*

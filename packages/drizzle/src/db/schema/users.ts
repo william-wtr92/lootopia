@@ -19,6 +19,7 @@ export const users = pgTable(
     passwordHash: text("password_hash").notNull(),
     passwordSalt: text("password_salt").notNull(),
     birthdate: timestamp("birthdate").notNull(),
+    avatar: text("avatar"),
     emailValidated: boolean("email_validated").notNull().default(false),
     gdprValidated: boolean("gdpr_validated").notNull().default(false),
     active: boolean().notNull().default(true),

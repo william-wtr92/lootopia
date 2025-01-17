@@ -22,7 +22,7 @@
     "db:migrate": "dotenv -e .env -- pnpm --filter @lootopia/drizzle run db:migrate",
     "db:drop": "dotenv -e .env -- pnpm --filter @lootopia/drizzle run db:drop",
     
-    "dev:server": "dotenv -e .env -- pnpm --filter @lootopia/server run dev",
+    "dev:server": "dotenv -e .env -- pnpm --filter @lootopia/server run dev:local",
     "build:server": "dotenv -e .env -- pnpm --filter @lootopia/server run build",
     "start:server": "dotenv -e .env -- pnpm --filter @lootopia/server run start"
   },

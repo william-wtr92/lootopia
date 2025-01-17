@@ -1,5 +1,5 @@
 {
-  "id": "98b0d95a-b461-4766-afe1-06d3593071bb",
+  "id": "f230daca-9975-4731-bc47-aae46459a2e5",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -50,6 +50,12 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true
+        },
+        "avatar": {
+          "name": "avatar",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "email_validated": {
           "name": "email_validated",
