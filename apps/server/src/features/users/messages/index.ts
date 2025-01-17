@@ -35,6 +35,11 @@ export const invalidImage = {
   key: "invalidImage",
 } as const
 
+export const invalidExtension = {
+  result: "Invalid extension.",
+  key: "invalidExtension",
+} as const
+
 // SUCCESS MESSAGES
 
 export const registerSuccess = {
