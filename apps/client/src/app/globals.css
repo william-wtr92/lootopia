@@ -3,8 +3,26 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary: #4A0E4E;
+  --secondary: #8A4FFF;
+  --accent: #FFD700;
+  --accent-hover: #E6C200;
+  --primary-bg: #F8F0E3;
+  --secondary-bg: #E6D9C0;
+}
+
+@layer base {
+  .tbr {
+    border: 2px solid red;
+  }
+
+  .tbg {
+    border: 2px solid green;
+  }
+
+  .tbb {
+    border: 2px solid blue;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

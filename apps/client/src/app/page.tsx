@@ -1,37 +1,96 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@lootopia/ui"
+import { Button } from "@lootopia/ui"
+import { MapPin, Compass, Gift, Download } from "lucide-react"
+import type { Metadata } from "next"
 
-export default function Home() {
+import FeatureCard from "@client/web/components/landing/FeatureCard"
+import Footer from "@client/web/components/layout/Footer"
+import Navbar from "@client/web/components/layout/Navbar"
+
+export const metadata: Metadata = {
+  icons: {
+    icon: "/logo.svg",
+  },
+  title: "Lootopia",
+  description:
+    "Lootopia is an innovative platform, structured as an immersive ecosystem, dedicated to the participation and organisation of treasure hunts.",
+}
+
+const HomePage = () => {
   return (
-    <div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20">
-      <h1 className="text-4xl font-bold">Lootopia WIP 🚧</h1>
-      <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value="item-1">
-          <AccordionTrigger>What is Lootopia?</AccordionTrigger>
-          <AccordionContent>
-            Lootopia is an innovative platform, structured as an immersive
-            ecosystem, dedicated to the participation and organisation of
-            treasure hunts.
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="item-2">
-          <AccordionTrigger>Lootopia comes with styles?</AccordionTrigger>
-          <AccordionContent>
-            Yes. It comes with a minimal set of styles, but you can easily
-            override them.
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="item-3">
-          <AccordionTrigger>Is the accordion animated?</AccordionTrigger>
-          <AccordionContent>
-            Yes. It's animated by default, but you can disable it if you prefer.
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+    <div className="bg-primary-bg relative min-h-screen overflow-hidden">
+      <Navbar />
+
+      <main className="container relative z-10 mx-auto px-4 py-16">
+        <div className="mb-32 text-center">
+          <h1 className="text-primary mb-4 text-4xl font-bold md:text-6xl">
+            Bienvenue à Lootopia
+          </h1>
+          <p className="text-primary mb-8 text-xl md:text-2xl">
+            Explorez, découvrez, et récoltez des trésors dans votre ville !
+          </p>
+          <div className="flex justify-center space-x-4">
+            <Button
+              size="lg"
+              className="bg-accent text-primary hover:bg-accentHover"
+            >
+              Commencer l'aventure
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="text-primary border-primary hover:bg-primary hover:text-accent"
+            >
+              En savoir plus
+            </Button>
+          </div>
+        </div>
+
+        <div className="mb-32 grid grid-cols-1 gap-8 md:grid-cols-3">
+          <FeatureCard
+            icon={<MapPin className="text-accent h-12 w-12" />}
+            title="Trouvez des caches"
+            description="Explorez votre ville à la recherche de caches secrètes."
+          />
+          <FeatureCard
+            icon={<Compass className="text-accent h-12 w-12" />}
+            title="Relevez des défis"
+            description="Résolvez des énigmes et accomplissez des missions."
+          />
+          <FeatureCard
+            icon={<Gift className="text-accent h-12 w-12" />}
+            title="Gagnez des récompenses"
+            description="Débloquez des prix et des avantages exclusifs."
+          />
+        </div>
+
+        <div className="mb-32 text-center">
+          <h2 className="text-primary mb-4 text-3xl font-bold">
+            Prêt à plonger dans Lootopia ?
+          </h2>
+          <p className="text-primary mb-8 text-xl">
+            Téléchargez l'application et commencez votre quête de trésors dès
+            maintenant !
+          </p>
+          <div className="flex justify-center space-x-4">
+            <Button
+              size="lg"
+              className="bg-primary text-accent hover:bg-secondary"
+            >
+              <Download className="mr-2 h-5 w-5" /> App Store
+            </Button>
+            <Button
+              size="lg"
+              className="bg-primary text-accent hover:bg-secondary"
+            >
+              <Download className="mr-2 h-5 w-5" /> Google Play
+            </Button>
+          </div>
+        </div>
+      </main>
+
+      <Footer />
     </div>
   )
 }
+
+export default HomePage
