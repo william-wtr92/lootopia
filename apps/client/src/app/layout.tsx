@@ -1,7 +1,10 @@
+import { Toaster } from "@lootopia/ui"
 import { Fredoka } from "next/font/google"
 import "./globals.css"
 import { type ReactNode } from "react"
 
+import TanStackProvider from "@client/providers/TanstackProvider"
+import Navbar from "@client/web/components/layout/Navbar"
 import TreasureMapBackground from "@client/web/components/layout/TreasureMapBackground"
 
 const fredoka = Fredoka({
@@ -17,8 +20,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${fredoka.className} antialiased`}>
-        <TreasureMapBackground />
-        {children}
+        <TanStackProvider>
+          <main>
+            <Navbar />
+            <TreasureMapBackground />
+            {children}
+          </main>
+          <Toaster />
+        </TanStackProvider>
       </body>
     </html>
   )

@@ -4,7 +4,6 @@ import type { Metadata } from "next"
 
 import FeatureCard from "@client/web/components/landing/FeatureCard"
 import Footer from "@client/web/components/layout/Footer"
-import Navbar from "@client/web/components/layout/Navbar"
 
 export const metadata: Metadata = {
   icons: {
@@ -18,9 +17,7 @@ export const metadata: Metadata = {
 const HomePage = () => {
   return (
     <div className="bg-primary-bg relative min-h-screen overflow-hidden">
-      <Navbar />
-
-      <main className="container relative z-10 mx-auto px-4 py-16">
+      <div className="container relative z-10 mx-auto px-4 py-16">
         <div className="mb-32 text-center">
           <h1 className="text-primary mb-4 text-4xl font-bold md:text-6xl">
             Bienvenue à Lootopia
@@ -86,7 +83,7 @@ const HomePage = () => {
             </Button>
           </div>
         </div>
-      </main>
+      </div>
 
       <Footer />
     </div>
