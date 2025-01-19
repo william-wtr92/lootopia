@@ -137,6 +137,9 @@ export const DatePicker = ({
           month={date}
           onMonthChange={(newDate) => setDate(newDate)}
           className={cn("text-white", "day-selected:text-white", className)}
+          disabled={(date) =>
+            date > new Date() || date < new Date("1900-01-01")
+          }
           initialFocus
         />
       </PopoverContent>

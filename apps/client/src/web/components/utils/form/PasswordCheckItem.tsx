@@ -41,9 +41,9 @@ const PasswordCheckItem = ({
         transition={{ type: "spring", stiffness: 500, damping: 30 }}
       >
         {isValid ? (
-          <Check className="h-4 w-4 text-green-500" />
+          <Check className="text-success h-4 w-4" />
         ) : (
-          <X className="h-4 w-4 text-red-500" />
+          <X className="text-error h-4 w-4" />
         )}
       </motion.div>
       <motion.span

@@ -1,34 +1,19 @@
-import { Toaster } from "@lootopia/ui"
-import { Fredoka } from "next/font/google"
-import "./globals.css"
-import { type ReactNode } from "react"
+import type { Metadata } from "next"
+import type { ReactNode } from "react"
 
-import TanStackProvider from "@client/providers/TanstackProvider"
-import Navbar from "@client/web/components/layout/Navbar"
-import TreasureMapBackground from "@client/web/components/layout/TreasureMapBackground"
-
-const fredoka = Fredoka({
-  variable: "--font-fredoka",
-  subsets: ["latin"],
-})
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: ReactNode
-}>) {
-  return (
-    <html lang="en">
-      <body className={`${fredoka.className} antialiased`}>
-        <TanStackProvider>
-          <main>
-            <Navbar />
-            <TreasureMapBackground />
-            {children}
-          </main>
-          <Toaster />
-        </TanStackProvider>
-      </body>
-    </html>
-  )
+export const metadata: Metadata = {
+  title: {
+    default: "Lootopia",
+    template: "%s | Lootopia",
+    absolute: "Lootopia",
+  },
+  description:
+    "Lootopia is an innovative platform, structured as an immersive ecosystem, dedicated to the participation and organisation of treasure hunts.",
+  icons: {
+    icon: "/logo.svg",
+  },
 }
+
+const Layout = ({ children }: { children: ReactNode }) => children
+
+export default Layout

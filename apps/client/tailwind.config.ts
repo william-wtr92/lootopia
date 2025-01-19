@@ -15,6 +15,8 @@ export default {
         accentHover: "var(--accent-hover)",
         primaryBg: "var(--primary-bg)",
         secondaryBg: "var(--secondary-bg)",
+        error: "var(--error)",
+        success: "var(--success)",
       },
     },
   },

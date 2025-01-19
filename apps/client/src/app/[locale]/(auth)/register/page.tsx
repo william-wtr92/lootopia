@@ -21,10 +21,10 @@ import {
   Label,
   useToast,
 } from "@lootopia/ui"
-import { AnimatePresence } from "framer-motion"
 import { Eye, EyeOff } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 
@@ -34,10 +34,11 @@ import {
 } from "@client/utils/helpers/passwordChecker"
 import { routes } from "@client/utils/routes"
 import CustomLink from "@client/web/components/utils/CustomLink"
-import PasswordCheckItem from "@client/web/components/utils/PasswordCheckItem"
+import PasswordStrengthChecker from "@client/web/components/utils/form/PasswordStrengthChecker"
 import { register } from "@client/web/services/auth/register"
 
 const RegisterPage = () => {
+  const t = useTranslations("Pages.Auth.Register")
   const [avatar, setAvatar] = useState<string | null>(null)
   const [passwordStrength, setPasswordStrength] = useState<PasswordStrength>({
     hasUppercase: false,
@@ -67,6 +68,10 @@ const RegisterPage = () => {
     },
   })
 
+  const {
+    formState: { errors },
+  } = form
+
   const onSubmit = async (data: RegisterSchema) => {
     const body = { ...data, avatar: form.getValues("avatar") || undefined }
 
@@ -74,10 +79,14 @@ const RegisterPage = () => {
 
     toast({
       variant: "default",
-      description: "Votre compte a été créé avec succès.",
+      description: t("success"),
     })
 
     router.push(routes.home)
+  }
+
+  const handleAvatarClick = () => {
+    fileInputRef.current?.click()
   }
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,6 +112,10 @@ const RegisterPage = () => {
     }
   }, [form])
 
+  const handleShowPassword = () => {
+    setShowPassword((prev) => !prev)
+  }
+
   useEffect(() => {
     const subscription = form.watch((value, { name }) => {
       if (name === "password") {
@@ -114,14 +127,14 @@ const RegisterPage = () => {
   }, [form])
 
   return (
-    <div className="overflow-hidden] relative flex min-h-screen items-center justify-center">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
       <Card className="border-primary bg-primaryBg z-0 w-2/5 opacity-95">
         <CardHeader className="text-center">
           <CardTitle className="text-primary text-3xl font-bold">
-            Créer un compte
+            {t("title")}
           </CardTitle>
           <CardTitle className="text-md text-primary font-normal">
-            Commencez votre aventure dès maintenant !
+            {t("description")}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -133,7 +146,7 @@ const RegisterPage = () => {
               <div className="flex flex-col items-center space-y-2">
                 <div
                   className="bg-secondary flex h-24 w-24 cursor-pointer items-center justify-center overflow-hidden rounded-full"
-                  onClick={() => fileInputRef.current?.click()}
+                  onClick={handleAvatarClick}
                 >
                   {avatar ? (
                     <Image src={avatar} alt="Avatar" width={96} height={96} />
@@ -146,9 +159,9 @@ const RegisterPage = () => {
                   ref={fileInputRef}
                   onChange={handleAvatarChange}
                   className="hidden"
-                  accept="image/*"
+                  accept="image/png, image/jpeg, image/jpg, image/webp"
                 />
-                <Label className="text-primary">Avatar</Label>
+                <Label className="text-primary">{t("form.avatar.label")}</Label>
               </div>
 
               <FormField
@@ -156,7 +169,9 @@ const RegisterPage = () => {
                 name="nickname"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-primary">Pseudo</FormLabel>
+                    <FormLabel className="text-primary">
+                      {t("form.nickname.label")}
+                    </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -164,7 +179,9 @@ const RegisterPage = () => {
                         autoComplete="nickname"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-error">
+                      {errors.nickname ? t("form.nickname.error") : null}
+                    </FormMessage>
                   </FormItem>
                 )}
               />
@@ -174,7 +191,9 @@ const RegisterPage = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-primary">Email</FormLabel>
+                    <FormLabel className="text-primary">
+                      {t("form.email.label")}
+                    </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -183,7 +202,9 @@ const RegisterPage = () => {
                         autoComplete="email"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-error">
+                      {errors.email ? t("form.email.error") : null}
+                    </FormMessage>
                   </FormItem>
                 )}
               />
@@ -193,7 +214,9 @@ const RegisterPage = () => {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-primary">Téléphone</FormLabel>
+                    <FormLabel className="text-primary">
+                      {t("form.phone.label")}
+                    </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -201,7 +224,9 @@ const RegisterPage = () => {
                         className="border-primary focus:ring-secondary"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-error">
+                      {errors.phone ? t("form.phone.error") : null}
+                    </FormMessage>
                   </FormItem>
                 )}
               />
@@ -212,18 +237,20 @@ const RegisterPage = () => {
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
                     <FormLabel className="text-primary">
-                      Date de naissance
+                      {t("form.birthdate.label")}
                     </FormLabel>
                     <FormControl>
                       <DatePicker
-                        placeholder="Choisissez une date"
+                        placeholder={t("form.birthdate.placeholder")}
                         className="text-primary border-primary bg-primaryBg w-full"
                         onChange={(selectedDate) => {
                           field.onChange(selectedDate?.toISOString() || "")
                         }}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-error">
+                      {errors.birthdate ? t("form.birthdate.error") : null}
+                    </FormMessage>
                   </FormItem>
                 )}
               />
@@ -231,10 +258,11 @@ const RegisterPage = () => {
               <FormField
                 control={form.control}
                 name="password"
-                // eslint-disable-next-line complexity
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-primary">Mot de passe</FormLabel>
+                    <FormLabel className="text-primary">
+                      {t("form.password.label")}
+                    </FormLabel>
                     <div className="relative">
                       <FormControl>
                         <Input
@@ -246,59 +274,23 @@ const RegisterPage = () => {
                           autoComplete="new-password"
                         />
                       </FormControl>
-                      <button
+                      <Button
                         type="button"
-                        className="text-primary hover:text-secondary absolute inset-y-0 right-0 flex items-center pr-3"
-                        onClick={() => setShowPassword(!showPassword)}
+                        className="text-primary hover:text-secondary absolute inset-y-0 right-0 flex items-center bg-transparent pr-3 shadow-none"
+                        onClick={handleShowPassword}
                       >
                         {showPassword ? (
                           <EyeOff className="h-4 w-4" />
                         ) : (
                           <Eye className="h-4 w-4" />
                         )}
-                      </button>
+                      </Button>
                     </div>
                     <FormMessage />
                     {isPasswordFocused && (
-                      <div className="mt-2 space-y-1">
-                        <AnimatePresence>
-                          {!passwordStrength.hasUppercase && (
-                            <PasswordCheckItem
-                              key="uppercase"
-                              label="Au moins une majuscule"
-                              isValid={passwordStrength.hasUppercase}
-                            />
-                          )}
-                          {!passwordStrength.hasLowercase && (
-                            <PasswordCheckItem
-                              key="lowercase"
-                              label="Au moins une minuscule"
-                              isValid={passwordStrength.hasLowercase}
-                            />
-                          )}
-                          {!passwordStrength.hasNumber && (
-                            <PasswordCheckItem
-                              key="number"
-                              label="Au moins un chiffre"
-                              isValid={passwordStrength.hasNumber}
-                            />
-                          )}
-                          {!passwordStrength.hasSpecialChar && (
-                            <PasswordCheckItem
-                              key="special"
-                              label="Au moins un caractère spécial"
-                              isValid={passwordStrength.hasSpecialChar}
-                            />
-                          )}
-                          {!passwordStrength.isLongEnough && (
-                            <PasswordCheckItem
-                              key="length"
-                              label="Au moins 12 caractères"
-                              isValid={passwordStrength.isLongEnough}
-                            />
-                          )}
-                        </AnimatePresence>
-                      </div>
+                      <PasswordStrengthChecker
+                        passwordStrength={passwordStrength}
+                      />
                     )}
                   </FormItem>
                 )}
@@ -310,7 +302,7 @@ const RegisterPage = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-primary">
-                      Confirmer le mot de passe
+                      {t("form.confirmPassword.label")}
                     </FormLabel>
                     <FormControl>
                       <Input
@@ -320,7 +312,11 @@ const RegisterPage = () => {
                         autoComplete="new-password"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-error">
+                      {errors.confirmPassword
+                        ? t("form.confirmPassword.error")
+                        : null}
+                    </FormMessage>
                   </FormItem>
                 )}
               />
@@ -339,8 +335,7 @@ const RegisterPage = () => {
                     </FormControl>
                     <div className="space-y-1 leading-none">
                       <FormLabel className="text-primary text-sm">
-                        J'accepte les conditions d'utilisation et la politique
-                        de confidentialité
+                        {t("form.gdpr.label")}
                       </FormLabel>
                     </div>
                   </FormItem>
@@ -352,16 +347,16 @@ const RegisterPage = () => {
                 type="submit"
                 className="text-primary w-full bg-[#FFD700] hover:bg-[#E6C200]"
               >
-                S'inscrire
+                {t("form.submit")}
               </Button>
             </form>
           </Form>
         </CardContent>
         <CardFooter className="text-primary flex justify-center text-sm">
           <div>
-            Déjà un compte ?{" "}
+            {t("cta.title")}{" "}
             <CustomLink href={routes.home}>
-              <span className="text-secondary">Connectez-vous</span>
+              <span className="text-secondary">{t("cta.login")}</span>
             </CustomLink>
           </div>
         </CardFooter>
