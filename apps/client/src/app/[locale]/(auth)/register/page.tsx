@@ -32,6 +32,7 @@ import {
   checkPasswordStrength,
   type PasswordStrength,
 } from "@client/utils/helpers/passwordChecker"
+import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
 import { routes } from "@client/utils/routes"
 import CustomLink from "@client/web/components/utils/CustomLink"
 import PasswordStrengthChecker from "@client/web/components/utils/form/PasswordStrengthChecker"
@@ -75,7 +76,16 @@ const RegisterPage = () => {
   const onSubmit = async (data: RegisterSchema) => {
     const body = { ...data, avatar: form.getValues("avatar") || undefined }
 
-    await register(body)
+    const [status, keys] = await register(body)
+
+    if (!status) {
+      toast({
+        variant: "default",
+        description: translateDynamicKey(t, `errors.${keys}`),
+      })
+
+      return
+    }
 
     toast({
       variant: "default",

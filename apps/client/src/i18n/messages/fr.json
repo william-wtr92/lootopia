@@ -46,11 +46,11 @@
             "label": "Avatar"
           },
           "nickname": {
-            "label": "Nickname",
-            "error": "Nickname invalide"
+            "label": "Pseudo",
+            "error": "Pseudo invalide"
           },
           "email": {
-            "email": "Email",
+            "label": "Email",
             "error": "Adresse e-mail invalide"
           },
           "phone": {
@@ -78,7 +78,15 @@
           "title": "Déjà inscrit ?",
           "login": "Connectez-vous"
         },
-        "success": "Votre compte a été créé avec succès !"
+        "success": "Votre compte a été créé avec succès !",
+        "errors": {
+          "passwordNotMatch": "Les mots de passe ne correspondent pas",
+          "emailAlreadyExists": "L'adresse e-mail existe déjà",
+          "nicknameAlreadyExists": "Le pseudo existe déjà",
+          "phoneAlreadyExists": "Le numéro de téléphone existe déjà",
+          "invalidImage": "L'image n'est pas valide",
+          "invalidExtension": "L'extension du fichier n'est pas valide"
+        }
       }
     }
   },

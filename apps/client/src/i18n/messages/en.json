@@ -78,7 +78,15 @@
           "title": "Already have an account?",
           "login": "Login"
         },
-        "success": "Your account has been created successfully!"
+        "success": "Your account has been created successfully!",
+        "errors": {
+          "passwordNotMatch": "Passwords do not match",
+          "emailAlreadyExists": "The email address already exists",
+          "nicknameAlreadyExists": "The nickname already exists",
+          "phoneAlreadyExists": "The phone number already exists",
+          "invalidImage": "The image is not valid",
+          "invalidExtension": "The file extension is not valid"
+        }
       }
     }
   },

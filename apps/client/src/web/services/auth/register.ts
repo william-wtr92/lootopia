@@ -25,5 +25,5 @@ export const register = async (data: RegisterSchema) => {
     return data.result
   }
 
-  return null
+  return [response.ok, (await response.json()).key]
 }
