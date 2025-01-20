@@ -60,17 +60,21 @@ export const authRoutes = app.post(
       return c.json(phoneAlreadyExists, SC.errors.BAD_REQUEST)
     }
 
-    if (!(filteredBody.avatar instanceof File)) {
-      return c.json(invalidImage, SC.errors.BAD_REQUEST)
+    let avatarUrl: string | null = null
+
+    if (filteredBody.avatar) {
+      if (!(filteredBody.avatar instanceof File)) {
+        return c.json(invalidImage, SC.errors.BAD_REQUEST)
+      }
+
+      const mimeType = mime.getType(filteredBody.avatar.name) || defaultMimeType
+
+      if (!allowedMimeTypes.includes(mimeType)) {
+        return c.json(invalidExtension, SC.errors.BAD_REQUEST)
+      }
+
+      avatarUrl = await uploadImage(filteredBody.avatar, mimeType)
     }
-
-    const mimeType = mime.getType(filteredBody.avatar.name) || defaultMimeType
-
-    if (!allowedMimeTypes.includes(mimeType)) {
-      return c.json(invalidExtension, SC.errors.BAD_REQUEST)
-    }
-
-    const avatarUrl = await uploadImage(filteredBody.avatar, mimeType)
 
     const [passwordHash, passwordSalt] = await hashPassword(password)
 

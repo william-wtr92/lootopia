@@ -2,7 +2,18 @@ import { z } from "zod"
 
 export const registerSchema = z
   .object({
-    avatar: z.instanceof(File).optional(),
+    avatar: z
+      .union([
+        z.instanceof(File),
+        z
+          .string()
+          .optional()
+          .transform((val) =>
+            val === "" || val === "undefined" ? undefined : val
+          ),
+        z.undefined(),
+      ])
+      .optional(),
     nickname: z
       .string()
       .min(1, "Nickname is required.")
