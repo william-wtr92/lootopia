@@ -47,12 +47,18 @@ const appConfigSchema = z
       password: z.string(),
       db: z.string(),
     }),
+    azure: z.object({
+      blob: z.object({
+        connection: z.string(),
+        container: z.string(),
+      }),
+    }),
   })
   .strict()
 
 const appConfig = appConfigSchema.parse({
   env: env.NODE_ENV!,
-  port: parseInt(process.env.PORT!, 10),
+  port: parseInt(process.env.SERVER_PORT!, 10),
   db: {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -90,6 +96,12 @@ const appConfig = appConfigSchema.parse({
     username: process.env.REDIS_USERNAME,
     password: process.env.REDIS_PASSWORD,
     db: process.env.REDIS_DB,
+  },
+  azure: {
+    blob: {
+      connection: process.env.AZURE_BLOB_CONNECTION,
+      container: process.env.AZURE_BLOB_CONTAINER,
+    },
   },
 })
 

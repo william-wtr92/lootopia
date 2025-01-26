@@ -1,0 +1,28 @@
+{
+  "name": "@lootopia/common",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Common package for Lootopia",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "prepare": "pnpm run build"
+  },
+  "dependencies": {
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsc-alias": "^1.8.10",
+    "typescript": "^5"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "types"
+  ],
+  "author": "William - @william-wtr92",
+  "license": "All Rights Reserved"
+}

@@ -1,0 +1,113 @@
+{
+  "Pages": {
+    "NotFound": {
+      "title": "404 - Page not found",
+      "description": "Sorry, the page you are looking for does not exist.",
+      "cta":{
+        "home": "Back to home"
+      }
+    },
+    "Home": {
+      "title": "Welcome to Lootopia",
+      "description": "Explore, discover, and collect treasures in your city!",
+      "cta": {
+        "start": "Start the adventure",
+        "about": "Learn more"
+      },
+      "cards": {
+        "caches": {
+          "title": "Find caches",
+          "description": "Explore your city in search of secret caches."
+        },
+        "challenges": {
+          "title": "Take on challenges",
+          "description": "Solve puzzles and complete missions."
+        },
+        "rewards": {
+          "title": "Earn rewards",
+          "description": "Unlock exclusive prizes and benefits."
+        }
+      },
+      "download": {
+        "title": "Ready to dive into Lootopia?",
+        "description": "Download the app and start your treasure hunt now!",
+        "cta": {
+          "ios": "App Store",
+          "android": "Google Play"
+        }
+      }
+    },
+    "Auth": {
+      "Register": {
+        "title": "Create an account",
+        "description": "Start your adventure now!",
+        "form": {
+          "avatar": {
+            "label": "Avatar"
+          },
+          "nickname": {
+            "label": "Nickname",
+            "error": "Invalid nickname"
+          },
+          "email": {
+            "label": "Email",
+            "error": "Invalid email address"
+          },
+          "phone": {
+            "label": "Phone",
+            "error": "Invalid phone number"
+          },
+          "birthdate": {
+            "label": "Birthdate",
+            "placeholder": "Choose a date",
+            "error": "Invalid birthdate"
+          },
+          "password": {
+            "label": "Password"
+          },
+          "confirmPassword": {
+            "label": "Confirm password",
+            "error": "Passwords do not match"
+          },
+          "gdpr": {
+            "label": "I accept the terms of use and privacy policy."
+          },
+          "submit": "Register"
+        },
+        "cta": {
+          "title": "Already have an account?",
+          "login": "Login"
+        },
+        "success": "Your account has been created successfully!",
+        "errors": {
+          "passwordNotMatch": "Passwords do not match",
+          "emailAlreadyExists": "The email address already exists",
+          "nicknameAlreadyExists": "The nickname already exists",
+          "phoneAlreadyExists": "The phone number already exists",
+          "invalidImage": "The image is not valid",
+          "invalidExtension": "The file extension is not valid"
+        }
+      }
+    }
+  },
+  "Components": {
+    "SelectLocale": {
+       "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 Français} other {Unknown}}"
+    },
+    "NavBar": {
+      "title": "Lootopia",
+      "register": "Register",
+      "login": "Login"
+    },
+    "Footer": {
+      "content": "{year} Lootopia. All rights reserved."
+    },
+    "PasswordStrengthChecker": {
+      "uppercase": "An uppercase letter",
+      "lowercase": "A lowercase letter",
+      "number": "A number",
+      "special": "A special character",
+      "length": "At least 12 characters"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import {
-  integer,
+  boolean,
   pgTable,
   text,
   timestamp,
@@ -7,6 +7,7 @@ import {
   uuid,
   varchar,
 } from "drizzle-orm/pg-core"
+import { ROLES, type Roles } from "@lootopia/common"
 
 export const users = pgTable(
   "users",
@@ -18,8 +19,11 @@ export const users = pgTable(
     passwordHash: text("password_hash").notNull(),
     passwordSalt: text("password_salt").notNull(),
     birthdate: timestamp("birthdate").notNull(),
-    interests: varchar({ length: 255 }).notNull(),
-    rating: integer().notNull().default(0),
+    avatar: text("avatar"),
+    emailValidated: boolean("email_validated").notNull().default(false),
+    gdprValidated: boolean("gdpr_validated").notNull().default(false),
+    active: boolean().notNull().default(true),
+    role: text("role").$type<Roles>().notNull().default(ROLES.user),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
@@ -27,7 +31,7 @@ export const users = pgTable(
     return {
       emailIdx: uniqueIndex("email_idx").on(table.email),
       phoneIdx: uniqueIndex("phone_idx").on(table.phone),
-      nameIdx: uniqueIndex("name_idx").on(table.nickname),
+      nicknameIdx: uniqueIndex("nickname_idx").on(table.nickname),
     }
   }
 )

@@ -1,3 +1,3 @@
 export const router = {
-  users: "/users",
+  auth: "/auth",
 } as const

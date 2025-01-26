@@ -14,6 +14,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 COPY apps/server ./apps/server
 COPY packages/drizzle ./packages/drizzle
+COPY packages/common ./packages/common
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 

@@ -1,5 +1,7 @@
 node_modules
+azurite/
 dist
+
 .env
 .env.prod
 tls.key

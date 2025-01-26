@@ -1,5 +1,5 @@
-import { usersRoutes } from "./users"
+import { authRoutes } from "./auth"
 
 export const routes = {
-  users: usersRoutes,
+  auth: authRoutes,
 }

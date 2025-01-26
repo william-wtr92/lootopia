@@ -6,23 +6,32 @@
   "scripts": {
     "lint": "eslint",
     "dev": "tsx watch src/index.ts",
+    "dev:local": "concurrently \"pnpm run azurite\" \"pnpm run dev\"",
     "build": "tsc && tsc-alias",
-    "start": "node dist/src/index.js"
+    "start": "node dist/index.js",
+    "azurite": "azurite --silent --location ./azurite --debug ./azurite/debug.log"
   },
   "dependencies": {
+    "@azure/storage-blob": "^12.26.0",
     "@hono/node-server": "^1.13.7",
     "@hono/zod-validator": "^0.4.2",
+    "@lootopia/common": "workspace:*",
     "@lootopia/drizzle": "workspace:*",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.2",
     "hono": "^4.6.14",
+    "ioredis": "^5.4.2",
+    "mime": "^4.0.6",
     "postgres": "^3.4.5",
+    "uuid": "^11.0.5",
     "zod": "^3.24.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@lootopia/eslint-config-server": "workspace:*",
     "@types/node": "^20.11.17",
+    "azurite": "^3.33.0",
+    "concurrently": "^9.1.2",
     "eslint": "^9",
     "tsc-alias": "^1.8.10",
     "tsx": "^4.7.1",

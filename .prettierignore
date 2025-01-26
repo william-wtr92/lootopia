@@ -6,6 +6,7 @@ public/
 .github/
 docs/
 packages/drizzle/migrations/
+apps/client/src/i18n/messages/*.json 
 
 .commitlintrc.json
 components.json
