@@ -87,6 +87,29 @@
           "invalidImage": "L'image n'est pas valide",
           "invalidExtension": "L'extension du fichier n'est pas valide"
         }
+      },
+      "Login": {
+        "title": "Se connecter",
+        "description": "Commencez votre aventure dès maintenant !",
+        "form": {
+          "email": {
+            "label": "Email",
+            "error": "Adresse e-mail invalide"
+          },
+          "password": {
+            "label": "Mot de passe"
+          },
+          "submit": "Se connecter"
+        },
+        "cta": {
+          "title": "Pas encore inscrit ?",
+          "register": "Inscrivez-vous"
+        },
+        "success": "Vous êtes connecté !",
+        "errors": {
+          "incorrectPassword": "Mot de passe incorrect",
+          "userNotFound": "Cet email n'existe pas"
+        }
       }
     }
   },
