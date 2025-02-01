@@ -12,7 +12,7 @@ const Navbar = () => {
   const t = useTranslations("Components.NavBar")
 
   return (
-    <header className="container relative z-10 mx-auto w-screen px-4 py-8">
+    <header className="container sticky left-0 top-0 z-10 mx-auto w-screen px-4 py-8">
       <nav className="flex items-center justify-between">
         <Link href={routes.home}>
           <div className="flex items-center space-x-2">

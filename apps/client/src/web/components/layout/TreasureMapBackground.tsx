@@ -1,37 +1,13 @@
 "use client"
 
+import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
+
+import anim from "@client/web/utils/anim"
 
 const TreasureMapBackground = () => {
   const pathRef = useRef<SVGPathElement>(null)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-
-  useEffect(() => {
-    const path = pathRef.current
-
-    if (!path) {
-      return
-    }
-
-    const length = path.getTotalLength()
-    path.style.strokeDasharray = `10, 10`
-    path.style.strokeDashoffset = `${length}`
-
-    const handleScroll = () => {
-      const scrollPercentage =
-        (document.documentElement.scrollTop + document.body.scrollTop) /
-        (document.documentElement.scrollHeight -
-          document.documentElement.clientHeight)
-      const drawLength = length * scrollPercentage
-      path.style.strokeDashoffset = `${length - drawLength}`
-    }
-
-    window.addEventListener("scroll", handleScroll)
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -44,6 +20,21 @@ const TreasureMapBackground = () => {
       window.removeEventListener("mousemove", handleMouseMove)
     }
   }, [])
+
+  const circleVariant = {
+    initial: {
+      opacity: 0,
+    },
+    enter: {
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+      },
+    },
+    exit: {
+      opacity: 0,
+    },
+  }
 
   return (
     <>
@@ -76,14 +67,20 @@ const TreasureMapBackground = () => {
             strokeWidth="1"
           />
 
-          <g fill="#4A0E4E" opacity="0.1">
-            <circle cx="10%" cy="20%" r="30" />
-            <circle cx="30%" cy="70%" r="40" />
-            <circle cx="70%" cy="40%" r="35" />
-            <circle cx="90%" cy="80%" r="25" />
-          </g>
+          <motion.g
+            fill="#4A0E4E"
+            opacity="0.1"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.5, staggerChildren: 0.1 }}
+          >
+            <motion.circle {...anim(circleVariant)} cx="10%" cy="20%" r="30" />
+            <motion.circle {...anim(circleVariant)} cx="30%" cy="70%" r="40" />
+            <motion.circle {...anim(circleVariant)} cx="70%" cy="40%" r="35" />
+            <motion.circle {...anim(circleVariant)} cx="90%" cy="80%" r="25" />
+          </motion.g>
 
-          <circle
+          <motion.circle
             cx={mousePosition.x}
             cy={mousePosition.y}
             r="100"
@@ -91,6 +88,13 @@ const TreasureMapBackground = () => {
             stroke="#FFD700"
             strokeWidth="2"
             opacity="0.2"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 260,
+              damping: 20,
+            }}
           >
             <animate
               attributeName="r"
@@ -106,14 +110,14 @@ const TreasureMapBackground = () => {
               dur="1.5s"
               repeatCount="indefinite"
             />
-          </circle>
+          </motion.circle>
         </svg>
 
         <svg
           className="pointer-events-none absolute left-0 top-0 h-full w-full"
           preserveAspectRatio="xMidYMax meet"
         >
-          <path
+          <motion.path
             ref={pathRef}
             d="M0,0 C300,700 700,300 1000,1000 C1300,1700 1700,1300 2000,2000 C2300,2700 2700,2300 3000,3000"
             stroke="#8A4FFF"
@@ -121,12 +125,18 @@ const TreasureMapBackground = () => {
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 2, ease: "easeInOut" }}
           />
-          <path
+          <motion.path
             d="M2990,2990 l20,20 m0,-20 l-20,20"
             stroke="#FFD700"
             strokeWidth="6"
             fill="none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2, duration: 0.5 }}
           />
         </svg>
       </div>
