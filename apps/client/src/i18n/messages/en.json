@@ -153,8 +153,27 @@
           "userNotFound": "This email does not exist"
         }
       }
+    },
+    "Profile": {
+      "statistics": {
+        "title": "Statistics",
+        "treasuresFound": "Treasures found",
+        "challengesCompleted": "Challenges completed",
+        "xp": "Xp points"
+      },
+      "progress": {
+        "title": "Progress",
+        "currentLevel": "Current level",
+        "nextTrophy": "Next trophy"
+      },
+      "cta": {
+        "treasureMap": "Treasure map",
+        "trophies": "Trophies",
+        "leaderboard": "Leaderboard",
+        "settings": "Settings"
+      }
     }
-  },
+  },  
   "Components": {
     "SelectLocale": {
        "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 Français} other {Unknown}}"
@@ -162,7 +181,8 @@
     "NavBar": {
       "title": "Lootopia",
       "register": "Register",
-      "login": "Login"
+      "login": "Login",
+      "profile": "Profile"
     },
     "Footer": {
       "content": "{year} Lootopia. All rights reserved."

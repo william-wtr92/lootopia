@@ -3,7 +3,6 @@ import { MapPin, Compass, Gift, Download } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import FeatureCard from "@client/web/components/landing/FeatureCard"
-import Footer from "@client/web/components/layout/Footer"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
 import anim from "@client/web/utils/anim"
 
@@ -150,8 +149,6 @@ const HomePage = () => {
           </div>
         </MotionComponent>
       </div>
-
-      <Footer />
     </main>
   )
 }

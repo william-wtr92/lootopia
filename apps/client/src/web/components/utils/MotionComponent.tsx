@@ -10,7 +10,7 @@ export const MotionComponent = ({
   ...props
 }: {
   type?: keyof HTMLElementTagNameMap | undefined
-  className: string
+  className?: string
   children: ReactNode
 }) => {
   const Component = type ? motion[type] : motion.div
