@@ -7,13 +7,15 @@ export const login = async (body: LoginSchemaType) => {
     form: body,
   })
 
+  const data = await response.json()
+
   if (!response.ok) {
-    const errorData = await response.json()
+    const errorData = data as { errorKey: string }
 
     return [false, errorData.errorKey || "unexpected_error"]
   }
 
-  const data = await response.json()
+  const successData = data as { message: { result: string; key: string } }
 
-  return [true, data.token]
+  return [true, successData.message.key]
 }

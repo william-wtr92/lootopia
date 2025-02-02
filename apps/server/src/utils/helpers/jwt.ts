@@ -1,7 +1,7 @@
+import appConfig from "@server/config"
 import { sign } from "hono/jwt"
 
 import { now } from "./times"
-import appConfig from "../../config"
 
 const { secret, expiresIn, algorithm } = appConfig.security.jwt
 

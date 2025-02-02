@@ -30,11 +30,12 @@ import CustomLink from "@client/web/components/utils/CustomLink"
 import { login } from "@client/web/services/auth/login"
 
 const LoginPage = () => {
-  const t = useTranslations("Pages.Auth.Login")
-  const [showPassword, setShowPassword] = useState(false)
   const { toast } = useToast()
   const router = useRouter()
+  const t = useTranslations("Pages.Auth.Login")
+
   const [isLoading, setIsLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
@@ -160,7 +161,7 @@ const LoginPage = () => {
         </CardContent>
         <CardFooter className="text-primary flex justify-center text-sm">
           <div>
-            {t("cta.title")}{" "}
+            {t("cta.title")}
             <CustomLink href={routes.register}>
               <span className="text-secondary">{t("cta.register")}</span>
             </CustomLink>

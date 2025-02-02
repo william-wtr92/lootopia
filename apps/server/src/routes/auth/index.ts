@@ -94,7 +94,6 @@ export const authRoutes = app
 
   .post("/login", zValidator("form", loginSchema), async (c) => {
     const { email, password } = c.req.valid("form")
-
     const user = await selectUserByEmail(email)
 
     if (!user) {
@@ -123,7 +122,6 @@ export const authRoutes = app
     return c.json(
       {
         message: { result: "success", key: "login_success" },
-        token: jwt,
       },
       SC.success.OK
     )

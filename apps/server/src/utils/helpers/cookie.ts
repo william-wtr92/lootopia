@@ -1,7 +1,6 @@
+import appConfig from "@server/config"
 import type { Context } from "hono"
 import { getSignedCookie, setSignedCookie, deleteCookie } from "hono/cookie"
-
-import appConfig from "../../config"
 
 const { secret, maxAge } = appConfig.security.cookie
 
