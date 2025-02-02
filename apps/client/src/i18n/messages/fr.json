@@ -169,6 +169,25 @@
         "leaderboard": "Classement",
         "settings": "Paramètres"
       }
+    },
+    "Profile": {
+      "statistics": {
+        "title": "Statistiques",
+        "treasuresFound": "Trésors trouvés",
+        "challengesCompleted": "Défis complétés",
+        "xp": "Points d'expérience"
+      },
+      "progress": {
+        "title": "Progression",
+        "currentLevel": "Niveau actuel",
+        "nextTrophy": "Prochain trophée"
+      },
+      "cta": {
+        "treasureMap": "Carte des trésors",
+        "trophies": "Trophées",
+        "leaderboard": "Classement",
+        "settings": "Paramètres"
+      }
     }
   },
   "Components": {
