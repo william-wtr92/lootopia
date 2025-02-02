@@ -81,18 +81,14 @@ const HomePage = () => {
             {t("description")}
           </p>
 
-          <div className="flex justify-center space-x-4">
+          <div className="flex justify-center gap-4">
             <Button
               size="lg"
               className="bg-accent text-primary hover:bg-accentHover"
             >
               {t("cta.start")}
             </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="text-primary border-primary hover:bg-primary hover:text-accent"
-            >
+            <Button size="lg" variant="outline">
               {t("cta.about")}
             </Button>
           </div>
@@ -120,7 +116,6 @@ const HomePage = () => {
         </MotionComponent>
 
         <MotionComponent
-          type="div"
           {...anim(readyTextVariant)}
           className="mb-32 text-center"
         >
@@ -133,17 +128,11 @@ const HomePage = () => {
           </p>
 
           <div className="flex justify-center space-x-4">
-            <Button
-              size="lg"
-              className="bg-primary text-accent hover:bg-secondary"
-            >
+            <Button size="lg">
               <Download className="mr-2 h-5 w-5" /> {t("download.cta.ios")}
             </Button>
 
-            <Button
-              size="lg"
-              className="bg-primary text-accent hover:bg-secondary"
-            >
+            <Button size="lg">
               <Download className="mr-2 h-5 w-5" /> {t("download.cta.android")}
             </Button>
           </div>

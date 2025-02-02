@@ -6,7 +6,7 @@ import {
   CardTitle,
   Progress,
 } from "@lootopia/ui"
-import { MapPin, Settings, Star, Trophy } from "lucide-react"
+import { Edit, MapPin, Settings, Star, Trophy } from "lucide-react"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
 import React from "react"
@@ -81,8 +81,8 @@ const ProfilePage = () => {
 
   return (
     <main className="relative z-10 flex w-full flex-1 flex-col gap-8 px-4 py-8">
-      <MotionComponent {...anim(profileHeaderVariant)} className="">
-        <Card className="bg-primaryBg">
+      <MotionComponent {...anim(profileHeaderVariant)}>
+        <Card className="bg-primaryBg flex justify-between">
           <CardContent className="flex items-center gap-6 pt-6">
             <Image
               src="/placeholder.svg?height=100&width=100"
@@ -98,6 +98,11 @@ const ProfilePage = () => {
               <p className="text-secondary">{user.role}</p>
             </div>
           </CardContent>
+
+          <Button variant={"secondary"} className="mb-6 mr-6 self-end">
+            <Edit className="mr-2 h-4 w-4" />
+            {t("cta.editProfile")}
+          </Button>
         </Card>
       </MotionComponent>
 
@@ -172,16 +177,16 @@ const ProfilePage = () => {
         className="grid grid-cols-2 gap-4 sm:grid-cols-4"
         {...anim(bottomButtonsVariant)}
       >
-        <Button className="bg-primary hover:bg-secondary text-accent">
+        <Button>
           <MapPin className="mr-2 h-4 w-4" /> {t("cta.treasureMap")}
         </Button>
-        <Button className="bg-primary hover:bg-secondary text-accent">
+        <Button>
           <Trophy className="mr-2 h-4 w-4" /> {t("cta.trophies")}
         </Button>
-        <Button className="bg-primary hover:bg-secondary text-accent">
+        <Button>
           <Star className="mr-2 h-4 w-4" /> {t("cta.leaderboard")}
         </Button>
-        <Button className="bg-primary hover:bg-secondary text-accent">
+        <Button>
           <Settings className="mr-2 h-4 w-4" /> {t("cta.settings")}
         </Button>
       </MotionComponent>
