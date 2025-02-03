@@ -1,5 +1,6 @@
 import { zValidator } from "@hono/zod-validator"
 import { registerSchema, SC } from "@lootopia/common"
+import appConfig from "@server/config"
 import {
   avatarTooLarge,
   emailAlreadyExists,
@@ -17,12 +18,16 @@ import {
   selectUserByPhone,
 } from "@server/features/users/repository/select"
 import { uploadImage } from "@server/utils/actions/azureActions"
+import { redis } from "@server/utils/clients/redis"
+import { redisKeys } from "@server/utils/constants/redisKeys"
 import {
   allowedMimeTypes,
   defaultMimeType,
   fiftyMo,
 } from "@server/utils/helpers/files"
+import { mailBuilder, sendMail } from "@server/utils/helpers/mail"
 import { hashPassword } from "@server/utils/helpers/password"
+import { now, oneHour, oneHourTTL } from "@server/utils/helpers/times"
 import { Hono } from "hono"
 import { bodyLimit } from "hono/body-limit"
 import mime from "mime"
@@ -82,6 +87,21 @@ export const authRoutes = app.post(
       passwordHash,
       passwordSalt,
     ])
+
+    const validationMail = await mailBuilder(
+      { nickname: filteredBody.nickname, email: filteredBody.email },
+      appConfig.sendgrid.template.register,
+      oneHour,
+      true
+    )
+
+    const emailTokenKey = redisKeys.auth.emailValidation(
+      validationMail.dynamic_template_data.token as string
+    )
+
+    await redis.set(emailTokenKey, now, "EX", oneHourTTL)
+
+    await sendMail(validationMail)
 
     return c.json(registerSuccess, SC.success.CREATED)
   }

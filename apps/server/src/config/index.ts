@@ -53,6 +53,14 @@ const appConfigSchema = z
         container: z.string(),
       }),
     }),
+    sendgrid: z.object({
+      key: z.string(),
+      baseUrl: z.string(),
+      sender: z.string(),
+      template: z.object({
+        register: z.string(),
+      }),
+    }),
   })
   .strict()
 
@@ -101,6 +109,14 @@ const appConfig = appConfigSchema.parse({
     blob: {
       connection: process.env.AZURE_BLOB_CONNECTION,
       container: process.env.AZURE_BLOB_CONTAINER,
+    },
+  },
+  sendgrid: {
+    key: process.env.SENDGRID_KEY,
+    baseUrl: process.env.SENDGRID_BASE_URL,
+    sender: process.env.SENDGRID_SENDER,
+    template: {
+      register: process.env.SENDGRID_TEMPLATE_REGISTER,
     },
   },
 })
