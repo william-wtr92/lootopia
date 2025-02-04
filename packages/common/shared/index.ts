@@ -1,4 +1,5 @@
-export * from "./status"
+export * from "./global/status"
+export * from "./global/server"
 
 // Global types
 
@@ -11,3 +12,8 @@ export {
   type RegisterSchema,
   type InsertUser,
 } from "./users/auth/register"
+
+export {
+  emailValidationSchema,
+  type EmailValidationSchema,
+} from "./users/auth/emailValidation"

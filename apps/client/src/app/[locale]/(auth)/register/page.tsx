@@ -80,7 +80,7 @@ const RegisterPage = () => {
 
     if (!status) {
       toast({
-        variant: "default",
+        variant: "destructive",
         description: translateDynamicKey(t, `errors.${keys}`),
       })
 

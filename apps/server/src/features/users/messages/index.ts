@@ -40,9 +40,19 @@ export const invalidExtension = {
   key: "invalidExtension",
 } as const
 
+export const tokenNotProvided = {
+  result: "No token provided.",
+  key: "tokenNotProvided",
+} as const
+
 // SUCCESS MESSAGES
 
 export const registerSuccess = {
   result: "You have successfully registered.",
   key: "registerSuccess",
+} as const
+
+export const emailValidationSuccess = {
+  result: "Email validated.",
+  key: "emailValidationSuccess",
 } as const

@@ -1,6 +1,7 @@
 import { Toaster } from "@lootopia/ui"
 import { Fredoka } from "next/font/google"
 import "@client/app/globals.css"
+import { NuqsAdapter } from "nuqs/adapters/next/app"
 import { type ReactNode } from "react"
 
 import { IntlClientProvider } from "@client/providers/NextIntlClientProvider"
@@ -25,16 +26,18 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body className={`${fredoka.className} antialiased`}>
-        <IntlClientProvider>
-          <TanStackProvider>
-            <Navbar />
-            <main className="z-0">
-              <TreasureMapBackground />
-              {children}
-            </main>
-            <Toaster />
-          </TanStackProvider>
-        </IntlClientProvider>
+        <NuqsAdapter>
+          <IntlClientProvider>
+            <TanStackProvider>
+              <Navbar />
+              <main className="z-0">
+                <TreasureMapBackground />
+                {children}
+              </main>
+              <Toaster />
+            </TanStackProvider>
+          </IntlClientProvider>
+        </NuqsAdapter>
       </body>
     </html>
   )

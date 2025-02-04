@@ -87,6 +87,22 @@
           "invalidImage": "L'image n'est pas valide",
           "invalidExtension": "L'extension du fichier n'est pas valide"
         }
+      },
+      "EmailValidation": {
+        "title": "Confirmez votre adresse e-mail",
+        "description": "Afin de valider votre compte, veuillez cliquer sur le bouton ci-dessous.",
+        "cta": {
+          "validate": "Valider mon adresse e-mail"
+        },
+        "success": "Votre adresse e-mail a été validée avec succès !",
+        "errors": {
+          "tokenNotProvided": "Veuillez refaire une demande de validation.",
+          "tokenExpired": "Votre lien de validation a expiré. Veuillez refaire une demande.",
+          "tokenSignatureMismatched": "Le lien de validation est invalide. Veuillez refaire une demande.",
+          "tokenInvalidStructure": "Le lien de validation est invalide. Veuillez refaire une demande.",
+          "unspecifiedErrorOccurred": "Une erreur inconnue s'est produite. Veuillez réessayer.",
+          "userNotFound": "Le lien de validation est invalide. Veuillez refaire une demande."
+        }
       }
     }
   },

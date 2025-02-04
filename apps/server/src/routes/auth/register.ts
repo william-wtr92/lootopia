@@ -34,7 +34,7 @@ import mime from "mime"
 
 const app = new Hono()
 
-export const authRoutes = app.post(
+export const registerRoute = app.post(
   "/register",
   bodyLimit({
     maxSize: fiftyMo,

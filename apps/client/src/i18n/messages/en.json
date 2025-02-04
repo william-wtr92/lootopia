@@ -87,6 +87,22 @@
           "invalidImage": "The image is not valid",
           "invalidExtension": "The file extension is not valid"
         }
+      },
+      "EmailValidation": {
+        "title": "Confirm your email address",
+        "description": "To validate your account, please click on the button below.",
+        "cta": {
+          "validate": "Validate my email"
+        },
+        "success": "Your email address has been validated successfully!",
+        "errors": {
+          "tokenNotProvided": "Please request a new validation.",
+          "tokenExpired": "Your validation link has expired. Please request a new one.",
+          "tokenSignatureMismatched": "The validation link is invalid. Please request a new one.",
+          "tokenInvalidStructure": "The validation link is invalid. Please request a new one.",
+          "unspecifiedErrorOccurred": "An unknown error occurred. Please try again.",
+          "userNotFound": "The validation link is invalid. Please request a new one."
+        }
       }
     }
   },

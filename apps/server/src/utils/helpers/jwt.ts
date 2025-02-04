@@ -1,7 +1,16 @@
 import appConfig from "@server/config"
 import { sign, verify } from "hono/jwt"
+import type { JWTPayload } from "hono/utils/jwt/types"
 
 import { now } from "./times"
+
+export type CustomPayload = {
+  payload: {
+    user: {
+      email: string
+    }
+  }
+}
 
 export const signJwt = async <T extends object>(
   payload: T,
@@ -19,12 +28,15 @@ export const signJwt = async <T extends object>(
   )
 }
 
-export const decodeJwt = async (jwt: string, secret?: string) => {
-  return await verify(
+export const decodeJwt = async <T extends object>(
+  jwt: string,
+  secret?: string
+) => {
+  return (await verify(
     jwt,
     secret ? secret : appConfig.security.jwt.secret,
     appConfig.security.jwt.algorithm
-  )
+  )) as JWTPayload & T
 }
 
 export const restructureJwt = async (jwt: string) => {
