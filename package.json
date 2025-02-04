@@ -4,24 +4,20 @@
   "description": "Lootopia is an innovative platform, structured as an immersive ecosystem, dedicated to the participation and organisation of treasure hunts.",
   "scripts": {
     "prepare": "husky",
-
     "clean": "rm -rf node_modules && pnpm -r exec rm -rf node_modules",
     "check:deps": "pnpm outdated",
     "sync:env": "cp -n .env.example .env || echo '.env already exists'",
     "format": "prettier --write \"**/*.{js,ts,tsx,md}\"",
     "format:check": "prettier -c \"**/*.{js,ts,tsx,md}\"",
     "lint": "pnpm --filter @lootopia/client run lint && pnpm --filter @lootopia/server run lint && pnpm --filter @lootopia/ui run lint",
-
     "dev:client": "dotenv -e .env -- pnpm --filter @lootopia/client run dev",
     "build:client": "dotenv -e .env.prod --  pnpm --filter @lootopia/client run build",
     "start:client": "dotenv -e .env -- pnpm --filter @lootopia/client run start",
-
     "build:drizzle": "dotenv -e .env -- pnpm --filter @lootopia/drizzle run build",
     "db:generate": "dotenv -e .env -- pnpm --filter @lootopia/drizzle run db:generate",
     "db:generate:custom": "dotenv -e .env -- pnpm --filter @lootopia/drizzle run db:generate:custom",
     "db:migrate": "dotenv -e .env -- pnpm --filter @lootopia/drizzle run db:migrate",
     "db:drop": "dotenv -e .env -- pnpm --filter @lootopia/drizzle run db:drop",
-    
     "dev:server": "dotenv -e .env -- pnpm --filter @lootopia/server run dev:local",
     "build:server": "dotenv -e .env -- pnpm --filter @lootopia/server run build",
     "start:server": "dotenv -e .env -- pnpm --filter @lootopia/server run start"
@@ -32,7 +28,8 @@
     "dotenv-cli": "^8.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.11",
-    "prettier": "^3.4.2"
+    "prettier": "^3.4.2",
+    "prettier-plugin-tailwindcss": "^0.6.11"
   },
   "packageManager": "pnpm@10.2.0",
   "engines": {

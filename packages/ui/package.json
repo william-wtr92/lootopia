@@ -58,6 +58,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3",
     "@lootopia/eslint-config-client": "workspace:*",
     "@types/node": "^22.10.2",
     "@types/react": "^19",
