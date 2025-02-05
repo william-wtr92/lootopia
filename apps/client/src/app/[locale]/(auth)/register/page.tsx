@@ -355,7 +355,7 @@ const RegisterPage = () => {
               <Button
                 disabled={!form.formState.isValid}
                 type="submit"
-                className="text-primary w-full bg-[#FFD700] hover:bg-[#E6C200]"
+                className="text-primary bg-accent hover:bg-accentHover w-full"
               >
                 {t("form.submit")}
               </Button>

@@ -92,7 +92,11 @@
         "title": "Confirmez votre adresse e-mail",
         "description": "Afin de valider votre compte, veuillez cliquer sur le bouton ci-dessous.",
         "cta": {
-          "validate": "Valider mon adresse e-mail"
+          "validate": "Valider mon adresse e-mail",
+          "resend": {
+            "label": "Vous n'avez pas reçu l'e-mail ?",
+            "link": "Cliquez ici pour le renvoyer"
+          }
         },
         "success": "Votre adresse e-mail a été validée avec succès !",
         "errors": {
@@ -103,6 +107,23 @@
           "unspecifiedErrorOccurred": "Une erreur inconnue s'est produite. Veuillez réessayer.",
           "userNotFound": "Le lien de validation est invalide. Veuillez refaire une demande."
         }
+      },
+      "ResendEmailValidation": {
+        "title": "Renvoyer l'e-mail de validation",
+        "description": "Entrez l'adresse e-mail associée à votre compte pour recevoir un nouveau lien de validation.",
+        "form": {
+          "email": {
+            "label": "Email",
+            "error": "Adresse e-mail invalide"
+          },
+          "submit": "Renvoyer l'e-mail"
+        },
+        "errors": {
+          "userNotFound": "L'adresse e-mail n'existe pas",
+          "emailAlreadyValidated": "L'adresse e-mail a déjà été validée",
+          "waitBeforeResendAnotherEmail": "Veuillez patienter avant de demander un autre e-mail !"
+        },
+        "success": "Un e-mail de validation a été envoyé avec succès !"
       }
     }
   },

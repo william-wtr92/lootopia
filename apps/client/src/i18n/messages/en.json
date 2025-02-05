@@ -92,7 +92,11 @@
         "title": "Confirm your email address",
         "description": "To validate your account, please click on the button below.",
         "cta": {
-          "validate": "Validate my email"
+          "validate": "Validate my email",
+          "resend": {
+            "label": "You didn't receive the email?",
+            "link": "Click here to resend it"
+          }
         },
         "success": "Your email address has been validated successfully!",
         "errors": {
@@ -103,6 +107,23 @@
           "unspecifiedErrorOccurred": "An unknown error occurred. Please try again.",
           "userNotFound": "The validation link is invalid. Please request a new one."
         }
+      },
+      "ResendEmailValidation": {
+        "title": "Resend validation email",
+        "description": "Enter the email address associated with your account to receive a new validation link.",
+        "form": {
+          "email": {
+            "label": "Email",
+            "error": "Invalid email address"
+          },
+          "submit": "Resend email"
+        },
+        "errors": {
+          "userNotFound": "The email address does not exist",
+          "emailAlreadyValidated": "The email address has already been validated",
+          "waitBeforeResendAnotherEmail": "Please wait before requesting another email!"
+        },
+        "success": "The validation email has been sent successfully!"
       }
     }
   },

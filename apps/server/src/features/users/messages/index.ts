@@ -45,6 +45,16 @@ export const tokenNotProvided = {
   key: "tokenNotProvided",
 } as const
 
+export const waitBeforeResendAnotherEmail = {
+  result: "Wait before resend another email.",
+  key: "waitBeforeResendAnotherEmail",
+} as const
+
+export const emailAlreadyValidated = {
+  result: "Email already validated.",
+  key: "emailAlreadyValidated",
+} as const
+
 // SUCCESS MESSAGES
 
 export const registerSuccess = {
@@ -55,4 +65,9 @@ export const registerSuccess = {
 export const emailValidationSuccess = {
   result: "Email validated.",
   key: "emailValidationSuccess",
+} as const
+
+export const emailValidationResendSuccess = {
+  result: "Email validation resent.",
+  key: "emailValidationResendSuccess",
 } as const

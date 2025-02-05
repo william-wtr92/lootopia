@@ -1,51 +1,120 @@
 import { zValidator } from "@hono/zod-validator"
-import { emailValidationSchema, SC } from "@lootopia/common"
+import {
+  emailValidationSchema,
+  resendEmailValidationSchema,
+  SC,
+  type ResendEmailValidationSchema,
+} from "@lootopia/common"
+import appConfig from "@server/config"
 import { tokenExpired, tokenNotProvided } from "@server/features/global"
-import { emailValidationSuccess, userNotFound } from "@server/features/users"
+import {
+  emailAlreadyValidated,
+  emailValidationResendSuccess,
+  emailValidationSuccess,
+  userNotFound,
+  waitBeforeResendAnotherEmail,
+} from "@server/features/users"
 import { selectUserByEmail } from "@server/features/users/repository/select"
 import { updateEmailValidation } from "@server/features/users/repository/update"
 import { redis } from "@server/utils/clients/redis"
 import { redisKeys } from "@server/utils/constants/redisKeys"
 import { JwtError } from "@server/utils/errors/jwt"
 import { decodeJwt, type CustomPayload } from "@server/utils/helpers/jwt"
+import { mailBuilder, sendMail } from "@server/utils/helpers/mail"
+import {
+  now,
+  oneHour,
+  oneHourTTL,
+  tenMinutesTTL,
+} from "@server/utils/helpers/times"
 import { Hono } from "hono"
 
 const app = new Hono()
 
-export const emailValidationRoute = app.get(
-  "/email-validation",
-  zValidator("query", emailValidationSchema),
-  async (c) => {
-    const token = c.req.query("token")
+export const emailValidationRoute = app
+  .get(
+    "/email-validation",
+    zValidator("query", emailValidationSchema),
+    async (c) => {
+      const token = c.req.query("token")
 
-    if (!token) {
-      return c.json(tokenNotProvided, SC.errors.BAD_REQUEST)
+      if (!token) {
+        return c.json(tokenNotProvided, SC.errors.BAD_REQUEST)
+      }
+
+      const emailTokenKey = redisKeys.auth.emailValidation(token)
+      const emailToken = await redis.get(emailTokenKey)
+
+      if (!emailToken) {
+        return c.json(tokenExpired, SC.errors.BAD_REQUEST)
+      }
+
+      try {
+        const decodedToken = await decodeJwt<CustomPayload>(token)
+        const email = decodedToken.payload.user.email
+
+        const user = await selectUserByEmail(email)
+
+        if (!user || !user.active) {
+          return c.json(userNotFound, SC.errors.BAD_REQUEST)
+        }
+
+        updateEmailValidation(email)
+
+        await redis.del(emailTokenKey)
+
+        return c.json(emailValidationSuccess, SC.success.OK)
+      } catch (error) {
+        throw JwtError(error)
+      }
     }
+  )
+  .post(
+    "/resend-email-validation",
+    zValidator("json", resendEmailValidationSchema),
+    async (c) => {
+      const body: ResendEmailValidationSchema = await c.req.json()
 
-    const emailTokenKey = redisKeys.auth.emailValidation(token)
-    const emailToken = await redis.get(emailTokenKey)
-
-    if (!emailToken) {
-      return c.json(tokenExpired, SC.errors.BAD_REQUEST)
-    }
-
-    try {
-      const decodedToken = await decodeJwt<CustomPayload>(token)
-      const email = decodedToken.payload.user.email
-
-      const user = await selectUserByEmail(email)
+      const user = await selectUserByEmail(body.email)
 
       if (!user || !user.active) {
         return c.json(userNotFound, SC.errors.BAD_REQUEST)
       }
 
-      updateEmailValidation(email)
+      if (user.emailValidated) {
+        return c.json(emailAlreadyValidated, SC.errors.BAD_REQUEST)
+      }
 
-      await redis.del(emailTokenKey)
+      const emailValidationCooldownKey = redisKeys.auth.emailValidationCooldown(
+        user.email
+      )
+      const emailValidationCooldown = await redis.get(
+        emailValidationCooldownKey
+      )
 
-      return c.json(emailValidationSuccess, SC.success.OK)
-    } catch (error) {
-      throw JwtError(error)
+      if (emailValidationCooldown) {
+        return c.json(waitBeforeResendAnotherEmail, SC.errors.BAD_REQUEST)
+      }
+
+      const validationMail = await mailBuilder(
+        { nickname: user.nickname, email: user.email },
+        appConfig.sendgrid.template.register,
+        oneHour,
+        true
+      )
+
+      const emailTokenKey = redisKeys.auth.emailValidation(
+        validationMail.dynamic_template_data.token as string
+      )
+
+      await redis
+        .multi()
+        .set(emailTokenKey, now, "EX", oneHourTTL)
+        .set(emailValidationCooldownKey, now, "EX", tenMinutesTTL)
+        .exec()
+
+      await sendMail(validationMail)
+
+      return c.json(emailValidationResendSuccess, SC.success.OK)
     }
-  }
-)
+  )

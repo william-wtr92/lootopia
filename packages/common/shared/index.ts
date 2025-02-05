@@ -16,4 +16,6 @@ export {
 export {
   emailValidationSchema,
   type EmailValidationSchema,
+  resendEmailValidationSchema,
+  type ResendEmailValidationSchema,
 } from "./users/auth/emailValidation"

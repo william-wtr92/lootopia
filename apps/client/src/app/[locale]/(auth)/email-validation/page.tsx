@@ -1,12 +1,20 @@
 "use client"
 
-import { Button, Card, toast } from "@lootopia/ui"
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  toast,
+} from "@lootopia/ui"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useQueryState } from "nuqs"
 
 import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
 import { routes } from "@client/utils/routes"
+import CustomLink from "@client/web/components/utils/CustomLink"
 import { emailValidation } from "@client/web/services/auth/emailValidation"
 
 const EmailValidationPage = () => {
@@ -41,16 +49,28 @@ const EmailValidationPage = () => {
 
   return (
     <div className="relative flex h-[75vh] items-center justify-center overflow-hidden">
-      <Card className="text-primary border-primary bg-primaryBg z-0 flex h-72 w-2/5 flex-col items-center justify-center gap-10 opacity-95">
-        <h1 className="text-center text-3xl">{t("title")}</h1>
-        <p className="text-center">{t("description")}</p>
-        <Button
-          className="text-white"
-          disabled={!token}
-          onClick={handleValidation}
-        >
-          {t("cta.validate")}
-        </Button>
+      <Card className="text-primary border-primary bg-primaryBg z-0 flex h-72 w-2/5 flex-col items-center justify-center gap-6 opacity-95">
+        <CardHeader>
+          <CardTitle className="text-center text-3xl">
+            <h1>{t("title")}</h1>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col items-center justify-center gap-8">
+          <p className="text-center">{t("description")}</p>
+          <Button
+            className="text-primary bg-accent hover:bg-accentHover w-full"
+            disabled={!token}
+            onClick={handleValidation}
+          >
+            {t("cta.validate")}
+          </Button>
+          <div className="flex items-center justify-center gap-2 text-sm">
+            <span>{t("cta.resend.label")}</span>
+            <CustomLink href={routes.resendEmaiValidation}>
+              <span className="text-secondary">{t("cta.resend.link")}</span>
+            </CustomLink>
+          </div>
+        </CardContent>
       </Card>
     </div>
   )
