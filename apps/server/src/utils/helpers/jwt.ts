@@ -38,9 +38,3 @@ export const decodeJwt = async <T extends object>(
     appConfig.security.jwt.algorithm
   )) as JWTPayload & T
 }
-
-export const restructureJwt = async (jwt: string) => {
-  const [header, payload, signature] = jwt.split(".")
-
-  return `${header}.${payload}.${signature}`
-}

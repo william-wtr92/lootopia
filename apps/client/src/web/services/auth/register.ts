@@ -5,17 +5,17 @@ import type { ParsedFormValue } from "hono/types"
 
 import { client } from "@client/web/utils/client"
 
-export const register = async (data: RegisterSchema) => {
+export const register = async (body: RegisterSchema) => {
   const response = await client.auth.register.$post({
     form: {
-      email: data.email,
-      nickname: data.nickname,
-      phone: data.phone,
-      avatar: data.avatar,
-      password: data.password,
-      confirmPassword: data.confirmPassword,
-      birthdate: data.birthdate,
-      gdprValidated: data.gdprValidated as unknown as ParsedFormValue,
+      email: body.email,
+      nickname: body.nickname,
+      phone: body.phone,
+      avatar: body.avatar,
+      password: body.password,
+      confirmPassword: body.confirmPassword,
+      birthdate: body.birthdate,
+      gdprValidated: body.gdprValidated as unknown as ParsedFormValue,
     },
   })
 

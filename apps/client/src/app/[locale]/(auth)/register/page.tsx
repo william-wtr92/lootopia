@@ -28,13 +28,13 @@ import { useTranslations } from "next-intl"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 
+import { Link } from "@client/i18n/routing"
 import {
   checkPasswordStrength,
   type PasswordStrength,
 } from "@client/utils/helpers/passwordChecker"
 import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
 import { routes } from "@client/utils/routes"
-import CustomLink from "@client/web/components/utils/CustomLink"
 import PasswordStrengthChecker from "@client/web/components/utils/form/PasswordStrengthChecker"
 import { register } from "@client/web/services/auth/register"
 
@@ -365,9 +365,9 @@ const RegisterPage = () => {
         <CardFooter className="text-primary flex justify-center text-sm">
           <div>
             {t("cta.title")}{" "}
-            <CustomLink href={routes.home}>
+            <Link href={routes.home}>
               <span className="text-secondary">{t("cta.login")}</span>
-            </CustomLink>
+            </Link>
           </div>
         </CardFooter>
       </Card>

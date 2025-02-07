@@ -12,9 +12,9 @@ import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useQueryState } from "nuqs"
 
+import { Link } from "@client/i18n/routing"
 import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
 import { routes } from "@client/utils/routes"
-import CustomLink from "@client/web/components/utils/CustomLink"
 import { emailValidation } from "@client/web/services/auth/emailValidation"
 
 const EmailValidationPage = () => {
@@ -66,9 +66,9 @@ const EmailValidationPage = () => {
           </Button>
           <div className="flex items-center justify-center gap-2 text-sm">
             <span>{t("cta.resend.label")}</span>
-            <CustomLink href={routes.resendEmaiValidation}>
+            <Link href={routes.resendEmaiValidation}>
               <span className="text-secondary">{t("cta.resend.link")}</span>
-            </CustomLink>
+            </Link>
           </div>
         </CardContent>
       </Card>

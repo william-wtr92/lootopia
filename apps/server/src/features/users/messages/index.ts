@@ -55,6 +55,11 @@ export const emailAlreadyValidated = {
   key: "emailAlreadyValidated",
 } as const
 
+export const incorrectPassword = {
+  result: "The password is incorrect",
+  key: "incorrectPassword",
+} as const
+
 // SUCCESS MESSAGES
 
 export const registerSuccess = {
@@ -70,4 +75,9 @@ export const emailValidationSuccess = {
 export const emailValidationResendSuccess = {
   result: "Email validation resent.",
   key: "emailValidationResendSuccess",
+} as const
+
+export const loginSuccess = {
+  result: "You have successfully logged in.",
+  key: "loginSuccess",
 } as const

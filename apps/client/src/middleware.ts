@@ -1,12 +1,9 @@
 import type { NextRequest } from "next/server"
 import createMiddleware from "next-intl/middleware"
 
-import { locales } from "@client/i18n/routing"
+import { routing } from "@client/i18n/routing"
 
-const middlewareI18n = createMiddleware({
-  locales,
-  defaultLocale: "en",
-})
+const middlewareI18n = createMiddleware(routing)
 
 export default function middleware(request: NextRequest) {
   const defaultLocale = request.headers.get("x-your-custom-locale") || "en"

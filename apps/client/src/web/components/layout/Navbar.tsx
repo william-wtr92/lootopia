@@ -4,8 +4,8 @@ import { Button } from "@lootopia/ui"
 import { useTranslations } from "next-intl"
 
 import Logo from "./Logo"
+import { Link } from "@client/i18n/routing"
 import { routes } from "@client/utils/routes"
-import CustomLink from "@client/web/components/utils/CustomLink"
 import SelectLocale from "@client/web/components/utils/SelectLocale"
 
 const Navbar = () => {
@@ -14,28 +14,30 @@ const Navbar = () => {
   return (
     <header className="container relative z-10 mx-auto w-screen px-4 py-8">
       <nav className="flex items-center justify-between">
-        <CustomLink href={routes.home}>
+        <Link href={routes.home}>
           <div className="flex items-center space-x-2">
             <Logo width={50} height={50} />
             <span className="text-primary text-2xl font-bold">
               {t("title")}
             </span>
           </div>
-        </CustomLink>
+        </Link>
         <div className="flex items-center space-x-4">
           <SelectLocale />
           <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              className="text-primary hover:text-secondary"
-            >
-              {t("login")}
-            </Button>
-            <CustomLink href={routes.register}>
+            <Link href={routes.login}>
+              <Button
+                variant="ghost"
+                className="text-primary hover:text-secondary"
+              >
+                {t("login")}
+              </Button>
+            </Link>
+            <Link href={routes.register}>
               <Button className="bg-primary text-accent hover:bg-secondary">
                 {t("register")}
               </Button>
-            </CustomLink>
+            </Link>
           </div>
         </div>
       </nav>
