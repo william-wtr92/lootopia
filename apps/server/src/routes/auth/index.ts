@@ -12,6 +12,7 @@ import {
   registerSuccess,
   loginSuccess,
   userNotFound,
+  incorrectPassword,
 } from "@server/features/users"
 import {
   selectUserByEmail,
@@ -93,7 +94,6 @@ export const authRoutes = app
       return c.json(registerSuccess, SC.success.CREATED)
     }
   )
-
   .post("/login", zValidator("json", loginSchema), async (c) => {
     const { email, password } = c.req.valid("json")
     const user = await selectUserByEmail(email)
@@ -109,7 +109,7 @@ export const authRoutes = app
     )
 
     if (!isPasswordValid) {
-      return c.json({ errorKey: "incorrectPassword" }, SC.errors.UNAUTHORIZED)
+      return c.json(incorrectPassword, SC.errors.UNAUTHORIZED)
     }
 
     const jwt = await signJwt({

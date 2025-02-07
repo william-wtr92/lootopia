@@ -57,7 +57,7 @@ const LoginPage = () => {
 
     if (!status) {
       toast({
-        variant: "default",
+        variant: "destructive",
         description: translateDynamicKey(t, `errors.${errorKey}`),
       })
 
@@ -77,7 +77,7 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
+    <div className="relative flex h-[75vh] items-center justify-center overflow-hidden">
       <Card className="border-primary bg-primaryBg z-0 w-2/5 opacity-95">
         <CardHeader className="text-center">
           <CardTitle className="text-primary text-3xl font-bold">
