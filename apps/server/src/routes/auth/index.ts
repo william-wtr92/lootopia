@@ -10,6 +10,8 @@ import {
   passwordNotMatch,
   phoneAlreadyExists,
   registerSuccess,
+  loginSuccess,
+  userNotFound,
 } from "@server/features/users"
 import {
   selectUserByEmail,
@@ -92,12 +94,12 @@ export const authRoutes = app
     }
   )
 
-  .post("/login", zValidator("form", loginSchema), async (c) => {
-    const { email, password } = c.req.valid("form")
+  .post("/login", zValidator("json", loginSchema), async (c) => {
+    const { email, password } = c.req.valid("json")
     const user = await selectUserByEmail(email)
 
     if (!user) {
-      return c.json({ errorKey: "userNotFound" }, SC.errors.NOT_FOUND)
+      return c.json(userNotFound, SC.errors.NOT_FOUND)
     }
 
     const isPasswordValid = await comparePassword(
@@ -119,12 +121,7 @@ export const authRoutes = app
 
     await setCookie(c, cookiesKeys.auth.session, jwt)
 
-    return c.json(
-      {
-        message: { result: "success", key: "login_success" },
-      },
-      SC.success.OK
-    )
+    return c.json(loginSuccess, SC.success.OK)
   })
 
 export default app

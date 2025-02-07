@@ -99,7 +99,8 @@
           "password": {
             "label": "Mot de passe"
           },
-          "submit": "Se connecter"
+          "submit": "Se connecter",
+          "loading": "Connexion..."
         },
         "cta": {
           "title": "Pas encore inscrit ?",

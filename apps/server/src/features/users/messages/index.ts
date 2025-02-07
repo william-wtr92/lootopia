@@ -43,7 +43,7 @@ export const invalidExtension = {
 export const incorrectPassword = {
   result: "The password is incorrect",
   key: "incorrectPassword",
-}
+} as const
 
 // SUCCESS MESSAGES
 
@@ -52,7 +52,7 @@ export const registerSuccess = {
   key: "registerSuccess",
 } as const
 
-export const loginSucess = {
+export const loginSuccess = {
   result: "You have successfully logged in.",
   key: "loginSuccess",
-}
+} as const

@@ -154,7 +154,7 @@ const LoginPage = () => {
                 type="submit"
                 className="text-primary bg-accent hover:bg-accent-hover w-full"
               >
-                {isLoading ? "Connexion..." : t("form.submit")}
+                {isLoading ? t("form.loading") : t("form.submit")}
               </Button>
             </form>
           </Form>

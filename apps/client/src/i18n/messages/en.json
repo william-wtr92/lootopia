@@ -103,7 +103,8 @@
           "password": {
             "label": "Password"
           },
-          "submit": "Login"
+          "submit": "Login",
+          "loading": "Connecting..."
         },
         "cta": {
           "title": "Not registered yet?",

@@ -4,7 +4,7 @@ import { client } from "@client/web/utils/client"
 
 export const login = async (body: LoginSchemaType) => {
   const response = await client.auth.login.$post({
-    form: body,
+    json: body,
   })
 
   const data = await response.json()
@@ -15,7 +15,7 @@ export const login = async (body: LoginSchemaType) => {
     return [false, errorData.errorKey || "unexpected_error"]
   }
 
-  const successData = data as { message: { result: string; key: string } }
+  const successData = data as { result: string; key: string }
 
-  return [true, successData.message.key]
+  return [true, successData.key]
 }
