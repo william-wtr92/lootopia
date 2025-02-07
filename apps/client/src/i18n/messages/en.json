@@ -87,6 +87,34 @@
           "invalidImage": "The image is not valid",
           "invalidExtension": "The file extension is not valid"
         }
+      },
+      "Login": {
+        "title": "Log in",
+        "description": "Start your adventure now!",
+        "form": {
+          "email": {
+            "label": "Email",
+            "error": "Invalid email address"
+          },
+          "phone": {
+            "label": "Phone",
+            "error": "Invalid phone number"
+          },
+          "password": {
+            "label": "Password"
+          },
+          "submit": "Login",
+          "loading": "Connecting..."
+        },
+        "cta": {
+          "title": "Not registered yet?",
+          "register": "Register"
+        },
+        "success": "You are connected!",
+        "errors": {
+          "incorrectPassword": "Incorrect password",
+          "userNotFound": "This email does not exist"
+        }
       }
     }
   },

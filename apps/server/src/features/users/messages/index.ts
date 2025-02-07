@@ -40,9 +40,19 @@ export const invalidExtension = {
   key: "invalidExtension",
 } as const
 
+export const incorrectPassword = {
+  result: "The password is incorrect",
+  key: "incorrectPassword",
+} as const
+
 // SUCCESS MESSAGES
 
 export const registerSuccess = {
   result: "You have successfully registered.",
   key: "registerSuccess",
+} as const
+
+export const loginSuccess = {
+  result: "You have successfully logged in.",
+  key: "loginSuccess",
 } as const
