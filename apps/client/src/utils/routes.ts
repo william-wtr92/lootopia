@@ -1,6 +1,7 @@
 export const routes = {
   home: "/",
   register: "/register",
+  login: "/login",
   profile: "/profile",
   resendEmaiValidation: "/resend-email-validation",
   login: "/login",
