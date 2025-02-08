@@ -16,6 +16,7 @@
         - [🔍 RPC](./monorepo/stack/hono/rpc/README.md)
       - [🎒 Redis](./monorepo/stack/redis/README.md)
       - [🔍 TanStack Query](./monorepo/stack/tanstack/README.md)
+      - [🐥 SendGrid Mailing](./monorepo/stack/sendgrid/README.md)
       - [🔨 Tooling Overview](./monorepo//stack/tools/README.md)
   - [📦 Docker](./docker/README.md)
   - [🌐 Infra](./infra/README.md)

@@ -40,6 +40,21 @@ export const invalidExtension = {
   key: "invalidExtension",
 } as const
 
+export const tokenNotProvided = {
+  result: "No token provided.",
+  key: "tokenNotProvided",
+} as const
+
+export const waitBeforeResendAnotherEmail = {
+  result: "Wait before resend another email.",
+  key: "waitBeforeResendAnotherEmail",
+} as const
+
+export const emailAlreadyValidated = {
+  result: "Email already validated.",
+  key: "emailAlreadyValidated",
+} as const
+
 export const incorrectPassword = {
   result: "The password is incorrect",
   key: "incorrectPassword",
@@ -50,6 +65,16 @@ export const incorrectPassword = {
 export const registerSuccess = {
   result: "You have successfully registered.",
   key: "registerSuccess",
+} as const
+
+export const emailValidationSuccess = {
+  result: "Email validated.",
+  key: "emailValidationSuccess",
+} as const
+
+export const emailValidationResendSuccess = {
+  result: "Email validation resent.",
+  key: "emailValidationResendSuccess",
 } as const
 
 export const loginSuccess = {

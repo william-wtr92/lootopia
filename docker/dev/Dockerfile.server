@@ -1,11 +1,14 @@
-FROM node:20-slim AS base
+FROM node:22-slim AS base
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 ENV PNPM_POSTINSTALL_ENABLE=false
 
-RUN corepack enable
-
+# INFO: add corepack manual install due to the common bug with npm registry 
+RUN npm install -g corepack@0.31.0 && \
+    corepack enable && \
+    corepack prepare pnpm@10.2.0 --activate
+    
 WORKDIR /usr/src/app
 
 FROM base AS build

@@ -88,6 +88,43 @@
           "invalidExtension": "The file extension is not valid"
         }
       },
+      "EmailValidation": {
+        "title": "Confirm your email address",
+        "description": "To validate your account, please click on the button below.",
+        "cta": {
+          "validate": "Validate my email",
+          "resend": {
+            "label": "You didn't receive the email?",
+            "link": "Click here to resend it"
+          }
+        },
+        "success": "Your email address has been validated successfully!",
+        "errors": {
+          "tokenNotProvided": "Please request a new validation.",
+          "tokenExpired": "Your validation link has expired. Please request a new one.",
+          "tokenSignatureMismatched": "The validation link is invalid. Please request a new one.",
+          "tokenInvalidStructure": "The validation link is invalid. Please request a new one.",
+          "unspecifiedErrorOccurred": "An unknown error occurred. Please try again.",
+          "userNotFound": "The validation link is invalid. Please request a new one."
+        }
+      },
+      "ResendEmailValidation": {
+        "title": "Resend validation email",
+        "description": "Enter the email address associated with your account to receive a new validation link.",
+        "form": {
+          "email": {
+            "label": "Email",
+            "error": "Invalid email address"
+          },
+          "submit": "Resend email"
+        },
+        "errors": {
+          "userNotFound": "The email address does not exist",
+          "emailAlreadyValidated": "The email address has already been validated",
+          "waitBeforeResendAnotherEmail": "Please wait before requesting another email!"
+        },
+        "success": "The validation email has been sent successfully!"
+      },
       "Login": {
         "title": "Log in",
         "description": "Start your adventure now!",

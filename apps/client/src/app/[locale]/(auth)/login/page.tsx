@@ -24,9 +24,9 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 
+import { Link } from "@client/i18n/routing"
 import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
 import { routes } from "@client/utils/routes"
-import CustomLink from "@client/web/components/utils/CustomLink"
 import { login } from "@client/web/services/auth/login"
 
 const LoginPage = () => {
@@ -162,9 +162,9 @@ const LoginPage = () => {
         <CardFooter className="text-primary flex justify-center text-sm">
           <div>
             {t("cta.title")}
-            <CustomLink href={routes.register}>
+            <Link href={routes.register}>
               <span className="text-secondary">{t("cta.register")}</span>
-            </CustomLink>
+            </Link>
           </div>
         </CardFooter>
       </Card>
