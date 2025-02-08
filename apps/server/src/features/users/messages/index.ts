@@ -60,6 +60,11 @@ export const incorrectPassword = {
   key: "incorrectPassword",
 } as const
 
+export const tokenNotProvided = {
+  result: "Token not provided",
+  key: "tokenNotProvided",
+} as const
+
 // SUCCESS MESSAGES
 
 export const registerSuccess = {

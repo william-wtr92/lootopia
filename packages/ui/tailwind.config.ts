@@ -1,9 +1,9 @@
 import type { Config } from "tailwindcss"
+import tailwindcssAnimate from "tailwindcss-animate"
 
 export default {
   darkMode: ["class"],
   content: ["./src/components/**/*.tsx"],
-  plugins: [],
   theme: {
     extend: {
       keyframes: {
@@ -42,4 +42,5 @@ export default {
       },
     },
   },
+  plugins: [tailwindcssAnimate],
 } satisfies Config

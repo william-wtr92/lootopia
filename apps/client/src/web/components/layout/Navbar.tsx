@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@lootopia/ui"
+import { useQuery } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
 
 import Logo from "./Logo"
@@ -9,12 +10,18 @@ import { routes } from "@client/utils/routes"
 import CustomLink from "@client/web/components/utils/CustomLink"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
 import SelectLocale from "@client/web/components/utils/SelectLocale"
+import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import anim from "@client/web/utils/anim"
 
 const Navbar = () => {
   const t = useTranslations("Components.NavBar")
 
-  const user = true
+  const { data } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => getUserLoggedIn(),
+  })
+
+  const user = data ? data : undefined
 
   const logoVariant = {
     initial: {

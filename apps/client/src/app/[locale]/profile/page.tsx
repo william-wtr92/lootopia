@@ -1,30 +1,38 @@
+"use client"
+
 import {
   Button,
   Card,
   CardContent,
   CardHeader,
   CardTitle,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
   Progress,
 } from "@lootopia/ui"
+import { useQuery } from "@tanstack/react-query"
 import { Edit, MapPin, Settings, Star, Trophy } from "lucide-react"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
 import React from "react"
 
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
+import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import anim from "@client/web/utils/anim"
 
 const ProfilePage = () => {
   const t = useTranslations("Pages.Profile")
 
-  const user = {
-    nickname: "John Doe",
-    email: "johndoe@gmail.com",
-    phone: "0689986898",
-    birthdate: "1990-01-01",
-    avatar: "/placeholder.svg?height=100&width=100",
-    role: "Chasseur de trésors expert",
-  }
+  const { data } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => getUserLoggedIn(),
+  })
+
+  const user = data ? data : undefined
 
   const profileHeaderVariant = {
     initial: { opacity: 0, y: 20 },
@@ -93,16 +101,32 @@ const ProfilePage = () => {
             />
             <div>
               <h1 className="text-primary text-3xl font-bold">
-                {user.nickname}
+                {user?.nickname}
               </h1>
-              <p className="text-secondary">{user.role}</p>
+              <p className="text-secondary">{user?.role}</p>
             </div>
           </CardContent>
 
-          <Button variant={"secondary"} className="mb-6 mr-6 self-end">
-            <Edit className="mr-2 h-4 w-4" />
-            {t("cta.editProfile")}
-          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant={"secondary"} className="mb-6 mr-6 self-end">
+                <Edit className="mr-2 h-4 w-4" />
+                {t("cta.editProfile")}
+              </Button>
+            </DialogTrigger>
+
+            <DialogContent className="text-primary">
+              <DialogHeader>
+                <DialogTitle className="text-center">
+                  Éditer son profil
+                </DialogTitle>
+                <DialogDescription>
+                  This action cannot be undone. This will permanently delete
+                  your account and remove your data from our servers.
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
         </Card>
       </MotionComponent>
 
