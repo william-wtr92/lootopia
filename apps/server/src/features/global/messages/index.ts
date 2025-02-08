@@ -5,6 +5,11 @@ export const unspecifiedErrorOccurred = {
   key: "unspecifiedErrorOccurred",
 } as const
 
+export const routeNotFound = {
+  result: "Route not found.",
+  key: "routeNotFound",
+} as const
+
 /* TOKEN JWT */
 
 export const tokenNotProvided = {
