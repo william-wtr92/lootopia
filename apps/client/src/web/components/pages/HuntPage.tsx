@@ -1,5 +1,3 @@
-"use client"
-
 import {
   type HuntSchema,
   parsePosition,
@@ -9,6 +7,8 @@ import {
 import {
   Button,
   Card,
+  CardContent,
+  CardFooter,
   CardTitle,
   Sheet,
   SheetContent,
@@ -22,6 +22,8 @@ import {
 } from "@lootopia/ui"
 import { useEffect, useState } from "react"
 
+import { Link } from "@client/i18n/routing"
+import { routes } from "@client/utils/routes"
 import ChestForm from "@client/web/components/map/form/ChestForm"
 import HuntForm from "@client/web/components/map/form/HuntForm"
 import PositionForm from "@client/web/components/map/form/PositionForm"
@@ -119,9 +121,15 @@ const HuntPage = ({ huntId }: Props) => {
             <CardTitle className="text-primary text-center text-3xl font-bold">
               Créer une chasse
             </CardTitle>
-            <div className="mt-6">
+            <CardContent className="mt-6">
               <HuntForm onSubmit={handleHuntSubmit} />
-            </div>
+            </CardContent>
+            <CardFooter className="text-primary flex justify-center gap-1 text-sm">
+              Retourner à la liste des chasses
+              <Link href={routes.hunts.list}>
+                <span className="text-secondary font-semibold">ici</span>
+              </Link>
+            </CardFooter>
           </Card>
         </TabsContent>
 

@@ -1,13 +1,19 @@
 "use client"
 
 import { Button, Card, CardContent, CardHeader, CardTitle } from "@lootopia/ui"
+import { SquarePen } from "lucide-react"
 
 import { Link } from "@client/i18n/routing"
 import { routes } from "@client/utils/routes"
+import AlertDeleteHunt from "@client/web/components/map/utils/AlertDeleteHunt"
 import { useHuntStore } from "@client/web/store/useHuntStore"
 
 const HuntListPage = () => {
-  const hunts = useHuntStore((state) => state.hunts)
+  const { hunts, removeHunt } = useHuntStore()
+
+  const handleRemoveHunt = (huntId: string) => {
+    removeHunt(huntId)
+  }
 
   return (
     <div className="relative flex h-[75vh] items-center justify-center overflow-hidden">
@@ -20,17 +26,28 @@ const HuntListPage = () => {
         <CardContent>
           <ul className="text-primary flex h-96 flex-col gap-2 overflow-auto">
             {Object.entries(hunts).map(([huntId, { hunt }]) => (
-              <Link key={huntId} href={routes.hunts.id(huntId)}>
-                <li
-                  key={huntId}
-                  className="hover:bg-accent cursor-pointer rounded-md p-3 transition"
-                >
+              <li
+                key={huntId}
+                className="hover:bg-accent flex cursor-pointer items-center justify-between rounded-md p-3 transition"
+              >
+                <div className="flex flex-col">
                   <p className="text-lg font-semibold">{hunt.name}</p>
                   {hunt.description && (
                     <p className="text-sm">{hunt.description}</p>
                   )}
-                </li>
-              </Link>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Link key={huntId} href={routes.hunts.id(huntId)}>
+                    <SquarePen size={20} />
+                  </Link>
+
+                  <AlertDeleteHunt
+                    huntId={huntId}
+                    onDelete={() => handleRemoveHunt(huntId)}
+                  />
+                </div>
+              </li>
             ))}
           </ul>
           <Link href={routes.hunts.create}>

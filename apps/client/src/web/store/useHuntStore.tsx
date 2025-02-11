@@ -14,6 +14,7 @@ type HuntStore = {
 
   createHunt: (hunt: Omit<HuntSchema, "id">) => string
   getHunt: (huntId: string) => HuntSchema | null
+  removeHunt: (huntId: string) => void
   addChest: (huntId: string, chest: ChestSchema) => void
   removeChest: (huntId: string, id: string) => void
   setActiveHunt: (huntId: string) => void
@@ -67,6 +68,17 @@ export const useHuntStore = create<HuntStore>()(
 
         return hunts[huntId] ? hunts[huntId].hunt : null
       },
+
+      removeHunt: (huntId) =>
+        set((state) => {
+          const hunts = { ...state.hunts }
+          delete hunts[huntId]
+
+          return {
+            hunts,
+            activeHuntId: null,
+          }
+        }),
 
       addChest: (huntId, chest) =>
         set((state) => {

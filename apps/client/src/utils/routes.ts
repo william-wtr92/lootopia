@@ -6,6 +6,7 @@ export const routes = {
     login: "/login",
   },
   hunts: {
+    list: "/hunts",
     id: (huntId: string) => `/hunts/${huntId}`,
     create: "/hunts/create",
   },
