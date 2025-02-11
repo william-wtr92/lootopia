@@ -7,6 +7,7 @@ import {
   type PositionSchema,
 } from "@lootopia/common"
 import {
+  Button,
   Card,
   CardTitle,
   Sheet,
@@ -19,7 +20,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@lootopia/ui"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import ChestForm from "@client/web/components/map/form/ChestForm"
 import HuntForm from "@client/web/components/map/form/HuntForm"
@@ -27,10 +28,14 @@ import PositionForm from "@client/web/components/map/form/PositionForm"
 import Map from "@client/web/components/map/Map"
 import { useHuntStore } from "@client/web/store/useHuntStore"
 
-const MapPage = () => {
+type Props = {
+  huntId?: string
+}
+
+const HuntPage = ({ huntId }: Props) => {
   const [map, setMap] = useState<L.Map | null>(null)
   const [activeTab, setActiveTab] = useState("hunt")
-  const [isHuntCreated, setIsHuntCreated] = useState(false)
+  const [isHuntCreated, setIsHuntCreated] = useState(!!huntId)
 
   const {
     activeHuntId,
@@ -42,10 +47,24 @@ const MapPage = () => {
     setPosition,
     setIsSheetOpen,
     setCurrentChest,
+    setActiveHunt,
   } = useHuntStore()
+
+  useEffect(() => {
+    if (huntId && hunts[huntId]) {
+      setActiveHunt(huntId)
+      setIsHuntCreated(true)
+    }
+  }, [huntId, hunts, setActiveHunt])
 
   const activeHunt = activeHuntId ? hunts[activeHuntId] : null
   const chests = activeHunt ? activeHunt.chests : []
+
+  const isValid =
+    activeHuntId &&
+    activeHunt &&
+    activeHunt.hunt &&
+    activeHunt.chests.length > 1
 
   const handlePositionSubmit = (data: PositionSchema) => {
     const newPosition = parsePosition(data)
@@ -67,9 +86,17 @@ const MapPage = () => {
   }
 
   const handleHuntSubmit = (data: HuntSchema) => {
-    createHunt(data)
-    setIsHuntCreated(true)
-    setActiveTab("chests")
+    const newHuntId = createHunt(data)
+
+    if (newHuntId) {
+      setIsHuntCreated(true)
+      setActiveTab("chests")
+    }
+  }
+
+  const handleSubmitAll = () => {
+    // eslint-disable-next-line no-console
+    console.log("Submit all")
   }
 
   return (
@@ -100,10 +127,21 @@ const MapPage = () => {
 
         <TabsContent value="chests">
           <div className="relative mx-auto mt-6 w-3/5">
-            <Card className="bg-primaryBg absolute right-5 top-5 z-[20] px-3 py-2">
-              <PositionForm onSubmit={handlePositionSubmit} />
-            </Card>
+            {map && (
+              <Card className="bg-primaryBg absolute right-5 top-5 z-[20] px-3 py-2">
+                <PositionForm onSubmit={handlePositionSubmit} />
+              </Card>
+            )}
             <Map map={map} setMap={setMap} chests={chests} />
+            {map && (
+              <Button
+                onClick={handleSubmitAll}
+                disabled={!isValid}
+                className="text-primary bg-accent hover:bg-accent-hover absolute bottom-5 left-1/2 z-[20] w-96 -translate-x-1/2 transform"
+              >
+                Valider la création
+              </Button>
+            )}
           </div>
 
           <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
@@ -126,4 +164,4 @@ const MapPage = () => {
   )
 }
 
-export default MapPage
+export default HuntPage

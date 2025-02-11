@@ -12,7 +12,8 @@ type HuntStore = {
   isSheetOpen: boolean
   currentChest: Partial<ChestSchema> | null
 
-  createHunt: (hunt: Omit<HuntSchema, "id">) => void
+  createHunt: (hunt: Omit<HuntSchema, "id">) => string
+  getHunt: (huntId: string) => HuntSchema | null
   addChest: (huntId: string, chest: ChestSchema) => void
   removeChest: (huntId: string, id: string) => void
   setActiveHunt: (huntId: string) => void
@@ -23,38 +24,49 @@ type HuntStore = {
 
 export const useHuntStore = create<HuntStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       hunts: {},
       activeHuntId: null,
       position: { lat: 46.603354, lng: 1.888334 },
       isSheetOpen: false,
       currentChest: null,
 
-      createHunt: (hunt) =>
-        set((state) => {
-          if (state.activeHuntId && state.hunts[state.activeHuntId]) {
-            return {
-              hunts: {
-                ...state.hunts,
-                [state.activeHuntId]: {
-                  ...state.hunts[state.activeHuntId],
-                  hunt: { ...state.hunts[state.activeHuntId].hunt, ...hunt },
-                },
-              },
-            }
-          }
+      createHunt: (hunt) => {
+        const { activeHuntId, hunts } = get()
 
-          const newHuntId = uuidv4()
-          const newHunt = { id: newHuntId, ...hunt }
-
-          return {
+        if (activeHuntId && hunts[activeHuntId]) {
+          set({
             hunts: {
-              ...state.hunts,
-              [newHuntId]: { hunt: newHunt, chests: [] },
+              ...hunts,
+              [activeHuntId]: {
+                ...hunts[activeHuntId],
+                hunt: { ...hunts[activeHuntId].hunt, ...hunt },
+              },
             },
-            activeHuntId: newHuntId,
-          }
-        }),
+          })
+
+          return activeHuntId
+        }
+
+        const newHuntId = uuidv4()
+        const newHunt = { id: newHuntId, ...hunt }
+
+        set((state) => ({
+          hunts: {
+            ...state.hunts,
+            [newHuntId]: { hunt: newHunt, chests: [] },
+          },
+          activeHuntId: newHuntId,
+        }))
+
+        return newHuntId
+      },
+
+      getHunt: (huntId) => {
+        const { hunts } = get()
+
+        return hunts[huntId] ? hunts[huntId].hunt : null
+      },
 
       addChest: (huntId, chest) =>
         set((state) => {

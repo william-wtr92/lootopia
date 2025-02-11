@@ -1,8 +1,12 @@
 export const routes = {
   home: "/",
-  register: "/register",
-  resendEmaiValidation: "/resend-email-validation",
-  login: "/login",
+  auth: {
+    register: "/register",
+    resendEmaiValidation: "/resend-email-validation",
+    login: "/login",
+  },
+  hunts: {
+    id: (huntId: string) => `/hunts/${huntId}`,
+    create: "/hunts/create",
+  },
 } as const
-
-export type Routes = (typeof routes)[keyof typeof routes]

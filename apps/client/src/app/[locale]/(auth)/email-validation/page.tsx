@@ -66,7 +66,7 @@ const EmailValidationPage = () => {
           </Button>
           <div className="flex items-center justify-center gap-2 text-sm">
             <span>{t("cta.resend.label")}</span>
-            <Link href={routes.resendEmaiValidation}>
+            <Link href={routes.auth.resendEmaiValidation}>
               <span className="text-secondary">{t("cta.resend.link")}</span>
             </Link>
           </div>

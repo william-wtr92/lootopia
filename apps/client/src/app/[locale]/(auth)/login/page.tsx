@@ -162,7 +162,7 @@ const LoginPage = () => {
         <CardFooter className="text-primary flex justify-center text-sm">
           <div>
             {t("cta.title")}
-            <Link href={routes.register}>
+            <Link href={routes.auth.register}>
               <span className="text-secondary">{t("cta.register")}</span>
             </Link>
           </div>

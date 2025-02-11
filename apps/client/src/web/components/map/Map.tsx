@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import MapEvents from "./MapEvents"
 import AlertDeleteChest from "./utils/AlertDeleteChest"
 import RecenterControl from "./utils/RecenterControl"
+import { leafletDef } from "@client/utils/def/leaflet"
 import { calculateHuntRange } from "@client/utils/helpers/calculateHuntRange"
 import { useHuntStore } from "@client/web/store/useHuntStore"
 
@@ -69,15 +70,14 @@ const Map = ({ map, setMap, chests }: Props) => {
       setL(L)
       setCustomMarker(
         L.icon({
-          iconUrl:
-            "https://unpkg.com/leaflet@1.4.0/dist/images/marker-icon.png",
+          iconUrl: leafletDef.userIconUrl,
           iconSize: [25, 41],
           iconAnchor: [13, 41],
         })
       )
       setChestMarker(
         L.icon({
-          iconUrl: "/logo.svg",
+          iconUrl: leafletDef.chestIconUrl,
           iconSize: [32, 32],
           iconAnchor: [16, 32],
         })
@@ -91,13 +91,8 @@ const Map = ({ map, setMap, chests }: Props) => {
           lng: pos.coords.longitude,
         })
       })
-    } else {
-      setPosition({
-        lat: 46.603354,
-        lng: 1.888334,
-      })
     }
-  }, [setPosition])
+  }, [setPosition, position])
 
   useEffect(() => {
     if (chests.length >= 1) {
@@ -129,8 +124,8 @@ const Map = ({ map, setMap, chests }: Props) => {
       ref={setMap}
     >
       <TileLayer
-        attribution='&copy; <a href="https://carto.com/">CARTO</a>'
-        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+        attribution={leafletDef.attribution}
+        url={leafletDef.layerUrl}
       />
 
       {map && (
