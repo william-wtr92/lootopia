@@ -24,6 +24,7 @@ type DatePickerProps = {
   onChange?: (date: Date | undefined) => void
   months?: string[]
   placeholder?: string
+  blockFutureDates?: boolean
 }
 
 export const DatePicker = ({
@@ -46,6 +47,7 @@ export const DatePicker = ({
     "December",
   ],
   placeholder = "Pick a date",
+  blockFutureDates = false,
 }: DatePickerProps) => {
   const [date, setDate] = useState<Date | undefined>()
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
@@ -72,8 +74,10 @@ export const DatePicker = ({
       onChange(selectedDate)
     }
 
-    // Fermez la popover après avoir sélectionné une date
     setIsPopoverOpen(false)
+  }
+  const handleBlockFutureDates = (date: Date) => {
+    return blockFutureDates && date > new Date()
   }
 
   return (
@@ -137,9 +141,7 @@ export const DatePicker = ({
           month={date}
           onMonthChange={(newDate) => setDate(newDate)}
           className={cn("text-white", "day-selected:text-white", className)}
-          disabled={(date) =>
-            date > new Date() || date < new Date("1900-01-01")
-          }
+          disabled={handleBlockFutureDates}
           initialFocus
         />
       </PopoverContent>

@@ -7,6 +7,7 @@ export { ROLES, type Roles } from "./users/global"
 
 // Features types
 
+// Users types
 export {
   registerSchema,
   type RegisterSchema,
@@ -21,3 +22,17 @@ export {
 } from "./users/auth/emailValidation"
 
 export { loginSchema, type LoginSchemaType } from "./users/auth/login"
+
+// Hunts types
+
+export { huntSchema, type HuntSchema } from "./hunts"
+
+// Chests types
+export {
+  chestSchema,
+  type ChestSchema,
+  positionSchema,
+  type PositionSchema,
+  type PositionCords,
+  parsePosition,
+} from "./hunts/chests"
