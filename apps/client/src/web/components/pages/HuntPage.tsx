@@ -5,7 +5,6 @@ import {
   type PositionSchema,
 } from "@lootopia/common"
 import {
-  Button,
   Card,
   CardContent,
   CardFooter,
@@ -20,6 +19,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@lootopia/ui"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 import { Link } from "@client/i18n/routing"
@@ -28,6 +28,7 @@ import ChestForm from "@client/web/components/map/form/ChestForm"
 import HuntForm from "@client/web/components/map/form/HuntForm"
 import PositionForm from "@client/web/components/map/form/PositionForm"
 import Map from "@client/web/components/map/Map"
+import ActionsButton from "@client/web/components/map/utils/ActionsButton"
 import { useHuntStore } from "@client/web/store/useHuntStore"
 
 type Props = {
@@ -35,10 +36,6 @@ type Props = {
 }
 
 const HuntPage = ({ huntId }: Props) => {
-  const [map, setMap] = useState<L.Map | null>(null)
-  const [activeTab, setActiveTab] = useState("hunt")
-  const [isHuntCreated, setIsHuntCreated] = useState(!!huntId)
-
   const {
     activeHuntId,
     hunts,
@@ -51,6 +48,11 @@ const HuntPage = ({ huntId }: Props) => {
     setCurrentChest,
     setActiveHunt,
   } = useHuntStore()
+  const router = useRouter()
+
+  const [map, setMap] = useState<L.Map | null>(null)
+  const [activeTab, setActiveTab] = useState("hunt")
+  const [isHuntCreated, setIsHuntCreated] = useState(!!huntId)
 
   useEffect(() => {
     if (huntId && hunts[huntId]) {
@@ -94,6 +96,10 @@ const HuntPage = ({ huntId }: Props) => {
       setIsHuntCreated(true)
       setActiveTab("chests")
     }
+  }
+
+  const handleDraftSave = () => {
+    router.push(routes.hunts.list)
   }
 
   const handleSubmitAll = () => {
@@ -142,13 +148,11 @@ const HuntPage = ({ huntId }: Props) => {
             )}
             <Map map={map} setMap={setMap} chests={chests} />
             {map && (
-              <Button
-                onClick={handleSubmitAll}
-                disabled={!isValid}
-                className="text-primary bg-accent hover:bg-accent-hover absolute bottom-5 left-1/2 z-[20] w-96 -translate-x-1/2 transform"
-              >
-                Valider la création
-              </Button>
+              <ActionsButton
+                handleDraftSave={handleDraftSave}
+                handleSubmitAll={handleSubmitAll}
+                isValid={isValid}
+              />
             )}
           </div>
 
