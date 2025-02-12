@@ -4,9 +4,9 @@ import {
   incorrectPassword,
   loginSuccess,
   userNotFound,
+  selectUserByEmail,
 } from "@server/features/users"
 import { sanitizeUser } from "@server/features/users/dto/sanitizeUser"
-import { selectUserByEmail } from "@server/features/users/repository/select"
 import { auth } from "@server/middlewares/auth"
 import { setCookie } from "@server/utils/helpers/cookie"
 import { signJwt } from "@server/utils/helpers/jwt"

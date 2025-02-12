@@ -3,7 +3,6 @@ import {
   emailValidationSchema,
   resendEmailValidationSchema,
   SC,
-  type ResendEmailValidationSchema,
 } from "@lootopia/common"
 import appConfig from "@server/config"
 import { tokenExpired, tokenNotProvided } from "@server/features/global"
@@ -13,9 +12,9 @@ import {
   emailValidationSuccess,
   userNotFound,
   waitBeforeResendAnotherEmail,
+  updateEmailValidation,
+  selectUserByEmail,
 } from "@server/features/users"
-import { selectUserByEmail } from "@server/features/users/repository/select"
-import { updateEmailValidation } from "@server/features/users/repository/update"
 import { redis } from "@server/utils/clients/redis"
 import { redisKeys } from "@server/utils/constants/redisKeys"
 import { JwtError } from "@server/utils/errors/jwt"
@@ -73,7 +72,7 @@ export const emailValidationRoute = app
     "/resend-email-validation",
     zValidator("json", resendEmailValidationSchema),
     async (c) => {
-      const body: ResendEmailValidationSchema = await c.req.json()
+      const body = c.req.valid("json")
 
       const user = await selectUserByEmail(body.email)
 

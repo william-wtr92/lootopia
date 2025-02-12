@@ -13,7 +13,7 @@ import {
 export const hunts = pgTable("hunts", {
   id: uuid().defaultRandom().primaryKey().notNull(),
   name: varchar({ length: 255 }).notNull(),
-  descritpion: text().notNull(),
+  description: text().notNull(),
   endDate: timestamp().notNull(),
   mode: boolean().notNull().default(true),
   maxParticipants: integer().default(0),

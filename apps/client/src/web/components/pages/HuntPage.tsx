@@ -18,6 +18,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
+  toast,
 } from "@lootopia/ui"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -29,6 +30,7 @@ import HuntForm from "@client/web/components/features/hunts/form/HuntForm"
 import PositionForm from "@client/web/components/features/hunts/form/PositionForm"
 import Map from "@client/web/components/features/hunts/Map"
 import ActionsButton from "@client/web/components/features/hunts/utils/ActionsButton"
+import { createFullHunt } from "@client/web/services/hunts/createFullHunt"
 import { useHuntStore } from "@client/web/store/useHuntStore"
 
 type Props = {
@@ -40,6 +42,8 @@ const HuntPage = ({ huntId }: Props) => {
     activeHuntId,
     hunts,
     createHunt,
+    removeHunt,
+    getHuntWithChests,
     addChest,
     isSheetOpen,
     currentChest,
@@ -102,9 +106,51 @@ const HuntPage = ({ huntId }: Props) => {
     router.push(routes.hunts.list)
   }
 
-  const handleSubmitAll = () => {
-    // eslint-disable-next-line no-console
-    console.log("Submit all")
+  const handleSubmitAll = async () => {
+    const huntWithChests = activeHuntId ? getHuntWithChests(activeHuntId) : null
+
+    if (!huntWithChests) {
+      toast({
+        variant: "destructive",
+        description: "Erreur : chasse non trouvée",
+      })
+
+      return
+    }
+
+    const chestsWithoutId = huntWithChests.chests.map(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      ({ id, ...chest }) => chest
+    )
+
+    const payload = {
+      hunt: huntWithChests.hunt,
+      chests: chestsWithoutId,
+    }
+
+    const [status] = await createFullHunt(payload)
+
+    if (!status) {
+      toast({
+        variant: "destructive",
+        description: "Erreur lors de l'enregistrement",
+      })
+
+      return
+    }
+
+    toast({
+      variant: "default",
+      description: "Succès",
+    })
+
+    router.push(routes.hunts.list)
+
+    if (activeHuntId) {
+      setTimeout(() => {
+        removeHunt(activeHuntId)
+      }, 10)
+    }
   }
 
   return (

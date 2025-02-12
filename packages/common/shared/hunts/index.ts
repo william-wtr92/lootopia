@@ -1,8 +1,9 @@
 import { z } from "zod"
+import { chestSchema } from "./chests"
 
 export const huntSchema = z.object({
   name: z.string(),
-  description: z.string().optional(),
+  description: z.string(),
   endDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
     message: "End date must be a valid date.",
   }),
@@ -16,3 +17,10 @@ export const huntSchema = z.object({
 })
 
 export type HuntSchema = z.infer<typeof huntSchema>
+
+export const combinedHuntSchema = z.object({
+  hunt: huntSchema,
+  chests: z.array(chestSchema.omit({ id: true })),
+})
+
+export type CombinedHuntSchema = z.infer<typeof combinedHuntSchema>

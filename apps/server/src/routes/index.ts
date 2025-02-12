@@ -1,8 +1,10 @@
+import { auth } from "@server/middlewares/auth"
 import { Hono } from "hono"
 
 import { emailValidationRoute } from "./auth/emailValidation"
 import { loginRoute } from "./auth/login"
 import { registerRoute } from "./auth/register"
+import { createHuntRoute } from "./hunts/create"
 
 const DEFAULT_PATH = "/" as const
 
@@ -11,6 +13,9 @@ const authRoutes = new Hono()
   .route(DEFAULT_PATH, emailValidationRoute)
   .route(DEFAULT_PATH, loginRoute)
 
+const huntsRoutes = new Hono().use(auth).route(DEFAULT_PATH, createHuntRoute)
+
 export const routes = {
   auth: authRoutes,
+  hunts: huntsRoutes,
 }

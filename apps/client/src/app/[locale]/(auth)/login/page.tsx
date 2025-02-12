@@ -52,13 +52,13 @@ const LoginPage = () => {
 
   const onSubmit = async (data: LoginSchemaType) => {
     setIsLoading(true)
-    const [status, errorKey] = await login(data)
+    const [status, keys] = await login(data)
     setIsLoading(false)
 
     if (!status) {
       toast({
         variant: "destructive",
-        description: translateDynamicKey(t, `errors.${errorKey}`),
+        description: translateDynamicKey(t, `errors.${keys}`),
       })
 
       return

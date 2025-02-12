@@ -14,7 +14,7 @@ CREATE TABLE "chests" (
 CREATE TABLE "hunts" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" varchar(255) NOT NULL,
-	"descritpion" text NOT NULL,
+	"description" text NOT NULL,
 	"endDate" timestamp NOT NULL,
 	"mode" boolean DEFAULT true NOT NULL,
 	"maxParticipants" integer DEFAULT 0,

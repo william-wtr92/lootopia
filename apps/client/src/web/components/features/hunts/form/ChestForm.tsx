@@ -120,6 +120,7 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
           )}
         />
         <Button
+          disabled={!form.formState.isValid}
           type="submit"
           className="text-primary bg-accent hover:bg-accent-hover w-full"
         >

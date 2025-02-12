@@ -26,7 +26,12 @@ export { loginSchema, type LoginSchemaType } from "./users/auth/login"
 
 // Hunts types
 
-export { huntSchema, type HuntSchema } from "./hunts"
+export {
+  huntSchema,
+  type HuntSchema,
+  combinedHuntSchema,
+  type CombinedHuntSchema,
+} from "./hunts"
 
 // Chests types
 export { chestSchema, type ChestSchema } from "./hunts/chests"

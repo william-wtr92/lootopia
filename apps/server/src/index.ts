@@ -39,7 +39,9 @@ app.onError((_, c) => {
 })
 
 //eslint-disable-next-line @typescript-eslint/no-unused-vars
-const appRouter = app.route(router.auth, routes.auth)
+const appRouter = app
+  .route(router.auth, routes.auth)
+  .route(router.hunts, routes.hunts)
 
 serve({
   fetch: app.fetch,

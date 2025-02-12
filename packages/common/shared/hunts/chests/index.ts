@@ -9,7 +9,7 @@ export const chestSchema = z.object({
     lng: z.number(),
   }),
   description: z.string().optional(),
-  reward: z.string().optional(),
+  reward: z.string().min(1),
   size: z.number().default(DEFAULT_CHEST_SIZE),
   maxUsers: z.number().default(1),
   visibility: z.boolean().default(false),
