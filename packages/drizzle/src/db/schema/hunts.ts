@@ -36,6 +36,8 @@ export const chests = pgTable(
     size: integer().notNull().default(80),
     maxUsers: integer().notNull().default(1),
     visibility: boolean().notNull().default(false),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
     huntId: uuid()
       .notNull()
       .references(() => hunts.id, { onDelete: "cascade" }),

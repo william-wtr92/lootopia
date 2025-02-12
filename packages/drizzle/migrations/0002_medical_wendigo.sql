@@ -6,6 +6,8 @@ CREATE TABLE "chests" (
 	"size" integer DEFAULT 80 NOT NULL,
 	"maxUsers" integer DEFAULT 1 NOT NULL,
 	"visibility" boolean DEFAULT false NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"huntId" uuid NOT NULL
 );
 --> statement-breakpoint
