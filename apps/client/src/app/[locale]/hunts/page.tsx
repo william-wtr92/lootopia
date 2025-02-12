@@ -5,7 +5,7 @@ import { SquarePen } from "lucide-react"
 
 import { Link } from "@client/i18n/routing"
 import { routes } from "@client/utils/routes"
-import AlertDeleteHunt from "@client/web/components/map/utils/AlertDeleteHunt"
+import AlertDeleteHunt from "@client/web/components/features/hunts/utils/AlertDeleteHunt"
 import { useHuntStore } from "@client/web/store/useHuntStore"
 
 const HuntListPage = () => {

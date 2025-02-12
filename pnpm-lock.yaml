@@ -196,6 +196,9 @@ importers:
       '@types/node':
         specifier: ^20.11.17
         version: 20.17.17
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^8.18.1
+        version: 8.24.0(@typescript-eslint/parser@8.24.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3)
       azurite:
         specifier: ^3.33.0
         version: 3.33.0
@@ -205,6 +208,9 @@ importers:
       eslint:
         specifier: ^9
         version: 9.20.0(jiti@2.4.2)
+      eslint-plugin-import:
+        specifier: ^2.31.0
+        version: 2.31.0(@typescript-eslint/parser@8.24.0(eslint@9.20.0(jiti@2.4.2))(typescript@5.7.3))(eslint-import-resolver-typescript@3.7.0)(eslint@9.20.0(jiti@2.4.2))
       tsc-alias:
         specifier: ^1.8.10
         version: 1.8.10

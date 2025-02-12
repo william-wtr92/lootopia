@@ -25,7 +25,7 @@ const Navbar = () => {
         <div className="flex items-center space-x-4">
           <SelectLocale />
           <div className="flex items-center space-x-4">
-            <Link href={routes.login}>
+            <Link href={routes.auth.login}>
               <Button
                 variant="ghost"
                 className="text-primary hover:text-secondary"
@@ -33,7 +33,7 @@ const Navbar = () => {
                 {t("login")}
               </Button>
             </Link>
-            <Link href={routes.register}>
+            <Link href={routes.auth.register}>
               <Button className="bg-primary text-accent hover:bg-secondary">
                 {t("register")}
               </Button>

@@ -1,5 +1,8 @@
 export const routes = {
   home: "/",
+  admin: {
+    dashboard: "/admin",
+  },
   auth: {
     register: "/register",
     resendEmaiValidation: "/resend-email-validation",
@@ -11,3 +14,8 @@ export const routes = {
     create: "/hunts/create",
   },
 } as const
+
+export const protectedRoutes = [
+  routes.hunts.list,
+  routes.admin.dashboard,
+] as const

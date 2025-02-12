@@ -1,5 +1,6 @@
 export * from "./global/status"
 export * from "./global/server"
+export * from "./global/position"
 
 // Global types
 
@@ -28,11 +29,4 @@ export { loginSchema, type LoginSchemaType } from "./users/auth/login"
 export { huntSchema, type HuntSchema } from "./hunts"
 
 // Chests types
-export {
-  chestSchema,
-  type ChestSchema,
-  positionSchema,
-  type PositionSchema,
-  type PositionCords,
-  parsePosition,
-} from "./hunts/chests"
+export { chestSchema, type ChestSchema } from "./hunts/chests"

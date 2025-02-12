@@ -24,11 +24,11 @@ import { useEffect, useState } from "react"
 
 import { Link } from "@client/i18n/routing"
 import { routes } from "@client/utils/routes"
-import ChestForm from "@client/web/components/map/form/ChestForm"
-import HuntForm from "@client/web/components/map/form/HuntForm"
-import PositionForm from "@client/web/components/map/form/PositionForm"
-import Map from "@client/web/components/map/Map"
-import ActionsButton from "@client/web/components/map/utils/ActionsButton"
+import ChestForm from "@client/web/components/features/hunts/form/ChestForm"
+import HuntForm from "@client/web/components/features/hunts/form/HuntForm"
+import PositionForm from "@client/web/components/features/hunts/form/PositionForm"
+import Map from "@client/web/components/features/hunts/Map"
+import ActionsButton from "@client/web/components/features/hunts/utils/ActionsButton"
 import { useHuntStore } from "@client/web/store/useHuntStore"
 
 type Props = {
