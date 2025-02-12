@@ -166,6 +166,36 @@
         "currentLevel": "Current level",
         "nextTrophy": "Next trophy"
       },
+      "editModal": {
+        "avatar": {
+          "label": "Avatar",
+          "error": "Invalid image"
+        },
+        "nickname": {
+          "label": "Nickname",
+          "error": "Invalid nickname"
+        },
+        "email": {
+          "label": "Email",
+          "error": "Invalid email"
+        },
+        "phone": {
+          "label": "Phone number",
+          "error": "Invalid phone number"
+        },
+        "birthdate": {
+          "label": "Birthdate",
+          "error": "Invalid birthdate"
+        },
+        "password": {
+          "label": "Password",
+          "error": "Invalid password"
+        },
+        "confirmPassword": {
+          "label": "Password confirmation",
+          "error": "Passwords do not match"
+        }
+      },
       "cta": {
         "editProfile": "Edit my profile",
         "treasureMap": "Treasure map",

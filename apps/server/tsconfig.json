@@ -18,7 +18,8 @@
     }
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts", 
+    "hono.d.ts"  
   ],
   "exclude": [
     "node_modules",

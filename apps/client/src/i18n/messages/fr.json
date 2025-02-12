@@ -162,7 +162,38 @@
         "currentLevel": "Niveau actuel",
         "nextTrophy": "Prochain trophée"
       },
+      "editModal": {
+        "avatar": {
+          "label": "Avatar",
+          "error": "Image invalide"
+        },
+        "nickname": {
+          "label": "Pseudo",
+          "error": "Pseudo invalide"
+        },
+        "email": {
+          "label": "Email",
+          "error": "Adresse e-mail invalide"
+        },
+        "phone": {
+          "label": "Numéro de téléphone",
+          "error": "Numéro de téléphone invalide"
+        },
+        "birthdate": {
+          "label": "Date de naissance",
+          "error": "Date de naissance invalide"
+        },
+        "password": {
+          "label": "Mot de passe",
+          "error": "Mot de passe invalide"
+        },
+        "confirmPassword": {
+          "label": "Confirmer le mot de passe",
+          "error": "Les mots de passe ne correspondent pas"
+        }
+      },
       "cta": {
+        "editProfile": "Éditer mon profil",
         "treasureMap": "Carte des trésors",
         "trophies": "Trophées",
         "leaderboard": "Classement",

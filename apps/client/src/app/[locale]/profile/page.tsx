@@ -6,21 +6,17 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
   Progress,
 } from "@lootopia/ui"
 import { useQuery } from "@tanstack/react-query"
-import { Edit, MapPin, Settings, Star, Trophy } from "lucide-react"
+import { MapPin, Settings, Star, Trophy } from "lucide-react"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
 import React from "react"
 
+import EditProfileForm from "@client/web/components/profile/EditProfileForm"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
+import { config } from "@client/web/config"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import anim from "@client/web/utils/anim"
 
@@ -93,11 +89,15 @@ const ProfilePage = () => {
         <Card className="bg-primaryBg flex justify-between">
           <CardContent className="flex items-center gap-6 pt-6">
             <Image
-              src="/placeholder.svg?height=100&width=100"
+              src={
+                user?.avatar
+                  ? config.blobUrl + user.avatar
+                  : "/avatar-placeholder.png"
+              }
               alt="Avatar"
               width={100}
               height={100}
-              className="tbb rounded-full"
+              className="aspect-square rounded-full"
             />
             <div>
               <h1 className="text-primary text-3xl font-bold">
@@ -107,26 +107,7 @@ const ProfilePage = () => {
             </div>
           </CardContent>
 
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant={"secondary"} className="mb-6 mr-6 self-end">
-                <Edit className="mr-2 h-4 w-4" />
-                {t("cta.editProfile")}
-              </Button>
-            </DialogTrigger>
-
-            <DialogContent className="text-primary">
-              <DialogHeader>
-                <DialogTitle className="text-center">
-                  Éditer son profil
-                </DialogTitle>
-                <DialogDescription>
-                  This action cannot be undone. This will permanently delete
-                  your account and remove your data from our servers.
-                </DialogDescription>
-              </DialogHeader>
-            </DialogContent>
-          </Dialog>
+          {user && <EditProfileForm user={user} />}
         </Card>
       </MotionComponent>
 

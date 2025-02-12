@@ -1,0 +1,21 @@
+meta {
+  name: Update
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{localhost}}/users/me
+  body: formUrlEncoded
+  auth: none
+}
+
+body:form-urlencoded {
+  avatar: %2F45ff1794-8959-4abf-9ed3-ecb4b32bd057-Capture%20d%E2%80%99%C3%A9cran%20du%202025-02-10%2015-25-33.png
+  nickname: Sung%20Jinwoo
+  email: johndoe%40example.com
+  phone: %2B33612345678
+  birthdate: 1995-06-15
+  password: 
+  confirmPassword: 
+}

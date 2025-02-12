@@ -1,6 +1,29 @@
+import type { UpdateUser } from "@lootopia/common/shared/users/auth/update"
 import { users } from "@lootopia/drizzle"
 import { db } from "@server/db/client"
 import { eq } from "drizzle-orm"
+
+export const updateUser = async (
+  data: UpdateUser,
+  avatarUrl: string,
+  [passwordHash, passwordSalt]: string[]
+) => {
+  await db.transaction(async (tx) => {
+    await tx
+      .update(users)
+      .set({
+        avatar: avatarUrl,
+        nickname: data.nickname,
+        email: data.email,
+        phone: data.phone,
+        birthdate: new Date(data.birthdate!),
+        passwordHash,
+        passwordSalt,
+        updatedAt: new Date(),
+      })
+      .where(eq(users.email, data.email))
+  })
+}
 
 export const updateEmailValidation = async (email: string) => {
   return db
