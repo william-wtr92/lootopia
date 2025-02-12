@@ -20,7 +20,7 @@ type HuntStore = {
   removeHunt: (huntId: string) => void
   addChest: (huntId: string, chest: ChestSchema) => void
   removeChest: (huntId: string, id: string) => void
-  setActiveHunt: (huntId: string) => void
+  setActiveHunt: (huntId: string | null) => void
   setPosition: (position: PositionCords) => void
   setIsSheetOpen: (isOpen: boolean) => void
   setCurrentChest: (chest: Partial<ChestSchema> | null) => void
@@ -124,8 +124,8 @@ export const useHuntStore = create<HuntStore>()(
         }),
 
       setActiveHunt: (huntId) =>
-        set((state) => ({
-          activeHuntId: state.hunts[huntId] ? huntId : state.activeHuntId,
+        set(() => ({
+          activeHuntId: huntId,
         })),
 
       setPosition: (position) => set(() => ({ position })),

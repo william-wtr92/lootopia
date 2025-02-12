@@ -2,6 +2,7 @@
 
 import { Button, Card, CardContent, CardHeader, CardTitle } from "@lootopia/ui"
 import { SquarePen } from "lucide-react"
+import { useEffect } from "react"
 
 import { Link } from "@client/i18n/routing"
 import { routes } from "@client/utils/routes"
@@ -9,11 +10,17 @@ import AlertDeleteHunt from "@client/web/components/features/hunts/utils/AlertDe
 import { useHuntStore } from "@client/web/store/useHuntStore"
 
 const HuntListPage = () => {
-  const { hunts, removeHunt } = useHuntStore()
+  const { hunts, removeHunt, setActiveHunt, activeHuntId } = useHuntStore()
 
   const handleRemoveHunt = (huntId: string) => {
     removeHunt(huntId)
   }
+
+  useEffect(() => {
+    if (activeHuntId) {
+      setActiveHunt(null)
+    }
+  }, [setActiveHunt, activeHuntId])
 
   return (
     <div className="relative flex h-[75vh] items-center justify-center overflow-hidden">
