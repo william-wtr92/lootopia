@@ -2,8 +2,8 @@ import { z } from "zod"
 import { chestSchema } from "./chests"
 
 export const huntSchema = z.object({
-  name: z.string(),
-  description: z.string(),
+  name: z.string().min(3),
+  description: z.string().min(3),
   endDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
     message: "End date must be a valid date.",
   }),

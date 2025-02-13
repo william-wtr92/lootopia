@@ -23,7 +23,7 @@ export const createHuntRoute = app.post(
       return c.json(userNotFound, SC.errors.NOT_FOUND)
     }
 
-    insertHuntWithChests(body)
+    insertHuntWithChests(body, user.id)
 
     return c.json(huntCreatedSuccess, SC.success.CREATED)
   }

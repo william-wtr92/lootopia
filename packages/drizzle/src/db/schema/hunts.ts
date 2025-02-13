@@ -9,6 +9,7 @@ import {
   uuid,
   varchar,
 } from "drizzle-orm/pg-core"
+import { users } from "./users"
 
 export const hunts = pgTable("hunts", {
   id: uuid().defaultRandom().primaryKey().notNull(),
@@ -20,6 +21,9 @@ export const hunts = pgTable("hunts", {
   active: boolean().notNull().default(true),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  organizerId: uuid()
+    .notNull()
+    .references(() => users.id),
 })
 
 export const chests = pgTable(

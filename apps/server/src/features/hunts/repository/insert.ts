@@ -2,7 +2,10 @@ import type { CombinedHuntSchema } from "@lootopia/common"
 import { hunts, chests } from "@lootopia/drizzle"
 import { db } from "@server/db/client"
 
-export const insertHuntWithChests = async (data: CombinedHuntSchema) => {
+export const insertHuntWithChests = async (
+  data: CombinedHuntSchema,
+  organizerId: string
+) => {
   const { hunt: huntData, chests: chestsData } = data
 
   return db.transaction(async (tx) => {
@@ -14,6 +17,7 @@ export const insertHuntWithChests = async (data: CombinedHuntSchema) => {
         endDate: new Date(huntData.endDate),
         mode: huntData.mode,
         maxParticipants: huntData.maxParticipants,
+        organizerId,
       })
       .returning({
         huntId: hunts.id,

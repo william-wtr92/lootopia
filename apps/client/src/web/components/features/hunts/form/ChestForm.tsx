@@ -25,6 +25,7 @@ type ChestFormProps = {
 const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
   const form = useForm<ChestSchema>({
     resolver: zodResolver(chestSchema),
+    mode: "onBlur",
     defaultValues: {
       id: initialData?.id || uuid(),
       position: initialData?.position || { lat: 0, lng: 0 },
@@ -35,6 +36,10 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
       visibility: initialData?.visibility || false,
     },
   })
+
+  const {
+    formState: { errors },
+  } = form
 
   const handleSubmit = (data: ChestSchema) => {
     onSubmit(data)
@@ -55,7 +60,6 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
                   placeholder="Décrivez le contenu et l'emplacement du coffre"
                 />
               </FormControl>
-              <FormMessage />
             </FormItem>
           )}
         />
@@ -68,7 +72,9 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
               <FormControl>
                 <Input {...field} placeholder="Décrivez la récompense" />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-error">
+                {errors.reward ? "Veuillez ajouter une récompense" : null}
+              </FormMessage>
             </FormItem>
           )}
         />
@@ -82,7 +88,9 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
                 <Input {...field} type="number" min={1} max={100} />
               </FormControl>
               <FormDescription>Taille du coffre (1-100)</FormDescription>
-              <FormMessage />
+              <FormMessage className="text-error">
+                {errors.size ? "Le coffre doit avoir une taille valide" : null}
+              </FormMessage>
             </FormItem>
           )}
         />
@@ -95,7 +103,6 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
               <FormControl>
                 <Input {...field} type="number" min={1} />
               </FormControl>
-              <FormMessage />
             </FormItem>
           )}
         />

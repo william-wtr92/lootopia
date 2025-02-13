@@ -1,5 +1,5 @@
 {
-  "id": "22835f65-8b4b-4e64-a8f3-4192094df9ce",
+  "id": "703de801-5bc8-4be7-ae02-2b4953a36b0d",
   "prevId": "dc2b8c2d-b451-4fa3-8b15-2e293e46f10a",
   "version": "7",
   "dialect": "postgresql",
@@ -176,10 +176,30 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "organizerId": {
+          "name": "organizerId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "hunts_organizerId_users_id_fk": {
+          "name": "hunts_organizerId_users_id_fk",
+          "tableFrom": "hunts",
+          "tableTo": "users",
+          "columnsFrom": [
+            "organizerId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},

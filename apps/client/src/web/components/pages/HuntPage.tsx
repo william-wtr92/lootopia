@@ -147,9 +147,7 @@ const HuntPage = ({ huntId }: Props) => {
     router.push(routes.hunts.list)
 
     if (activeHuntId) {
-      setTimeout(() => {
-        removeHunt(activeHuntId)
-      }, 10)
+      removeHunt(activeHuntId)
     }
   }
 

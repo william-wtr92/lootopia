@@ -31,6 +31,7 @@ const HuntForm = ({ onSubmit }: Props) => {
 
   const form = useForm<HuntSchema>({
     resolver: zodResolver(huntSchema),
+    mode: "onBlur",
     defaultValues: {
       name: activeHunt?.name ?? "",
       description: activeHunt?.description ?? "",
@@ -39,6 +40,10 @@ const HuntForm = ({ onSubmit }: Props) => {
       maxParticipants: activeHunt?.maxParticipants ?? undefined,
     },
   })
+
+  const {
+    formState: { errors },
+  } = form
 
   useEffect(() => {
     if (activeHunt) {
@@ -65,7 +70,9 @@ const HuntForm = ({ onSubmit }: Props) => {
                   className="border-primary border"
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-error">
+                {errors.name ? "Veuillez ajouter un nom" : null}
+              </FormMessage>
             </FormItem>
           )}
         />
@@ -83,7 +90,9 @@ const HuntForm = ({ onSubmit }: Props) => {
                   className="border-primary h-10 border"
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-error">
+                {errors.description ? "Veuillez ajouter une description" : null}
+              </FormMessage>
             </FormItem>
           )}
         />
@@ -103,6 +112,11 @@ const HuntForm = ({ onSubmit }: Props) => {
                   }}
                 />
               </FormControl>
+              <FormMessage className="text-error">
+                {errors.endDate
+                  ? "Veuillez ajouter une date de fin à la chasse"
+                  : null}
+              </FormMessage>
             </FormItem>
           )}
         />
@@ -128,7 +142,11 @@ const HuntForm = ({ onSubmit }: Props) => {
                   }}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-error">
+                {errors.maxParticipants
+                  ? "Ajoutez le nombre de participants maximum"
+                  : null}
+              </FormMessage>
               <FormDescription className="text-sm text-gray-500">
                 Laisser vide signifie que la chasse est{" "}
                 <strong>illimitée</strong>.
