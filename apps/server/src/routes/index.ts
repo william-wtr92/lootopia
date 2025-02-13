@@ -1,5 +1,4 @@
 import { usersRoutes } from "@server/routes/users"
-
 import { Hono } from "hono"
 
 import { emailValidationRoute } from "./auth/emailValidation"

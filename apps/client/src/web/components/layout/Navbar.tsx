@@ -7,7 +7,6 @@ import { useTranslations } from "next-intl"
 import Logo from "./Logo"
 import { Link } from "@client/i18n/routing"
 import { routes } from "@client/utils/routes"
-import CustomLink from "@client/web/components/utils/CustomLink"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
 import SelectLocale from "@client/web/components/utils/SelectLocale"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
@@ -54,7 +53,7 @@ const Navbar = () => {
   return (
     <header className="sticky left-0 top-0 z-10 h-fit px-16 py-8">
       <nav className="flex items-center justify-between">
-        <CustomLink href={routes.home}>
+        <Link href={routes.home}>
           <MotionComponent
             className="flex items-center gap-2"
             {...anim(logoVariant)}
@@ -65,7 +64,7 @@ const Navbar = () => {
               {t("title")}
             </span>
           </MotionComponent>
-        </CustomLink>
+        </Link>
 
         <MotionComponent
           className="flex items-center justify-end space-x-4"
@@ -76,27 +75,27 @@ const Navbar = () => {
           <div className="flex items-center space-x-4">
             {!user ? (
               <>
-                <CustomLink href={routes.login}>
+                <Link href={routes.login}>
                   <Button
                     variant="outline"
                     className="text-primary hover:text-secondary"
                   >
                     {t("login")}
                   </Button>
-                </CustomLink>
-                <CustomLink href={routes.register}>
+                </Link>
+                <Link href={routes.register}>
                   <Button className="bg-primary text-accent hover:bg-secondary">
                     {t("register")}
                   </Button>
-                </CustomLink>
+                </Link>
               </>
             ) : (
               <>
-                <CustomLink href={routes.profile}>
+                <Link href={routes.profile}>
                   <Button className="bg-primary text-accent hover:bg-secondary">
                     {t("profile")}
                   </Button>
-                </CustomLink>
+                </Link>
               </>
             )}
           </div>

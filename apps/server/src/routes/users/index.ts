@@ -18,9 +18,11 @@ import {
 import { updateUser } from "@server/features/users/repository/update"
 import { auth } from "@server/middlewares/auth"
 import { uploadImage } from "@server/utils/actions/azureActions"
+import { redis } from "@server/utils/clients/redis"
 import { allowedMimeTypes, defaultMimeType } from "@server/utils/helpers/files"
 import { hashPassword } from "@server/utils/helpers/password"
 import { contextKeys } from "@server/utils/keys/contextKeys"
+import { redisKeys } from "@server/utils/keys/redisKeys"
 import { Hono } from "hono"
 import mime from "mime"
 
@@ -40,9 +42,9 @@ export const usersRoutes = app
   })
   .put("/me", auth, zValidator("form", updateSchema), async (c) => {
     const body = c.req.valid("form")
-    const email = c.get(contextKeys.loggedUserEmail)
+    const loggedUserEmail = c.get(contextKeys.loggedUserEmail)
 
-    const userToUpdate = await selectUserByEmail(email)
+    const userToUpdate = await selectUserByEmail(loggedUserEmail)
 
     if (!userToUpdate) {
       return c.json(userNotFound, SC.errors.NOT_FOUND)
@@ -81,26 +83,40 @@ export const usersRoutes = app
       avatarUrl = await uploadImage(body.avatar, mimeType)
     }
 
-    await updateUser(
-      {
-        nickname:
-          userToUpdate.nickname === body.nickname
-            ? userToUpdate.nickname
-            : body.nickname,
-        email:
-          userToUpdate.email === body.email ? userToUpdate.email : body.email,
-        phone:
-          userToUpdate.phone === body.phone ? userToUpdate.phone : body.phone,
-        birthdate:
-          userToUpdate.birthdate.toDateString() === body.birthdate
-            ? userToUpdate.birthdate.toDateString()
-            : body.birthdate,
-      },
+    const newNickname =
+      userToUpdate.nickname === body.nickname
+        ? userToUpdate.nickname
+        : body.nickname
+
+    const newEmail =
+      userToUpdate.email === body.email ? userToUpdate.email : body.email
+
+    const newPhone =
+      userToUpdate.phone === body.phone ? userToUpdate.phone : body.phone
+
+    const newBirthdate =
+      userToUpdate.birthdate.toDateString() === body.birthdate
+        ? userToUpdate.birthdate.toDateString()
+        : body.birthdate
+
+    const newAvatar =
       typeof body.avatar !== "string"
         ? (avatarUrl as string)
-        : (userToUpdate.avatar as string),
+        : (userToUpdate.avatar as string)
+
+    await updateUser(
+      {
+        nickname: newNickname,
+        email: newEmail,
+        phone: newPhone,
+        birthdate: newBirthdate,
+      },
+      newAvatar,
       [passwordHash, passwordSalt]
     )
+
+    const redisKey = redisKeys.session(loggedUserEmail)
+    await redis.del(redisKey)
 
     return c.json(updateSuccess, SC.success.OK)
   })
