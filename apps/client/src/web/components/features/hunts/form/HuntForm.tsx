@@ -15,6 +15,7 @@ import {
   DatePicker,
   Button,
 } from "@lootopia/ui"
+import { useTranslations } from "next-intl"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 
@@ -25,6 +26,7 @@ type Props = {
 }
 
 const HuntForm = ({ onSubmit }: Props) => {
+  const t = useTranslations("Components.Hunts.Form.HuntForm")
   const { activeHuntId, hunts } = useHuntStore()
 
   const activeHunt = activeHuntId ? hunts[activeHuntId]?.hunt : null
@@ -36,8 +38,8 @@ const HuntForm = ({ onSubmit }: Props) => {
       name: activeHunt?.name ?? "",
       description: activeHunt?.description ?? "",
       endDate: activeHunt?.endDate ?? "",
-      mode: activeHunt?.mode ?? true,
       maxParticipants: activeHunt?.maxParticipants ?? undefined,
+      mode: activeHunt?.mode ?? true,
     },
   })
 
@@ -62,16 +64,16 @@ const HuntForm = ({ onSubmit }: Props) => {
           name="name"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Nom de la chasse</FormLabel>
+              <FormLabel>{t("name.label")}</FormLabel>
               <FormControl>
                 <Input
                   {...field}
-                  placeholder="Nom de la chasse"
+                  placeholder={t("name.placeholder")}
                   className="border-primary border"
                 />
               </FormControl>
               <FormMessage className="text-error">
-                {errors.name ? "Veuillez ajouter un nom" : null}
+                {errors.name ? t("name.error") : null}
               </FormMessage>
             </FormItem>
           )}
@@ -82,16 +84,16 @@ const HuntForm = ({ onSubmit }: Props) => {
           name="description"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Description</FormLabel>
+              <FormLabel>{t("description.label")}</FormLabel>
               <FormControl>
                 <Textarea
                   {...field}
-                  placeholder="Décrivez le contenu et l'emplacement du coffre"
+                  placeholder={t("description.placeholder")}
                   className="border-primary h-10 border"
                 />
               </FormControl>
               <FormMessage className="text-error">
-                {errors.description ? "Veuillez ajouter une description" : null}
+                {errors.description ? t("description.error") : null}
               </FormMessage>
             </FormItem>
           )}
@@ -102,10 +104,10 @@ const HuntForm = ({ onSubmit }: Props) => {
           name="endDate"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Date de fin</FormLabel>
+              <FormLabel>{t("endDate.label")}</FormLabel>
               <FormControl>
                 <DatePicker
-                  placeholder={"Date de fin de la chasse"}
+                  placeholder={t("endDate.placeholder")}
                   className="text-primary border-primary bg-primaryBg w-full"
                   onChange={(selectedDate) => {
                     field.onChange(selectedDate?.toISOString() || "")
@@ -113,9 +115,7 @@ const HuntForm = ({ onSubmit }: Props) => {
                 />
               </FormControl>
               <FormMessage className="text-error">
-                {errors.endDate
-                  ? "Veuillez ajouter une date de fin à la chasse"
-                  : null}
+                {errors.endDate ? t("endDate.error") : null}
               </FormMessage>
             </FormItem>
           )}
@@ -126,12 +126,12 @@ const HuntForm = ({ onSubmit }: Props) => {
           name="maxParticipants"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Participants max</FormLabel>
+              <FormLabel>{t("maxParticipants.label")}</FormLabel>
               <FormControl>
                 <Input
                   {...field}
                   type="number"
-                  placeholder="Laisser vide pour illimité"
+                  placeholder={t("maxParticipants.placeholder")}
                   className="border-primary border"
                   value={field.value ?? ""}
                   onChange={(e) => {
@@ -143,13 +143,11 @@ const HuntForm = ({ onSubmit }: Props) => {
                 />
               </FormControl>
               <FormMessage className="text-error">
-                {errors.maxParticipants
-                  ? "Ajoutez le nombre de participants maximum"
-                  : null}
+                {errors.maxParticipants ? t("maxParticipants.error") : null}
               </FormMessage>
-              <FormDescription className="text-sm text-gray-500">
-                Laisser vide signifie que la chasse est{" "}
-                <strong>illimitée</strong>.
+              <FormDescription className="flex gap-1 text-sm text-gray-500">
+                <span>{t("maxParticipants.description")}</span>
+                <span>{t("maxParticipants.bold")}</span>
               </FormDescription>
             </FormItem>
           )}
@@ -160,10 +158,10 @@ const HuntForm = ({ onSubmit }: Props) => {
           name="mode"
           render={({ field }) => (
             <FormItem className="border-primary flex w-full items-center justify-between rounded-lg border p-4 shadow-md">
-              <FormDescription className="text-md">
-                Visibilité de la chasse :
-                <span className={`text-primary ml-2 font-semibold`}>
-                  {field.value ? "Publique" : "Privée"}
+              <FormDescription className="text-md flex gap-1">
+                <span>{t("mode.description")}</span>
+                <span>
+                  {field.value ? t("mode.public") : t("mode.private")}
                 </span>
               </FormDescription>
               <FormControl>
@@ -181,7 +179,7 @@ const HuntForm = ({ onSubmit }: Props) => {
           type="submit"
           className="text-primary bg-accent hover:bg-accentHover w-full"
         >
-          {activeHunt ? "Modifier" : "Créer"} la chasse
+          <span>{activeHuntId ? t("submit.update") : t("submit.create")}</span>
         </Button>
       </form>
     </Form>

@@ -153,6 +153,37 @@
           "userNotFound": "This email does not exist"
         }
       }
+    },
+    "Hunts": {
+      "Create": {
+        "notFound": "Not found hunt!",
+        "tabs": {
+          "triggers": {
+            "hunt": "Hunt",
+            "chests": "Chests"
+          },
+          "content": {
+            "title": "Create hunt",
+            "link": "Return to hunt list",
+            "here": "here"
+          }
+        },
+        "sheet": {
+          "title": "Add a chest",
+          "description": "Describe the chest and its reward for participants."
+        },
+        "success": "The hunt has been created successfully!",
+        "errors": {
+          "userNotFound": "You are not authorized to perform this action"
+        }
+      },
+      "List": {
+        "title": "Draft hunts",
+        "empty": "No hunt saved in draft, create one!",
+        "cta": {
+          "create": "Create a hunt"
+        } 
+      }
     }
   },
   "Components": {
@@ -173,6 +204,99 @@
       "number": "A number",
       "special": "A special character",
       "length": "At least 12 characters"
+    },
+    "Hunts": {
+      "Map": {
+        "loading": "Loading map...",
+        "marker": "You are here"
+      },
+      "Form": {
+        "ChestForm": {
+          "description": {
+            "label": "Description",
+            "placeholder": "Enter a description for the chest"
+          },
+          "reward": {
+            "label": "Reward",
+            "placeholder": "Enter the reward for the chest",
+            "error": "Invalid reward"
+          },
+          "size": {
+            "label": "Chest size",
+            "description": "The size of the chest must be between (1-100)",
+            "error": "Invalid size"
+          },
+          "maxUsers": {
+            "label": "Max number of users"
+          },
+          "visibility": {
+            "label": "Visibility",
+            "description": "Make safe visible to all users (default: disabled)"
+          },
+          "submit": "Add chest"
+        },
+        "HuntForm": {
+          "name": {
+            "label": "Name",
+            "placeholder": "Enter a name for the hunt",
+            "error": "Invalid name"
+          },
+          "description": {
+            "label": "Description",
+            "placeholder": "Enter a description for the hunt",
+            "error": "Invalid description"
+          },
+          "endDate": {
+            "label": "End date",
+            "placeholder": "Choose the end date",
+            "error": "Invalid end date"
+          },
+          "maxParticipants": {
+            "label": "Max participants",
+            "placeholder": "Enter the maximum number of participants",
+            "error": "Invalid max participants",
+            "description": "Leaving empty means that the hunt is",
+            "bold": "unlimited."
+          },
+          "mode": {
+            "description": "Visibility of the hunt :",
+            "public": "Public",
+            "private": "Private"
+          },
+          "submit": {
+            "update": "Update hunt",
+            "create": "Create hunt"
+          }
+        },
+        "PositionForm": {
+          "lat": {
+            "placeholder": "Latitude"
+          },
+          "lng": {
+            "placeholder": "Longitude"
+          },
+          "submit": "Center map"
+        }
+      },
+      "Utils": {
+        "ActionsButton": {
+          "saveDraft": "Save draft",
+          "submit": "Submit hunt"
+        },
+        "AlertDeleteChest": {
+          "trigger": "Delete",
+          "title": "Do you really want to delete this chest?",
+          "description": "Action cannot be undone.",
+          "cancel": "Cancel",
+          "confirm": "Delete"
+        },
+        "AlertDeleteHunt": {
+          "title": "Do you really want to delete this hunt?",
+          "description": "Action cannot be undone.",
+          "cancel": "Cancel",
+          "confirm": "Delete"
+        }
+      }
     }
   }
 }

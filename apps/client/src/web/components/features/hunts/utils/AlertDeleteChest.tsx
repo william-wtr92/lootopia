@@ -11,6 +11,7 @@ import {
   AlertDialogAction,
   Button,
 } from "@lootopia/ui"
+import { useTranslations } from "next-intl"
 
 type Props = {
   chest: ChestSchema
@@ -18,25 +19,25 @@ type Props = {
 }
 
 const AlertDeleteChest = ({ chest, onDelete }: Props) => {
+  const t = useTranslations("Components.Hunts.Utils.AlertDeleteChest")
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">Supprimer</Button>
+        <Button variant="destructive">{t("trigger")}</Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="bg-primaryBg text-primary">
         <AlertDialogHeader>
-          <AlertDialogTitle>Supprimer ce coffre ?</AlertDialogTitle>
-          <AlertDialogDescription>
-            Cette action est irréversible.
-          </AlertDialogDescription>
+          <AlertDialogTitle>{t("title")}</AlertDialogTitle>
+          <AlertDialogDescription>{t("description")}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Annuler</AlertDialogCancel>
+          <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
           <AlertDialogAction
             onClick={() => onDelete(chest.id)}
             className="bg-error text-white"
           >
-            Continuer
+            {t("confirm")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

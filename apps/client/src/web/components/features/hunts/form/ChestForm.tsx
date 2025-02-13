@@ -14,6 +14,7 @@ import {
   Switch,
   Textarea,
 } from "@lootopia/ui"
+import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { v4 as uuid } from "uuid"
 
@@ -23,6 +24,8 @@ type ChestFormProps = {
 }
 
 const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
+  const t = useTranslations("Components.Hunts.Form.ChestForm")
+
   const form = useForm<ChestSchema>({
     resolver: zodResolver(chestSchema),
     mode: "onBlur",
@@ -53,69 +56,86 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel>{t("description.label")}</FormLabel>
               <FormControl>
                 <Textarea
                   {...field}
-                  placeholder="Décrivez le contenu et l'emplacement du coffre"
+                  placeholder={t("description.placeholder")}
                 />
               </FormControl>
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="reward"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Récompense</FormLabel>
+              <FormLabel>{t("reward.label")}</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="Décrivez la récompense" />
+                <Input {...field} placeholder={t("reward.placeholder")} />
               </FormControl>
               <FormMessage className="text-error">
-                {errors.reward ? "Veuillez ajouter une récompense" : null}
+                {errors.reward ? t("reward.error") : null}
               </FormMessage>
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="size"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Taille du coffre</FormLabel>
+              <FormLabel>{t("size.label")}</FormLabel>
               <FormControl>
-                <Input {...field} type="number" min={1} max={100} />
+                <Input
+                  {...field}
+                  type="number"
+                  min={1}
+                  max={100}
+                  value={field.value}
+                  onChange={(e) => field.onChange(Number(e.target.value) || 80)}
+                />
               </FormControl>
-              <FormDescription>Taille du coffre (1-100)</FormDescription>
+              <FormDescription>{t("size.description")}</FormDescription>
               <FormMessage className="text-error">
-                {errors.size ? "Le coffre doit avoir une taille valide" : null}
+                {errors.size ? t("size.error") : null}
               </FormMessage>
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="maxUsers"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nombre maximum d'utilisateurs</FormLabel>
+              <FormLabel>{t("maxUsers.label")}</FormLabel>
               <FormControl>
-                <Input {...field} type="number" min={1} />
+                <Input
+                  {...field}
+                  type="number"
+                  min={1}
+                  value={field.value}
+                  onChange={(e) => field.onChange(Number(e.target.value) || 1)}
+                />
               </FormControl>
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="visibility"
           render={({ field }) => (
             <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
               <div className="space-y-0.5">
-                <FormLabel className="text-base">Visibilité</FormLabel>
-                <FormDescription>
-                  Rendre le coffre visible pour tous les utilisateurs
-                </FormDescription>
+                <FormLabel className="text-base">
+                  {t("visibility.label")}
+                </FormLabel>
+                <FormDescription>{t("visibility.description")}</FormDescription>
               </div>
               <FormControl>
                 <Switch
@@ -126,12 +146,13 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
             </FormItem>
           )}
         />
+
         <Button
           disabled={!form.formState.isValid}
           type="submit"
           className="text-primary bg-accent hover:bg-accent-hover w-full"
         >
-          Valider
+          {t("submit")}
         </Button>
       </form>
     </Form>

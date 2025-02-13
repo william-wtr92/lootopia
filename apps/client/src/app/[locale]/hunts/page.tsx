@@ -2,6 +2,7 @@
 
 import { Button, Card, CardContent, CardHeader, CardTitle } from "@lootopia/ui"
 import { SquarePen } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useEffect } from "react"
 
 import { Link } from "@client/i18n/routing"
@@ -10,6 +11,7 @@ import AlertDeleteHunt from "@client/web/components/features/hunts/utils/AlertDe
 import { useHuntStore } from "@client/web/store/useHuntStore"
 
 const HuntListPage = () => {
+  const t = useTranslations("Pages.Hunts.List")
   const { hunts, removeHunt, setActiveHunt, activeHuntId } = useHuntStore()
   const huntsArray = Object.entries(hunts)
 
@@ -28,13 +30,13 @@ const HuntListPage = () => {
       <Card className="border-primary bg-primaryBg z-0 w-2/5 opacity-95">
         <CardHeader className="text-center">
           <CardTitle className="text-primary text-3xl font-bold">
-            Chasses brouillons
+            {t("title")}
           </CardTitle>
         </CardHeader>
         <CardContent>
           {huntsArray.length === 0 ? (
             <p className="text-primary flex h-96 items-center justify-center text-center text-lg font-semibold">
-              Aucune chasse enregistrée en brouillon, créez-en une !
+              {t("empty")}
             </p>
           ) : (
             <ul className="text-primary flex h-96 flex-col gap-2 overflow-auto">
@@ -66,7 +68,7 @@ const HuntListPage = () => {
           )}
           <Link href={routes.hunts.create}>
             <Button className="text-primary bg-accent hover:bg-accent-hover mt-6 w-full">
-              Créer une chasse
+              {t("cta.create")}
             </Button>
           </Link>
         </CardContent>

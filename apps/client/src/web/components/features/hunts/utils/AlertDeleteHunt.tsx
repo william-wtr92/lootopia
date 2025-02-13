@@ -10,6 +10,7 @@ import {
   AlertDialogAction,
 } from "@lootopia/ui"
 import { X } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 type Props = {
   huntId: string
@@ -17,6 +18,8 @@ type Props = {
 }
 
 const AlertDeleteHunt = ({ huntId, onDelete }: Props) => {
+  const t = useTranslations("Components.Hunts.Utils.AlertDeleteHunt")
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -24,18 +27,16 @@ const AlertDeleteHunt = ({ huntId, onDelete }: Props) => {
       </AlertDialogTrigger>
       <AlertDialogContent className="bg-primaryBg text-primary">
         <AlertDialogHeader>
-          <AlertDialogTitle>Supprimer cette chasse ?</AlertDialogTitle>
-          <AlertDialogDescription>
-            Cette action est irréversible.
-          </AlertDialogDescription>
+          <AlertDialogTitle>{t("title")}</AlertDialogTitle>
+          <AlertDialogDescription>{t("description")}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Annuler</AlertDialogCancel>
+          <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
           <AlertDialogAction
             onClick={() => onDelete(huntId)}
             className="bg-error text-white"
           >
-            Continuer
+            {t("confirm")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

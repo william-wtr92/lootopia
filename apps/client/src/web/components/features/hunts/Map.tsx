@@ -1,5 +1,6 @@
 import type { ChestSchema, PositionCords } from "@lootopia/common"
 import dynamic from "next/dynamic"
+import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 
 import MapEvents from "./MapEvents"
@@ -39,6 +40,8 @@ type Props = {
 }
 
 const Map = ({ map, setMap, chests }: Props) => {
+  const t = useTranslations("Components.Hunts.Map")
+
   const {
     activeHuntId,
     position,
@@ -62,6 +65,12 @@ const Map = ({ map, setMap, chests }: Props) => {
       removeChest(activeHuntId, chestId)
       setCurrentChest(null)
       setIsSheetOpen(false)
+    }
+  }
+
+  const handleRecenter = () => {
+    if (map) {
+      map.flyTo(position, 16, { duration: 2 })
     }
   }
 
@@ -111,7 +120,7 @@ const Map = ({ map, setMap, chests }: Props) => {
   }, [chests])
 
   if (!L || !customMarker || !chestMarker) {
-    return <p className="mt-4 text-center">Chargement de la carte...</p>
+    return <p className="mt-4 text-center">{t("loading")}</p>
   }
 
   return (
@@ -133,12 +142,12 @@ const Map = ({ map, setMap, chests }: Props) => {
           L={L}
           map={map}
           position="bottomleft"
-          onRecenter={() => map.flyTo(position, 16, { duration: 2 })}
+          onRecenter={handleRecenter}
         />
       )}
 
       <Marker position={position} icon={customMarker}>
-        <Popup>Point névralgique de la chasse</Popup>
+        <Popup>{t("marker")}</Popup>
       </Marker>
 
       {chests.map((chest) => (

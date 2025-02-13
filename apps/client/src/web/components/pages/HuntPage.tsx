@@ -21,9 +21,11 @@ import {
   toast,
 } from "@lootopia/ui"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 
 import { Link } from "@client/i18n/routing"
+import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
 import { routes } from "@client/utils/routes"
 import ChestForm from "@client/web/components/features/hunts/form/ChestForm"
 import HuntForm from "@client/web/components/features/hunts/form/HuntForm"
@@ -38,6 +40,7 @@ type Props = {
 }
 
 const HuntPage = ({ huntId }: Props) => {
+  const t = useTranslations("Pages.Hunts.Create")
   const {
     activeHuntId,
     hunts,
@@ -112,7 +115,7 @@ const HuntPage = ({ huntId }: Props) => {
     if (!huntWithChests) {
       toast({
         variant: "destructive",
-        description: "Erreur : chasse non trouvée",
+        description: t("notFound"),
       })
 
       return
@@ -128,12 +131,12 @@ const HuntPage = ({ huntId }: Props) => {
       chests: chestsWithoutId,
     }
 
-    const [status] = await createFullHunt(payload)
+    const [status, keys] = await createFullHunt(payload)
 
     if (!status) {
       toast({
         variant: "destructive",
-        description: "Erreur lors de l'enregistrement",
+        description: translateDynamicKey(t, `errors.${keys}`),
       })
 
       return
@@ -141,7 +144,7 @@ const HuntPage = ({ huntId }: Props) => {
 
     toast({
       variant: "default",
-      description: "Succès",
+      description: t("success"),
     })
 
     router.push(routes.hunts.list)
@@ -160,24 +163,26 @@ const HuntPage = ({ huntId }: Props) => {
         className="relative z-50"
       >
         <TabsList className="text-primary bg-primaryBg z-20 mx-auto grid w-2/5 grid-cols-2 rounded-lg border shadow-md">
-          <TabsTrigger value="hunt">Hunt</TabsTrigger>
+          <TabsTrigger value="hunt">{t("tabs.triggers.hunt")}</TabsTrigger>
           <TabsTrigger value="chests" disabled={!isHuntCreated}>
-            Chests
+            {t("tabs.triggers.chests")}
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="hunt">
           <Card className="border-primary bg-primaryBg z-0 mx-auto mt-6 w-2/5 p-4 opacity-95">
             <CardTitle className="text-primary text-center text-3xl font-bold">
-              Créer une chasse
+              {t("tabs.content.title")}
             </CardTitle>
             <CardContent className="mt-6">
               <HuntForm onSubmit={handleHuntSubmit} />
             </CardContent>
             <CardFooter className="text-primary flex justify-center gap-1 text-sm">
-              Retourner à la liste des chasses
+              {t("tabs.content.link")}
               <Link href={routes.hunts.list}>
-                <span className="text-secondary font-semibold">ici</span>
+                <span className="text-secondary font-semibold">
+                  {t("tabs.content.here")}
+                </span>
               </Link>
             </CardFooter>
           </Card>
@@ -203,10 +208,8 @@ const HuntPage = ({ huntId }: Props) => {
           <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetContent className="bg-primaryBg text-primary">
               <SheetHeader>
-                <SheetTitle>Ajouter un coffre</SheetTitle>
-                <SheetDescription>
-                  Décrivez le contenu et l'emplacement du coffre.
-                </SheetDescription>
+                <SheetTitle>{t("sheet.title")}</SheetTitle>
+                <SheetDescription>{t("sheet.description")}</SheetDescription>
               </SheetHeader>
               <ChestForm
                 initialData={currentChest}

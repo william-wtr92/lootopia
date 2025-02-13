@@ -1,4 +1,5 @@
 import { Button } from "@lootopia/ui"
+import { useTranslations } from "next-intl"
 
 type Props = {
   handleDraftSave: () => void
@@ -11,6 +12,8 @@ const ActionsButton = ({
   handleSubmitAll,
   isValid,
 }: Props) => {
+  const t = useTranslations("Components.Hunts.Utils.ActionsButton")
+
   return (
     <div className="absolute bottom-5 left-1/2 z-[20] flex -translate-x-1/2 gap-4">
       <Button
@@ -18,14 +21,14 @@ const ActionsButton = ({
         disabled={!isValid}
         className="text-primary bg-primaryBg w-48"
       >
-        Enregister en brouillon
+        {t("saveDraft")}
       </Button>
       <Button
         onClick={handleSubmitAll}
         disabled={!isValid}
         className="text-primary bg-accent hover:bg-accentHover w-48"
       >
-        Valider la création
+        {t("submit")}
       </Button>
     </div>
   )

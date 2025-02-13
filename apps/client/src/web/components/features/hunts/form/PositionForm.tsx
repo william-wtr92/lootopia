@@ -6,9 +6,9 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormMessage,
   Input,
 } from "@lootopia/ui"
+import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 
 type Props = {
@@ -16,9 +16,10 @@ type Props = {
 }
 
 const PositionForm = ({ onSubmit }: Props) => {
+  const t = useTranslations("Components.Hunts.Form.PositionForm")
+
   const form = useForm<PositionSchema>({
     resolver: zodResolver(positionSchema),
-    mode: "onBlur",
     defaultValues: {
       lat: "",
       lng: "",
@@ -44,11 +45,10 @@ const PositionForm = ({ onSubmit }: Props) => {
                 <Input
                   {...field}
                   type="text"
-                  placeholder="Latitude"
+                  placeholder={t("lat.placeholder")}
                   className="w-24"
                 />
               </FormControl>
-              <FormMessage />
             </FormItem>
           )}
         />
@@ -62,20 +62,20 @@ const PositionForm = ({ onSubmit }: Props) => {
                 <Input
                   {...field}
                   type="text"
-                  placeholder="Longitude"
+                  placeholder={t("lng.placeholder")}
                   className="w-24"
                 />
               </FormControl>
-              <FormMessage />
             </FormItem>
           )}
         />
+
         <Button
           type="submit"
           className="text-primary bg-accent hover:bg-accent-hover w-auto"
           disabled={!form.formState.isValid}
         >
-          Centrer la carte
+          {t("submit")}
         </Button>
       </form>
     </Form>
