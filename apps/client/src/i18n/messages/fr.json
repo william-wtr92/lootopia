@@ -254,10 +254,10 @@
             "description": "Laisser vide signifie que la chasse est",
             "bold": "illimitée."
           },
-          "visibility": {
-            "description": "Visibilité de la chasse : {status}",
-            "public": "Publique",
-            "private": "Privée"
+          "mode": {
+            "description": "Visibility of the hunt :",
+            "public": "Public",
+            "private": "Private"
           },
           "submit": {
             "update": "Modifier la chasse",
