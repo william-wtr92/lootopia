@@ -7,7 +7,7 @@ const updateUser = async (data: UpdateSchema) => {
     form: data,
   })
 
-  if (response.status === 200) {
+  if (response.ok) {
     const { result } = await response.json()
 
     return result

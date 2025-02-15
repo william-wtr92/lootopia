@@ -4,10 +4,12 @@ import type { JWTPayload } from "hono/utils/jwt/types"
 
 import { now } from "./times"
 
-export type CustomPayload = {
+export type DecodedToken = {
   payload: {
     user: {
+      id: string
       email: string
+      name: string
     }
   }
 }

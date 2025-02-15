@@ -17,9 +17,8 @@ import {
 import { selectUserByEmail } from "@server/features/users/repository/select"
 import { updateEmailValidation } from "@server/features/users/repository/update"
 import { redis } from "@server/utils/clients/redis"
-import { redisKeys } from "@server/utils/constants/redisKeys"
 import { JwtError } from "@server/utils/errors/jwt"
-import { decodeJwt, type CustomPayload } from "@server/utils/helpers/jwt"
+import { decodeJwt, type DecodedToken } from "@server/utils/helpers/jwt"
 import { mailBuilder, sendMail } from "@server/utils/helpers/mail"
 import {
   now,
@@ -27,6 +26,7 @@ import {
   oneHourTTL,
   tenMinutesTTL,
 } from "@server/utils/helpers/times"
+import { redisKeys } from "@server/utils/keys/redisKeys"
 import { Hono } from "hono"
 
 const app = new Hono()
@@ -50,7 +50,7 @@ export const emailValidationRoute = app
       }
 
       try {
-        const decodedToken = await decodeJwt<CustomPayload>(token)
+        const decodedToken = await decodeJwt<DecodedToken>(token)
         const email = decodedToken.payload.user.email
 
         const user = await selectUserByEmail(email)

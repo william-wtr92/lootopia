@@ -167,6 +167,7 @@
         "nextTrophy": "Next trophy"
       },
       "editModal": {
+        "title": "Edit your profile",
         "avatar": {
           "label": "Avatar",
           "error": "Invalid image"
@@ -194,7 +195,8 @@
         "confirmPassword": {
           "label": "Password confirmation",
           "error": "Passwords do not match"
-        }
+        },
+        "save": "Save modifications"
       },
       "cta": {
         "editProfile": "Edit my profile",

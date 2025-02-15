@@ -1,3 +1,5 @@
+import { env } from "@client/env"
+
 export const config = {
-  blobUrl: "http://localhost:10000/devstoreaccount1/lootopia",
+  blobUrl: env.NEXT_PUBLIC_AZURE_BLOB_URL,
 }

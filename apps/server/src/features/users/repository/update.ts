@@ -8,21 +8,19 @@ export const updateUser = async (
   avatarUrl: string,
   [passwordHash, passwordSalt]: string[]
 ) => {
-  await db.transaction(async (tx) => {
-    await tx
-      .update(users)
-      .set({
-        avatar: avatarUrl,
-        nickname: data.nickname,
-        email: data.email,
-        phone: data.phone,
-        birthdate: new Date(data.birthdate!),
-        passwordHash,
-        passwordSalt,
-        updatedAt: new Date(),
-      })
-      .where(eq(users.email, data.email))
-  })
+  await db
+    .update(users)
+    .set({
+      avatar: avatarUrl,
+      nickname: data.nickname,
+      email: data.email,
+      phone: data.phone,
+      birthdate: new Date(data.birthdate!),
+      passwordHash,
+      passwordSalt,
+      updatedAt: new Date(),
+    })
+    .where(eq(users.email, data.email))
 }
 
 export const updateEmailValidation = async (email: string) => {

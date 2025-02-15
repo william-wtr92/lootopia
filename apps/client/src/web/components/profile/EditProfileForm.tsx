@@ -110,7 +110,9 @@ const EditProfileForm = (props: Props) => {
 
       <DialogContent className="text-primary" size="xl">
         <DialogHeader>
-          <DialogTitle className="text-center">Éditer son profil</DialogTitle>
+          <DialogTitle className="text-center">
+            {t("editModal.title")}
+          </DialogTitle>
           <Form {...form}>
             <form
               className="flex flex-col gap-3 pt-6"
@@ -286,7 +288,7 @@ const EditProfileForm = (props: Props) => {
                 variant="secondary"
                 type="submit"
               >
-                <Save className="mr-2 h-4 w-4" /> Sauvegarder les modifications
+                <Save className="mr-2 h-4 w-4" /> {t("editModal.save")}
               </Button>
             </form>
           </Form>

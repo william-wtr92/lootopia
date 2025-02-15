@@ -1,52 +1,60 @@
 import { SC } from "@lootopia/common"
-import { tokenNotProvided, userNotFound } from "@server/features/users"
+import { tokenNotProvided } from "@server/features/global"
+import { sanitizeUser, userNotFound } from "@server/features/users"
 import { selectUserByEmail } from "@server/features/users/repository/select"
-import type { DecodedToken } from "@server/features/users/types"
 import { redis } from "@server/utils/clients/redis"
+import { JwtError } from "@server/utils/errors/jwt"
 import { getCookie } from "@server/utils/helpers/cookie"
-import { decodeJwt } from "@server/utils/helpers/jwt"
+import { decodeJwt, type DecodedToken } from "@server/utils/helpers/jwt"
+import { oneDayTTL } from "@server/utils/helpers/times"
 import { contextKeys } from "@server/utils/keys/contextKeys"
 import { cookiesKeys } from "@server/utils/keys/cookiesKeys"
 import { redisKeys } from "@server/utils/keys/redisKeys"
-import type { MiddlewareHandler } from "hono"
-import { createFactory, type Factory } from "hono/factory"
+import { createFactory } from "hono/factory"
 
-const factory: Factory = createFactory()
+const factory = createFactory()
 
-export const auth: MiddlewareHandler = factory.createMiddleware(
-  async (c, next) => {
-    const authToken = await getCookie(c, cookiesKeys.auth.session)
+export const auth = factory.createMiddleware(async (c, next) => {
+  const authToken = await getCookie(c, cookiesKeys.auth.session)
 
-    if (!authToken) {
-      return c.json(tokenNotProvided, SC.errors.UNAUTHORIZED)
-    }
+  if (!authToken) {
+    return c.json(tokenNotProvided, SC.errors.UNAUTHORIZED)
+  }
 
-    try {
-      const decodedToken = (await decodeJwt(authToken)) as DecodedToken
+  try {
+    const decodedToken = await decodeJwt<DecodedToken>(authToken)
 
-      if (decodedToken) {
-        const userEmail = decodedToken.payload.user.email
+    if (decodedToken) {
+      const userEmail = decodedToken.payload.user.email
 
-        const redisKey = redisKeys.session(userEmail)
-        const userCached = await redis.get(redisKey)
+      const redisKey = redisKeys.session(userEmail)
+      const userCached = await redis.get(redisKey)
 
-        const user = userCached
-          ? JSON.parse(userCached)
-          : await selectUserByEmail(userEmail)
+      const user = userCached
+        ? JSON.parse(userCached)
+        : await selectUserByEmail(userEmail)
 
-        if (!user) {
-          return c.json(userNotFound, SC.errors.NOT_FOUND)
-        }
-
-        c.set(contextKeys.loggedUserEmail, userEmail)
-
-        await next()
+      if (!user) {
+        return c.json(userNotFound, SC.errors.NOT_FOUND)
       }
 
-      return c.json(tokenNotProvided, SC.errors.UNAUTHORIZED)
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (e: any) {
-      throw c.json(tokenNotProvided, SC.errors.UNAUTHORIZED)
+      if (!userCached) {
+        const sanitizedUser = sanitizeUser(user)
+        await redis.set(
+          redisKey,
+          JSON.stringify(sanitizedUser),
+          "EX",
+          oneDayTTL
+        )
+      }
+
+      c.set(contextKeys.loggedUserEmail, user.email)
+
+      await next()
     }
+
+    return c.json(tokenNotProvided, SC.errors.UNAUTHORIZED)
+  } catch (error) {
+    throw JwtError(error)
   }
-)
+})
