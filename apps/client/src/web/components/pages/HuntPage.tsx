@@ -18,7 +18,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-  toast,
+  useToast,
 } from "@lootopia/ui"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
@@ -55,6 +55,7 @@ const HuntPage = ({ huntId }: Props) => {
     setCurrentChest,
     setActiveHunt,
   } = useHuntStore()
+  const { toast } = useToast()
   const router = useRouter()
 
   const [map, setMap] = useState<L.Map | null>(null)

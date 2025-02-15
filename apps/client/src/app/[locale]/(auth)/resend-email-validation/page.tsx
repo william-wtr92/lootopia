@@ -18,7 +18,7 @@ import {
   FormLabel,
   FormMessage,
   Input,
-  toast,
+  useToast,
 } from "@lootopia/ui"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
@@ -30,6 +30,7 @@ import { resendEmailValidation } from "@client/web/services/auth/resendEmailVali
 
 const ResendEmailValidationPage = () => {
   const t = useTranslations("Pages.Auth.ResendEmailValidation")
+  const { toast } = useToast()
   const router = useRouter()
 
   const form = useForm<ResendEmailValidationSchema>({

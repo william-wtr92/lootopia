@@ -6,7 +6,7 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-  toast,
+  useToast,
 } from "@lootopia/ui"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
@@ -19,6 +19,7 @@ import { emailValidation } from "@client/web/services/auth/emailValidation"
 
 const EmailValidationPage = () => {
   const t = useTranslations("Pages.Auth.EmailValidation")
+  const { toast } = useToast()
   const router = useRouter()
 
   const [token] = useQueryState("token")
