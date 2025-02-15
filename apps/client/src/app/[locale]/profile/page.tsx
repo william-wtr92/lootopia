@@ -126,17 +126,17 @@ const ProfilePage = () => {
                   <span className="text-primary">
                     {t("statistics.treasuresFound")}
                   </span>
-                  <span className="text-accent font-bold">42</span>
+                  <span className="text-primary font-bold">42</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-primary">
                     {t("statistics.challengesCompleted")}
                   </span>
-                  <span className="text-accent font-bold">15</span>
+                  <span className="text-primary font-bold">15</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-primary">{t("statistics.xp")}</span>
-                  <span className="text-accent font-bold">1337</span>
+                  <span className="text-primary font-bold">1337</span>
                 </div>
               </div>
             </CardContent>
@@ -158,7 +158,7 @@ const ProfilePage = () => {
                     <span className="text-primary">
                       {t("progress.currentLevel")}
                     </span>
-                    <span className="text-accent font-bold">7</span>
+                    <span className="text-primary font-bold">7</span>
                   </div>
                   <Progress value={70} className="bg-secondaryBg h-2" />
                 </div>
@@ -168,7 +168,7 @@ const ProfilePage = () => {
                     <span className="text-primary">
                       {t("progress.nextTrophy")}
                     </span>
-                    <span className="text-accent font-bold">3/5</span>
+                    <span className="text-primary font-bold">3/5</span>
                   </div>
                   <Progress value={60} className="bg-secondaryBg h-2" />
                 </div>

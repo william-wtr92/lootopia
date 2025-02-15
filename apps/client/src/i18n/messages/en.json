@@ -168,6 +168,9 @@
       },
       "editModal": {
         "title": "Edit your profile",
+        "passwordValidationCheckTitle": "Confirm modifications",
+        "save": "Save modifications",
+        "confirm": "Confirm",
         "avatar": {
           "label": "Avatar",
           "error": "Invalid image"
@@ -195,8 +198,10 @@
         "confirmPassword": {
           "label": "Password confirmation",
           "error": "Passwords do not match"
-        },
-        "save": "Save modifications"
+        }
+      },
+      "errors": {
+        "incorrectPassword": "Incorrect password"
       },
       "cta": {
         "editProfile": "Edit my profile",

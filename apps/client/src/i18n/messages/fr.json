@@ -164,6 +164,9 @@
       },
       "editModal": {
         "title": "Éditer mon profil",
+        "passwordValidationCheckTitle": "Confirmer les modifications",
+        "save": "Sauvegarder les modifications",
+        "confirm": "Confirmer",
         "avatar": {
           "label": "Avatar",
           "error": "Image invalide"
@@ -191,8 +194,10 @@
         "confirmPassword": {
           "label": "Confirmer le mot de passe",
           "error": "Les mots de passe ne correspondent pas"
-        },
-        "save": "Sauvegarder les modifications"
+        }        
+      },
+      "errors": {
+        "incorrectPassword": "Mot de passe incorrect"
       },
       "cta": {
         "editProfile": "Éditer mon profil",
