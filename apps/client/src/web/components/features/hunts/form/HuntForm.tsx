@@ -37,6 +37,7 @@ const HuntForm = ({ onSubmit }: Props) => {
     defaultValues: {
       name: activeHunt?.name ?? "",
       description: activeHunt?.description ?? "",
+      startDate: activeHunt?.startDate ?? "",
       endDate: activeHunt?.endDate ?? "",
       maxParticipants: activeHunt?.maxParticipants ?? undefined,
       mode: activeHunt?.mode ?? true,
@@ -52,6 +53,18 @@ const HuntForm = ({ onSubmit }: Props) => {
       form.reset(activeHunt)
     }
   }, [activeHunt, form, form.reset])
+
+  const today = new Date(new Date().setHours(0, 0, 0, 0))
+
+  const handleResetEndDate = () => {
+    form.setValue("endDate", "")
+  }
+
+  const handleChangeMinEndDate = () => {
+    return form.watch("startDate")
+      ? new Date(form.watch("startDate"))
+      : new Date()
+  }
 
   return (
     <Form {...form}>
@@ -101,6 +114,31 @@ const HuntForm = ({ onSubmit }: Props) => {
 
         <FormField
           control={form.control}
+          name="startDate"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Start date</FormLabel>
+              <FormControl>
+                <DatePicker
+                  placeholder="Start date"
+                  className="text-primary border-primary bg-primaryBg w-full"
+                  value={field.value ? new Date(field.value) : undefined}
+                  onChange={(selectedDate) => {
+                    field.onChange(selectedDate || "")
+                    handleResetEndDate()
+                  }}
+                  minDate={today}
+                />
+              </FormControl>
+              <FormMessage className="text-error">
+                {errors.startDate ? "Error start date" : null}
+              </FormMessage>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="endDate"
           render={({ field }) => (
             <FormItem className="flex flex-col">
@@ -109,9 +147,11 @@ const HuntForm = ({ onSubmit }: Props) => {
                 <DatePicker
                   placeholder={t("endDate.placeholder")}
                   className="text-primary border-primary bg-primaryBg w-full"
+                  value={field.value ? new Date(field.value) : undefined}
                   onChange={(selectedDate) => {
-                    field.onChange(selectedDate?.toISOString() || "")
+                    field.onChange(selectedDate || "")
                   }}
+                  minDate={handleChangeMinEndDate()}
                 />
               </FormControl>
               <FormMessage className="text-error">

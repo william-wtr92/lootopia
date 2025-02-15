@@ -4,6 +4,9 @@ import { chestSchema } from "./chests"
 export const huntSchema = z.object({
   name: z.string().min(3),
   description: z.string().min(3),
+  startDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: "Start date must be a valid date.",
+  }),
   endDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
     message: "End date must be a valid date.",
   }),

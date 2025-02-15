@@ -254,8 +254,9 @@ const RegisterPage = () => {
                         placeholder={t("form.birthdate.placeholder")}
                         className="text-primary border-primary bg-primaryBg w-full"
                         onChange={(selectedDate) => {
-                          field.onChange(selectedDate?.toISOString() || "")
+                          field.onChange(selectedDate || "")
                         }}
+                        blockFutureDates={true}
                       />
                     </FormControl>
                     <FormMessage className="text-error">

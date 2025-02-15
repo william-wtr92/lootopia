@@ -9,12 +9,16 @@ export const insertHuntWithChests = async (
   const { hunt: huntData, chests: chestsData } = data
 
   return db.transaction(async (tx) => {
+    const startDate = new Date(huntData.startDate)
+    const endDate = new Date(huntData.endDate)
+
     const [huntInserted] = await tx
       .insert(hunts)
       .values({
         name: huntData.name,
         description: huntData.description,
-        endDate: new Date(huntData.endDate),
+        startDate,
+        endDate,
         mode: huntData.mode,
         maxParticipants: huntData.maxParticipants,
         organizerId,

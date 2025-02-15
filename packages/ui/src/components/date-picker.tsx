@@ -3,7 +3,7 @@
 
 import { format, getMonth, getYear, setMonth, setYear } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { Button } from "./button"
 import { Calendar } from "./calendar"
@@ -21,16 +21,19 @@ type DatePickerProps = {
   startYear?: number
   endYear?: number
   className?: string
-  onChange?: (date: Date | undefined) => void
+  value?: Date | string | undefined
+  onChange?: (date: string) => void
   months?: string[]
   placeholder?: string
   blockFutureDates?: boolean
+  minDate?: Date
 }
 
 export const DatePicker = ({
   startYear = getYear(new Date()) - 100,
   endYear = new Date().getFullYear(),
   className,
+  value,
   onChange,
   months = [
     "January",
@@ -48,6 +51,7 @@ export const DatePicker = ({
   ],
   placeholder = "Pick a date",
   blockFutureDates = false,
+  minDate,
 }: DatePickerProps) => {
   const [date, setDate] = useState<Date | undefined>()
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
@@ -68,17 +72,37 @@ export const DatePicker = ({
   }
 
   const handleSelect = (selectedDate: Date | undefined) => {
-    setDate(selectedDate)
+    if (selectedDate) {
+      const formattedDate = `${selectedDate.getFullYear()}-${String(
+        selectedDate.getMonth() + 1
+      ).padStart(2, "0")}-${String(selectedDate.getDate()).padStart(2, "0")}`
 
-    if (onChange) {
-      onChange(selectedDate)
+      setDate(selectedDate)
+
+      if (onChange) {
+        onChange(formattedDate)
+      }
+    } else {
+      setDate(undefined)
+
+      if (onChange) {
+        onChange("")
+      }
     }
 
     setIsPopoverOpen(false)
   }
-  const handleBlockFutureDates = (date: Date) => {
-    return blockFutureDates && date > new Date()
+
+  const handleDisabledDates = (date: Date): boolean => {
+    return (
+      (blockFutureDates && date > new Date()) ||
+      (minDate ? date < minDate : false)
+    )
   }
+
+  useEffect(() => {
+    setDate(value ? new Date(value) : undefined)
+  }, [value])
 
   return (
     <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
@@ -141,7 +165,7 @@ export const DatePicker = ({
           month={date}
           onMonthChange={(newDate) => setDate(newDate)}
           className={cn("text-white", "day-selected:text-white", className)}
-          disabled={handleBlockFutureDates}
+          disabled={handleDisabledDates}
           initialFocus
         />
       </PopoverContent>
