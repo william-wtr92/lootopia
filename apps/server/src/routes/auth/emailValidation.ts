@@ -16,7 +16,6 @@ import {
   selectUserByEmail,
 } from "@server/features/users"
 import { redis } from "@server/utils/clients/redis"
-import { redisKeys } from "@server/utils/constants/redisKeys"
 import { JwtError } from "@server/utils/errors/jwt"
 import { decodeJwt, type CustomPayload } from "@server/utils/helpers/jwt"
 import { mailBuilder, sendMail } from "@server/utils/helpers/mail"
@@ -26,6 +25,7 @@ import {
   oneHourTTL,
   tenMinutesTTL,
 } from "@server/utils/helpers/times"
+import { redisKeys } from "@server/utils/keys/redisKeys"
 import { Hono } from "hono"
 
 const app = new Hono()

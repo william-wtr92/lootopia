@@ -17,7 +17,6 @@ import {
 } from "@server/features/users"
 import { uploadImage } from "@server/utils/actions/azureActions"
 import { redis } from "@server/utils/clients/redis"
-import { redisKeys } from "@server/utils/constants/redisKeys"
 import {
   allowedMimeTypes,
   defaultMimeType,
@@ -26,6 +25,7 @@ import {
 import { mailBuilder, sendMail } from "@server/utils/helpers/mail"
 import { hashPassword } from "@server/utils/helpers/password"
 import { now, oneHour, oneHourTTL } from "@server/utils/helpers/times"
+import { redisKeys } from "@server/utils/keys/redisKeys"
 import { Hono } from "hono"
 import { bodyLimit } from "hono/body-limit"
 import mime from "mime"
