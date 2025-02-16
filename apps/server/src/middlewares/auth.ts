@@ -1,11 +1,15 @@
 import { SC } from "@lootopia/common"
 import { tokenNotProvided } from "@server/features/global"
-import { sanitizeUser, userNotFound } from "@server/features/users"
+import {
+  sanitizeUser,
+  userNotFound,
+  type DecodedToken,
+} from "@server/features/users"
 import { selectUserByEmail } from "@server/features/users/repository/select"
 import { redis } from "@server/utils/clients/redis"
 import { JwtError } from "@server/utils/errors/jwt"
 import { getCookie } from "@server/utils/helpers/cookie"
-import { decodeJwt, type DecodedToken } from "@server/utils/helpers/jwt"
+import { decodeJwt } from "@server/utils/helpers/jwt"
 import { oneDayTTL } from "@server/utils/helpers/times"
 import { contextKeys } from "@server/utils/keys/contextKeys"
 import { cookiesKeys } from "@server/utils/keys/cookiesKeys"

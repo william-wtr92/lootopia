@@ -14,9 +14,9 @@ import Image from "next/image"
 import { useTranslations } from "next-intl"
 import React from "react"
 
+import { config } from "@client/env"
 import EditProfileForm from "@client/web/components/profile/EditProfileForm"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
-import { config } from "@client/web/config"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import anim from "@client/web/utils/anim"
 

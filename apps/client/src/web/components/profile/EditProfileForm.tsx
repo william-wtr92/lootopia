@@ -30,8 +30,8 @@ import { useTranslations } from "next-intl"
 import React, { useRef, useState, type ChangeEvent } from "react"
 import { useForm } from "react-hook-form"
 
+import { config } from "@client/env"
 import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
-import { config } from "@client/web/config"
 import { login } from "@client/web/services/auth/login"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import updateUser from "@client/web/services/users/updateUser"
@@ -43,7 +43,7 @@ type Props = {
     id: string
     email: string
     nickname: string
-    birthDate: string
+    birthdate: string
     phone: string
     avatar: string | null
     role: Roles
@@ -70,7 +70,7 @@ const EditProfileForm = (props: Props) => {
       nickname: user?.nickname,
       email: user?.email,
       phone: user?.phone,
-      birthdate: user?.birthDate,
+      birthdate: user?.birthdate,
       password: "",
       confirmPassword: "",
     },
@@ -102,7 +102,15 @@ const EditProfileForm = (props: Props) => {
 
   const handleIsOpen = (open: boolean) => {
     setIsOpen(open)
-    setShowPasswordValidationStep(false)
+    handleShowPasswordValidationStep(false)
+  }
+
+  const handlePassword = (value: string) => {
+    setPassword(value)
+  }
+
+  const handleShowPasswordValidationStep = (value: boolean) => {
+    setShowPasswordValidationStep(value)
   }
 
   const validatePassword = async () => {
@@ -127,7 +135,7 @@ const EditProfileForm = (props: Props) => {
 
   const onSubmit = async (data: UpdateSchema) => {
     if (!showPasswordValidationStep) {
-      setShowPasswordValidationStep(true)
+      handleShowPasswordValidationStep(true)
 
       return
     }
@@ -140,7 +148,7 @@ const EditProfileForm = (props: Props) => {
 
     await updateUser(data)
 
-    setIsOpen(false)
+    handleIsOpen(false)
     refetch()
   }
 
@@ -350,7 +358,7 @@ const EditProfileForm = (props: Props) => {
                 <>
                   <ArrowLeft
                     className="absolute left-4 top-4 cursor-pointer"
-                    onClick={() => setShowPasswordValidationStep(false)}
+                    onClick={() => handleShowPasswordValidationStep(false)}
                   ></ArrowLeft>
 
                   <FormItem>
@@ -362,7 +370,7 @@ const EditProfileForm = (props: Props) => {
                         type="password"
                         className="border-primary focus:ring-secondary"
                         autoComplete="off"
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => handlePassword(e.target.value)}
                       />
                     </FormControl>
                   </FormItem>

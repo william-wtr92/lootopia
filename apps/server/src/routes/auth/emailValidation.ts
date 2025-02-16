@@ -13,12 +13,13 @@ import {
   emailValidationSuccess,
   userNotFound,
   waitBeforeResendAnotherEmail,
+  type DecodedToken,
 } from "@server/features/users"
 import { selectUserByEmail } from "@server/features/users/repository/select"
 import { updateEmailValidation } from "@server/features/users/repository/update"
 import { redis } from "@server/utils/clients/redis"
 import { JwtError } from "@server/utils/errors/jwt"
-import { decodeJwt, type DecodedToken } from "@server/utils/helpers/jwt"
+import { decodeJwt } from "@server/utils/helpers/jwt"
 import { mailBuilder, sendMail } from "@server/utils/helpers/mail"
 import {
   now,

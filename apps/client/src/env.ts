@@ -11,3 +11,7 @@ export const env = createEnv({
     NEXT_PUBLIC_AZURE_BLOB_URL: process.env.NEXT_PUBLIC_AZURE_BLOB_URL,
   },
 })
+
+export const config = {
+  blobUrl: env.NEXT_PUBLIC_AZURE_BLOB_URL,
+}
