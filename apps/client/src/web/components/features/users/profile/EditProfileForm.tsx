@@ -115,12 +115,12 @@ const EditProfileForm = (props: Props) => {
       password: password,
     }
 
-    const [status, errorKey] = await login(body)
+    const [status, key] = await login(body)
 
     if (!status) {
       toast({
         variant: "destructive",
-        description: translateDynamicKey(t, `errors.${errorKey}`),
+        description: translateDynamicKey(t, `errors.${key}`),
       })
 
       return false

@@ -76,12 +76,12 @@ const RegisterPage = () => {
   const onSubmit = async (data: RegisterSchema) => {
     const body = { ...data, avatar: form.getValues("avatar") || undefined }
 
-    const [status, keys] = await register(body)
+    const [status, key] = await register(body)
 
     if (!status) {
       toast({
         variant: "destructive",
-        description: translateDynamicKey(t, `errors.${keys}`),
+        description: translateDynamicKey(t, `errors.${key}`),
       })
 
       return

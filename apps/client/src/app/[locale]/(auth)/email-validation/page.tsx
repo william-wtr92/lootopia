@@ -29,12 +29,12 @@ const EmailValidationPage = () => {
       return
     }
 
-    const [status, keys] = await emailValidation({ token })
+    const [status, key] = await emailValidation({ token })
 
     if (!status) {
       toast({
         variant: "destructive",
-        description: translateDynamicKey(t, `errors.${keys}`),
+        description: translateDynamicKey(t, `errors.${key}`),
       })
 
       return

@@ -127,17 +127,17 @@ const HuntPage = ({ huntId }: Props) => {
       ({ id, ...chest }) => chest
     )
 
-    const payload = {
+    const body = {
       hunt: huntWithChests.hunt,
       chests: chestsWithoutId,
     }
 
-    const [status, keys] = await createFullHunt(payload)
+    const [status, key] = await createFullHunt(body)
 
     if (!status) {
       toast({
         variant: "destructive",
-        description: translateDynamicKey(t, `errors.${keys}`),
+        description: translateDynamicKey(t, `errors.${key}`),
       })
 
       return

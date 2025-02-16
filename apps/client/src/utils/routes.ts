@@ -16,6 +16,11 @@ export const routes = {
     id: (huntId: string) => `/hunts/${huntId}`,
     create: "/hunts/create",
   },
+  api: {
+    users: {
+      me: "users/me",
+    },
+  },
 } as const
 
 export const protectedRoutes = [

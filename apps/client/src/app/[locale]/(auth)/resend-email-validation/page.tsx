@@ -46,12 +46,12 @@ const ResendEmailValidationPage = () => {
   } = form
 
   const onSubmit = async (data: ResendEmailValidationSchema) => {
-    const [status, keys] = await resendEmailValidation(data)
+    const [status, key] = await resendEmailValidation(data)
 
     if (!status) {
       toast({
         variant: "destructive",
-        description: translateDynamicKey(t, `errors.${keys}`),
+        description: translateDynamicKey(t, `errors.${key}`),
       })
 
       return

@@ -174,7 +174,7 @@
         "success": "La chasse a été créée avec succès !"
       },
       "List": {
-        "title": "Chasses brouillons",
+        "title": "Brouillons des chasses",
         "empty": "Aucune chasse enregistrée en brouillon, créez-en une !",
         "cta": {
           "create": "Créer une chasse"
@@ -321,9 +321,9 @@
             "bold": "illimitée."
           },
           "mode": {
-            "description": "Visibility of the hunt :",
-            "public": "Public",
-            "private": "Private"
+            "description": "Visibilité de la chasse :",
+            "public": "Publique",
+            "private": "Privée"
           },
           "submit": {
             "update": "Modifier la chasse",

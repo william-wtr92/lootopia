@@ -156,7 +156,7 @@
     },
     "Hunts": {
       "Create": {
-        "notFound": "Not found hunt!",
+        "notFound": "Hunt not found!",
         "tabs": {
           "triggers": {
             "hunt": "Hunt",

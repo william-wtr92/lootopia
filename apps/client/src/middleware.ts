@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server"
 import createMiddleware from "next-intl/middleware"
 
 import { env } from "./env"
-import { userInfoEndpoint, authTokenName } from "./utils/def/constants"
+import { authTokenName } from "./utils/def/constants"
 import { protectedRoutes, routes } from "./utils/routes"
 import { locales, routing } from "@client/i18n/routing"
 
@@ -33,7 +33,7 @@ export default async function middleware(request: NextRequest) {
 
     try {
       const authResponse = await fetch(
-        env.NEXT_PUBLIC_MIDDLEWARE_API_URL + userInfoEndpoint,
+        env.NEXT_PUBLIC_MIDDLEWARE_API_URL + routes.api.users.me,
         {
           method: "GET",
           headers: {
