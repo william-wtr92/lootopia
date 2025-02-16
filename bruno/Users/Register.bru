@@ -1,0 +1,37 @@
+meta {
+  name: Register
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{localhost}}/auth/register
+  body: formUrlEncoded
+  auth: none
+}
+
+body:json {
+  {
+    "form": {
+      "avatar": "https://example.com/avatar.png",
+      "nickname": "JohnDoe",
+      "email": "johndoe@example.com",
+      "phone": "+33612345678",
+      "birthdate": "1995-06-15",
+      "password": "SecurePass123!",
+      "confirmPassword": "SecurePass123!",
+      "gdprValidated": true
+    }
+  }
+}
+
+body:form-urlencoded {
+  avatar: 
+  nickname: JohnDoe
+  email: johndoe%40example.com
+  phone: %2B33612345678
+  birthdate: 1995-06-15
+  password: SecurePass123!
+  confirmPassword: SecurePass123!
+  gdprValidated: true
+}

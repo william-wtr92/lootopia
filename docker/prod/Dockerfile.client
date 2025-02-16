@@ -7,6 +7,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 ARG NEXT_PUBLIC_API_URL
 ARG NEXT_PUBLIC_MIDDLEWARE_API_URL
+ARG NEXT_PUBLIC_AZURE_BLOB_URL
 
 # INFO: add corepack manual install due to the common bug with npm registry 
 RUN npm install -g corepack@0.31.0 && \

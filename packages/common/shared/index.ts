@@ -24,6 +24,12 @@ export {
 
 export { loginSchema, type LoginSchemaType } from "./users/auth/login"
 
+export {
+  updateSchema,
+  type UpdateSchema,
+  type UpdateUser,
+} from "./users/auth/update"
+
 // Hunts types
 
 export {

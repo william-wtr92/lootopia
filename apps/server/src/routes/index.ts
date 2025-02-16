@@ -5,6 +5,7 @@ import { emailValidationRoute } from "./auth/emailValidation"
 import { loginRoute } from "./auth/login"
 import { registerRoute } from "./auth/register"
 import { createHuntRoute } from "./hunts/create"
+import { profileRoute } from "./users/profile"
 
 const DEFAULT_PATH = "/" as const
 
@@ -15,7 +16,10 @@ const authRoutes = new Hono()
 
 const huntsRoutes = new Hono().use(auth).route(DEFAULT_PATH, createHuntRoute)
 
+const usersRoutes = new Hono().use(auth).route(DEFAULT_PATH, profileRoute)
+
 export const routes = {
   auth: authRoutes,
   hunts: huntsRoutes,
+  users: usersRoutes,
 }

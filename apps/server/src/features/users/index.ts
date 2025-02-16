@@ -5,4 +5,5 @@ export * from "./repository/select"
 export * from "./repository/update"
 
 export * from "./types"
-export * from "./dto/sanitizeUser"
+
+export * from "./dto"

@@ -1,2 +1,2 @@
 export const authTokenName = "auth-token" as const
-export const authEndpoint = "auth/me" as const
+export const userInfoEndpoint = "users/me" as const

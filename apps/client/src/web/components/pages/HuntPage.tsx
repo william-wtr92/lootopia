@@ -156,7 +156,7 @@ const HuntPage = ({ huntId }: Props) => {
   }
 
   return (
-    <div className="relative">
+    <main className="relative mb-20 items-center justify-center">
       <Tabs
         value={activeTab}
         onValueChange={setActiveTab}
@@ -220,7 +220,7 @@ const HuntPage = ({ huntId }: Props) => {
           </Sheet>
         </TabsContent>
       </Tabs>
-    </div>
+    </main>
   )
 }
 

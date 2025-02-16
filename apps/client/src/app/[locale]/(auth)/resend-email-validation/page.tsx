@@ -66,7 +66,7 @@ const ResendEmailValidationPage = () => {
   }
 
   return (
-    <div className="relative flex h-[75vh] items-center justify-center overflow-hidden">
+    <main className="relative flex flex-1 items-center justify-center">
       <Card className="border-primary bg-primaryBg opacity-9 z-0 w-2/5">
         <CardHeader className="text-center">
           <CardTitle className="text-primary text-3xl font-bold">
@@ -115,7 +115,7 @@ const ResendEmailValidationPage = () => {
           </Form>
         </CardContent>
       </Card>
-    </div>
+    </main>
   )
 }
 

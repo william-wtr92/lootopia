@@ -8,6 +8,9 @@ export const routes = {
     resendEmaiValidation: "/resend-email-validation",
     login: "/login",
   },
+  users: {
+    profile: "/profile",
+  },
   hunts: {
     list: "/hunts",
     id: (huntId: string) => `/hunts/${huntId}`,
@@ -18,4 +21,5 @@ export const routes = {
 export const protectedRoutes = [
   routes.hunts.list,
   routes.admin.dashboard,
+  routes.users.profile,
 ] as const

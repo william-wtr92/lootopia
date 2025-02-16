@@ -137,7 +137,7 @@ const RegisterPage = () => {
   }, [form])
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
+    <main className="relative mb-16 flex items-center justify-center">
       <Card className="border-primary bg-primaryBg z-0 w-2/5 opacity-95">
         <CardHeader className="text-center">
           <CardTitle className="text-primary text-3xl font-bold">
@@ -372,7 +372,7 @@ const RegisterPage = () => {
           </div>
         </CardFooter>
       </Card>
-    </div>
+    </main>
   )
 }
 

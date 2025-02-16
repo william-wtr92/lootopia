@@ -45,6 +45,7 @@ export const auth = factory.createMiddleware(async (c, next) => {
 
       if (!userCached) {
         const sanitizedUser = sanitizeUser(user, ["id"])
+
         await redis.set(
           redisKey,
           JSON.stringify(sanitizedUser),

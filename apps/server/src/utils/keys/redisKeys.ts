@@ -5,4 +5,4 @@ export const redisKeys = {
     emailValidationCooldown: (email: string) =>
       `auth:email-validation-cooldown:${email}`,
   },
-}
+} as const

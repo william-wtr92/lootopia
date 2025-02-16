@@ -42,6 +42,7 @@ app.onError((_, c) => {
 const appRouter = app
   .route(router.auth, routes.auth)
   .route(router.hunts, routes.hunts)
+  .route(router.users, routes.users)
 
 serve({
   fetch: app.fetch,

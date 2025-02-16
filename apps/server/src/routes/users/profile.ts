@@ -1,0 +1,122 @@
+import { zValidator } from "@hono/zod-validator"
+import { SC, updateSchema } from "@lootopia/common"
+import {
+  invalidExtension,
+  invalidImage,
+  nicknameAlreadyExists,
+  phoneAlreadyExists,
+  sanitizeUser,
+  updateSuccess,
+  userNotFound,
+} from "@server/features/users"
+import {
+  selectUserByEmail,
+  selectUserByNickname,
+  selectUserByPhone,
+} from "@server/features/users/repository/select"
+import { updateUser } from "@server/features/users/repository/update"
+import { uploadImage } from "@server/utils/actions/azureActions"
+import { redis } from "@server/utils/clients/redis"
+import { allowedMimeTypes, defaultMimeType } from "@server/utils/helpers/files"
+import { hashPassword } from "@server/utils/helpers/password"
+import { contextKeys } from "@server/utils/keys/contextKeys"
+import { redisKeys } from "@server/utils/keys/redisKeys"
+import { Hono } from "hono"
+import mime from "mime"
+
+const app = new Hono()
+
+export const profileRoute = app
+  .get("/me", async (c) => {
+    const email = c.get(contextKeys.loggedUserEmail)
+
+    const user = await selectUserByEmail(email)
+
+    if (!user) {
+      return c.json(userNotFound, SC.errors.NOT_FOUND)
+    }
+
+    return c.json({ result: sanitizeUser(user) }, SC.success.OK)
+  })
+  .put("/me", zValidator("form", updateSchema), async (c) => {
+    const body = c.req.valid("form")
+    const loggedUserEmail = c.get(contextKeys.loggedUserEmail)
+
+    const userToUpdate = await selectUserByEmail(loggedUserEmail)
+
+    if (!userToUpdate) {
+      return c.json(userNotFound, SC.errors.NOT_FOUND)
+    }
+
+    if (userToUpdate.nickname !== body.nickname) {
+      if (await selectUserByNickname(body.nickname)) {
+        return c.json(nicknameAlreadyExists, SC.errors.BAD_REQUEST)
+      }
+    }
+
+    if (userToUpdate.phone !== body.phone) {
+      if (await selectUserByPhone(body.phone)) {
+        return c.json(phoneAlreadyExists, SC.errors.BAD_REQUEST)
+      }
+    }
+
+    const [passwordHash, passwordSalt] =
+      body.password !== ""
+        ? await hashPassword(body.password)
+        : [userToUpdate.passwordHash, userToUpdate.passwordSalt]
+
+    let avatarUrl: string | null = null
+
+    if (body.avatar && typeof body.avatar !== "string") {
+      if (!(body.avatar instanceof File)) {
+        return c.json(invalidImage, SC.errors.BAD_REQUEST)
+      }
+
+      const mimeType = mime.getType(body.avatar.name) || defaultMimeType
+
+      if (!allowedMimeTypes.includes(mimeType)) {
+        return c.json(invalidExtension, SC.errors.BAD_REQUEST)
+      }
+
+      avatarUrl = await uploadImage(body.avatar, mimeType)
+    }
+
+    const newNickname =
+      userToUpdate.nickname === body.nickname
+        ? userToUpdate.nickname
+        : body.nickname
+
+    const newEmail =
+      userToUpdate.email === body.email ? userToUpdate.email : body.email
+
+    const newPhone =
+      userToUpdate.phone === body.phone ? userToUpdate.phone : body.phone
+
+    const newBirthdate =
+      userToUpdate.birthdate.toDateString() === body.birthdate
+        ? userToUpdate.birthdate.toDateString()
+        : body.birthdate
+
+    const newAvatar =
+      typeof body.avatar !== "string"
+        ? (avatarUrl as string)
+        : (userToUpdate.avatar as string)
+
+    await updateUser(
+      {
+        nickname: newNickname,
+        email: newEmail,
+        phone: newPhone,
+        birthdate: newBirthdate,
+      },
+      newAvatar,
+      [passwordHash, passwordSalt]
+    )
+
+    const redisKey = redisKeys.auth.session(loggedUserEmail)
+    await redis.del(redisKey)
+
+    return c.json(updateSuccess, SC.success.OK)
+  })
+
+export default app

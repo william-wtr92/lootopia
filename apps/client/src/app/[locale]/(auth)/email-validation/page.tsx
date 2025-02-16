@@ -49,7 +49,7 @@ const EmailValidationPage = () => {
   }
 
   return (
-    <div className="relative flex h-[75vh] items-center justify-center overflow-hidden">
+    <main className="relative flex flex-1 items-center justify-center">
       <Card className="text-primary border-primary bg-primaryBg z-0 flex h-72 w-2/5 flex-col items-center justify-center gap-6 opacity-95">
         <CardHeader>
           <CardTitle className="text-center text-3xl">
@@ -73,7 +73,7 @@ const EmailValidationPage = () => {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </main>
   )
 }
 

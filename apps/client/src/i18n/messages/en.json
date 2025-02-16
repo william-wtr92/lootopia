@@ -182,10 +182,69 @@
         "empty": "No hunt saved in draft, create one!",
         "cta": {
           "create": "Create a hunt"
-        } 
+        }
+      }
+    },
+    "Users": {
+      "Profile": {
+        "statistics": {
+          "title": "Statistics",
+          "treasuresFound": "Treasures found",
+          "challengesCompleted": "Challenges completed",
+          "xp": "Xp points"
+        },
+        "progress": {
+          "title": "Progress",
+          "currentLevel": "Current level",
+          "nextTrophy": "Next trophy"
+        },
+        "editModal": {
+          "title": "Edit your profile",
+          "passwordValidationCheckTitle": "Confirm modifications",
+          "save": "Save modifications",
+          "confirm": "Confirm",
+          "avatar": {
+            "label": "Avatar",
+            "error": "Invalid image"
+          },
+          "nickname": {
+            "label": "Nickname",
+            "error": "Invalid nickname"
+          },
+          "email": {
+            "label": "Email",
+            "error": "Invalid email"
+          },
+          "phone": {
+            "label": "Phone number",
+            "error": "Invalid phone number"
+          },
+          "birthdate": {
+            "label": "Birthdate",
+            "error": "Invalid birthdate"
+          },
+          "password": {
+            "label": "Password",
+            "error": "Invalid password"
+          },
+          "confirmPassword": {
+            "label": "Password confirmation",
+            "error": "Passwords do not match"
+          }
+        },
+        "errors": {
+          "incorrectPassword": "Incorrect password"
+        },
+        "cta": {
+          "editProfile": "Edit my profile",
+          "treasureMap": "Treasure map",
+          "trophies": "Trophies",
+          "leaderboard": "Leaderboard",
+          "settings": "Settings"
+        }
       }
     }
-  },
+  },  
   "Components": {
     "SelectLocale": {
        "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 Français} other {Unknown}}"
@@ -193,7 +252,9 @@
     "NavBar": {
       "title": "Lootopia",
       "register": "Register",
-      "login": "Login"
+      "login": "Login",
+      "profile": "Profile",
+      "hunts": "Hunts"
     },
     "Footer": {
       "content": "{year} Lootopia. All rights reserved."
