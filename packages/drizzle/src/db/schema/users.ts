@@ -35,5 +35,3 @@ export const users = pgTable(
     }
   }
 )
-
-export type User = typeof users.$inferSelect

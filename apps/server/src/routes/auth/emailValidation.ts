@@ -7,6 +7,7 @@ import {
 import appConfig from "@server/config"
 import { tokenExpired, tokenNotProvided } from "@server/features/global"
 import {
+  type DecodedToken,
   emailAlreadyValidated,
   emailValidationResendSuccess,
   emailValidationSuccess,
@@ -17,7 +18,7 @@ import {
 } from "@server/features/users"
 import { redis } from "@server/utils/clients/redis"
 import { JwtError } from "@server/utils/errors/jwt"
-import { decodeJwt, type CustomPayload } from "@server/utils/helpers/jwt"
+import { decodeJwt } from "@server/utils/helpers/jwt"
 import { mailBuilder, sendMail } from "@server/utils/helpers/mail"
 import {
   now,
@@ -49,7 +50,7 @@ export const emailValidationRoute = app
       }
 
       try {
-        const decodedToken = await decodeJwt<CustomPayload>(token)
+        const decodedToken = await decodeJwt<DecodedToken>(token)
         const email = decodedToken.payload.user.email
 
         const user = await selectUserByEmail(email)

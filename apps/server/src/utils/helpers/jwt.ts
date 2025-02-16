@@ -4,14 +4,6 @@ import type { JWTPayload } from "hono/utils/jwt/types"
 
 import { now } from "./times"
 
-export type CustomPayload = {
-  payload: {
-    user: {
-      email: string
-    }
-  }
-}
-
 export const signJwt = async <T extends object>(
   payload: T,
   expiration?: number

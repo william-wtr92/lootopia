@@ -1,12 +1,16 @@
 import { SC } from "@lootopia/common"
-import type { User } from "@lootopia/drizzle"
 import { tokenNotProvided } from "@server/features/global"
-import { userNotFound, selectUserByEmail } from "@server/features/users"
-import { sanitizeUser } from "@server/features/users/dto/sanitizeUser"
+import {
+  type User,
+  sanitizeUser,
+  userNotFound,
+  selectUserByEmail,
+  type DecodedToken,
+} from "@server/features/users"
 import { redis } from "@server/utils/clients/redis"
 import { JwtError } from "@server/utils/errors/jwt"
 import { getCookie } from "@server/utils/helpers/cookie"
-import { decodeJwt, type CustomPayload } from "@server/utils/helpers/jwt"
+import { decodeJwt } from "@server/utils/helpers/jwt"
 import { oneDayTTL } from "@server/utils/helpers/times"
 import { contextKeys } from "@server/utils/keys/contextKeys"
 import { cookiesKeys } from "@server/utils/keys/cookiesKeys"
@@ -23,7 +27,7 @@ export const auth = factory.createMiddleware(async (c, next) => {
   }
 
   try {
-    const decodedToken = await decodeJwt<CustomPayload>(authToken)
+    const decodedToken = await decodeJwt<DecodedToken>(authToken)
 
     if (decodedToken) {
       const userEmail = decodedToken.payload.user.email

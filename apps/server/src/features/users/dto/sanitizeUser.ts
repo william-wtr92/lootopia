@@ -1,6 +1,9 @@
-import type { User } from "@lootopia/drizzle"
+import type { User } from "@server/features/users/types"
 
-type AdditionalUserFields = Omit<User, "username" | "email">
+type AdditionalUserFields = Omit<
+  User,
+  "nickname" | "email" | "phone" | "birthdate"
+>
 
 export const sanitizeUser = <T extends keyof AdditionalUserFields>(
   user: User,
