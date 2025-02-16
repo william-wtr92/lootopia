@@ -1,0 +1,11 @@
+meta {
+  name: Get self user
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{localhost}}/users/me
+  body: none
+  auth: basic
+}

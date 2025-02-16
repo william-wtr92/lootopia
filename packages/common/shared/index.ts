@@ -21,3 +21,5 @@ export {
 } from "./users/auth/emailValidation"
 
 export { loginSchema, type LoginSchemaType } from "./users/auth/login"
+
+export { type UpdateSchema } from "./users/auth/update"

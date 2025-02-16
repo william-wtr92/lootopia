@@ -149,6 +149,63 @@
           "userNotFound": "Cet email n'existe pas"
         }
       }
+    },
+    "Profile": {
+      "statistics": {
+        "title": "Statistiques",
+        "treasuresFound": "Trésors trouvés",
+        "challengesCompleted": "Défis complétés",
+        "xp": "Points d'expérience"
+      },
+      "progress": {
+        "title": "Progression",
+        "currentLevel": "Niveau actuel",
+        "nextTrophy": "Prochain trophée"
+      },
+      "editModal": {
+        "title": "Éditer mon profil",
+        "passwordValidationCheckTitle": "Confirmer les modifications",
+        "save": "Sauvegarder les modifications",
+        "confirm": "Confirmer",
+        "avatar": {
+          "label": "Avatar",
+          "error": "Image invalide"
+        },
+        "nickname": {
+          "label": "Pseudo",
+          "error": "Pseudo invalide"
+        },
+        "email": {
+          "label": "Email",
+          "error": "Adresse e-mail invalide"
+        },
+        "phone": {
+          "label": "Numéro de téléphone",
+          "error": "Numéro de téléphone invalide"
+        },
+        "birthdate": {
+          "label": "Date de naissance",
+          "error": "Date de naissance invalide"
+        },
+        "password": {
+          "label": "Mot de passe",
+          "error": "Mot de passe invalide"
+        },
+        "confirmPassword": {
+          "label": "Confirmer le mot de passe",
+          "error": "Les mots de passe ne correspondent pas"
+        }        
+      },
+      "errors": {
+        "incorrectPassword": "Mot de passe incorrect"
+      },
+      "cta": {
+        "editProfile": "Éditer mon profil",
+        "treasureMap": "Carte des trésors",
+        "trophies": "Trophées",
+        "leaderboard": "Classement",
+        "settings": "Paramètres"
+      }
     }
   },
   "Components": {
@@ -158,7 +215,8 @@
     "NavBar": {
       "title": "Lootopia",
       "register": "S'inscrire",
-      "login": "Connexion"
+      "login": "Connexion",
+      "profile": "Profil"
     },
     "Footer": {
       "content": "{year} Lootopia. Tous droits réservés."

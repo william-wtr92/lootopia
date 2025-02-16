@@ -81,3 +81,8 @@ export const loginSuccess = {
   result: "You have successfully logged in.",
   key: "loginSuccess",
 } as const
+
+export const updateSuccess = {
+  result: "User updated successfully.",
+  key: "updateSuccess",
+} as const

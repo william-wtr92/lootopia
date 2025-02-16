@@ -18,6 +18,7 @@ import {
   Input,
   useToast,
 } from "@lootopia/ui"
+import { useQuery } from "@tanstack/react-query"
 import { Eye, EyeOff } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
@@ -28,11 +29,17 @@ import { Link } from "@client/i18n/routing"
 import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
 import { routes } from "@client/utils/routes"
 import { login } from "@client/web/services/auth/login"
+import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 
 const LoginPage = () => {
-  const { toast } = useToast()
   const router = useRouter()
   const t = useTranslations("Pages.Auth.Login")
+  const { toast } = useToast()
+
+  const { refetch: refreshLoggedUser } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => getUserLoggedIn(),
+  })
 
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
@@ -68,6 +75,8 @@ const LoginPage = () => {
       variant: "default",
       description: t("success"),
     })
+
+    refreshLoggedUser()
 
     router.push(routes.home)
   }
