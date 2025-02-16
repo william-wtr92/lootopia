@@ -242,6 +242,11 @@
             "placeholder": "Entrez une description pour la chasse",
             "error": "Description invalide"
           },
+          "startDate": {
+            "label": "Date de début",
+            "placeholder": "Choisissez la date de début",
+            "error": "Date de début invalide"
+          },
           "endDate": {
             "label": "Date de fin",
             "placeholder": "Choisissez la date de fin",

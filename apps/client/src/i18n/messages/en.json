@@ -246,6 +246,11 @@
             "placeholder": "Enter a description for the hunt",
             "error": "Invalid description"
           },
+          "startDate": {
+            "label": "Start date",
+            "placeholder": "Choose the start date",
+            "error": "Invalid start date"
+          },
           "endDate": {
             "label": "End date",
             "placeholder": "Choose the end date",

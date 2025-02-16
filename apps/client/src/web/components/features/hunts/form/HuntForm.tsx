@@ -117,10 +117,10 @@ const HuntForm = ({ onSubmit }: Props) => {
           name="startDate"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Start date</FormLabel>
+              <FormLabel>{t("startDate.label")}</FormLabel>
               <FormControl>
                 <DatePicker
-                  placeholder="Start date"
+                  placeholder={t("startDate.placeholder")}
                   className="text-primary border-primary bg-primaryBg w-full"
                   value={field.value ? new Date(field.value) : undefined}
                   onChange={(selectedDate) => {
@@ -131,7 +131,7 @@ const HuntForm = ({ onSubmit }: Props) => {
                 />
               </FormControl>
               <FormMessage className="text-error">
-                {errors.startDate ? "Error start date" : null}
+                {errors.startDate ? t("startDate.error") : null}
               </FormMessage>
             </FormItem>
           )}

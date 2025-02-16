@@ -1,4 +1,4 @@
-import type { PositionCords } from "@lootopia/common"
+import type { PositionCords } from "@common/global/position"
 
 /**
  * Function to calculate the distance in meters between two geographical points (Haversine formula).

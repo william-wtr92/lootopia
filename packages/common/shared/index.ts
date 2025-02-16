@@ -33,5 +33,7 @@ export {
   type CombinedHuntSchema,
 } from "./hunts"
 
+export { calculateHuntRange } from "./hunts/utils/calculateHuntRange"
+
 // Chests types
 export { chestSchema, type ChestSchema } from "./hunts/chests"

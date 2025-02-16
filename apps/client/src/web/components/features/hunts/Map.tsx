@@ -1,4 +1,8 @@
-import type { ChestSchema, PositionCords } from "@lootopia/common"
+import {
+  type ChestSchema,
+  type PositionCords,
+  calculateHuntRange,
+} from "@lootopia/common"
 import dynamic from "next/dynamic"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
@@ -7,7 +11,6 @@ import MapEvents from "./MapEvents"
 import AlertDeleteChest from "./utils/AlertDeleteChest"
 import RecenterControl from "./utils/RecenterControl"
 import { leafletDef } from "@client/utils/def/leaflet"
-import { calculateHuntRange } from "@client/utils/helpers/calculateHuntRange"
 import { useHuntStore } from "@client/web/store/useHuntStore"
 
 const MapContainer = dynamic(
