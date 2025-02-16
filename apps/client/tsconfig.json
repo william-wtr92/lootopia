@@ -32,6 +32,9 @@
       "@server/*": [
         "../server/src/*"
       ],
+      "@common/*": [
+        "../../packages/common/shared/*"
+      ],
       "@ui/*": [
         "../../packages/ui/src/*"
       ]
