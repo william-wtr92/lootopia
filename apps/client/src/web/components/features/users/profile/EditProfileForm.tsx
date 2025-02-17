@@ -142,7 +142,21 @@ const EditProfileForm = (props: Props) => {
       return
     }
 
-    await updateUser(data)
+    const [status, key] = await updateUser(data)
+
+    if (!status) {
+      toast({
+        variant: "destructive",
+        description: translateDynamicKey(t, `errors.${key}`),
+      })
+
+      return
+    }
+
+    toast({
+      variant: "default",
+      description: t("success"),
+    })
 
     handleIsOpen(false)
     refetch()

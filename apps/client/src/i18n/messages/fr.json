@@ -228,7 +228,13 @@
             "error": "Les mots de passe ne correspondent pas"
           }        
         },
+        "success": "Profil mis à jour avec succès !",
         "errors": {
+          "nicknameAlreadyExists": "Le pseudo existe déjà",
+          "phoneAlreadyExists": "Le numéro de téléphone existe déjà",
+          "invalidImage": "L'image n'est pas valide",
+          "invalidExtension": "L'extension du fichier n'est pas valide",
+          "waitThirtyDaysBeforeUpdateNickname": "Veuillez patienter 30 jours avant de modifier votre pseudo.",
           "incorrectPassword": "Mot de passe incorrect"
         },
         "cta": {
