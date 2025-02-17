@@ -4,9 +4,5 @@
   "eslint.enable": true,
   "eslint.alwaysShowStatus": true,
   "eslint.debug": true,
-  "eslint.workingDirectories": [
-    { "pattern": "./apps/client/*"},
-    { "pattern": "./apps/server/*"},
-    { "pattern": "./packages/*"}
-  ]
+  "eslint.workingDirectories": [{ "mode": "auto" }]
 }

@@ -1,6 +1,5 @@
 import { zValidator } from "@hono/zod-validator"
-import { SC } from "@lootopia/common"
-import { updateSchema } from "@lootopia/common/shared/users/auth/update"
+import { SC, updateSchema } from "@lootopia/common"
 import {
   invalidExtension,
   invalidImage,
@@ -16,7 +15,6 @@ import {
   selectUserByPhone,
 } from "@server/features/users/repository/select"
 import { updateUser } from "@server/features/users/repository/update"
-import { auth } from "@server/middlewares/auth"
 import { uploadImage } from "@server/utils/actions/azureActions"
 import { redis } from "@server/utils/clients/redis"
 import { allowedMimeTypes, defaultMimeType } from "@server/utils/helpers/files"
@@ -28,8 +26,8 @@ import mime from "mime"
 
 const app = new Hono()
 
-export const usersRoutes = app
-  .get("/me", auth, async (c) => {
+export const profileRoute = app
+  .get("/me", async (c) => {
     const email = c.get(contextKeys.loggedUserEmail)
 
     const user = await selectUserByEmail(email)
@@ -40,7 +38,7 @@ export const usersRoutes = app
 
     return c.json({ result: sanitizeUser(user) }, SC.success.OK)
   })
-  .put("/me", auth, zValidator("form", updateSchema), async (c) => {
+  .put("/me", zValidator("form", updateSchema), async (c) => {
     const body = c.req.valid("form")
     const loggedUserEmail = c.get(contextKeys.loggedUserEmail)
 
@@ -115,7 +113,7 @@ export const usersRoutes = app
       [passwordHash, passwordSalt]
     )
 
-    const redisKey = redisKeys.session(loggedUserEmail)
+    const redisKey = redisKeys.auth.session(loggedUserEmail)
     await redis.del(redisKey)
 
     return c.json(updateSuccess, SC.success.OK)

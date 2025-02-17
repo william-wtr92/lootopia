@@ -13,12 +13,12 @@
     "baseUrl": "./",
     "paths": {
       "@common/*": [
-        "./src/*"
+        "./shared/*"
       ]
     }
   },
   "include": [
-    "src/**/*.ts",
+    "shared/**/*.ts",
     "index.ts"  
   ],
   "exclude": [

@@ -1,20 +1,66 @@
-import type { NextRequest } from "next/server"
+import { NextResponse, type NextRequest } from "next/server"
 import createMiddleware from "next-intl/middleware"
 
-import { routing } from "@client/i18n/routing"
+import { env } from "./env"
+import { authTokenName } from "./utils/def/constants"
+import { protectedRoutes, routes } from "./utils/routes"
+import { locales, routing } from "@client/i18n/routing"
 
 const middlewareI18n = createMiddleware(routing)
 
-export default function middleware(request: NextRequest) {
-  const defaultLocale = request.headers.get("x-your-custom-locale") || "en"
-
+export default async function middleware(request: NextRequest) {
   const response = middlewareI18n(request)
 
-  response.headers.set("x-your-custom-locale", defaultLocale)
+  const defaultLocale = request.headers.get("x-locale") || "en"
+  response.headers.set("x-locale", defaultLocale)
+
+  const localeRegex = new RegExp(`^/(${locales.join("|")})`)
+  const pathnameWithoutLocale = request.nextUrl.pathname.replace(
+    localeRegex,
+    ""
+  )
+
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    pathnameWithoutLocale.startsWith(route)
+  )
+
+  const authToken = request.cookies.get(authTokenName)?.value
+
+  if (isProtectedRoute) {
+    if (!authToken) {
+      return NextResponse.redirect(new URL(routes.home, request.url))
+    }
+
+    try {
+      const authResponse = await fetch(
+        env.NEXT_PUBLIC_MIDDLEWARE_API_URL + routes.api.users.me,
+        {
+          method: "GET",
+          headers: {
+            Cookie: `${authTokenName}=${authToken}`,
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      )
+
+      if (!authResponse.ok) {
+        return NextResponse.redirect(new URL(routes.home, request.url))
+      }
+
+      return response
+    } catch {
+      return NextResponse.redirect(new URL(routes.home, request.url))
+    }
+  }
 
   return response
 }
 
 export const config = {
-  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
+  matcher: [
+    "/((?!api|_next|_vercel|.*\\..*).*)",
+    "/hunts/:path*",
+    "/profile/:path*",
+  ],
 }

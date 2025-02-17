@@ -14,6 +14,9 @@
     "paths": {
       "@server/*": [
         "./src/*"
+      ],
+      "@common/*": [
+        "../../packages/common/shared/*"
       ]
     }
   },

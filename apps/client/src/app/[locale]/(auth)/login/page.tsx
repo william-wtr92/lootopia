@@ -59,13 +59,13 @@ const LoginPage = () => {
 
   const onSubmit = async (data: LoginSchemaType) => {
     setIsLoading(true)
-    const [status, errorKey] = await login(data)
+    const [status, key] = await login(data)
     setIsLoading(false)
 
     if (!status) {
       toast({
         variant: "destructive",
-        description: translateDynamicKey(t, `errors.${errorKey}`),
+        description: translateDynamicKey(t, `errors.${key}`),
       })
 
       return
@@ -86,7 +86,7 @@ const LoginPage = () => {
   }
 
   return (
-    <div className="relative flex h-[75vh] items-center justify-center overflow-hidden">
+    <main className="relative flex flex-1 items-center justify-center">
       <Card className="border-primary bg-primaryBg z-0 w-2/5 opacity-95">
         <CardHeader className="text-center">
           <CardTitle className="text-primary text-3xl font-bold">
@@ -171,13 +171,13 @@ const LoginPage = () => {
         <CardFooter className="text-primary flex justify-center text-sm">
           <div>
             {t("cta.title")}
-            <Link href={routes.register}>
+            <Link href={routes.auth.register}>
               <span className="text-secondary">{t("cta.register")}</span>
             </Link>
           </div>
         </CardFooter>
       </Card>
-    </div>
+    </main>
   )
 }
 

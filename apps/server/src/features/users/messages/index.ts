@@ -40,11 +40,6 @@ export const invalidExtension = {
   key: "invalidExtension",
 } as const
 
-export const tokenNotProvided = {
-  result: "No token provided.",
-  key: "tokenNotProvided",
-} as const
-
 export const waitBeforeResendAnotherEmail = {
   result: "Wait before resend another email.",
   key: "waitBeforeResendAnotherEmail",

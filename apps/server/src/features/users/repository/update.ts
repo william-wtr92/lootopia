@@ -1,4 +1,4 @@
-import type { UpdateUser } from "@lootopia/common/shared/users/auth/update"
+import type { UpdateUser } from "@lootopia/common"
 import { users } from "@lootopia/drizzle"
 import { db } from "@server/db/client"
 import { eq } from "drizzle-orm"

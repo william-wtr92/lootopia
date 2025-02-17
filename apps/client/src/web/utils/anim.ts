@@ -1,4 +1,6 @@
-const anim = (variants: unknown) => {
+import type { Variants } from "framer-motion"
+
+const anim = (variants: Variants) => {
   return {
     initial: "initial",
     animate: "enter",

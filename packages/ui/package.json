@@ -60,10 +60,12 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@lootopia/eslint-config-client": "workspace:*",
+    "@next/eslint-plugin-next": "^15.1.7",
     "@types/node": "^22.10.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
+    "eslint-plugin-react-hooks": "^5.1.0",
     "typescript": "^5"
   },
   "keywords": [

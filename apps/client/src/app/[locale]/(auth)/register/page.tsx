@@ -76,12 +76,12 @@ const RegisterPage = () => {
   const onSubmit = async (data: RegisterSchema) => {
     const body = { ...data, avatar: form.getValues("avatar") || undefined }
 
-    const [status, keys] = await register(body)
+    const [status, key] = await register(body)
 
     if (!status) {
       toast({
         variant: "destructive",
-        description: translateDynamicKey(t, `errors.${keys}`),
+        description: translateDynamicKey(t, `errors.${key}`),
       })
 
       return
@@ -137,7 +137,7 @@ const RegisterPage = () => {
   }, [form])
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
+    <main className="relative mb-16 flex items-center justify-center">
       <Card className="border-primary bg-primaryBg z-0 w-2/5 opacity-95">
         <CardHeader className="text-center">
           <CardTitle className="text-primary text-3xl font-bold">
@@ -254,8 +254,9 @@ const RegisterPage = () => {
                         placeholder={t("form.birthdate.placeholder")}
                         className="text-primary border-primary bg-primaryBg w-full"
                         onChange={(selectedDate) => {
-                          field.onChange(selectedDate?.toISOString() || "")
+                          field.onChange(selectedDate || "")
                         }}
+                        blockFutureDates={true}
                       />
                     </FormControl>
                     <FormMessage className="text-error">
@@ -371,7 +372,7 @@ const RegisterPage = () => {
           </div>
         </CardFooter>
       </Card>
-    </div>
+    </main>
   )
 }
 

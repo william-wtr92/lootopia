@@ -18,7 +18,7 @@ import {
   FormLabel,
   FormMessage,
   Input,
-  toast,
+  useToast,
 } from "@lootopia/ui"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
@@ -30,6 +30,7 @@ import { resendEmailValidation } from "@client/web/services/auth/resendEmailVali
 
 const ResendEmailValidationPage = () => {
   const t = useTranslations("Pages.Auth.ResendEmailValidation")
+  const { toast } = useToast()
   const router = useRouter()
 
   const form = useForm<ResendEmailValidationSchema>({
@@ -45,12 +46,12 @@ const ResendEmailValidationPage = () => {
   } = form
 
   const onSubmit = async (data: ResendEmailValidationSchema) => {
-    const [status, keys] = await resendEmailValidation(data)
+    const [status, key] = await resendEmailValidation(data)
 
     if (!status) {
       toast({
         variant: "destructive",
-        description: translateDynamicKey(t, `errors.${keys}`),
+        description: translateDynamicKey(t, `errors.${key}`),
       })
 
       return
@@ -65,7 +66,7 @@ const ResendEmailValidationPage = () => {
   }
 
   return (
-    <div className="relative flex h-[75vh] items-center justify-center overflow-hidden">
+    <main className="relative flex flex-1 items-center justify-center">
       <Card className="border-primary bg-primaryBg opacity-9 z-0 w-2/5">
         <CardHeader className="text-center">
           <CardTitle className="text-primary text-3xl font-bold">
@@ -114,7 +115,7 @@ const ResendEmailValidationPage = () => {
           </Form>
         </CardContent>
       </Card>
-    </div>
+    </main>
   )
 }
 

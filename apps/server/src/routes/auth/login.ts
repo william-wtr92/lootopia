@@ -4,8 +4,8 @@ import {
   incorrectPassword,
   loginSuccess,
   userNotFound,
+  selectUserByEmail,
 } from "@server/features/users"
-import { selectUserByEmail } from "@server/features/users/repository/select"
 import { setCookie } from "@server/utils/helpers/cookie"
 import { signJwt } from "@server/utils/helpers/jwt"
 import { comparePassword } from "@server/utils/helpers/password"

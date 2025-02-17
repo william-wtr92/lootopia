@@ -1,10 +1,6 @@
 /* eslint-disable complexity */
 import { zodResolver } from "@hookform/resolvers/zod"
-import type { Roles } from "@lootopia/common"
-import {
-  type UpdateSchema,
-  updateSchema,
-} from "@lootopia/common/shared/users/auth/update"
+import { type Roles, type UpdateSchema, updateSchema } from "@lootopia/common"
 import {
   Button,
   DatePicker,
@@ -27,7 +23,7 @@ import { useQuery } from "@tanstack/react-query"
 import { ArrowLeft, Edit, Save } from "lucide-react"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
-import React, { useRef, useState, type ChangeEvent } from "react"
+import { useRef, useState, type ChangeEvent } from "react"
 import { useForm } from "react-hook-form"
 
 import { config } from "@client/env"
@@ -53,7 +49,7 @@ type Props = {
 const EditProfileForm = (props: Props) => {
   const { user } = props
 
-  const t = useTranslations("Pages.Profile")
+  const t = useTranslations("Pages.Users.Profile")
   const { toast } = useToast()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -119,12 +115,12 @@ const EditProfileForm = (props: Props) => {
       password: password,
     }
 
-    const [status, errorKey] = await login(body)
+    const [status, key] = await login(body)
 
     if (!status) {
       toast({
         variant: "destructive",
-        description: translateDynamicKey(t, `errors.${errorKey}`),
+        description: translateDynamicKey(t, `errors.${key}`),
       })
 
       return false
@@ -282,9 +278,7 @@ const EditProfileForm = (props: Props) => {
                               placeholder={t("editModal.birthdate.label")}
                               className="text-primary border-primary bg-primaryBg w-full"
                               onChange={(selectedDate) => {
-                                field.onChange(
-                                  selectedDate?.toISOString() || ""
-                                )
+                                field.onChange(selectedDate || "")
                               }}
                             />
                           </FormControl>

@@ -5,7 +5,9 @@ services:
       dockerfile: docker/prod/Dockerfile.client
       target: production
       args:
-        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL_DOCKER}
+        NEXT_PUBLIC_MIDDLEWARE_API_URL: ${NEXT_PUBLIC_MIDDLEWARE_API_URL_DOCKER}
+        NEXT_PUBLIC_AZURE_BLOB_URL: ${NEXT_PUBLIC_AZURE_BLOB_URL}
     ports:
       - "3000:3000"
     networks:
@@ -17,30 +19,30 @@ services:
       dockerfile: docker/prod/Dockerfile.server
       target: production
     environment:
-      - NODE_ENV=production
-      - SERVER_PORT=${SERVER_PORT}
-      - DB_HOST=${DB_HOST_DOCKER}
-      - DB_PORT=${DB_PORT}
-      - DB_USER=${DB_USER_DOCKER}
-      - DB_PASSWORD=${DB_PASSWORD_DOCKER}
-      - DB_NAME=${DB_NAME_DOCKER}
-      - REDIS_HOST=${REDIS_HOST_DOCKER}
-      - REDIS_PORT=${REDIS_PORT_DOCKER}
-      - REDIS_USERNAME=${REDIS_USERNAME_DOCKER}
-      - REDIS_PASSWORD=${REDIS_PASSWORD_DOCKER}
-      - REDIS_DB=${REDIS_DB_DOCKER}
-      - AZURE_ACCOUNT_NAME=${AZURE_ACCOUNT_NAME}
-      - AZURE_ACCOUNT_KEY=${AZURE_ACCOUNT_KEY}
-      - AZURE_BLOB_CONTAINER=${AZURE_BLOB_CONTAINER}
-      - AZURE_BLOB_CONNECTION=${AZURE_BLOB_CONNECTION_DOCKER}
-      - SENDGRID_KEY=${SENDGRID_KEY}
-      - SENDGRID_BASE_URL=${SENDGRID_BASE_URL}
-      - SENDGRID_SENDER=${SENDGRID_SENDER}
-      - SENDGRID_TEMPLATE_REGISTER=${SENDGRID_TEMPLATE_REGISTER}
-      - SECURITY_JWT_SECRET=${SECURITY_JWT_SECRET}
-      - SECURITY_PASSWORD_PEPPER=${SECURITY_PASSWORD_PEPPER}
-      - SECURITY_COOKIE_SECRET=${SECURITY_COOKIE_SECRET}
-      - CORS_ORIGIN=${CORS_ORIGIN}
+      NODE_ENV: production
+      SERVER_PORT: ${SERVER_PORT}
+      DB_HOST: ${DB_HOST_DOCKER}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER_DOCKER}
+      DB_PASSWORD: ${DB_PASSWORD_DOCKER}
+      DB_NAME: ${DB_NAME_DOCKER}
+      REDIS_HOST: ${REDIS_HOST_DOCKER}
+      REDIS_PORT: ${REDIS_PORT_DOCKER}
+      REDIS_USERNAME: ${REDIS_USERNAME_DOCKER}
+      REDIS_PASSWORD: ${REDIS_PASSWORD_DOCKER}
+      REDIS_DB: ${REDIS_DB_DOCKER}
+      AZURE_ACCOUNT_NAME: ${AZURE_ACCOUNT_NAME}
+      AZURE_ACCOUNT_KEY: ${AZURE_ACCOUNT_KEY}
+      AZURE_BLOB_CONTAINER: ${AZURE_BLOB_CONTAINER}
+      AZURE_BLOB_CONNECTION: ${AZURE_BLOB_CONNECTION_DOCKER}
+      SENDGRID_KEY: ${SENDGRID_KEY}
+      SENDGRID_BASE_URL: ${SENDGRID_BASE_URL}
+      SENDGRID_SENDER: ${SENDGRID_SENDER}
+      SENDGRID_TEMPLATE_REGISTER: ${SENDGRID_TEMPLATE_REGISTER}
+      SECURITY_JWT_SECRET: ${SECURITY_JWT_SECRET}
+      SECURITY_PASSWORD_PEPPER: ${SECURITY_PASSWORD_PEPPER}
+      SECURITY_COOKIE_SECRET: ${SECURITY_COOKIE_SECRET}
+      CORS_ORIGIN: ${CORS_ORIGIN}
     ports:
       - "3001:3001"
     networks:
@@ -56,12 +58,12 @@ services:
       dockerfile: docker/prod/Dockerfile.migrations
       target: prod
     environment:
-      - NODE_ENV=production
-      - DB_HOST=${DB_HOST_DOCKER}
-      - DB_PORT=${DB_PORT}
-      - DB_USER=${DB_USER_DOCKER}
-      - DB_PASSWORD=${DB_PASSWORD_DOCKER}
-      - DB_NAME=${DB_NAME_DOCKER}
+      NODE_ENV: production
+      DB_HOST: ${DB_HOST_DOCKER}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER_DOCKER}
+      DB_PASSWORD: ${DB_PASSWORD_DOCKER}
+      DB_NAME: ${DB_NAME_DOCKER}
     networks:
       - lootopia_network
     depends_on:
@@ -71,7 +73,7 @@ services:
     restart: "no"
 
   db:
-    image: "postgres:alpine"
+    image: "postgis/postgis:17-3.5-alpine"
     environment:
       POSTGRES_USER: ${DB_USER_DOCKER}
       POSTGRES_PASSWORD: ${DB_PASSWORD_DOCKER}
@@ -105,7 +107,6 @@ services:
       - ./azurite:/workspace
     networks:
       - lootopia_network
-
 
 networks:
   lootopia_network:

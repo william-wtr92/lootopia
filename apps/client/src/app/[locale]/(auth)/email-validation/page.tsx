@@ -6,7 +6,7 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-  toast,
+  useToast,
 } from "@lootopia/ui"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
@@ -19,6 +19,7 @@ import { emailValidation } from "@client/web/services/auth/emailValidation"
 
 const EmailValidationPage = () => {
   const t = useTranslations("Pages.Auth.EmailValidation")
+  const { toast } = useToast()
   const router = useRouter()
 
   const [token] = useQueryState("token")
@@ -28,12 +29,12 @@ const EmailValidationPage = () => {
       return
     }
 
-    const [status, keys] = await emailValidation({ token })
+    const [status, key] = await emailValidation({ token })
 
     if (!status) {
       toast({
         variant: "destructive",
-        description: translateDynamicKey(t, `errors.${keys}`),
+        description: translateDynamicKey(t, `errors.${key}`),
       })
 
       return
@@ -48,7 +49,7 @@ const EmailValidationPage = () => {
   }
 
   return (
-    <div className="relative flex h-[75vh] items-center justify-center overflow-hidden">
+    <main className="relative flex flex-1 items-center justify-center">
       <Card className="text-primary border-primary bg-primaryBg z-0 flex h-72 w-2/5 flex-col items-center justify-center gap-6 opacity-95">
         <CardHeader>
           <CardTitle className="text-center text-3xl">
@@ -66,13 +67,13 @@ const EmailValidationPage = () => {
           </Button>
           <div className="flex items-center justify-center gap-2 text-sm">
             <span>{t("cta.resend.label")}</span>
-            <Link href={routes.resendEmaiValidation}>
+            <Link href={routes.auth.resendEmaiValidation}>
               <span className="text-secondary">{t("cta.resend.link")}</span>
             </Link>
           </div>
         </CardContent>
       </Card>
-    </div>
+    </main>
   )
 }
 

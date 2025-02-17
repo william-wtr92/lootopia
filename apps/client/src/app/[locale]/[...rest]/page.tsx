@@ -8,7 +8,7 @@ const CatchAllPage = () => {
   const t = useTranslations("Pages.NotFound")
 
   return (
-    <div className="flex h-[75vh] items-center justify-center overflow-hidden">
+    <main className="relative flex flex-1 items-center justify-center overflow-hidden">
       <div className="border-1 container relative z-10 mx-auto flex flex-col gap-6 px-4 py-16 text-center">
         <h1 className="text-primary text-6xl font-bold">{t("title")}</h1>
         <p className="text-primary text-xl">{t("description")}</p>
@@ -18,7 +18,7 @@ const CatchAllPage = () => {
           </Button>
         </Link>
       </div>
-    </div>
+    </main>
   )
 }
 

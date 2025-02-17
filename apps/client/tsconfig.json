@@ -17,6 +17,9 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "types": [
+      "../server/src/hono.d.ts"
+    ],
     "plugins": [
       {
         "name": "next"
@@ -28,6 +31,9 @@
       ],
       "@server/*": [
         "../server/src/*"
+      ],
+      "@common/*": [
+        "../../packages/common/shared/*"
       ],
       "@ui/*": [
         "../../packages/ui/src/*"

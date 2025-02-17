@@ -43,3 +43,7 @@ stop: ## Stop services (default: development)
 logs: ## View logs for services (default: development)
 	$(DC) logs -f
 	@echo "Streaming logs for $(SERVICE) server 📜!"
+
+clear-cache: ## Clear all docker cache
+	docker system prune -a --volumes
+	@echo "All cache is cleared 🚀!"

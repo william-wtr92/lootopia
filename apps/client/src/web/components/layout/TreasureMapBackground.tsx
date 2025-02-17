@@ -125,10 +125,12 @@ const TreasureMapBackground = () => {
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 2, ease: "easeInOut" }}
+            strokeDasharray="20 15"
+            initial={{ strokeDashoffset: 1000 }}
+            animate={{ strokeDashoffset: 0 }}
+            transition={{ duration: 3, ease: "easeInOut" }}
           />
+
           <motion.path
             d="M2990,2990 l20,20 m0,-20 l-20,20"
             stroke="#FFD700"

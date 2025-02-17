@@ -8,6 +8,20 @@
       "when": 1739026001104,
       "tag": "0000_strange_mathemanic",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1739311110348,
+      "tag": "0001_slim_ultron",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1739638666870,
+      "tag": "0002_common_the_fury",
+      "breakpoints": true
     }
   ]
 }

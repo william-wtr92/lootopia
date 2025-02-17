@@ -11,12 +11,10 @@ import {
   passwordNotMatch,
   phoneAlreadyExists,
   registerSuccess,
-} from "@server/features/users"
-import {
   selectUserByEmail,
   selectUserByNickname,
   selectUserByPhone,
-} from "@server/features/users/repository/select"
+} from "@server/features/users"
 import { uploadImage } from "@server/utils/actions/azureActions"
 import { redis } from "@server/utils/clients/redis"
 import {

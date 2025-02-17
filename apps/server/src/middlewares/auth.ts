@@ -1,11 +1,12 @@
 import { SC } from "@lootopia/common"
 import { tokenNotProvided } from "@server/features/global"
 import {
+  type User,
   sanitizeUser,
   userNotFound,
+  selectUserByEmail,
   type DecodedToken,
 } from "@server/features/users"
-import { selectUserByEmail } from "@server/features/users/repository/select"
 import { redis } from "@server/utils/clients/redis"
 import { JwtError } from "@server/utils/errors/jwt"
 import { getCookie } from "@server/utils/helpers/cookie"
@@ -31,10 +32,10 @@ export const auth = factory.createMiddleware(async (c, next) => {
     if (decodedToken) {
       const userEmail = decodedToken.payload.user.email
 
-      const redisKey = redisKeys.session(userEmail)
+      const redisKey = redisKeys.auth.session(userEmail)
       const userCached = await redis.get(redisKey)
 
-      const user = userCached
+      const user: User = userCached
         ? JSON.parse(userCached)
         : await selectUserByEmail(userEmail)
 
@@ -43,7 +44,8 @@ export const auth = factory.createMiddleware(async (c, next) => {
       }
 
       if (!userCached) {
-        const sanitizedUser = sanitizeUser(user)
+        const sanitizedUser = sanitizeUser(user, ["id"])
+
         await redis.set(
           redisKey,
           JSON.stringify(sanitizedUser),

@@ -75,15 +75,15 @@ const Navbar = () => {
           <div className="flex items-center space-x-4">
             {!user ? (
               <>
-                <Link href={routes.login}>
+                <Link href={routes.auth.login}>
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     className="text-primary hover:text-secondary"
                   >
                     {t("login")}
                   </Button>
                 </Link>
-                <Link href={routes.register}>
+                <Link href={routes.auth.register}>
                   <Button className="bg-primary text-accent hover:bg-secondary">
                     {t("register")}
                   </Button>
@@ -91,7 +91,12 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Link href={routes.profile}>
+                <Link href={routes.hunts.list}>
+                  <Button className="bg-primary text-accent hover:bg-secondary">
+                    {t("hunts")}
+                  </Button>
+                </Link>
+                <Link href={routes.users.profile}>
                   <Button className="bg-primary text-accent hover:bg-secondary">
                     {t("profile")}
                   </Button>

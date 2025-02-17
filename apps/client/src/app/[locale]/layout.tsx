@@ -1,6 +1,7 @@
 import { Toaster } from "@lootopia/ui"
 import { Fredoka } from "next/font/google"
 import "@client/app/globals.css"
+import "leaflet/dist/leaflet.css"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import { type ReactNode } from "react"
 
