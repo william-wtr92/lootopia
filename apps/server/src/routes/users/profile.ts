@@ -8,7 +8,7 @@ import {
   sanitizeUser,
   updateSuccess,
   userNotFound,
-  waitThirtyDaysBeforeUpdateNickname,
+  waitThirtyDaysBeforeUpdatingNickname,
 } from "@server/features/users"
 import {
   selectUserByEmail,
@@ -91,7 +91,10 @@ export const profileRoute = app
 
     if (userToUpdate.nickname !== body.nickname) {
       if (redisNickname) {
-        return c.json(waitThirtyDaysBeforeUpdateNickname, SC.errors.BAD_REQUEST)
+        return c.json(
+          waitThirtyDaysBeforeUpdatingNickname,
+          SC.errors.BAD_REQUEST
+        )
       }
 
       newNickname = body.nickname

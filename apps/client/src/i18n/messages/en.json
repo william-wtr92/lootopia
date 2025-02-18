@@ -238,7 +238,7 @@
           "phoneAlreadyExists": "The phone number already exists",
           "invalidImage": "The image is not valid",
           "invalidExtension": "The file extension is not valid",
-          "waitThirtyDaysBeforeUpdateNickname": "You must wait 30 days before changing your nickname",
+          "waitThirtyDaysBeforeUpdatingNickname": "You must wait 30 days before changing your nickname",
           "incorrectPassword": "Incorrect password"
         },
         "cta": {
