@@ -15,6 +15,11 @@ export const nicknameAlreadyExists = {
   key: "nicknameAlreadyExists",
 } as const
 
+export const waitThirtyDaysBeforeUpdatingNickname = {
+  result: "Wait 30 days before updating nickname.",
+  key: "waitThirtyDaysBeforeUpdatingNickname",
+} as const
+
 export const phoneAlreadyExists = {
   result: "Phone already exists.",
   key: "phoneAlreadyExists",

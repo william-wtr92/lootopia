@@ -13,7 +13,7 @@ const updateUser = async (data: UpdateSchema) => {
     return result
   }
 
-  return null
+  return [response.ok, (await response.json()).key]
 }
 
 export default updateUser
