@@ -4,6 +4,7 @@ export type DecodedToken = {
   payload: {
     user: {
       email: string
+      newEmail?: string
     }
   }
 }

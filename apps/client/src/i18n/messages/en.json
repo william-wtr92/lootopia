@@ -108,6 +108,26 @@
           "userNotFound": "The validation link is invalid. Please request a new one."
         }
       },
+       "EmailChangeValidation": {
+          "title": "Confirm your new email address",
+          "description": "To validate your new email adress, please click on the button below.",
+          "cta": {
+            "validate": "Validate my email address",
+            "resend": {
+              "label": "You didn't receive the email?",
+              "link": "Click here to resend it"
+            }
+          },
+          "success": "Your email address has been validated successfully!",
+          "errors": {
+            "tokenNotProvided": "Please request a new validation.",
+            "tokenExpired": "Your validation link has expired. Please request a new one.",
+            "tokenSignatureMismatched": "The validation link is invalid. Please request a new one.",
+            "tokenInvalidStructure": "The validation link is invalid. Please request a new one.",
+            "unspecifiedErrorOccurred": "An unknown error occurred. Please try again.",
+            "userNotFound": "The validation link is invalid. Please request a new one."
+          }
+        },
       "ResendEmailValidation": {
         "title": "Resend validation email",
         "description": "Enter the email address associated with your account to receive a new validation link.",
@@ -242,6 +262,7 @@
           "incorrectPassword": "Incorrect password"
         },
         "cta": {
+          "logout": "Logout", 
           "editProfile": "Edit my profile",
           "treasureMap": "Treasure map",
           "trophies": "Trophies",

@@ -6,6 +6,7 @@ import { oneHour } from "./times"
 
 type MailData = {
   email: string
+  newEmail?: string
 }
 
 type DynamicData = {
@@ -35,6 +36,7 @@ export const mailBuilder = async <T extends MailData>(
       {
         user: {
           email: data.email,
+          newEmail: data.newEmail ? data.newEmail : {},
         },
       },
       expiration ? expiration : oneHour
@@ -44,7 +46,7 @@ export const mailBuilder = async <T extends MailData>(
   sgMail.setApiKey(appConfig.sendgrid.key)
 
   const sendGridMail: MailBuild<T> = {
-    to: data.email,
+    to: data.newEmail ? data.newEmail : data.email,
     from: appConfig.sendgrid.sender,
     templateId: templateId,
     dynamic_template_data: dynamicData,

@@ -1,5 +1,6 @@
 import { zValidator } from "@hono/zod-validator"
 import { SC, updateSchema } from "@lootopia/common"
+import appConfig from "@server/config"
 import {
   invalidExtension,
   invalidImage,
@@ -19,8 +20,14 @@ import { updateUser } from "@server/features/users/repository/update"
 import { uploadImage } from "@server/utils/actions/azureActions"
 import { redis } from "@server/utils/clients/redis"
 import { allowedMimeTypes, defaultMimeType } from "@server/utils/helpers/files"
+import { mailBuilder, sendMail } from "@server/utils/helpers/mail"
 import { hashPassword } from "@server/utils/helpers/password"
-import { thirtyDaysTTL } from "@server/utils/helpers/times"
+import {
+  now,
+  oneHour,
+  oneHourTTL,
+  thirtyDaysTTL,
+} from "@server/utils/helpers/times"
 import { contextKeys } from "@server/utils/keys/contextKeys"
 import { redisKeys } from "@server/utils/keys/redisKeys"
 import { Hono } from "hono"
@@ -83,13 +90,14 @@ export const profileRoute = app
       avatarUrl = await uploadImage(body.avatar, mimeType)
     }
 
-    let newNickname: string
-    const redisNicknameKey = redisKeys.users.nicknameUpdateCooldown(
-      userToUpdate.id
-    )
-    const redisNickname = await redis.get(redisNicknameKey)
+    let newNickname: string = userToUpdate.nickname
 
     if (userToUpdate.nickname !== body.nickname) {
+      const redisNicknameKey = redisKeys.users.nicknameUpdateCooldown(
+        userToUpdate.id
+      )
+      const redisNickname = await redis.get(redisNicknameKey)
+
       if (redisNickname) {
         return c.json(
           waitThirtyDaysBeforeUpdatingNickname,
@@ -99,12 +107,32 @@ export const profileRoute = app
 
       newNickname = body.nickname
       await redis.set(redisNicknameKey, userToUpdate.id, "EX", thirtyDaysTTL)
-    } else {
-      newNickname = userToUpdate.nickname
     }
 
-    const newEmail =
-      userToUpdate.email === body.email ? userToUpdate.email : body.email
+    let newEmail = userToUpdate.email
+
+    if (userToUpdate.email !== body.email) {
+      newEmail = body.email
+
+      const validationMail = await mailBuilder(
+        {
+          nickname: body.nickname,
+          email: userToUpdate.email,
+          newEmail: body.email,
+        },
+        appConfig.sendgrid.template.emailChangeValidation,
+        oneHour,
+        true
+      )
+
+      const emailTokenKey = redisKeys.auth.emailChangeValidation(
+        validationMail.dynamic_template_data.token as string
+      )
+
+      await redis.set(emailTokenKey, now, "EX", oneHourTTL)
+
+      await sendMail(validationMail)
+    }
 
     const newPhone =
       userToUpdate.phone === body.phone ? userToUpdate.phone : body.phone

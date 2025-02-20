@@ -165,7 +165,7 @@ const EditProfileForm = (props: Props) => {
   return (
     <Dialog open={isOpen} onOpenChange={handleIsOpen}>
       <DialogTrigger asChild>
-        <Button variant={"secondary"} className="mb-6 mr-6 self-end">
+        <Button variant={"secondary"}>
           <Edit className="mr-2 h-4 w-4" />
           {t("cta.editProfile")}
         </Button>

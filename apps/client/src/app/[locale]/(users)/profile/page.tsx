@@ -8,20 +8,25 @@ import {
   CardTitle,
   Progress,
 } from "@lootopia/ui"
-import { useQuery } from "@tanstack/react-query"
-import { MapPin, Settings, Star, Trophy } from "lucide-react"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { LogOutIcon, MapPin, Settings, Star, Trophy } from "lucide-react"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 
 import { config } from "@client/env"
+import { routes } from "@client/utils/routes"
 import EditProfileForm from "@client/web/components/features/users/profile/EditProfileForm"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
+import { logout } from "@client/web/services/auth/logout"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import anim from "@client/web/utils/anim"
 
 const ProfilePage = () => {
   const t = useTranslations("Pages.Users.Profile")
+  const router = useRouter()
 
+  const qc = useQueryClient()
   const { data } = useQuery({
     queryKey: ["user"],
     queryFn: () => getUserLoggedIn(),
@@ -82,10 +87,18 @@ const ProfilePage = () => {
     },
   }
 
+  const logoutUser = async () => {
+    await logout()
+
+    qc.invalidateQueries({ queryKey: ["user"] })
+
+    router.push(routes.auth.login)
+  }
+
   return (
     <main className="relative z-10 flex w-full flex-1 flex-col gap-8 px-4 py-8">
       <MotionComponent {...anim(profileHeaderVariant)}>
-        <Card className="bg-primaryBg flex justify-between">
+        <Card className="flex justify-between">
           <CardContent className="flex items-center gap-6 pt-6">
             <Image
               src={
@@ -106,13 +119,19 @@ const ProfilePage = () => {
             </div>
           </CardContent>
 
-          {user && <EditProfileForm user={user} />}
+          <div className="mb-6 mr-6 flex flex-col gap-2 self-end">
+            {user && <EditProfileForm user={user} />}
+
+            <Button onClick={logoutUser}>
+              <LogOutIcon /> {t("cta.logout")}
+            </Button>
+          </div>
         </Card>
       </MotionComponent>
 
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
         <MotionComponent {...anim(statsCardVariant)}>
-          <Card className="bg-primaryBg">
+          <Card>
             <CardHeader>
               <CardTitle className="text-primary">
                 {t("statistics.title")}
@@ -143,7 +162,7 @@ const ProfilePage = () => {
         </MotionComponent>
 
         <MotionComponent {...anim(progressCardVariant)}>
-          <Card className="bg-primaryBg h-full">
+          <Card className="h-full">
             <CardHeader>
               <CardTitle className="text-primary">
                 {t("progress.title")}

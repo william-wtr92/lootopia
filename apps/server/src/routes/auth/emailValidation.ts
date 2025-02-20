@@ -15,9 +15,11 @@ import {
   waitBeforeResendAnotherEmail,
   updateEmailValidation,
   selectUserByEmail,
+  updateEmail,
 } from "@server/features/users"
 import { redis } from "@server/utils/clients/redis"
 import { JwtError } from "@server/utils/errors/jwt"
+import { delCookie } from "@server/utils/helpers/cookie"
 import { decodeJwt } from "@server/utils/helpers/jwt"
 import { mailBuilder, sendMail } from "@server/utils/helpers/mail"
 import {
@@ -26,6 +28,7 @@ import {
   oneHourTTL,
   tenMinutesTTL,
 } from "@server/utils/helpers/times"
+import { cookiesKeys } from "@server/utils/keys/cookiesKeys"
 import { redisKeys } from "@server/utils/keys/redisKeys"
 import { Hono } from "hono"
 
@@ -62,6 +65,44 @@ export const emailValidationRoute = app
         updateEmailValidation(email)
 
         await redis.del(emailTokenKey)
+
+        return c.json(emailValidationSuccess, SC.success.OK)
+      } catch (error) {
+        throw JwtError(error)
+      }
+    }
+  )
+  .get(
+    "/email-change-validation",
+    zValidator("query", emailValidationSchema),
+    async (c) => {
+      const token = c.req.query("token")
+
+      if (!token) {
+        return c.json(tokenNotProvided, SC.errors.BAD_REQUEST)
+      }
+
+      const emailTokenKey = redisKeys.auth.emailChangeValidation(token)
+      const emailToken = await redis.get(emailTokenKey)
+
+      if (!emailToken) {
+        return c.json(tokenExpired, SC.errors.BAD_REQUEST)
+      }
+
+      try {
+        const decodedToken = await decodeJwt<DecodedToken>(token)
+        const oldEmail = decodedToken.payload.user.email
+        const newEmail = decodedToken.payload.user.newEmail
+
+        if (!newEmail) {
+          return c.json(tokenExpired, SC.errors.BAD_REQUEST)
+        }
+
+        updateEmail(oldEmail, newEmail)
+        updateEmailValidation(newEmail)
+
+        await redis.del(emailTokenKey)
+        delCookie(c, cookiesKeys.auth.session)
 
         return c.json(emailValidationSuccess, SC.success.OK)
       } catch (error) {
