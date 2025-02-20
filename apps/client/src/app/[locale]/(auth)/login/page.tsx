@@ -87,7 +87,7 @@ const LoginPage = () => {
 
   return (
     <main className="relative flex flex-1 items-center justify-center">
-      <Card className="border-primary bg-primaryBg z-0 w-2/5 opacity-95">
+      <Card className="w-2/5">
         <CardHeader className="text-center">
           <CardTitle className="text-primary text-3xl font-bold">
             {t("title")}
