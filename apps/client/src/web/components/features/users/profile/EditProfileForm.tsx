@@ -142,12 +142,12 @@ const EditProfileForm = (props: Props) => {
       return
     }
 
-    const [status, key] = await updateUser(data)
+    const [messageKey, errorKey] = await updateUser(data)
 
-    if (!status) {
+    if (!messageKey) {
       toast({
         variant: "destructive",
-        description: translateDynamicKey(t, `errors.${key}`),
+        description: translateDynamicKey(t, `errors.${errorKey}`),
       })
 
       return
@@ -155,7 +155,7 @@ const EditProfileForm = (props: Props) => {
 
     toast({
       variant: "default",
-      description: t("success"),
+      description: t(`success.${messageKey}`),
     })
 
     handleIsOpen(false)

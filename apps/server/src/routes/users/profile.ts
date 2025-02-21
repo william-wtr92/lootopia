@@ -8,6 +8,7 @@ import {
   phoneAlreadyExists,
   sanitizeUser,
   updateSuccess,
+  updateSuccessWithEmailChange,
   userNotFound,
   waitThirtyDaysBeforeUpdatingNickname,
 } from "@server/features/users"
@@ -147,6 +148,11 @@ export const profileRoute = app
         ? (avatarUrl as string)
         : (userToUpdate.avatar as string)
 
+    const updateSuccessKey =
+      userToUpdate.email === body.email
+        ? updateSuccess
+        : updateSuccessWithEmailChange
+
     await updateUser(
       {
         nickname: newNickname,
@@ -161,7 +167,7 @@ export const profileRoute = app
     const redisSessionKey = redisKeys.auth.session(loggedUserEmail)
     await redis.del(redisSessionKey)
 
-    return c.json(updateSuccess, SC.success.OK)
+    return c.json(updateSuccessKey, SC.success.OK)
   })
 
 export default app

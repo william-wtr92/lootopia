@@ -87,7 +87,12 @@ export const updateSuccess = {
   key: "updateSuccess",
 } as const
 
+export const updateSuccessWithEmailChange = {
+  result: "User updated successfully. Please check your mails to validate it.",
+  key: "updateSuccessWithEmailChange",
+} as const
+
 export const logoutSuccess = {
   result: "You have successfully logged out.",
   key: "logoutSuccess",
-}
+} as const

@@ -252,7 +252,10 @@
             "error": "Passwords do not match"
           }
         },
-        "success": "Profile updated successfully!",
+        "success": {
+          "updateSuccess": "Profile updated successfully!",
+          "updateSuccessWithEmailChange": "Profile updated successfully! A validation mail has been sent to your new email address."
+        },
         "errors": {
           "nicknameAlreadyExists": "The nickname already exists",
           "phoneAlreadyExists": "The phone number already exists",
