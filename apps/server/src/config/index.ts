@@ -59,6 +59,7 @@ const appConfigSchema = z
       sender: z.string(),
       template: z.object({
         register: z.string(),
+        emailChangeValidation: z.string(),
       }),
     }),
   })
@@ -117,6 +118,8 @@ const appConfig = appConfigSchema.parse({
     sender: process.env.SENDGRID_SENDER,
     template: {
       register: process.env.SENDGRID_TEMPLATE_REGISTER,
+      emailChangeValidation:
+        process.env.SENDGRID_TEMPLATE_EMAIL_CHANGE_VALIDATION,
     },
   },
 })

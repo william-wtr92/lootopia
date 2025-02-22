@@ -12,7 +12,7 @@ const FeatureCard = (props: Props) => {
   const { icon, title, description } = props
 
   return (
-    <div className="bg-primaryBg border-primary rounded-lg border p-6 text-center">
+    <div className="bg-primaryBg rounded-lg border p-6 text-center">
       <div className="mb-4 flex justify-center">{icon}</div>
       <h3 className="text-primary mb-2 text-xl font-semibold">{title}</h3>
       <p className="text-primary">{description}</p>

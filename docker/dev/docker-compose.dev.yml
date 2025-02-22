@@ -1,6 +1,6 @@
 services:
   client:
-    build: 
+    build:
       context: ../..
       dockerfile: docker/dev/Dockerfile.client
       target: dev
@@ -12,9 +12,9 @@ services:
       - "3000:3000"
     networks:
       - lootopia_network
-    
+
   server:
-    build: 
+    build:
       context: ../..
       dockerfile: docker/dev/Dockerfile.server
       target: dev
@@ -39,12 +39,13 @@ services:
       SENDGRID_BASE_URL: ${SENDGRID_BASE_URL}
       SENDGRID_SENDER: ${SENDGRID_SENDER}
       SENDGRID_TEMPLATE_REGISTER: ${SENDGRID_TEMPLATE_REGISTER}
+      SENDGRID_TEMPLATE_EMAIL_CHANGE_VALIDATION: ${SENDGRID_TEMPLATE_EMAIL_CHANGE_VALIDATION}
       SECURITY_JWT_SECRET: ${SECURITY_JWT_SECRET}
       SECURITY_PASSWORD_PEPPER: ${SECURITY_PASSWORD_PEPPER}
       SECURITY_COOKIE_SECRET: ${SECURITY_COOKIE_SECRET}
       CORS_ORIGIN: ${CORS_ORIGIN}
     ports:
-      - "3001:3001" 
+      - "3001:3001"
     networks:
       - lootopia_network
     depends_on:
@@ -53,7 +54,7 @@ services:
       - azurite
 
   migrations:
-    build: 
+    build:
       context: ../..
       dockerfile: docker/dev/Dockerfile.migrations
       target: dev
@@ -83,11 +84,15 @@ services:
     networks:
       - lootopia_network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER_DOCKER} -h 127.0.0.1 -d ${DB_NAME_DOCKER}"]
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${DB_USER_DOCKER} -h 127.0.0.1 -d ${DB_NAME_DOCKER}",
+        ]
       interval: 10s
       timeout: 5s
       retries: 5
-  
+
   redis:
     image: "redis:alpine"
     ports:
@@ -99,7 +104,7 @@ services:
     image: "mcr.microsoft.com/azure-storage/azurite"
     hostname: azurite
     restart: always
-    command: 'azurite --loose --blobHost 0.0.0.0 --blobPort 10000 --queueHost 0.0.0.0 --queuePort 10001 --location /workspace --debug /workspace/debug.log'
+    command: "azurite --loose --blobHost 0.0.0.0 --blobPort 10000 --queueHost 0.0.0.0 --queuePort 10001 --location /workspace --debug /workspace/debug.log"
     ports:
       - "10000:10000"
       - "10001:10001"

@@ -51,7 +51,7 @@ const Navbar = () => {
   }
 
   return (
-    <header className="sticky left-0 top-0 z-10 h-fit px-16 py-8">
+    <header className="sticky left-0 top-0 z-[9998] h-fit px-16 py-8">
       <nav className="flex items-center justify-between">
         <Link href={routes.home}>
           <MotionComponent

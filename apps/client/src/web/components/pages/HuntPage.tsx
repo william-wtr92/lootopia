@@ -171,7 +171,7 @@ const HuntPage = ({ huntId }: Props) => {
         </TabsList>
 
         <TabsContent value="hunt">
-          <Card className="border-primary bg-primaryBg z-0 mx-auto mt-6 w-2/5 p-4 opacity-95">
+          <Card className="mx-auto mt-6 w-2/5 p-4">
             <CardTitle className="text-primary text-center text-3xl font-bold">
               {t("tabs.content.title")}
             </CardTitle>
@@ -192,7 +192,7 @@ const HuntPage = ({ huntId }: Props) => {
         <TabsContent value="chests">
           <div className="relative mx-auto mt-6 w-3/5">
             {map && (
-              <Card className="bg-primaryBg absolute right-5 top-5 z-[20] px-3 py-2">
+              <Card className="absolute right-5 top-5 z-[20] px-3 py-2">
                 <PositionForm onSubmit={handlePositionSubmit} />
               </Card>
             )}

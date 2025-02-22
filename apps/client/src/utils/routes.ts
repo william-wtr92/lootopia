@@ -5,6 +5,8 @@ export const routes = {
   },
   auth: {
     register: "/register",
+    emailValidation: "/email-validation",
+    emailChangeValidation: "/email-change-validation",
     resendEmaiValidation: "/resend-email-validation",
     login: "/login",
   },

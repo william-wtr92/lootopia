@@ -1,6 +1,6 @@
 services:
   client:
-    build: 
+    build:
       context: ../..
       dockerfile: docker/prod/Dockerfile.client
       target: production
@@ -12,9 +12,9 @@ services:
       - "3000:3000"
     networks:
       - lootopia_network
-    
+
   server:
-    build: 
+    build:
       context: ../..
       dockerfile: docker/prod/Dockerfile.server
       target: production
@@ -39,6 +39,7 @@ services:
       SENDGRID_BASE_URL: ${SENDGRID_BASE_URL}
       SENDGRID_SENDER: ${SENDGRID_SENDER}
       SENDGRID_TEMPLATE_REGISTER: ${SENDGRID_TEMPLATE_REGISTER}
+      SENDGRID_TEMPLATE_EMAIL_CHANGE_VALIDATION: ${SENDGRID_TEMPLATE_EMAIL_CHANGE_VALIDATION}
       SECURITY_JWT_SECRET: ${SECURITY_JWT_SECRET}
       SECURITY_PASSWORD_PEPPER: ${SECURITY_PASSWORD_PEPPER}
       SECURITY_COOKIE_SECRET: ${SECURITY_COOKIE_SECRET}
@@ -53,7 +54,7 @@ services:
       - azurite
 
   migrations:
-    build: 
+    build:
       context: ../..
       dockerfile: docker/prod/Dockerfile.migrations
       target: prod
@@ -83,23 +84,27 @@ services:
     networks:
       - lootopia_network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER_DOCKER} -h 127.0.0.1 -d ${DB_NAME_DOCKER}"]
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${DB_USER_DOCKER} -h 127.0.0.1 -d ${DB_NAME_DOCKER}",
+        ]
       interval: 10s
       timeout: 5s
       retries: 5
-  
+
   redis:
     image: "redis:alpine"
     ports:
       - "6379:6379"
     networks:
       - lootopia_network
-  
+
   azurite:
     image: "mcr.microsoft.com/azure-storage/azurite"
     hostname: azurite
     restart: always
-    command: 'azurite --loose --blobHost 0.0.0.0 --blobPort 10000 --queueHost 0.0.0.0 --queuePort 10001 --location /workspace --debug /workspace/debug.log'
+    command: "azurite --loose --blobHost 0.0.0.0 --blobPort 10000 --queueHost 0.0.0.0 --queuePort 10001 --location /workspace --debug /workspace/debug.log"
     ports:
       - "10000:10000"
       - "10001:10001"

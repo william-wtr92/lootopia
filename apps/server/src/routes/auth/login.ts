@@ -5,19 +5,22 @@ import {
   loginSuccess,
   userNotFound,
   selectUserByEmail,
+  logoutSuccess,
 } from "@server/features/users"
-import { setCookie } from "@server/utils/helpers/cookie"
+import { auth } from "@server/middlewares/auth"
+import { redis } from "@server/utils/clients/redis"
+import { delCookie, setCookie } from "@server/utils/helpers/cookie"
 import { signJwt } from "@server/utils/helpers/jwt"
 import { comparePassword } from "@server/utils/helpers/password"
+import { contextKeys } from "@server/utils/keys/contextKeys"
 import { cookiesKeys } from "@server/utils/keys/cookiesKeys"
+import { redisKeys } from "@server/utils/keys/redisKeys"
 import { Hono } from "hono"
 
 const app = new Hono()
 
-export const loginRoute = app.post(
-  "/login",
-  zValidator("json", loginSchema),
-  async (c) => {
+export const loginRoute = app
+  .post("/login", zValidator("json", loginSchema), async (c) => {
     const { email, password } = c.req.valid("json")
     const user = await selectUserByEmail(email)
 
@@ -45,5 +48,19 @@ export const loginRoute = app.post(
     await setCookie(c, cookiesKeys.auth.session, jwt)
 
     return c.json(loginSuccess, SC.success.OK)
-  }
-)
+  })
+  .post("/logout", auth, async (c) => {
+    const email = c.get(contextKeys.loggedUserEmail)
+    const user = await selectUserByEmail(email)
+
+    if (!user) {
+      return c.json(userNotFound, SC.errors.NOT_FOUND)
+    }
+
+    delCookie(c, cookiesKeys.auth.session)
+
+    const sessionKey = redisKeys.auth.session(user.email)
+    await redis.del(sessionKey)
+
+    return c.json(logoutSuccess, SC.success.OK)
+  })

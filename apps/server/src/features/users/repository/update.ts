@@ -23,6 +23,15 @@ export const updateUser = async (
     .where(eq(users.email, data.email))
 }
 
+export const updateEmail = async (oldMail: string, newMail: string) => {
+  return db
+    .update(users)
+    .set({
+      email: newMail,
+    })
+    .where(eq(users.email, oldMail))
+}
+
 export const updateEmailValidation = async (email: string) => {
   return db
     .update(users)

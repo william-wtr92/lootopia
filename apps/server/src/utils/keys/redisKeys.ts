@@ -2,6 +2,8 @@ export const redisKeys = {
   auth: {
     session: (email: string) => `auth:session:${email}`,
     emailValidation: (token: string) => `auth:email-validation:${token}`,
+    emailChangeValidation: (token: string) =>
+      `auth:email-change-validation:${token}`,
     emailValidationCooldown: (email: string) =>
       `auth:email-validation-cooldown:${email}`,
   },

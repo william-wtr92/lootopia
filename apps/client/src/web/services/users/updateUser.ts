@@ -2,18 +2,36 @@ import type { UpdateSchema } from "@lootopia/common"
 
 import { client } from "@client/web/utils/client"
 
-const updateUser = async (data: UpdateSchema) => {
+type UpdateMessageKeyType =
+  | "updateSuccess"
+  | "updateSuccessWithEmailChange"
+  | "userNotFound"
+  | "nicknameAlreadyExists"
+  | "phoneAlreadyExists"
+  | "invalidImage"
+  | "invalidExtension"
+  | "waitThirtyDaysBeforeUpdatingNickname"
+  | null
+
+type SuccessMessageKeyType = Extract<
+  UpdateMessageKeyType,
+  "updateSuccess" | "updateSuccessWithEmailChange" | null
+>
+
+const updateUser = async (
+  data: UpdateSchema
+): Promise<[SuccessMessageKeyType, UpdateMessageKeyType]> => {
   const response = await client.users.me.$put({
     form: data,
   })
 
   if (response.ok) {
-    const { result } = await response.json()
+    const { key } = await response.json()
 
-    return result
+    return [key, null]
   }
 
-  return [response.ok, (await response.json()).key]
+  return [null, (await response.json()).key]
 }
 
 export default updateUser
