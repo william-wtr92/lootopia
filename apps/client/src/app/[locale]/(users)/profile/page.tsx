@@ -90,9 +90,9 @@ const ProfilePage = () => {
   const logoutUser = async () => {
     await logout()
 
-    qc.invalidateQueries({ queryKey: ["user"] })
-
     router.push(routes.auth.login)
+
+    qc.invalidateQueries({ queryKey: ["user"] })
   }
 
   return (
