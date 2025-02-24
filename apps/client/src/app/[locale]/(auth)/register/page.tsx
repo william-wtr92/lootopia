@@ -287,7 +287,8 @@ const RegisterPage = () => {
                       </FormControl>
                       <Button
                         type="button"
-                        className="text-primary hover:text-secondary absolute inset-y-0 right-0 flex items-center bg-transparent pr-3 shadow-none"
+                        variant="ghost"
+                        className="text-primary absolute inset-y-0 right-0 flex items-center pr-3 shadow-none hover:bg-transparent"
                         onClick={handleShowPassword}
                       >
                         {showPassword ? (

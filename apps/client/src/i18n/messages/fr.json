@@ -3,7 +3,7 @@
     "NotFound": {
       "title": "404 - Page non trouvée",
       "description": "Désolé, la page que vous recherchez n'existe pas.",
-      "cta":{
+      "cta": {
         "home": "Retour à l'accueil"
       }
     },
@@ -54,7 +54,7 @@
             "error": "Adresse e-mail invalide"
           },
           "phone": {
-            "label": "Téléphone", 
+            "label": "Téléphone",
             "error": "Numéro de téléphone invalide"
           },
           "birthdate": {
@@ -88,7 +88,7 @@
           "invalidExtension": "L'extension du fichier n'est pas valide"
         }
       },
-       "EmailValidation": {
+      "EmailValidation": {
         "title": "Confirmez votre adresse e-mail",
         "description": "Afin de valider votre compte, veuillez cliquer sur le bouton ci-dessous.",
         "cta": {
@@ -168,6 +168,42 @@
           "incorrectPassword": "Mot de passe incorrect",
           "userNotFound": "Cet email n'existe pas"
         }
+      },
+      "RequestPasswordReset": {
+        "title": "Demander une réinitialisation de mot de passe",
+        "description": "Entrez l'adresse e-mail associée à votre compte pour recevoir un lien de réinitialisation de mot de passe.",
+        "form": {
+          "email": {
+            "label": "Email",
+            "error": "Adresse email invalide"
+          },
+          "submit": "Envoyer l'email"
+        },
+        "errors": {
+          "waitBeforeRequestingPasswordReset": "Veuillez patienter avant de demander un autre e-mail !",
+          "userNotFound": "L'adresse e-mail n'existe pas"
+        },
+        "success": "Un email de réinitialisation de mot de passe a été envoyé avec succès !"
+      },
+      "PasswordReset": {
+        "title": "Réinitialiser le mot de passe",
+        "description": "Entrez un nouveau mot de passe pour votre compte.",
+        "form": {
+          "password": {
+            "label": "Mot de passe"
+          },
+          "confirmPassword": {
+            "label": "Confirmer le mot de passe",
+            "error": "Les mots de passe ne correspondent pas"
+          },
+          "submit": "Réinitialiser le mot de passe"
+        },
+        "errors": {
+          "passwordNotMatch": "Les mots de passe ne correspondent pas.",
+          "tokenExpired": "Votre lien de validation a expiré. Veuillez refaire une demande.",
+          "userNotFound": "Votre lien de validation est invalide. Veuillez refaire une demande."
+        },
+        "success": "Votre mot de passe a été réinitialisé avec succès !"
       }
     },
     "Hunts": {
@@ -198,7 +234,7 @@
         "empty": "Aucune chasse enregistrée en brouillon, créez-en une !",
         "cta": {
           "create": "Créer une chasse"
-        } 
+        }
       }
     },
     "Users": {
@@ -246,7 +282,7 @@
           "confirmPassword": {
             "label": "Confirmer le mot de passe",
             "error": "Les mots de passe ne correspondent pas"
-          }        
+          }
         },
         "success": {
           "updateSuccess": "Profil mis à jour avec succès !",
@@ -261,7 +297,7 @@
           "incorrectPassword": "Mot de passe incorrect"
         },
         "cta": {
-          "logout": "Déconnexion", 
+          "logout": "Déconnexion",
           "editProfile": "Éditer mon profil",
           "treasureMap": "Carte des trésors",
           "trophies": "Trophées",
@@ -273,7 +309,7 @@
   },
   "Components": {
     "SelectLocale": {
-       "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 Français} other {Unknown}}"
+      "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 Français} other {Unknown}}"
     },
     "NavBar": {
       "title": "Lootopia",
@@ -292,7 +328,7 @@
       "special": "Un caractère spécial",
       "length": "Au moins 12 caractères"
     },
-     "Hunts": {
+    "Hunts": {
       "Map": {
         "loading": "Chargement de la carte...",
         "marker": "Vous êtes ici"

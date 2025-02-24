@@ -60,6 +60,7 @@ const appConfigSchema = z
       template: z.object({
         register: z.string(),
         emailChangeValidation: z.string(),
+        passwordReset: z.string(),
       }),
     }),
   })
@@ -120,6 +121,7 @@ const appConfig = appConfigSchema.parse({
       register: process.env.SENDGRID_TEMPLATE_REGISTER,
       emailChangeValidation:
         process.env.SENDGRID_TEMPLATE_EMAIL_CHANGE_VALIDATION,
+      passwordReset: process.env.SENDGRID_TEMPLATE_PASSWORD_RESET,
     },
   },
 })

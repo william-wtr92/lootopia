@@ -20,11 +20,13 @@ import EditProfileForm from "@client/web/components/features/users/profile/EditP
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
 import { logout } from "@client/web/services/auth/logout"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
+import { useAuthStore } from "@client/web/store/useAuthStore"
 import anim from "@client/web/utils/anim"
 
 const ProfilePage = () => {
   const t = useTranslations("Pages.Users.Profile")
   const router = useRouter()
+  const { clearAuthToken } = useAuthStore()
 
   const qc = useQueryClient()
   const { data } = useQuery({
@@ -90,9 +92,11 @@ const ProfilePage = () => {
   const logoutUser = async () => {
     await logout()
 
-    router.push(routes.auth.login)
+    clearAuthToken()
 
-    qc.invalidateQueries({ queryKey: ["user"] })
+    qc.removeQueries({ queryKey: ["user"] })
+
+    router.push(routes.auth.login)
   }
 
   return (

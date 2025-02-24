@@ -40,3 +40,16 @@ export const updateEmailValidation = async (email: string) => {
     })
     .where(eq(users.email, email))
 }
+
+export const updatePassword = async (
+  email: string,
+  [passwordHash, passwordSalt]: string[]
+) => {
+  return db
+    .update(users)
+    .set({
+      passwordHash,
+      passwordSalt,
+    })
+    .where(eq(users.email, email))
+}

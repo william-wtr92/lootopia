@@ -169,5 +169,3 @@ export const profileRoute = app
 
     return c.json(updateSuccessKey, SC.success.OK)
   })
-
-export default app

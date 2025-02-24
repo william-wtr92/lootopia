@@ -3,7 +3,7 @@
     "NotFound": {
       "title": "404 - Page not found",
       "description": "Sorry, the page you are looking for does not exist.",
-      "cta":{
+      "cta": {
         "home": "Back to home"
       }
     },
@@ -108,26 +108,26 @@
           "userNotFound": "The validation link is invalid. Please request a new one."
         }
       },
-       "EmailChangeValidation": {
-          "title": "Confirm your new email address",
-          "description": "To validate your new email adress, please click on the button below.",
-          "cta": {
-            "validate": "Validate my email address",
-            "resend": {
-              "label": "You didn't receive the email?",
-              "link": "Click here to resend it"
-            }
-          },
-          "success": "Your email address has been validated successfully!",
-          "errors": {
-            "tokenNotProvided": "Please request a new validation.",
-            "tokenExpired": "Your validation link has expired. Please request a new one.",
-            "tokenSignatureMismatched": "The validation link is invalid. Please request a new one.",
-            "tokenInvalidStructure": "The validation link is invalid. Please request a new one.",
-            "unspecifiedErrorOccurred": "An unknown error occurred. Please try again.",
-            "userNotFound": "The validation link is invalid. Please request a new one."
+      "EmailChangeValidation": {
+        "title": "Confirm your new email address",
+        "description": "To validate your new email adress, please click on the button below.",
+        "cta": {
+          "validate": "Validate my email address",
+          "resend": {
+            "label": "You didn't receive the email?",
+            "link": "Click here to resend it"
           }
         },
+        "success": "Your email address has been validated successfully!",
+        "errors": {
+          "tokenNotProvided": "Please request a new validation.",
+          "tokenExpired": "Your validation link has expired. Please request a new one.",
+          "tokenSignatureMismatched": "The validation link is invalid. Please request a new one.",
+          "tokenInvalidStructure": "The validation link is invalid. Please request a new one.",
+          "unspecifiedErrorOccurred": "An unknown error occurred. Please try again.",
+          "userNotFound": "The validation link is invalid. Please request a new one."
+        }
+      },
       "ResendEmailValidation": {
         "title": "Resend validation email",
         "description": "Enter the email address associated with your account to receive a new validation link.",
@@ -172,6 +172,42 @@
           "incorrectPassword": "Incorrect password",
           "userNotFound": "This email does not exist"
         }
+      },
+      "RequestPasswordReset": {
+        "title": "Request a password reset",
+        "description": "Enter the email address associated with your account to receive a password reset link.",
+        "form": {
+          "email": {
+            "label": "Email",
+            "error": "Invalid email address"
+          },
+          "submit": "Send email"
+        },
+        "errors": {
+          "waitBeforeRequestingPasswordReset": "Please wait before requesting another email!",
+          "userNotFound": "The email address does not exist"
+        },
+        "success": "An email has been sent to reset your password!"
+      },
+      "PasswordReset": {
+        "title": "Reset your password",
+        "description": "Enter your new password to reset it.",
+        "form": {
+          "password": {
+            "label": "Password"
+          },
+          "confirmPassword": {
+            "label": "Confirm password",
+            "error": "Passwords do not match"
+          },
+          "submit": "Reset password"
+        },
+        "errors": {
+          "passwordNotMatch": "Passwords do not match",
+          "tokenExpired": "Your validation link has expired. Please request a new one.",
+          "userNotFound": "Your validation link is invalid. Please request a new one."
+        },
+        "success": "Your password has been reset successfully!"
       }
     },
     "Hunts": {
@@ -265,7 +301,7 @@
           "incorrectPassword": "Incorrect password"
         },
         "cta": {
-          "logout": "Logout", 
+          "logout": "Logout",
           "editProfile": "Edit my profile",
           "treasureMap": "Treasure map",
           "trophies": "Trophies",
@@ -274,10 +310,10 @@
         }
       }
     }
-  },  
+  },
   "Components": {
     "SelectLocale": {
-       "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 Français} other {Unknown}}"
+      "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 Français} other {Unknown}}"
     },
     "NavBar": {
       "title": "Lootopia",

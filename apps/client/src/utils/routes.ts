@@ -9,6 +9,8 @@ export const routes = {
     emailChangeValidation: "/email-change-validation",
     resendEmaiValidation: "/resend-email-validation",
     login: "/login",
+    passwordReset: "/password-reset",
+    requestPasswordReset: "/request-password-reset",
   },
   users: {
     profile: "/profile",

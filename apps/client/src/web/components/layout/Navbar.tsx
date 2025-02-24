@@ -10,14 +10,18 @@ import { routes } from "@client/utils/routes"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
 import SelectLocale from "@client/web/components/utils/SelectLocale"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
+import { useAuthStore } from "@client/web/store/useAuthStore"
 import anim from "@client/web/utils/anim"
 
 const Navbar = () => {
   const t = useTranslations("Components.NavBar")
 
+  const token = useAuthStore((state) => state.token)
+
   const { data } = useQuery({
     queryKey: ["user"],
     queryFn: () => getUserLoggedIn(),
+    enabled: !!token,
   })
 
   const user = data ? data : undefined
@@ -51,7 +55,7 @@ const Navbar = () => {
   }
 
   return (
-    <header className="sticky left-0 top-0 z-[9998] h-fit px-16 py-8">
+    <header className="sticky left-0 top-0 z-20 h-fit px-16 py-8">
       <nav className="flex items-center justify-between">
         <Link href={routes.home}>
           <MotionComponent
