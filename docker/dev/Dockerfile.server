@@ -4,10 +4,7 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 ENV PNPM_POSTINSTALL_ENABLE=false
 
-# INFO: add corepack manual install due to the common bug with npm registry 
-RUN npm install -g corepack@0.31.0 && \
-    corepack enable && \
-    corepack prepare pnpm@10.2.0 --activate
+RUN corepack enable
     
 WORKDIR /usr/src/app
 

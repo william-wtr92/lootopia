@@ -19,7 +19,7 @@ const ActionsButton = ({
       <Button
         onClick={handleDraftSave}
         disabled={!isValid}
-        className="text-primary bg-primaryBg w-48"
+        className="text-primary bg-primaryBg w-48 hover:text-white"
       >
         {t("saveDraft")}
       </Button>

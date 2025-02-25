@@ -22,13 +22,20 @@ export {
   type ResendEmailValidationSchema,
 } from "./users/auth/emailValidation"
 
-export { loginSchema, type LoginSchemaType } from "./users/auth/login"
+export { loginSchema, type LoginSchema } from "./users/auth/login"
 
 export {
   updateSchema,
   type UpdateSchema,
   type UpdateUser,
 } from "./users/auth/update"
+
+export {
+  requestPasswordResetSchema,
+  type RequestPasswordResetSchema,
+  passwordResetSchema,
+  type PasswordResetSchema,
+} from "./users/auth/passwordReset"
 
 // Hunts types
 

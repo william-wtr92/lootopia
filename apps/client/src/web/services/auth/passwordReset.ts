@@ -1,9 +1,9 @@
-import type { LoginSchema } from "@lootopia/common"
+import type { PasswordResetSchema } from "@lootopia/common"
 
 import { client } from "@client/web/utils/client"
 
-export const login = async (body: LoginSchema) => {
-  const response = await client.auth.login.$post({
+export const passwordReset = async (body: PasswordResetSchema) => {
+  const response = await client.auth["reset-password"].$post({
     json: body,
   })
 

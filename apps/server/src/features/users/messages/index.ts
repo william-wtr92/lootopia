@@ -60,6 +60,11 @@ export const incorrectPassword = {
   key: "incorrectPassword",
 } as const
 
+export const waitBeforeRequestingPasswordReset = {
+  result: "Wait before requesting password reset.",
+  key: "waitBeforeRequestingPasswordReset",
+} as const
+
 // SUCCESS MESSAGES
 
 export const registerSuccess = {
@@ -95,4 +100,14 @@ export const updateSuccessWithEmailChange = {
 export const logoutSuccess = {
   result: "You have successfully logged out.",
   key: "logoutSuccess",
+} as const
+
+export const passwordResetRequestSentSuccess = {
+  result: "Password reset request sent.",
+  key: "passwordResetRequestSentSuccess",
+} as const
+
+export const passwordResetSuccess = {
+  result: "Password reset successfully.",
+  key: "passwordResetSuccess",
 } as const

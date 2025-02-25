@@ -1,7 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { loginSchema, type LoginSchemaType } from "@lootopia/common"
+import { loginSchema, type LoginSchema } from "@lootopia/common"
 import {
   Button,
   Card,
@@ -29,18 +29,20 @@ import { Link } from "@client/i18n/routing"
 import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
 import { routes } from "@client/utils/routes"
 import { login } from "@client/web/services/auth/login"
+import { useAuthStore } from "@client/web/store/useAuthStore"
 
 const LoginPage = () => {
   const router = useRouter()
   const t = useTranslations("Pages.Auth.Login")
   const { toast } = useToast()
+  const { setAuthToken } = useAuthStore()
 
   const qc = useQueryClient()
 
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
-  const form = useForm<LoginSchemaType>({
+  const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     mode: "onBlur",
     defaultValues: {
@@ -53,7 +55,7 @@ const LoginPage = () => {
     formState: { errors },
   } = form
 
-  const onSubmit = async (data: LoginSchemaType) => {
+  const onSubmit = async (data: LoginSchema) => {
     setIsLoading(true)
     const [status, key] = await login(data)
     setIsLoading(false)
@@ -71,6 +73,8 @@ const LoginPage = () => {
       variant: "default",
       description: t("success"),
     })
+
+    setAuthToken()
 
     qc.invalidateQueries({ queryKey: ["user"] })
 
@@ -140,7 +144,8 @@ const LoginPage = () => {
                       </FormControl>
                       <Button
                         type="button"
-                        className="text-primary hover:text-secondary absolute inset-y-0 right-0 flex items-center bg-transparent pr-3 shadow-none"
+                        variant="ghost"
+                        className="text-primary absolute inset-y-0 right-0 flex items-center pr-3 shadow-none hover:bg-transparent"
                         onClick={handleShowPassword}
                       >
                         {showPassword ? (
@@ -164,11 +169,20 @@ const LoginPage = () => {
             </form>
           </Form>
         </CardContent>
-        <CardFooter className="text-primary flex justify-center text-sm">
-          <div>
+        <CardFooter className="text-primary flex flex-col items-center space-y-2 text-sm">
+          <div className="flex gap-1">
             {t("cta.title")}
             <Link href={routes.auth.register}>
               <span className="text-secondary">{t("cta.register")}</span>
+            </Link>
+          </div>
+
+          <div className="flex gap-1">
+            Vous avez oublié votre mot de passe ?
+            <Link href={routes.auth.requestPasswordReset}>
+              <span className="text-secondary">
+                Cliquez ici pour le réinitialiser
+              </span>
             </Link>
           </div>
         </CardFooter>

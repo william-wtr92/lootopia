@@ -15,5 +15,5 @@ export const tenMinutesTTL = 10 * 60
 export const oneHourTTL = 60 * 60
 export const oneDayTTL = 60 * 60 * 24
 export const twoDaysTTL = 60 * 60 * 24 * 2
+export const sevenDaysTTL = oneDayTTL * 7
 export const thirtyDaysTTL = oneDayTTL * 30
-export const oneMonthTTL = 60 * 60 * 24 * 30
