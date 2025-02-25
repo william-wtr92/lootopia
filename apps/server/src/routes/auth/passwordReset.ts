@@ -59,7 +59,7 @@ export const passwordResetRoute = app
 
       const user = await selectUserByEmail(email)
 
-      if (!user) {
+      if (!user || !user.active) {
         return c.json(userNotFound, SC.errors.NOT_FOUND)
       }
 
@@ -108,7 +108,7 @@ export const passwordResetRoute = app
 
         const user = await selectUserByEmail(email)
 
-        if (!user || !user.active) {
+        if (!user) {
           return c.json(userNotFound, SC.errors.BAD_REQUEST)
         }
 

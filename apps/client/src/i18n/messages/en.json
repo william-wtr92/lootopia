@@ -114,7 +114,7 @@
         "cta": {
           "validate": "Validate my email address",
           "resend": {
-            "label": "You didn't receive the email?",
+            "label": "Didn't receive the email?",
             "link": "Click here to resend it"
           }
         },
