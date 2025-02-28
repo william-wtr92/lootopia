@@ -46,6 +46,7 @@ export {
   type CombinedHuntSchema,
 } from "./hunts"
 
+export { cities, type City, OTHER_CITY_OPTION } from "./hunts/utils/cities"
 export { calculateHuntRange } from "./hunts/utils/calculateHuntRange"
 
 // Chests types

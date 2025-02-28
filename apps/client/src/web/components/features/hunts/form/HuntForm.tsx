@@ -1,6 +1,11 @@
 /* eslint-disable complexity */
 import { zodResolver } from "@hookform/resolvers/zod"
-import { type HuntSchema, huntSchema } from "@lootopia/common"
+import {
+  cities,
+  type HuntSchema,
+  huntSchema,
+  OTHER_CITY_OPTION,
+} from "@lootopia/common"
 import {
   Form,
   FormField,
@@ -14,6 +19,11 @@ import {
   FormLabel,
   DatePicker,
   Button,
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
 } from "@lootopia/ui"
 import { useTranslations } from "next-intl"
 import { useEffect } from "react"
@@ -37,6 +47,7 @@ const HuntForm = ({ onSubmit }: Props) => {
     defaultValues: {
       name: activeHunt?.name ?? "",
       description: activeHunt?.description ?? "",
+      city: activeHunt?.city ?? "",
       startDate: activeHunt?.startDate ?? "",
       endDate: activeHunt?.endDate ?? "",
       maxParticipants: activeHunt?.maxParticipants ?? undefined,
@@ -52,7 +63,7 @@ const HuntForm = ({ onSubmit }: Props) => {
     if (activeHunt) {
       form.reset(activeHunt)
     }
-  }, [activeHunt, form, form.reset])
+  }, [activeHunt, form])
 
   const today = new Date(new Date().setHours(0, 0, 0, 0))
 
@@ -107,6 +118,49 @@ const HuntForm = ({ onSubmit }: Props) => {
               </FormControl>
               <FormMessage className="text-error">
                 {errors.description ? t("description.error") : null}
+              </FormMessage>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="city"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>{t("city.label")}</FormLabel>
+              <FormControl>
+                <Select
+                  {...field}
+                  onValueChange={(v) => v !== "" && field.onChange(v)}
+                  value={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className="border-primary border">
+                      <SelectValue placeholder={t("city.placeholder")} />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent className="bg-primaryBg text-primary">
+                    {cities.map((city, index) => (
+                      <SelectItem
+                        key={`city-${index}-${city.name}`}
+                        value={city.name.toLowerCase()}
+                      >
+                        {city.name}
+                      </SelectItem>
+                    ))}
+                    <SelectItem
+                      key={`city-${OTHER_CITY_OPTION}`}
+                      className="font-semibold"
+                      value={OTHER_CITY_OPTION}
+                    >
+                      {t("city.other")}
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage className="text-error">
+                {errors.city ? t("city.error") : null}
               </FormMessage>
             </FormItem>
           )}

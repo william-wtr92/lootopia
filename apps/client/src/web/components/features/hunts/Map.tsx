@@ -96,15 +96,6 @@ const Map = ({ map, setMap, chests }: Props) => {
         })
       )
     })
-
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        setPosition({
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
-        })
-      })
-    }
   }, [setPosition, position])
 
   useEffect(() => {
