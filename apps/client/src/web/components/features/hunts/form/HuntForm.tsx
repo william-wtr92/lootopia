@@ -135,16 +135,14 @@ const HuntForm = ({ onSubmit }: Props) => {
                   onValueChange={(v) => v !== "" && field.onChange(v)}
                   value={field.value}
                 >
-                  <FormControl>
-                    <SelectTrigger className="border-primary border">
-                      <SelectValue placeholder={t("city.placeholder")} />
-                    </SelectTrigger>
-                  </FormControl>
+                  <SelectTrigger className="border-primary border">
+                    <SelectValue placeholder={t("city.placeholder")} />
+                  </SelectTrigger>
                   <SelectContent className="bg-primaryBg text-primary">
                     {cities.map((city, index) => (
                       <SelectItem
                         key={`city-${index}-${city.name}`}
-                        value={city.name.toLowerCase()}
+                        value={city.name}
                       >
                         {city.name}
                       </SelectItem>

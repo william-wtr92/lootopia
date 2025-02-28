@@ -101,7 +101,7 @@ const HuntPage = ({ huntId }: Props) => {
   const handleHuntSubmit = (data: HuntSchema) => {
     const newHuntId = createHunt({
       ...data,
-      city: data.city.toLowerCase(),
+      city: data.city,
     })
 
     if (newHuntId) {
