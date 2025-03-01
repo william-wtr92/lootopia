@@ -373,6 +373,12 @@
             "placeholder": "Enter a description for the hunt",
             "error": "Invalid description"
           },
+          "city": {
+            "label": "City",
+            "other": "Other",
+            "placeholder": "Select a city",
+            "error": "Invalid city"
+          },
           "startDate": {
             "label": "Start date",
             "placeholder": "Choose the start date",

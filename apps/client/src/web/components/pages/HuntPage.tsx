@@ -3,6 +3,7 @@ import {
   parsePosition,
   type ChestSchema,
   type PositionSchema,
+  cities,
 } from "@lootopia/common"
 import {
   Card,
@@ -98,11 +99,20 @@ const HuntPage = ({ huntId }: Props) => {
   }
 
   const handleHuntSubmit = (data: HuntSchema) => {
-    const newHuntId = createHunt(data)
+    const newHuntId = createHunt({
+      ...data,
+      city: data.city,
+    })
 
     if (newHuntId) {
       setIsHuntCreated(true)
       setActiveTab("chests")
+    }
+
+    const selectedCity = cities.find((city) => city.name === data.city)
+
+    if (selectedCity) {
+      setPosition(selectedCity.position)
     }
   }
 

@@ -15,6 +15,7 @@ export const hunts = pgTable("hunts", {
   id: uuid().defaultRandom().primaryKey().notNull(),
   name: varchar({ length: 255 }).notNull(),
   description: text().notNull(),
+  city: varchar({ length: 255 }).notNull(),
   startDate: timestamp().notNull(),
   endDate: timestamp().notNull(),
   mode: boolean().notNull().default(true),

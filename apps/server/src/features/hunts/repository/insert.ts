@@ -17,6 +17,7 @@ export const insertHuntWithChests = async (
       .values({
         name: huntData.name,
         description: huntData.description,
+        city: huntData.city.toLowerCase(),
         startDate,
         endDate,
         mode: huntData.mode,

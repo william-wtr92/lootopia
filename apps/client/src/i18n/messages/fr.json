@@ -369,6 +369,12 @@
             "placeholder": "Entrez une description pour la chasse",
             "error": "Description invalide"
           },
+          "city": {
+            "label": "Ville",
+            "other": "Autre",
+            "placeholder": "Choisissez une ville",
+            "error": "Ville invalide"
+          },
           "startDate": {
             "label": "Date de début",
             "placeholder": "Choisissez la date de début",
