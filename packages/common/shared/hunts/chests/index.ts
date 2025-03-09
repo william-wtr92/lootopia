@@ -5,8 +5,8 @@ const DEFAULT_CHEST_SIZE = 80 as const
 export const chestSchema = z.object({
   id: z.string(),
   position: z.object({
-    lat: z.number(),
-    lng: z.number(),
+    x: z.number(),
+    y: z.number(),
   }),
   description: z.string().optional(),
   reward: z.string().min(1),

@@ -236,8 +236,10 @@
       "List": {
         "title": "Draft hunts",
         "empty": "No hunt saved in draft, create one!",
+        "loading": "Loading...", 
         "cta": {
-          "create": "Create a hunt"
+          "create": "Create a hunt",
+          "loadMore": "Load more"
         }
       }
     },
@@ -335,7 +337,8 @@
     "Hunts": {
       "Map": {
         "loading": "Loading map...",
-        "marker": "You are here"
+        "marker": "You are here",
+        "reward": "Reward"
       },
       "Form": {
         "ChestForm": {
@@ -433,6 +436,16 @@
           "description": "Action cannot be undone.",
           "cancel": "Cancel",
           "confirm": "Delete"
+        }
+      },
+      "SearchBar": {
+        "options": {  
+          "city": "By city",
+          "name": "By Name"
+        },
+        "placeholder": {
+          "city": "The legend of the lost jewel",
+          "name": "Paris, Le Havre, Marseille..."
         }
       }
     }

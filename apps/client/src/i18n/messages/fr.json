@@ -232,8 +232,10 @@
       "List": {
         "title": "Brouillons des chasses",
         "empty": "Aucune chasse enregistrée en brouillon, créez-en une !",
+        "loading": "Chargement...", 
         "cta": {
-          "create": "Créer une chasse"
+          "create": "Créer une chasse",
+          "loadMore": "Charger plus"
         }
       }
     },
@@ -331,7 +333,8 @@
     "Hunts": {
       "Map": {
         "loading": "Chargement de la carte...",
-        "marker": "Vous êtes ici"
+        "marker": "Vous êtes ici",
+        "reward": "Récompense"
       },
       "Form": {
         "ChestForm": {
@@ -429,6 +432,16 @@
           "description": "Cette action est irréversible.",
           "cancel": "Annuler",
           "confirm": "Supprimer"
+        }
+      },
+      "SearchBar": {
+        "options": {  
+          "city": "Par ville",
+          "name": "Par nom"
+        },
+        "placeholder": {
+          "city": "La légende du joyau perdu",
+          "name": "Paris, Le Havre, Marseille..."
         }
       }
     }

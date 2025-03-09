@@ -30,7 +30,7 @@ export const insertHuntWithChests = async (
 
     await tx.insert(chests).values(
       chestsData.map((chest) => ({
-        position: { x: chest.position.lng, y: chest.position.lat },
+        position: { x: chest.position.x, y: chest.position.y },
         description: chest.description,
         reward: chest.reward,
         size: chest.size,

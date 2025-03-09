@@ -206,7 +206,15 @@ const HuntPage = ({ huntId }: Props) => {
                 <PositionForm onSubmit={handlePositionSubmit} />
               </Card>
             )}
-            <Map map={map} setMap={setMap} chests={chests} />
+            <Map
+              map={map}
+              setMap={setMap}
+              chests={chests}
+              heightClass="h-[75vh]"
+              widthClass="w-full"
+              displayChests={true}
+              canDeleteChest={true}
+            />
             {map && (
               <ActionsButton
                 handleDraftSave={handleDraftSave}

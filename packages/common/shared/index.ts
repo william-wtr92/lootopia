@@ -4,7 +4,7 @@ export * from "./global/position"
 
 // Global types
 
-export { ROLES, type Roles } from "./users/global"
+export { ROLES, type Roles, userSchema, type UserSchema } from "./users"
 
 // Features types
 

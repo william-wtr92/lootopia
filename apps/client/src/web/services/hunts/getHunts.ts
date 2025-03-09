@@ -8,7 +8,7 @@ export const getHunts = async (
 ) => {
   const response = await client.hunts.$get({
     query: {
-      limit: 1,
+      limit: 10,
       page: pageParam,
       name: searchType === huntFilterTypeEnum.name ? value : undefined,
       city: searchType === huntFilterTypeEnum.city ? value : undefined,

@@ -5,14 +5,14 @@ meta {
 }
 
 get {
-  url: {{localhost}}/hunts?limit=1&page=1
+  url: {{localhost}}/hunts?limit=10&page=0
   body: none
   auth: none
 }
 
 query {
-  limit: 1
-  page: 1
-  ~city: s
+  limit: 10
+  page: 0
+  ~city: 
   ~name: 
 }

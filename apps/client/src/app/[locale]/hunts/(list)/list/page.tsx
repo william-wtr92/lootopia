@@ -2,6 +2,7 @@
 
 import { Button } from "@lootopia/ui"
 import { useInfiniteQuery } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
 import React, { useEffect, useState } from "react"
 
 import HuntListItem from "@client/web/components/features/hunts/list/HuntListItem"
@@ -17,6 +18,8 @@ export type HuntFilterType =
   (typeof huntFilterTypeEnum)[keyof typeof huntFilterTypeEnum]
 
 const HuntsListPage = () => {
+  const t = useTranslations("Pages.Hunts.List")
+
   const [inputValue, setInputValue] = useState<string>("")
   const [huntFilterType, setHuntFilterType] = useState<HuntFilterType>("name")
 
@@ -41,6 +44,10 @@ const HuntsListPage = () => {
     data?.pages
       .flatMap((page) => page?.result)
       .filter((item) => item !== undefined) || []
+
+  const handleInputValue = (value: string) => {
+    setInputValue(value)
+  }
 
   const handleHuntFilterType = (value: HuntFilterType) => {
     setHuntFilterType(value)
@@ -67,12 +74,11 @@ const HuntsListPage = () => {
   return (
     <main className="relative mx-auto mb-8 w-[70%] flex-1 space-y-4">
       <HuntSearchBar
-        setInputValue={setInputValue}
+        handleInputValue={handleInputValue}
         huntFilterType={huntFilterType}
         handleHuntFilterType={handleHuntFilterType}
       />
 
-      {/* List of hunts */}
       <div className="flex w-full flex-col gap-4">
         {hunts.map((hunt, index) => (
           <HuntListItem key={index} hunt={hunt} />
@@ -80,7 +86,7 @@ const HuntsListPage = () => {
 
         {hasNextPage && (
           <Button variant={"default"} onClick={loadMore}>
-            {isFetching ? "Loading..." : "Load more"}
+            {isFetching ? t("loading") : t("cta.loadMore")}
           </Button>
         )}
       </div>

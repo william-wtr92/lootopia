@@ -6,11 +6,14 @@ import { Hono } from "hono"
 
 const app = new Hono()
 
+const defaultLimit = 10
+const defaultPage = 0
+
 export const listHuntRoute = app.get("/", async (c) => {
   const { limit: limitString, page: offsetString, name, city } = c.req.query()
 
-  const limit = parseInt(limitString, 10) || 10
-  const page = parseInt(offsetString, 10) || 0
+  const limit = parseInt(limitString, 10) || defaultLimit
+  const page = parseInt(offsetString, 10) || defaultPage
 
   const hunts = await selectHunts(limit, page, name, city)
 
