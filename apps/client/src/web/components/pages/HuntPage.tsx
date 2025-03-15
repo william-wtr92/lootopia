@@ -71,6 +71,19 @@ const HuntPage = ({ huntId }: Props) => {
   }, [huntId, hunts, setActiveHunt])
 
   const activeHunt = activeHuntId ? hunts[activeHuntId] : null
+
+  useEffect(() => {
+    if (activeHunt && activeHunt.hunt.city) {
+      const selectedCity = cities.find(
+        (city) => city.name === activeHunt.hunt.city
+      )
+
+      if (selectedCity) {
+        setPosition(selectedCity.position)
+      }
+    }
+  }, [activeHunt, setPosition])
+
   const chests = activeHunt ? activeHunt.chests : []
 
   const isValid =
