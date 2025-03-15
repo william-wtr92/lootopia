@@ -142,12 +142,12 @@ const EditProfileForm = (props: Props) => {
       return
     }
 
-    const [messageKey, errorKey] = await updateUser(data)
+    const [messageKey, key] = await updateUser(data)
 
     if (!messageKey) {
       toast({
         variant: "destructive",
-        description: translateDynamicKey(t, `errors.${errorKey}`),
+        description: translateDynamicKey(t, `errors.${key}`),
       })
 
       return
