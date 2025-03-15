@@ -50,4 +50,18 @@ export { cities, type City, OTHER_CITY_OPTION } from "./hunts/utils/cities"
 export { calculateHuntRange } from "./hunts/utils/calculateHuntRange"
 
 // Chests types
-export { chestSchema, type ChestSchema } from "./hunts/chests"
+export {
+  chestSchema,
+  type ChestSchema,
+  type ChestRewardType,
+  CHEST_REWARD_TYPES,
+} from "./hunts/chests"
+
+// Artifacts types
+export {
+  ACCEPTED_FILE_TYPES,
+  artifactUploadSchema,
+  type ArtifactUploadSchema,
+  artifactSchema,
+  type ArtifactSchema,
+} from "./artifacts"

@@ -17,6 +17,7 @@ const MapEvents = ({ setIsSheetOpen, setCurrentChest }: Props) => {
         maxUsers: 1,
         visibility: false,
         description: "",
+        rewardType: "crown",
         reward: "",
       }
 

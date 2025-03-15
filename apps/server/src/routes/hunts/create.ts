@@ -1,6 +1,10 @@
 import { zValidator } from "@hono/zod-validator"
 import { combinedHuntSchema, SC } from "@lootopia/common"
 import {
+  artifactNotFound,
+  selectArtifactById,
+} from "@server/features/artifacts"
+import {
   huntCreatedSuccess,
   insertHuntWithChests,
 } from "@server/features/hunts"
@@ -21,6 +25,16 @@ export const createHuntRoute = app.post(
 
     if (!user) {
       return c.json(userNotFound, SC.errors.NOT_FOUND)
+    }
+
+    for (const chest of body.chests) {
+      if (chest.rewardType === "artifact") {
+        const artifact = await selectArtifactById(chest.reward.toString())
+
+        if (!artifact) {
+          return c.json(artifactNotFound, SC.errors.NOT_FOUND)
+        }
+      }
     }
 
     insertHuntWithChests(body, user.id)

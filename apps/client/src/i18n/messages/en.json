@@ -153,10 +153,6 @@
             "label": "Email",
             "error": "Invalid email address"
           },
-          "phone": {
-            "label": "Phone",
-            "error": "Invalid phone number"
-          },
           "password": {
             "label": "Password"
           },
@@ -343,10 +339,25 @@
             "label": "Description",
             "placeholder": "Enter a description for the chest"
           },
+          "rewardType": {
+            "label": "Reward type",
+            "select": {
+              "crown": "Crown(s)",
+              "artifact": "Artifact"
+            },
+            "placeholder": "Select the type of reward",
+            "error": "Invalid reward type"
+          },
           "reward": {
-            "label": "Reward",
-            "placeholder": "Enter the reward for the chest",
-            "error": "Invalid reward"
+            "crown": {
+              "label": "Amout of crowns",
+              "error": "Invalid amount"
+            },
+            "artifact": {
+              "label": "Choose an Artifact",
+              "empty": "No artifact available",
+              "error": "Invalid artifact"
+            }
           },
           "size": {
             "label": "Chest size",
@@ -360,6 +371,11 @@
             "label": "Visibility",
             "description": "Make safe visible to all users (default: disabled)"
           },
+          "errors": {
+            "userNotFound": "You are not authorized to perform this action",
+            "artifactAlreadyExists": "The artifact already exists, retrieve it from the list"
+          },
+          "successArtifactUpload": "The artifact has been added successfully!",
           "submit": "Add chest"
         },
         "HuntForm": {
@@ -433,6 +449,18 @@
           "description": "Action cannot be undone.",
           "cancel": "Cancel",
           "confirm": "Delete"
+        }
+      }
+    },
+    "Artifacts": {
+      "ArtifactPopover": {
+        "button": "Add artifact",
+        "Form": {
+          "file": {
+            "label": "Choose a model",
+            "error": "Invalid file"
+          },
+          "submit": "Upload"
         }
       }
     }

@@ -43,6 +43,7 @@ const appRouter = app
   .route(router.auth, routes.auth)
   .route(router.hunts, routes.hunts)
   .route(router.users, routes.users)
+  .route(router.artifacts, routes.artifacts)
 
 serve({
   fetch: app.fetch,

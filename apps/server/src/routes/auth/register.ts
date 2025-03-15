@@ -15,7 +15,7 @@ import {
   selectUserByNickname,
   selectUserByPhone,
 } from "@server/features/users"
-import { uploadImage } from "@server/utils/actions/azureActions"
+import { azureDirectory, uploadImage } from "@server/utils/actions/azureActions"
 import { redis } from "@server/utils/clients/redis"
 import {
   allowedMimeTypes,
@@ -76,7 +76,11 @@ export const registerRoute = app.post(
         return c.json(invalidExtension, SC.errors.BAD_REQUEST)
       }
 
-      avatarUrl = await uploadImage(filteredBody.avatar, mimeType)
+      avatarUrl = await uploadImage(
+        azureDirectory.avatars,
+        filteredBody.avatar,
+        mimeType
+      )
     }
 
     const [passwordHash, passwordSalt] = await hashPassword(password)

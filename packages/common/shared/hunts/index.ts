@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { chestSchema } from "./chests"
+import { baseChestSchema } from "./chests"
 
 export const huntSchema = z.object({
   name: z.string().min(3),
@@ -24,7 +24,7 @@ export type HuntSchema = z.infer<typeof huntSchema>
 
 export const combinedHuntSchema = z.object({
   hunt: huntSchema,
-  chests: z.array(chestSchema.omit({ id: true })),
+  chests: z.array(baseChestSchema.omit({ id: true })),
 })
 
 export type CombinedHuntSchema = z.infer<typeof combinedHuntSchema>
