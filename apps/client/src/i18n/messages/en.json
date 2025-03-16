@@ -355,8 +355,8 @@
             },
             "artifact": {
               "label": "Choose an Artifact",
-              "empty": "No artifact available",
-              "error": "Invalid artifact"
+              "placeholder": "Select an artifact",
+              "empty": "No artifact available"
             }
           },
           "size": {

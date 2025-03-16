@@ -355,8 +355,8 @@
             },
             "artifact": {
               "label": "Choisissez un artefact",
-              "empty": "Aucun artefact trouvé",
-              "error": "Artefact invalide"
+              "placeholder": "Selectionnez un artefact",
+              "empty": "Aucun artefact trouvé"
             }
           },
           "size": {

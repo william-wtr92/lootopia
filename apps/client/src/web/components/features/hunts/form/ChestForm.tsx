@@ -211,7 +211,9 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
                     onValueChange={(value) => handleRewardChange(value)}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select an artifact" />
+                      <SelectValue
+                        placeholder={t("reward.artifact.placeholder")}
+                      />
                     </SelectTrigger>
                     <SelectContent className="bg-primaryBg text-primary">
                       {artifacts && artifacts?.length > 0 ? (
@@ -227,9 +229,6 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
                       )}
                     </SelectContent>
                   </Select>
-                  <FormMessage>
-                    {errors.reward ? t("reward.artifact.error") : null}
-                  </FormMessage>
                 </FormItem>
               )}
             />
