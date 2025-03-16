@@ -52,11 +52,12 @@ const ArtifactPopover = ({ onUpload }: Props) => {
     }
 
     onUpload(data)
-    setOpen(false)
+    form.resetField("file")
+    handleOpen()
   }
 
-  const handleOpen = (isOpen: boolean) => {
-    setOpen(isOpen)
+  const handleOpen = () => {
+    setOpen((prev) => !prev)
   }
 
   const handleChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
@@ -66,7 +67,7 @@ const ArtifactPopover = ({ onUpload }: Props) => {
   }
 
   return (
-    <Popover open={open} onOpenChange={(isOpen) => handleOpen(isOpen)}>
+    <Popover open={open} onOpenChange={handleOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" className="w-full">
           {t("button")}
