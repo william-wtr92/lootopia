@@ -375,7 +375,7 @@
             "userNotFound": "You are not authorized to perform this action",
             "artifactAlreadyExists": "The artifact already exists, retrieve it from the list"
           },
-          "successArtifactUpload": "The artifact has been added successfully!",
+          "artifactCreated": "The artifact has been added successfully!",
           "submit": "Add chest"
         },
         "HuntForm": {

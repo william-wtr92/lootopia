@@ -375,7 +375,7 @@
             "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action.",
             "artifactAlreadyExists": "L'artefact existe déjà, retrouvez le dans la liste des artefacts."
           },
-          "successArtifactUpload": "Artefact ajouté avec succès !",
+          "artifactCreated": "Artefact ajouté avec succès !",
           "submit": "Ajouter un coffre"
         },
         "HuntForm": {

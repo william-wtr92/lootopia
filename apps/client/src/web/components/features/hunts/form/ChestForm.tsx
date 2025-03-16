@@ -34,7 +34,7 @@ import { v4 as uuid } from "uuid"
 
 import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
 import ArtifactPopover from "@client/web/components/features/artifacts/ArtifactPopover"
-import { listArtifacts } from "@client/web/services/artifacts/listArtifacts"
+import { getArtifacts } from "@client/web/services/artifacts/getArtifacts"
 import { uploadArtifact } from "@client/web/services/artifacts/uploadArtifact"
 
 type ChestFormProps = {
@@ -53,7 +53,7 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
 
   const { data: artifacts } = useQuery({
     queryKey: ["artifacts"],
-    queryFn: listArtifacts,
+    queryFn: getArtifacts,
   })
 
   const form = useForm<ChestSchema>({
@@ -98,7 +98,7 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
 
     toast({
       variant: "default",
-      description: t("successArtifactUpload"),
+      description: t("artifactCreated"),
     })
   }
 

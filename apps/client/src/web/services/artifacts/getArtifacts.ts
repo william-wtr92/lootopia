@@ -1,6 +1,6 @@
 import { client } from "@client/web/utils/client"
 
-export const listArtifacts = async () => {
+export const getArtifacts = async () => {
   const response = await client.artifacts.$get()
 
   if (response.ok) {
