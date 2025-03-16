@@ -10,6 +10,10 @@ export const MotionComponent = ({
   className,
   variants,
   custom,
+  onClick,
+  initial,
+  animate,
+  exit,
   ...props
 }: {
   children?: ReactNode
@@ -17,6 +21,10 @@ export const MotionComponent = ({
   className?: string
   variants?: any
   custom?: any
+  onClick?: (e?: any) => void
+  initial?: string
+  animate?: string
+  exit?: string
 }) => {
   const Component = type ? motion[type] : motion.div
 
@@ -25,6 +33,10 @@ export const MotionComponent = ({
       className={className}
       variants={variants}
       custom={custom}
+      onClick={onClick}
+      initial={initial}
+      animate={animate}
+      exit={exit}
       {...props}
     >
       {children}

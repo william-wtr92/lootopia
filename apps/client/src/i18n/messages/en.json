@@ -233,13 +233,24 @@
           "userNotFound": "You are not authorized to perform this action"
         }
       },
-      "List": {
+      "Drafts": {
         "title": "Draft hunts",
         "empty": "No hunt saved in draft, create one!",
-        "loading": "Loading...", 
         "cta": {
-          "create": "Create a hunt",
-          "loadMore": "Load more"
+          "create-a-hunt": "Create a hunt"
+        }
+      },
+      "List": {
+        "loading": "Loading hunts...", 
+        "no-hunts-available": "No hunts available",
+        "no-hunts-hint": "There don't seem to be any treasure hunts available at the moment. Come back later or create your own adventure!",
+        "no-hunts-search": "No hunts found for search : ", 
+        "no-hunts-search-hint": "There don't seem to be any treasure hunts matching your search. Try another search or create your own adventure!",
+        "cta": {
+          "create-a-hunt": "Create a hunt",
+          "load-more": "Load more",
+          "refresh": "Refresh",
+          "delete-search-value": "Delete search"
         }
       }
     },
@@ -446,6 +457,9 @@
         "placeholder": {
           "city": "The legend of the lost jewel",
           "name": "Paris, Le Havre, Marseille..."
+        },
+        "cta": {
+          "create-a-hunt": "Create a hunt"
         }
       }
     }

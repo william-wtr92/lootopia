@@ -7,6 +7,8 @@ import React, { useEffect, useState } from "react"
 
 import HuntListItem from "@client/web/components/features/hunts/list/HuntListItem"
 import HuntSearchBar from "@client/web/components/features/hunts/list/HuntSearchBar"
+import NoResultHuntList from "@client/web/components/features/hunts/list/NoResultHuntList"
+import Loader from "@client/web/components/utils/Loader"
 import { getHunts } from "@client/web/services/hunts/getHunts"
 
 export const huntFilterTypeEnum = {
@@ -23,7 +25,7 @@ const HuntsListPage = () => {
   const [inputValue, setInputValue] = useState<string>("")
   const [huntFilterType, setHuntFilterType] = useState<HuntFilterType>("name")
 
-  const { data, hasNextPage, isFetching, refetch, fetchNextPage } =
+  const { data, hasNextPage, isLoading, isFetching, refetch, fetchNextPage } =
     useInfiniteQuery({
       queryKey: ["hunts"],
       queryFn: ({ pageParam = 0 }) =>
@@ -72,24 +74,40 @@ const HuntsListPage = () => {
   }, [refetch])
 
   return (
-    <main className="relative mx-auto mb-8 w-[70%] flex-1 space-y-4">
+    <main className="relative mx-auto mb-8 flex w-[70%] flex-1 flex-col gap-4">
       <HuntSearchBar
+        inputValue={inputValue}
         handleInputValue={handleInputValue}
         huntFilterType={huntFilterType}
         handleHuntFilterType={handleHuntFilterType}
       />
 
-      <div className="flex w-full flex-col gap-4">
-        {hunts.map((hunt, index) => (
-          <HuntListItem key={index} hunt={hunt} />
-        ))}
+      {isLoading ? (
+        <div className="flex h-full w-full flex-1 flex-col items-center justify-center">
+          <Loader label={t("loading")} />
+        </div>
+      ) : hunts.length > 0 ? (
+        <div className="flex w-full flex-col gap-4">
+          {hunts.map((hunt, index) => (
+            <HuntListItem key={index} hunt={hunt} />
+          ))}
 
-        {hasNextPage && (
-          <Button variant={"default"} onClick={loadMore}>
-            {isFetching ? t("loading") : t("cta.loadMore")}
-          </Button>
-        )}
-      </div>
+          {hasNextPage &&
+            (isFetching ? (
+              <Loader />
+            ) : (
+              <Button variant={"default"} onClick={loadMore}>
+                {t("cta.load-more")}
+              </Button>
+            ))}
+        </div>
+      ) : (
+        <NoResultHuntList
+          inputValue={inputValue}
+          handleInputValue={handleInputValue}
+          refetch={refetch}
+        />
+      )}
     </main>
   )
 }

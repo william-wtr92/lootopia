@@ -1,3 +1,4 @@
+import { defaultLimit, defaultPage } from "@lootopia/common"
 import {
   selectHunts,
   selectHuntsCount,
@@ -5,9 +6,6 @@ import {
 import { Hono } from "hono"
 
 const app = new Hono()
-
-const defaultLimit = 10
-const defaultPage = 0
 
 export const listHuntRoute = app.get("/", async (c) => {
   const { limit: limitString, page: offsetString, name, city } = c.req.query()

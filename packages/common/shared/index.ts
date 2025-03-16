@@ -44,6 +44,8 @@ export {
   type HuntSchema,
   combinedHuntSchema,
   type CombinedHuntSchema,
+  defaultLimit,
+  defaultPage,
 } from "./hunts"
 
 export { cities, type City, OTHER_CITY_OPTION } from "./hunts/utils/cities"

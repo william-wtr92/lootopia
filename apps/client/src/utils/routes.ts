@@ -17,8 +17,9 @@ export const routes = {
   },
   hunts: {
     list: "/hunts/list",
-    id: (huntId: string) => `/hunts/${huntId}`,
     create: "/hunts/create",
+    drafts: "/hunts/drafts",
+    id: (huntId: string) => `/hunts/${huntId}`,
   },
   api: {
     users: {

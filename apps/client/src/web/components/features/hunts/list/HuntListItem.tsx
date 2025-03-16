@@ -11,6 +11,7 @@ import { formatDate } from "@client/utils/helpers/formatDate"
 import Map from "@client/web/components/features/hunts/Map"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
 import anim from "@client/web/utils/anim"
+import { capitalizeFirstLetter } from "@client/web/utils/capitalizeFirstLetter"
 
 type Props = {
   hunt: HuntSchema & {
@@ -25,7 +26,7 @@ const HuntListItem = (props: Props) => {
   const { hunt } = props
 
   const [map, setMap] = useState<L.Map | null>(null)
-  const [isDeployed, setIsDeployed] = useState<boolean>(false)
+  const [isDeployed, setIsDeployed] = useState(false)
 
   const handleIsDeployed = () => {
     setIsDeployed((prev) => !prev)
@@ -110,7 +111,9 @@ const HuntListItem = (props: Props) => {
           <div className="text-primary flex items-center gap-6 text-sm font-medium">
             <span>
               <MapPin size={24} className="text-accent inline-block" />{" "}
-              <span className="first-letter:uppercase">{hunt.city}</span>
+              <span className="first-letter:uppercase">
+                {capitalizeFirstLetter(hunt.city)}
+              </span>
             </span>
 
             <span>

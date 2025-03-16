@@ -79,7 +79,7 @@ const Map = ({
   const [customMarker, setCustomMarker] = useState<L.Icon>()
   const [chestMarker, setChestMarker] = useState<L.Icon>()
   const [center, setCenter] = useState<LatLngExpression | undefined>(undefined)
-  const [zoom, setZoom] = useState<number>(0)
+  const [zoom, setZoom] = useState(0)
 
   const [huntCenter, setHuntCenter] = useState<PositionCords | null>(null)
   const [huntRadius, setHuntRadius] = useState<number>(0)

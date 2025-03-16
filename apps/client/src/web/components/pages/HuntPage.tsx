@@ -171,7 +171,7 @@ const HuntPage = ({ huntId }: Props) => {
         value={activeTab}
         onValueChange={setActiveTab}
         defaultValue="hunt"
-        className="relative z-50"
+        className="relative z-10"
       >
         <TabsList className="text-primary bg-primaryBg z-20 mx-auto grid w-2/5 grid-cols-2 rounded-lg border shadow-md">
           <TabsTrigger value="hunt">{t("tabs.triggers.hunt")}</TabsTrigger>
