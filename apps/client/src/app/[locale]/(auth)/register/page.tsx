@@ -29,14 +29,14 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 
 import { Link } from "@client/i18n/routing"
+import PasswordStrengthChecker from "@client/web/components/utils/form/PasswordStrengthChecker"
+import { routes } from "@client/web/routes"
+import { register } from "@client/web/services/auth/register"
 import {
   checkPasswordStrength,
   type PasswordStrength,
-} from "@client/utils/helpers/passwordChecker"
-import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
-import { routes } from "@client/utils/routes"
-import PasswordStrengthChecker from "@client/web/components/utils/form/PasswordStrengthChecker"
-import { register } from "@client/web/services/auth/register"
+} from "@client/web/utils/passwordChecker"
+import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 const RegisterPage = () => {
   const t = useTranslations("Pages.Auth.Register")

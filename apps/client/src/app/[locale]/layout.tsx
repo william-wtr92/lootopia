@@ -11,7 +11,7 @@ import Footer from "@client/web/components/layout/Footer"
 import Navbar from "@client/web/components/layout/Navbar"
 import TreasureMapBackground from "@client/web/components/layout/TreasureMapBackground"
 
-const fredoka = Fredoka({
+export const fredoka = Fredoka({
   variable: "--font-fredoka",
   subsets: ["latin"],
 })

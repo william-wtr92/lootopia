@@ -4,7 +4,7 @@ import { AnimatePresence } from "framer-motion"
 import { useTranslations } from "next-intl"
 
 import PasswordCheckItem from "./PasswordCheckItem"
-import type { PasswordStrength } from "@client/utils/helpers/passwordChecker"
+import type { PasswordStrength } from "@client/web/utils/passwordChecker"
 
 type Props = {
   passwordStrength: PasswordStrength

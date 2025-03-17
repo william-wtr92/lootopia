@@ -6,12 +6,12 @@ import { useTranslations } from "next-intl"
 import { useEffect } from "react"
 
 import { Link } from "@client/i18n/routing"
-import { routes } from "@client/utils/routes"
 import AlertDeleteHunt from "@client/web/components/features/hunts/utils/AlertDeleteHunt"
+import { routes } from "@client/web/routes"
 import { useHuntStore } from "@client/web/store/useHuntStore"
 
 const HuntListPage = () => {
-  const t = useTranslations("Pages.Hunts.List")
+  const t = useTranslations("Pages.Hunts.Drafts")
   const { hunts, removeHunt, setActiveHunt, activeHuntId } = useHuntStore()
   const huntsArray = Object.entries(hunts)
 
@@ -68,7 +68,7 @@ const HuntListPage = () => {
           )}
           <Link href={routes.hunts.create}>
             <Button className="text-primary bg-accent hover:bg-accent-hover mt-6 w-full">
-              {t("cta.create")}
+              {t("cta.create-a-hunt")}
             </Button>
           </Link>
         </CardContent>

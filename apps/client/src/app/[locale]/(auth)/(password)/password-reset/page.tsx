@@ -24,14 +24,14 @@ import { useQueryState } from "nuqs"
 import { useCallback, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 
+import PasswordStrengthChecker from "@client/web/components/utils/form/PasswordStrengthChecker"
+import { routes } from "@client/web/routes"
+import { passwordReset } from "@client/web/services/auth/passwordReset"
 import {
   checkPasswordStrength,
   type PasswordStrength,
-} from "@client/utils/helpers/passwordChecker"
-import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
-import { routes } from "@client/utils/routes"
-import PasswordStrengthChecker from "@client/web/components/utils/form/PasswordStrengthChecker"
-import { passwordReset } from "@client/web/services/auth/passwordReset"
+} from "@client/web/utils/passwordChecker"
+import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 const PasswordResetPage = () => {
   const router = useRouter()

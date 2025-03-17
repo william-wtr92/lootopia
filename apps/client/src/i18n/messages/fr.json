@@ -229,11 +229,24 @@
         },
         "success": "La chasse a été créée avec succès !"
       },
-      "List": {
+      "Drafts": {
         "title": "Brouillons des chasses",
         "empty": "Aucune chasse enregistrée en brouillon, créez-en une !",
         "cta": {
-          "create": "Créer une chasse"
+          "create-a-hunt": "Créer une chasse"
+        }
+      },
+      "List": {
+        "loading": "Chargement...", 
+        "no-hunts-available": "Aucune chasses disponible",
+        "no-hunts-hint": "Il semble qu'il n'y ait aucune chasse au trésor disponible pour le moment. Revenez plus tard ou créez votre propre aventure !",
+        "no-hunts-search": "Aucune chasse trouvée pour la recherche : ", 
+        "no-hunts-search-hint": "Il semble qu'il n'y ait aucune chasse au trésor correspondant à votre recherche. Essayez une autre recherche ou créez votre propre aventure !",
+        "cta": {
+          "create-a-hunt": "Créer une chasse",
+          "load-more": "Charger plus",
+          "refresh": "Rafraîchir",
+          "delete-search-value": "Supprimer la recherche"
         }
       }
     },
@@ -331,7 +344,8 @@
     "Hunts": {
       "Map": {
         "loading": "Chargement de la carte...",
-        "marker": "Vous êtes ici"
+        "marker": "Vous êtes ici",
+        "reward": "Récompense"
       },
       "Form": {
         "ChestForm": {
@@ -449,6 +463,19 @@
           "description": "Cette action est irréversible.",
           "cancel": "Annuler",
           "confirm": "Supprimer"
+        }
+      },
+      "SearchBar": {
+        "options": {  
+          "city": "Par ville",
+          "name": "Par nom"
+        },
+        "placeholder": {
+          "city": "La légende du joyau perdu",
+          "name": "Paris, Le Havre, Marseille..."
+        },
+        "cta": {
+          "create-a-hunt": "Créer une chasse"
         }
       }
     },

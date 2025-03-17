@@ -1,6 +1,9 @@
 import { z } from "zod"
 import { baseChestSchema } from "./chests"
 
+export const defaultLimit = 10
+export const defaultPage = 0
+
 export const huntSchema = z.object({
   name: z.string().min(3),
   description: z.string().min(3),

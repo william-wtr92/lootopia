@@ -16,9 +16,10 @@ export const routes = {
     profile: "/profile",
   },
   hunts: {
-    list: "/hunts",
-    id: (huntId: string) => `/hunts/${huntId}`,
+    list: "/hunts/list",
     create: "/hunts/create",
+    drafts: "/hunts/drafts",
+    id: (huntId: string) => `/hunts/${huntId}`,
   },
   api: {
     users: {

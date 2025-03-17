@@ -24,9 +24,9 @@ import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 
-import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
-import { routes } from "@client/utils/routes"
+import { routes } from "@client/web/routes"
 import { requestPasswordReset } from "@client/web/services/auth/requestPasswordReset"
+import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 const RequestPasswordResetPage = () => {
   const t = useTranslations("Pages.Auth.RequestPasswordReset")

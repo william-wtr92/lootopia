@@ -8,8 +8,8 @@ export type ChestRewardType = (typeof CHEST_REWARD_TYPES)[number]
 export const baseChestSchema = z.object({
   id: z.string(),
   position: z.object({
-    lat: z.number(),
-    lng: z.number(),
+    x: z.number(),
+    y: z.number(),
   }),
   description: z.string().optional(),
   rewardType: z.enum(CHEST_REWARD_TYPES),

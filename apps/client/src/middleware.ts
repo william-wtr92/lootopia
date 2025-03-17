@@ -2,8 +2,8 @@ import { NextResponse, type NextRequest } from "next/server"
 import createMiddleware from "next-intl/middleware"
 
 import { env } from "./env"
-import { authTokenName } from "./utils/def/constants"
-import { protectedRoutes, routes } from "./utils/routes"
+import { protectedRoutes, routes } from "./web/routes"
+import { authTokenName } from "./web/utils/def/constants"
 import { locales, routing } from "@client/i18n/routing"
 
 const middlewareI18n = createMiddleware(routing)

@@ -32,10 +32,10 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { v4 as uuid } from "uuid"
 
-import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
 import ArtifactPopover from "@client/web/components/features/artifacts/ArtifactPopover"
 import { getArtifacts } from "@client/web/services/artifacts/getArtifacts"
 import { uploadArtifact } from "@client/web/services/artifacts/uploadArtifact"
+import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 type ChestFormProps = {
   initialData?: Partial<ChestSchema> | null
@@ -61,7 +61,7 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
     mode: "onBlur",
     defaultValues: {
       id: initialData?.id || uuid(),
-      position: initialData?.position || { lat: 0, lng: 0 },
+      position: initialData?.position || { y: 0, x: 0 },
       description: initialData?.description || "",
       rewardType: initialData?.rewardType || rewardType,
       reward: initialData?.reward || "",

@@ -26,15 +26,15 @@ import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 
 import { Link } from "@client/i18n/routing"
-import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
-import { routes } from "@client/utils/routes"
 import ChestForm from "@client/web/components/features/hunts/form/ChestForm"
 import HuntForm from "@client/web/components/features/hunts/form/HuntForm"
 import PositionForm from "@client/web/components/features/hunts/form/PositionForm"
 import Map from "@client/web/components/features/hunts/Map"
 import ActionsButton from "@client/web/components/features/hunts/utils/ActionsButton"
+import { routes } from "@client/web/routes"
 import { createFullHunt } from "@client/web/services/hunts/createFullHunt"
 import { useHuntStore } from "@client/web/store/useHuntStore"
+import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 type Props = {
   huntId?: string
@@ -184,7 +184,7 @@ const HuntPage = ({ huntId }: Props) => {
         value={activeTab}
         onValueChange={setActiveTab}
         defaultValue="hunt"
-        className="relative z-50"
+        className="relative z-10"
       >
         <TabsList className="text-primary bg-primaryBg z-20 mx-auto grid w-2/5 grid-cols-2 rounded-lg border shadow-md">
           <TabsTrigger value="hunt">{t("tabs.triggers.hunt")}</TabsTrigger>
@@ -219,7 +219,15 @@ const HuntPage = ({ huntId }: Props) => {
                 <PositionForm onSubmit={handlePositionSubmit} />
               </Card>
             )}
-            <Map map={map} setMap={setMap} chests={chests} />
+            <Map
+              map={map}
+              setMap={setMap}
+              chests={chests}
+              heightClass="h-[75vh]"
+              widthClass="w-full"
+              displayChests={true}
+              canDeleteChest={true}
+            />
             {map && (
               <ActionsButton
                 handleDraftSave={handleDraftSave}
