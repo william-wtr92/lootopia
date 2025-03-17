@@ -1,11 +1,14 @@
 import { defaultLimit } from "@lootopia/common"
 
-import { huntFilterTypeEnum } from "@client/app/[locale]/hunts/(list)/list/page"
 import { client } from "@client/web/utils/client"
+import {
+  huntFilterTypeEnum,
+  type HuntFilterType,
+} from "@client/web/utils/def/huntFilter"
 
 export const getHunts = async (
   value: string,
-  searchType: string,
+  searchType: HuntFilterType,
   pageParam: number
 ) => {
   const response = await client.hunts.$get({

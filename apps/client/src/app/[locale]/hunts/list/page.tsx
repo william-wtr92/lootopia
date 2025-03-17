@@ -3,21 +3,14 @@
 import { Button } from "@lootopia/ui"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 import HuntListItem from "@client/web/components/features/hunts/list/HuntListItem"
 import HuntSearchBar from "@client/web/components/features/hunts/list/HuntSearchBar"
 import NoResultHuntList from "@client/web/components/features/hunts/list/NoResultHuntList"
 import Loader from "@client/web/components/utils/Loader"
 import { getHunts } from "@client/web/services/hunts/getHunts"
-
-export const huntFilterTypeEnum = {
-  city: "city",
-  name: "name",
-}
-
-export type HuntFilterType =
-  (typeof huntFilterTypeEnum)[keyof typeof huntFilterTypeEnum]
+import type { HuntFilterType } from "@client/web/utils/def/huntFilter"
 
 const HuntsListPage = () => {
   const t = useTranslations("Pages.Hunts.List")

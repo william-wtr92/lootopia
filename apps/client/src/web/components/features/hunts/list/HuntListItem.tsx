@@ -4,14 +4,14 @@ import type { ChestSchema, HuntSchema, UserSchema } from "@common/index"
 import { AnimatePresence } from "framer-motion"
 import { Award, ChevronRightIcon, Clock, MapPin, UsersIcon } from "lucide-react"
 import Image from "next/image"
-import React, { useState } from "react"
+import { useState } from "react"
 
 import { config } from "@client/env"
-import { formatDate } from "@client/utils/helpers/formatDate"
 import Map from "@client/web/components/features/hunts/Map"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
 import anim from "@client/web/utils/anim"
 import { capitalizeFirstLetter } from "@client/web/utils/capitalizeFirstLetter"
+import { formatDate } from "@client/web/utils/formatDate"
 
 type Props = {
   hunt: HuntSchema & {

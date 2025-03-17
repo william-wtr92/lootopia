@@ -32,11 +32,14 @@ export const insertHuntWithChests = async (
       chestsData.map((chest) => ({
         position: { x: chest.position.x, y: chest.position.y },
         description: chest.description,
-        reward: chest.reward,
+        rewardType: chest.rewardType,
+        reward: chest.rewardType === "crown" ? chest.reward?.toString() : null,
         size: chest.size,
         maxUsers: chest.maxUsers,
         visibility: chest.visibility,
         huntId: huntInserted.huntId,
+        artifactId:
+          chest.rewardType === "artifact" ? chest.reward?.toString() : null,
       }))
     )
   })

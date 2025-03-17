@@ -4,10 +4,9 @@ import { Button } from "@lootopia/ui"
 import { CirclePlus, DeleteIcon, Map, RefreshCcw } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
-import React from "react"
 
-import { routes } from "@client/utils/routes"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
+import { routes } from "@client/web/routes"
 import anim from "@client/web/utils/anim"
 
 type Props = {

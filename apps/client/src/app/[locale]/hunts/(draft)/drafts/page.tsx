@@ -6,8 +6,8 @@ import { useTranslations } from "next-intl"
 import { useEffect } from "react"
 
 import { Link } from "@client/i18n/routing"
-import { routes } from "@client/utils/routes"
 import AlertDeleteHunt from "@client/web/components/features/hunts/utils/AlertDeleteHunt"
+import { routes } from "@client/web/routes"
 import { useHuntStore } from "@client/web/store/useHuntStore"
 
 const HuntListPage = () => {

@@ -3,8 +3,8 @@
 import { useParams, useRouter } from "next/navigation"
 import { useEffect } from "react"
 
-import { routes } from "@client/utils/routes"
-import HuntPage from "@client/web/components/pages/HuntPage"
+import HuntPage from "@client/web/components/features/hunts/HuntPage"
+import { routes } from "@client/web/routes"
 import { useHuntStore } from "@client/web/store/useHuntStore"
 
 const EditHuntPage = () => {

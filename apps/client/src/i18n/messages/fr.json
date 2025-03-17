@@ -353,10 +353,25 @@
             "label": "Description",
             "placeholder": "Entrez une description pour le coffre"
           },
+          "rewardType": {
+            "label": "Type de récompense",
+            "placeholder": "Choisissez un type de récompense",
+            "select": {
+              "crown": "Couronne(s)",
+              "artifact": "Artefact"
+            },
+            "error": "Type de récompense invalide"
+          },
           "reward": {
-            "label": "Récompense",
-            "placeholder": "Entrez une récompense pour le coffre",
-            "error": "Récompense invalide"
+            "crown": {
+              "label": "Montant de couronnes",
+              "error": "Montant de couronnes invalide"
+            },
+            "artifact": {
+              "label": "Choisissez un artefact",
+              "placeholder": "Selectionnez un artefact",
+              "empty": "Aucun artefact trouvé"
+            }
           },
           "size": {
             "label": "Taille du coffre",
@@ -370,6 +385,11 @@
             "label": "Visibilité",
             "description": "Rendre le coffre visible pour tous les utilisateurs (par défaut désactivé)"
           },
+          "errors": {
+            "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action.",
+            "artifactAlreadyExists": "L'artefact existe déjà, retrouvez le dans la liste des artefacts."
+          },
+          "artifactCreated": "Artefact ajouté avec succès !",
           "submit": "Ajouter un coffre"
         },
         "HuntForm": {
@@ -456,6 +476,18 @@
         },
         "cta": {
           "create-a-hunt": "Créer une chasse"
+        }
+      }
+    },
+    "Artifacts": {
+      "ArtifactPopover": {
+        "button": "Ajouter un artefact",
+        "Form": {
+          "file": {
+            "label": "Choisissez un modèle",
+            "error": "Fichier invalide"
+          },
+          "submit": "Ajouter"
         }
       }
     }

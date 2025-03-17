@@ -24,9 +24,9 @@ import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 
-import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
-import { routes } from "@client/utils/routes"
+import { routes } from "@client/web/routes"
 import { resendEmailValidation } from "@client/web/services/auth/resendEmailValidation"
+import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 const ResendEmailValidationPage = () => {
   const t = useTranslations("Pages.Auth.ResendEmailValidation")

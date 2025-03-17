@@ -1,7 +1,7 @@
 import { create } from "zustand"
 
-import { authTokenName } from "@client/utils/def/constants"
 import { delCookie, getCookie, setCookie } from "@client/web/utils/cookie"
+import { authTokenName } from "@client/web/utils/def/constants"
 
 type AuthState = {
   token?: string

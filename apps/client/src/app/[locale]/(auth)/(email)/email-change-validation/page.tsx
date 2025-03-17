@@ -14,10 +14,10 @@ import { useTranslations } from "next-intl"
 import { useQueryState } from "nuqs"
 
 import { Link } from "@client/i18n/routing"
-import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
-import { routes } from "@client/utils/routes"
+import { routes } from "@client/web/routes"
 import { emailChangeValidation } from "@client/web/services/auth/emailChangeValidation"
 import { logout } from "@client/web/services/auth/logout"
+import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 const EmailChangeValidationPage = () => {
   const t = useTranslations("Pages.Auth.EmailChangeValidation")

@@ -2,13 +2,12 @@ import { Button } from "@lootopia/ui"
 import { CirclePlusIcon, SearchIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
-import React from "react"
 
+import { routes } from "@client/web/routes"
 import {
   huntFilterTypeEnum,
   type HuntFilterType,
-} from "@client/app/[locale]/hunts/(list)/list/page"
-import { routes } from "@client/utils/routes"
+} from "@client/web/utils/def/huntFilter"
 
 type Props = {
   inputValue: string

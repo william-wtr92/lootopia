@@ -26,10 +26,10 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 
 import { Link } from "@client/i18n/routing"
-import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
-import { routes } from "@client/utils/routes"
+import { routes } from "@client/web/routes"
 import { login } from "@client/web/services/auth/login"
 import { useAuthStore } from "@client/web/store/useAuthStore"
+import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 const LoginPage = () => {
   const router = useRouter()

@@ -27,10 +27,10 @@ import { useRef, useState, type ChangeEvent } from "react"
 import { useForm } from "react-hook-form"
 
 import { config } from "@client/env"
-import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
 import { login } from "@client/web/services/auth/login"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import updateUser from "@client/web/services/users/updateUser"
+import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 type AvatarType = string | File | undefined
 
@@ -142,12 +142,12 @@ const EditProfileForm = (props: Props) => {
       return
     }
 
-    const [messageKey, errorKey] = await updateUser(data)
+    const [messageKey, key] = await updateUser(data)
 
     if (!messageKey) {
       toast({
         variant: "destructive",
-        description: translateDynamicKey(t, `errors.${errorKey}`),
+        description: translateDynamicKey(t, `errors.${key}`),
       })
 
       return

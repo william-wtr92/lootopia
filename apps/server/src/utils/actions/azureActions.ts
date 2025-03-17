@@ -1,8 +1,19 @@
 import { blobStorage } from "@server/utils/clients/azure"
 import { v4 } from "uuid"
 
-export const uploadImage = async (image: File, mimeType: string) => {
-  const imageName = `${v4()}-${image.name}`
+export const azureDirectory = {
+  avatars: "avatars/",
+  artifacts: "artifacts/",
+} as const
+
+type AzureDirectory = (typeof azureDirectory)[keyof typeof azureDirectory]
+
+export const uploadImage = async (
+  directory: AzureDirectory,
+  image: File,
+  mimeType: string
+) => {
+  const imageName = `${directory}${v4()}-${image.name}`
 
   const blobHTTPHeaders = {
     blobContentType: mimeType,

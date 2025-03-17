@@ -13,10 +13,12 @@ import MapEvents from "./MapEvents"
 import AlertDeleteChest from "./utils/AlertDeleteChest"
 import RecenterControl from "./utils/RecenterControl"
 import { fredoka } from "@client/app/[locale]/layout"
-import { leafletDef } from "@client/utils/def/leaflet"
-import { getZoomByRadius } from "@client/utils/helpers/getZoomByRadius"
 import { useHuntStore } from "@client/web/store/useHuntStore"
 import { convertPositionToLatLng } from "@client/web/utils/convertPosition"
+import { leafletDef } from "@client/web/utils/def/leaflet"
+import { getZoomByRadius } from "@client/web/utils/getZoomByRadius"
+
+const DEFAULT_MAP_ZOOM = 12
 
 const MapContainer = dynamic(
   () => import("react-leaflet").then((mod) => mod.MapContainer),
@@ -79,7 +81,7 @@ const Map = ({
   const [customMarker, setCustomMarker] = useState<L.Icon>()
   const [chestMarker, setChestMarker] = useState<L.Icon>()
   const [center, setCenter] = useState<LatLngExpression | undefined>(undefined)
-  const [zoom, setZoom] = useState(0)
+  const [zoom, setZoom] = useState(DEFAULT_MAP_ZOOM)
 
   const [huntCenter, setHuntCenter] = useState<PositionCords | null>(null)
   const [huntRadius, setHuntRadius] = useState<number>(0)
@@ -134,6 +136,8 @@ const Map = ({
           popupAnchor: [0, -18],
         })
       )
+
+      //handleRecenter()
     })
   }, [setPosition, position])
 

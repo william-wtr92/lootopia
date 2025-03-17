@@ -26,15 +26,15 @@ import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 
 import { Link } from "@client/i18n/routing"
-import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
-import { routes } from "@client/utils/routes"
 import ChestForm from "@client/web/components/features/hunts/form/ChestForm"
 import HuntForm from "@client/web/components/features/hunts/form/HuntForm"
 import PositionForm from "@client/web/components/features/hunts/form/PositionForm"
 import Map from "@client/web/components/features/hunts/Map"
 import ActionsButton from "@client/web/components/features/hunts/utils/ActionsButton"
+import { routes } from "@client/web/routes"
 import { createFullHunt } from "@client/web/services/hunts/createFullHunt"
 import { useHuntStore } from "@client/web/store/useHuntStore"
+import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 type Props = {
   huntId?: string
@@ -71,6 +71,19 @@ const HuntPage = ({ huntId }: Props) => {
   }, [huntId, hunts, setActiveHunt])
 
   const activeHunt = activeHuntId ? hunts[activeHuntId] : null
+
+  useEffect(() => {
+    if (activeHunt && activeHunt.hunt.city) {
+      const selectedCity = cities.find(
+        (city) => city.name === activeHunt.hunt.city
+      )
+
+      if (selectedCity) {
+        setPosition(selectedCity.position)
+      }
+    }
+  }, [activeHunt, setPosition])
+
   const chests = activeHunt ? activeHunt.chests : []
 
   const isValid =
