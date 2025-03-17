@@ -31,7 +31,7 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
     mode: "onBlur",
     defaultValues: {
       id: initialData?.id || uuid(),
-      position: initialData?.position || { lat: 0, lng: 0 },
+      position: initialData?.position || { y: 0, x: 0 },
       description: initialData?.description || "",
       reward: initialData?.reward || "",
       size: initialData?.size || 80,

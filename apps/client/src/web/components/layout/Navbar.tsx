@@ -55,11 +55,11 @@ const Navbar = () => {
   }
 
   return (
-    <header className="sticky left-0 top-0 z-20 h-fit px-16 py-8">
+    <header className="sticky left-0 top-0 z-[11] h-fit px-16 py-8">
       <nav className="flex items-center justify-between">
         <Link href={routes.home}>
           <MotionComponent
-            className="flex items-center gap-2"
+            className="z-20 flex items-center gap-2"
             {...anim(logoVariant)}
           >
             <Logo width={50} height={50} />
@@ -76,7 +76,7 @@ const Navbar = () => {
         >
           <SelectLocale />
 
-          <div className="flex items-center space-x-4">
+          <div className="z-20 flex items-center space-x-4">
             {!user ? (
               <>
                 <Link href={routes.auth.login}>
