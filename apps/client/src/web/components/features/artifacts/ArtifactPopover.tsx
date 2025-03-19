@@ -34,6 +34,7 @@ const ArtifactPopover = ({ onUpload }: Props) => {
     resolver: zodResolver(artifactUploadSchema),
     mode: "onBlur",
     defaultValues: {
+      name: "",
       file: undefined,
     },
   })
@@ -76,6 +77,28 @@ const ArtifactPopover = ({ onUpload }: Props) => {
       <PopoverContent className="bg-primaryBg text-primary p-4">
         <Form {...form}>
           <form className="flex flex-col justify-center gap-4">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-primary">
+                    {t("Form.name.label")}
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      className="border-primary focus:ring-secondary"
+                      autoComplete="name"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-error">
+                    {errors.name ? t("Form.name.error") : null}
+                  </FormMessage>
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="file"

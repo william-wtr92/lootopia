@@ -9,6 +9,7 @@ export const ACCEPTED_FILE_TYPES = [
 ] as const
 
 export const artifactUploadSchema = z.object({
+  name: z.string(),
   file: z.instanceof(File),
 })
 

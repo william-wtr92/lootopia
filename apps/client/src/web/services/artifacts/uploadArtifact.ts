@@ -4,9 +4,7 @@ import { client } from "@client/web/utils/client"
 
 export const uploadArtifact = async (body: ArtifactUploadSchema) => {
   const response = await client.artifacts.upload.$post({
-    form: {
-      file: body.file,
-    },
+    form: body,
   })
 
   if (response.ok) {
