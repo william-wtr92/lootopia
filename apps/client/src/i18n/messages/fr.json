@@ -483,6 +483,10 @@
       "ArtifactPopover": {
         "button": "Ajouter un artefact",
         "Form": {
+          "name": {
+            "label": "Nom",
+            "error": "Nom invalide"
+          },
           "file": {
             "label": "Choisissez un modèle",
             "error": "Fichier invalide"
