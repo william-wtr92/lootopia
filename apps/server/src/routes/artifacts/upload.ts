@@ -21,7 +21,7 @@ export const uploadArtifactRoute = app.post(
   zValidator("form", artifactUploadSchema),
   async (c) => {
     const email = c.get(contextKeys.loggedUserEmail)
-    const { file: artifact } = c.req.valid("form")
+    const { name, file: artifact } = c.req.valid("form")
 
     const user = await selectUserByEmail(email)
 
@@ -41,7 +41,7 @@ export const uploadArtifactRoute = app.post(
 
     await insertArtifact(
       {
-        name: artifact.name,
+        name,
         link: link,
         shaKey: shaKey,
       },
