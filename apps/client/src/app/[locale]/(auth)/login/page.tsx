@@ -29,6 +29,7 @@ import { Link } from "@client/i18n/routing"
 import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
 import { routes } from "@client/utils/routes"
 import { login } from "@client/web/services/auth/login"
+import { reactivateAccountRequest } from "@client/web/services/auth/reactivateAccountRequest"
 
 const LoginPage = () => {
   const router = useRouter()
@@ -79,6 +80,37 @@ const LoginPage = () => {
 
   const handleShowPassword = () => {
     setShowPassword((prev) => !prev)
+  }
+
+  const handleReactivateAccount = async () => {
+    const { email, password } = form.getValues()
+
+    if (!email || !password) {
+      toast({
+        variant: "destructive",
+        description: t("reactiveChamp"),
+      })
+
+      return
+    }
+
+    setIsLoading(true)
+
+    const [status, key] = await reactivateAccountRequest({email, password})
+
+    if (!status) {
+      toast({
+        variant: "destructive",
+        description: translateDynamicKey(t, `errors.${key}`),
+      })
+
+      return
+    }
+
+    toast({
+      variant: "default",
+      description: "Envoyé mail",
+    })
   }
 
   return (
@@ -154,13 +186,23 @@ const LoginPage = () => {
                 )}
               />
 
-              <Button
-                disabled={isLoading || !form.formState.isValid}
-                type="submit"
-                className="text-primary bg-accent hover:bg-accent-hover w-full"
-              >
-                {isLoading ? t("form.loading") : t("form.submit")}
-              </Button>
+              <div className="flex flex-col gap-3">
+                <Button
+                  disabled={isLoading || !form.formState.isValid}
+                  type="submit"
+                  className="text-primary bg-accent hover:bg-accent-hover w-full"
+                >
+                  {isLoading ? t("form.loading") : t("form.submit")}
+                </Button>
+                <Button
+                  variant="link"
+                  type="button"
+                  onClick={handleReactivateAccount}
+                  className="text-secondary"
+                >
+                  {t("reactivateAccount")}
+                </Button>
+              </div>
             </form>
           </Form>
         </CardContent>
@@ -168,7 +210,7 @@ const LoginPage = () => {
           <div>
             {t("cta.title")}
             <Link href={routes.auth.register}>
-              <span className="text-secondary">{t("cta.register")}</span>
+              <span className="text-secondary"> {t("cta.register")}</span>
             </Link>
           </div>
         </CardFooter>

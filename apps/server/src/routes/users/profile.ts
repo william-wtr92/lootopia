@@ -6,13 +6,13 @@ import {
   invalidImage,
   nicknameAlreadyExists,
   phoneAlreadyExists,
-  sanitizeUser,
   updateSuccess,
   updateSuccessWithEmailChange,
   userNotFound,
   waitThirtyDaysBeforeUpdatingNickname,
 } from "@server/features/users"
 import {
+  selectIfUserIsActive,
   selectUserByEmail,
   selectUserByNickname,
   selectUserByPhone,
@@ -40,13 +40,13 @@ export const profileRoute = app
   .get("/me", async (c) => {
     const email = c.get(contextKeys.loggedUserEmail)
 
-    const user = await selectUserByEmail(email)
+    const user = await selectIfUserIsActive(email)
 
     if (!user) {
       return c.json(userNotFound, SC.errors.NOT_FOUND)
     }
 
-    return c.json({ result: sanitizeUser(user) }, SC.success.OK)
+    return c.json({ result: user }, SC.success.OK)
   })
   .put("/me", zValidator("form", updateSchema), async (c) => {
     const body = c.req.valid("form")

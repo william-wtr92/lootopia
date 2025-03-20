@@ -145,9 +145,21 @@
         },
         "success": "Un e-mail de validation a été envoyé avec succès !"
       },
+      "ReactivateAccount": {
+        "title" : "Réactiver votre compte",
+        "cta" : {
+          "validate" : "Valider la réactivation"
+        },
+        "success": "Votre compte a bien été reactivé ! "
+
+      },
       "Login": {
         "title": "Se connecter",
         "description": "Commencez votre aventure dès maintenant !",
+        "reactivateAccount" :"Reactivez votre compte",
+        "reactiveChamp":"Veuillez renseigner votre email et votre mot de passe pour réactiver votre compte.",
+        "emailReactivate":"Un email de réactivation a été envoyé.",
+        "unspecifiedErrorOccurred": "Une erreur inconnue s'est produite. Veuillez réessayer.",
         "form": {
           "email": {
             "label": "Email",
@@ -166,7 +178,8 @@
         "success": "Vous êtes connecté !",
         "errors": {
           "incorrectPassword": "Mot de passe incorrect",
-          "userNotFound": "Cet email n'existe pas"
+          "userNotFound": "Cet email n'existe pas",
+          "accountDisabled": "Votre compte a été désactivé. Si vous souhaitez vous connecter, veuillez le réactiver."
         }
       }
     },
@@ -250,7 +263,8 @@
         },
         "success": {
           "updateSuccess": "Profil mis à jour avec succès !",
-          "updateSuccessWithEmailChange": "Profil mis à jour avec succès ! Un e-mail de validation a été envoyé à votre nouvelle adresse e-mail."
+          "updateSuccessWithEmailChange": "Profil mis à jour avec succès ! Un e-mail de validation a été envoyé à votre nouvelle adresse e-mail.",
+          "deactivatedSucces": "Votre compte a été désactivé et sera supprimé dans 6 mois"
         },
         "errors": {
           "nicknameAlreadyExists": "Le pseudo existe déjà",
@@ -258,7 +272,9 @@
           "invalidImage": "L'image n'est pas valide",
           "invalidExtension": "L'extension du fichier n'est pas valide",
           "waitThirtyDaysBeforeUpdatingNickname": "Veuillez patienter 30 jours avant de modifier votre pseudo.",
-          "incorrectPassword": "Mot de passe incorrect"
+          "incorrectPassword": "Mot de passe incorrect",
+          "userNotFound" :"Utilisateur introuvable",
+          "accountAlreadyDisabled":"Votre compte est déjà désactivé"
         },
         "cta": {
           "logout": "Déconnexion", 
@@ -269,6 +285,11 @@
           "settings": "Paramètres"
         }
       }
+    },
+    "ReactivateAccountConfirm":{
+      "errors": {
+        "tokenNotFound":"Token introuvable"
+      } 
     }
   },
   "Components": {

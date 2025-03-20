@@ -7,8 +7,10 @@ import { etag } from "hono/etag"
 import { logger } from "hono/logger"
 import { prettyJSON } from "hono/pretty-json"
 import { secureHeaders } from "hono/secure-headers"
+import cron from "node-cron"
 
 import { routeNotFound, unspecifiedErrorOccurred } from "./features/global"
+import { deleteInactiveUsers } from "./jobs/deleteInactiveUsers"
 import { routes } from "./routes"
 import { router } from "./utils/router"
 
@@ -47,6 +49,11 @@ const appRouter = app
 serve({
   fetch: app.fetch,
   port: appConfig.port,
+})
+
+//every day at midnight
+cron.schedule("0 0 * * *", async () => {
+  await deleteInactiveUsers()
 })
 
 //eslint-disable-next-line no-console

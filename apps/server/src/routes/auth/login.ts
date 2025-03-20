@@ -6,6 +6,7 @@ import {
   userNotFound,
   selectUserByEmail,
   logoutSuccess,
+  accountDisabled,
 } from "@server/features/users"
 import { auth } from "@server/middlewares/auth"
 import { redis } from "@server/utils/clients/redis"
@@ -26,6 +27,10 @@ export const loginRoute = app
 
     if (!user) {
       return c.json(userNotFound, SC.errors.NOT_FOUND)
+    }
+
+    if (user.active === false) {
+      return c.json(accountDisabled, SC.errors.UNAUTHORIZED)
     }
 
     const isPasswordValid = await comparePassword(

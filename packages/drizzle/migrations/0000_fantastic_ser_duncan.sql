@@ -25,6 +25,31 @@ CREATE TABLE "hunts" (
 	"organizerId" uuid NOT NULL
 );
 --> statement-breakpoint
+CREATE TABLE "users" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"nickname" varchar(255) NOT NULL,
+	"email" varchar(255) NOT NULL,
+	"phone" varchar(255) NOT NULL,
+	"password_hash" text NOT NULL,
+	"password_salt" text NOT NULL,
+	"birthdate" timestamp NOT NULL,
+	"avatar" text,
+	"email_validated" boolean DEFAULT false NOT NULL,
+	"gdpr_validated" boolean DEFAULT false NOT NULL,
+	"active" boolean DEFAULT true NOT NULL,
+	"role" text DEFAULT 'user' NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"deactivation_date" timestamp,
+	"deletion_date" timestamp,
+	CONSTRAINT "users_nickname_unique" UNIQUE("nickname"),
+	CONSTRAINT "users_email_unique" UNIQUE("email"),
+	CONSTRAINT "users_phone_unique" UNIQUE("phone")
+);
+--> statement-breakpoint
 ALTER TABLE "chests" ADD CONSTRAINT "chests_huntId_hunts_id_fk" FOREIGN KEY ("huntId") REFERENCES "public"."hunts"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "hunts" ADD CONSTRAINT "hunts_organizerId_users_id_fk" FOREIGN KEY ("organizerId") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-CREATE INDEX "chests_position_index" ON "chests" USING gist ("position");
+CREATE INDEX "chests_position_index" ON "chests" USING gist ("position");--> statement-breakpoint
+CREATE UNIQUE INDEX "email_idx" ON "users" USING btree ("email");--> statement-breakpoint
+CREATE UNIQUE INDEX "phone_idx" ON "users" USING btree ("phone");--> statement-breakpoint
+CREATE UNIQUE INDEX "nickname_idx" ON "users" USING btree ("nickname");

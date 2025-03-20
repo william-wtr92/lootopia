@@ -40,3 +40,14 @@ export const updateEmailValidation = async (email: string) => {
     })
     .where(eq(users.email, email))
 }
+
+export const updateReactivationUser = async (email: string) => {
+  return db
+    .update(users)
+    .set({
+      active: true,
+      deactivationDate: null,
+      deletionDate: null,
+    })
+    .where(eq(users.email, email))
+}

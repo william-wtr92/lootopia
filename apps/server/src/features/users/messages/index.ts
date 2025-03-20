@@ -5,6 +5,11 @@ export const userNotFound = {
   key: "userNotFound",
 } as const
 
+export const accountNotFound = {
+  result: "Account not found.",
+  key: "accountNotFound",
+} as const
+
 export const emailAlreadyExists = {
   result: "Email already exists.",
   key: "emailAlreadyExists",
@@ -60,6 +65,46 @@ export const incorrectPassword = {
   key: "incorrectPassword",
 } as const
 
+export const accountDisabled = {
+  result: "Your account is disabled.",
+  key: "accountDisabled",
+} as const
+
+export const accountAlreadyDisabled = {
+  result: "Your account is already disabled.",
+  key: "accountAlreadyDisabled",
+} as const
+
+export const missingToken = {
+  result: "missing or expired token",
+  key: "missingToken",
+} as const
+
+export const invalidToken = {
+  result: "invalid or e",
+  key: "invalidToken",
+} as const
+
+export const reactivationFailed = {
+  result: "Account reactivation failed",
+  key: "reactivationFailed",
+} as const
+
+export const reactivationLinkFailed = {
+  result: "The reactivation link is invalid or expired.",
+  key: "reactivationFailed",
+} as const
+
+export const emailRequired = {
+  result: "Email is required.",
+  key: "emailRequired",
+} as const
+
+export const accountAlreadyExist = {
+  result: "Your account is already active.",
+  key: "accountAlreadyExist",
+} as const
+
 // SUCCESS MESSAGES
 
 export const registerSuccess = {
@@ -95,4 +140,24 @@ export const updateSuccessWithEmailChange = {
 export const logoutSuccess = {
   result: "You have successfully logged out.",
   key: "logoutSuccess",
+} as const
+
+export const deactivatedSucces = {
+  result: "Your account has been deactivated and will be deleted in 6 months.",
+  key: "deactivatedSucces",
+} as const
+
+export const reactivationSuccess = {
+  result: "Your account has been successfully reactivated!",
+  key: "reactivationSuccess",
+} as const
+
+export const reactivationEmailSuccess = {
+  result: "Reactivation email sent successfully.",
+  key: "reactivationEmailSuccess",
+} as const
+
+export const accountReactivatedSuccess = {
+  result: "Your account has been successfully reactivated.",
+  key: "accountReactivatedSuccess",
 } as const

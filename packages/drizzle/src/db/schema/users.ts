@@ -26,6 +26,8 @@ export const users = pgTable(
     role: text("role").$type<Roles>().notNull().default(ROLES.user),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
+    deactivationDate: timestamp("deactivation_date"),
+    deletionDate: timestamp("deletion_date"),
   },
   (table) => {
     return {

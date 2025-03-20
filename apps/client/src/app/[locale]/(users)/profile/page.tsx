@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
   Progress,
+  useToast,
 } from "@lootopia/ui"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { LogOutIcon, MapPin, Settings, Star, Trophy } from "lucide-react"
@@ -15,16 +16,20 @@ import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 
 import { config } from "@client/env"
+import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
 import { routes } from "@client/utils/routes"
 import EditProfileForm from "@client/web/components/features/users/profile/EditProfileForm"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
 import { logout } from "@client/web/services/auth/logout"
+import { deactivateAccount } from "@client/web/services/users/deactivateAccount"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import anim from "@client/web/utils/anim"
 
+// eslint-disable-next-line complexity
 const ProfilePage = () => {
   const t = useTranslations("Pages.Users.Profile")
   const router = useRouter()
+  const { toast } = useToast()
 
   const qc = useQueryClient()
   const { data } = useQuery({
@@ -95,6 +100,24 @@ const ProfilePage = () => {
     qc.invalidateQueries({ queryKey: ["user"] })
   }
 
+  const handleToggleAccount = async () => {
+    const [status, key] = await deactivateAccount()
+
+    if (!status) {
+      toast({
+        variant: "destructive",
+        description: translateDynamicKey(t, `errors.${key}`),
+      })
+
+      return
+    }
+
+    toast({
+      variant: "default",
+      description: translateDynamicKey(t, `success.deactivatedSucces`),
+    })
+  }
+
   return (
     <main className="relative z-10 flex w-full flex-1 flex-col gap-8 px-4 py-8">
       <MotionComponent {...anim(profileHeaderVariant)}>
@@ -118,13 +141,17 @@ const ProfilePage = () => {
               <p className="text-secondary">{user?.role}</p>
             </div>
           </CardContent>
-
           <div className="mb-6 mr-6 flex flex-col gap-2 self-end">
             {user && <EditProfileForm user={user} />}
 
             <Button onClick={logoutUser}>
               <LogOutIcon /> {t("cta.logout")}
             </Button>
+            {user?.active && (
+              <Button onClick={handleToggleAccount} className="bg-red-500">
+                Désactiver mon compte
+              </Button>
+            )}
           </div>
         </Card>
       </MotionComponent>

@@ -1,9 +1,7 @@
 /* Dates Object */
-export const nowDate = new Date()
-export const sixMonthsDate = new Date(
-  new Date().setMonth(new Date().getMonth() + 6)
-)
-
+export const nowDate = () => new Date()
+export const sixMonthsDate = () =>
+  new Date(new Date().setMonth(new Date().getMonth() + 6))
 /* Current time in seconds + x */
 export const now = Math.floor(Date.now() / 1000)
 export const oneHour = Math.floor(Date.now() / 1000) + 60 * 60

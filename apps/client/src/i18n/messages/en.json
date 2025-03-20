@@ -145,9 +145,21 @@
         },
         "success": "The validation email has been sent successfully!"
       },
+      "ReactivateAccount": {
+        "title" : "Reactivate your account",
+        "cta" : {
+          "validate" : "Validate reactivation"
+        },
+        "success": "Your account has been successfully reactivated!"
+
+      },
       "Login": {
         "title": "Log in",
         "description": "Start your adventure now!",
+        "reactivateAccount" :"Reactivate your account",
+        "reactiveChamp":"Please enter your email address and password to reactivate your account.",
+        "emailReactivate":"A reactivation email has been sent.",
+        "unspecifiedErrorOccurred": "An unknown error occurred. Please try again.",
         "form": {
           "email": {
             "label": "Email",
@@ -170,7 +182,8 @@
         "success": "You are connected!",
         "errors": {
           "incorrectPassword": "Incorrect password",
-          "userNotFound": "This email does not exist"
+          "userNotFound": "This email does not exist",
+          "accountDisabled": "Your account has been deactivated. If you wish to log in, please reactivate it."
         }
       }
     },
@@ -254,7 +267,8 @@
         },
         "success": {
           "updateSuccess": "Profile updated successfully!",
-          "updateSuccessWithEmailChange": "Profile updated successfully! A validation mail has been sent to your new email address."
+          "updateSuccessWithEmailChange": "Profile updated successfully! A validation mail has been sent to your new email address.",
+          "deactivatedSucces": "Your account has been deactivated and will be deleted in 6 months"
         },
         "errors": {
           "nicknameAlreadyExists": "The nickname already exists",
@@ -262,7 +276,9 @@
           "invalidImage": "The image is not valid",
           "invalidExtension": "The file extension is not valid",
           "waitThirtyDaysBeforeUpdatingNickname": "You must wait 30 days before changing your nickname",
-          "incorrectPassword": "Incorrect password"
+          "incorrectPassword": "Incorrect password",
+          "userNotFound" :"User not found",
+          "accountAlreadyDisabled":"Your account is already disabled"
         },
         "cta": {
           "logout": "Logout", 
@@ -273,6 +289,11 @@
           "settings": "Settings"
         }
       }
+    },
+    "ReactivateAccountConfirm":{
+      "errors": {
+        "tokenNotFound":"Token not found"
+      } 
     }
   },  
   "Components": {
