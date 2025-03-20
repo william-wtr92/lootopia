@@ -2,17 +2,7 @@ import { db } from "@server/db/client"
 
 export const selectIfUserIsActive = async (email: string) => {
   return await db.query.users.findFirst({
-    where: (users, { eq }) => eq(users.email, email),
-    columns: {
-      id: true,
-      nickname: true,
-      email: true,
-      phone: true,
-      birthdate: true,
-      active: true,
-      avatar: true,
-      role: true,
-    },
+    where: (users, { eq, and }) => and(eq(users.email, email), eq(users.active, true)), 
   })
 }
 
@@ -35,12 +25,22 @@ export const selectUserByPhone = async (phone: string) => {
 }
 
 export const selectUserWithPassword = async (email: string) => {
-  return await db.query.users.findFirst({
+  const user = await db.query.users.findFirst({
     where: (users, { eq }) => eq(users.email, email),
-    columns: {
-      email: true,
-      passwordHash: true,
-      passwordSalt: true,
-    },
+  })
+
+  if (user) {
+    const { passwordHash, passwordSalt, ...sanitizedUser } = user 
+    return sanitizedUser
+  }
+
+  return null
+}
+
+export const getInactiveUsersToDelete = async (today: Date) => {
+  return await db.query.users.findMany({
+    where: (users, { eq, and, lt }) =>
+      and(eq(users.active, false), lt(users.deletionDate, today)),
   })
 }
+

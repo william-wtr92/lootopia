@@ -25,7 +25,7 @@ const ConfirmReactivationPage = () => {
     if (!token) {
       toast({
         variant: "destructive",
-        description: "Token manquant dans l'URL.",
+        description: translateDynamicKey(t, `errors.tokenNotFound`),
       })
     }
   }, [token, toast])
@@ -50,7 +50,7 @@ const ConfirmReactivationPage = () => {
       <Card className="text-primary flex h-fit w-2/5 flex-col items-center justify-start gap-6">
         <CardHeader>
           <CardTitle className="text-center text-3xl">
-            Activation du Compte
+          {t("title")}
           </CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col items-center justify-center gap-8">
@@ -59,7 +59,7 @@ const ConfirmReactivationPage = () => {
             disabled={!token || loading}
             onClick={handleConfirm}
           >
-            {loading ? "Activation en cours..." : "Activer mon compte"}
+            {loading ? t("activationProgress") : t("activateAccount")}
           </Button>
         </CardContent>
       </Card>

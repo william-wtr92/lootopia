@@ -1,14 +1,10 @@
 import { zValidator } from "@hono/zod-validator"
-import { SC } from "@lootopia/common"
-import { db } from "@server/db/client"
+import { loginSchema, SC } from "@lootopia/common"
 import { tokenNotProvided } from "@server/features/global"
 import {
   emailRequired,
-  missingToken,
   reactivationEmailSuccess,
-  reactivationFailed,
   reactivationLinkFailed,
-  reactivationSuccess,
   updateReactivationUser,
   userNotFound,
   accountAlreadyExist,
@@ -24,15 +20,11 @@ import { mailBuilder, sendMail } from "@server/utils/helpers/mail"
 import { oneHourTTL } from "@server/utils/helpers/times"
 import { cookiesKeys } from "@server/utils/keys/cookiesKeys"
 import { redisKeys } from "@server/utils/keys/redisKeys"
-import { eq } from "drizzle-orm"
 import { Hono } from "hono"
-import { z } from "zod"
 
 const app = new Hono()
 
-const emailSchema = z.object({
-  email: z.string().email("Format d'email invalide"),
-})
+const emailSchema = loginSchema.pick({ email: true });
 
 export const reactivateAccountRoute = app
   .post(
@@ -45,10 +37,7 @@ export const reactivateAccountRoute = app
         return c.json(emailRequired, SC.errors.BAD_REQUEST)
       }
 
-      const user = await db.query.users.findFirst({
-        where: (users, { eq }) => eq(users.email, email),
-        columns: { email: true, active: true, nickname: true },
-      })
+      const user = await selectUserByEmail(email)
 
       if (!user) {
         return c.json(accountNotFound, SC.errors.NOT_FOUND )
@@ -82,8 +71,6 @@ export const reactivateAccountRoute = app
   .post("/reactivate-account/confirm", async (c) => {
     const token = c.req.query("token")
 
-    console.log("token received : ", token)
-
     if (!token) {
       return c.json(tokenNotProvided, SC.errors.BAD_REQUEST)
     }
@@ -93,7 +80,6 @@ export const reactivateAccountRoute = app
     try {
       decoded = await decodeJwt<{ email: string }>(token)
     } catch (err) {
-      console.error("Error decoding token:", err)
       return c.json(reactivationLinkFailed, SC.errors.BAD_REQUEST)
     }
 

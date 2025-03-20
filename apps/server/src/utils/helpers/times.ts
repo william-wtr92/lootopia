@@ -1,7 +1,7 @@
 /* Dates Object */
-export const nowDate = () => new Date()
-export const sixMonthsDate = () =>
-  new Date(new Date().setMonth(new Date().getMonth() + 6))
+export const nowDate = new Date()
+export const sixMonthsDate = new Date(new Date().setMonth(new Date().getMonth() + 6))
+
 /* Current time in seconds + x */
 export const now = Math.floor(Date.now() / 1000)
 export const oneHour = Math.floor(Date.now() / 1000) + 60 * 60
@@ -15,3 +15,7 @@ export const oneDayTTL = 60 * 60 * 24
 export const twoDaysTTL = 60 * 60 * 24 * 2
 export const thirtyDaysTTL = oneDayTTL * 30
 export const oneMonthTTL = 60 * 60 * 24 * 30
+
+export const getToday = (): Date => {
+  return new Date()
+}

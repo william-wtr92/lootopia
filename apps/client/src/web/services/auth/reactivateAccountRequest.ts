@@ -1,6 +1,6 @@
 import { client } from "@client/web/utils/client"
 
-export const reactivateAccountRequest = async(body: {email: string, password: string}) => {
+export const reactivateAccountRequest = async(body: {email: string}) => {
     const response = await client.auth["reactivate-account"].request.$post({
         json: body
     })

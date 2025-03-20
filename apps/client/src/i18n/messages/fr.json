@@ -157,9 +157,11 @@
         "title": "Se connecter",
         "description": "Commencez votre aventure dès maintenant !",
         "reactivateAccount" :"Reactivez votre compte",
-        "reactiveChamp":"Veuillez renseigner votre email et votre mot de passe pour réactiver votre compte.",
-        "emailReactivate":"Un email de réactivation a été envoyé.",
-        "unspecifiedErrorOccurred": "Une erreur inconnue s'est produite. Veuillez réessayer.",
+        "reactiveChamp":"Veuillez renseigner votre email pour réactiver votre compte.",
+        "reactivateEmail":"Un email de réactivation a été envoyé.",
+        "cancel":"Annuler",
+        "confirm":"Confirmer",
+        "reactivateAccountDescription":"Veuillez saisir votre adresse e-mail pour recevoir un lien de réactivation de votre compte.",
         "form": {
           "email": {
             "label": "Email",
@@ -216,6 +218,7 @@
     },
     "Users": {
       "Profile": {
+        "deactivateAccount":"Désactiver mon compte",
         "statistics": {
           "title": "Statistiques",
           "treasuresFound": "Trésors trouvés",
@@ -264,7 +267,7 @@
         "success": {
           "updateSuccess": "Profil mis à jour avec succès !",
           "updateSuccessWithEmailChange": "Profil mis à jour avec succès ! Un e-mail de validation a été envoyé à votre nouvelle adresse e-mail.",
-          "deactivatedSucces": "Votre compte a été désactivé et sera supprimé dans 6 mois"
+          "succes": "Votre compte a été désactivé et sera supprimé dans 6 mois"
         },
         "errors": {
           "nicknameAlreadyExists": "Le pseudo existe déjà",
@@ -287,6 +290,9 @@
       }
     },
     "ReactivateAccountConfirm":{
+      "title": "Activation du Compte",
+      "activationProgress":"Activation en cours...",
+      "activateAccount":"Activer mon compte",
       "errors": {
         "tokenNotFound":"Token introuvable"
       } 

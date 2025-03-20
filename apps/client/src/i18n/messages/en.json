@@ -157,9 +157,11 @@
         "title": "Log in",
         "description": "Start your adventure now!",
         "reactivateAccount" :"Reactivate your account",
-        "reactiveChamp":"Please enter your email address and password to reactivate your account.",
-        "emailReactivate":"A reactivation email has been sent.",
-        "unspecifiedErrorOccurred": "An unknown error occurred. Please try again.",
+        "reactiveChamp":"Please enter your email address to reactivate your account.",
+        "reactivateEmail":"A reactivation email has been sent.",
+        "cancel":"Cancel",
+        "confirm":"Confirm",
+        "reactivateAccountDescription":"Please enter your email address to receive a reactivation link for your account.",
         "form": {
           "email": {
             "label": "Email",
@@ -220,6 +222,7 @@
     },
     "Users": {
       "Profile": {
+        "deactivateAccount":"Deactivate my account",
         "statistics": {
           "title": "Statistics",
           "treasuresFound": "Treasures found",
@@ -268,7 +271,7 @@
         "success": {
           "updateSuccess": "Profile updated successfully!",
           "updateSuccessWithEmailChange": "Profile updated successfully! A validation mail has been sent to your new email address.",
-          "deactivatedSucces": "Your account has been deactivated and will be deleted in 6 months"
+          "succes": "Your account has been deactivated and will be deleted in 6 months"
         },
         "errors": {
           "nicknameAlreadyExists": "The nickname already exists",
@@ -291,6 +294,9 @@
       }
     },
     "ReactivateAccountConfirm":{
+      "title":"Account activation",
+      "activationProgress":"Activation in progress...",
+      "activateAccount":"Activate my account",
       "errors": {
         "tokenNotFound":"Token not found"
       } 

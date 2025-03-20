@@ -114,7 +114,7 @@ const ProfilePage = () => {
 
     toast({
       variant: "default",
-      description: translateDynamicKey(t, `success.deactivatedSucces`),
+      description: translateDynamicKey(t, `success`),
     })
   }
 
@@ -149,7 +149,7 @@ const ProfilePage = () => {
             </Button>
             {user?.active && (
               <Button onClick={handleToggleAccount} className="bg-red-500">
-                Désactiver mon compte
+                Désactiver mon compte {t("deactivateAccount")} 
               </Button>
             )}
           </div>

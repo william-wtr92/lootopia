@@ -29,7 +29,7 @@ export const loginRoute = app
       return c.json(userNotFound, SC.errors.NOT_FOUND)
     }
 
-    if (user.active === false) {
+    if (!user.active) {
       return c.json(accountDisabled, SC.errors.UNAUTHORIZED)
     }
 

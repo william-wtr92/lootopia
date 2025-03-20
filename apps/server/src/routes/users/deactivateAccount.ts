@@ -5,7 +5,8 @@ import {
   selectUserByEmail,
   userNotFound,
   accountAlreadyDisabled,
-  deactivatedSucces,
+  deactivatedSuccess,
+  deactivateUserByEmail,
 } from "@server/features/users"
 import { auth } from "@server/middlewares/auth"
 import { delCookie } from "@server/utils/helpers/cookie"
@@ -36,13 +37,7 @@ export const deactivateAccountRoute = app.post("/deactivate-account", auth, asyn
     return c.json(accountAlreadyDisabled, SC.errors.BAD_REQUEST)
   }
 
-  await db.update(users)
-    .set({
-      active: false,
-      deactivationDate: nowDate(),
-      deletionDate: sixMonthsDate(),
-    })
-    .where(eq(users.email, user.email))
+  await deactivateUserByEmail(user.email, nowDate, sixMonthsDate);
 
   delCookie(c, cookiesKeys.auth.session)
 
@@ -53,5 +48,5 @@ export const deactivateAccountRoute = app.post("/deactivate-account", auth, asyn
 
   await sendMail(deactivateMail)
 
-  return c.json(deactivatedSucces, SC.success.OK)
+  return c.json(deactivatedSuccess, SC.success.OK)
 })

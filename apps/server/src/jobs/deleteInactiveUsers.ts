@@ -1,14 +1,14 @@
 import { users } from "@lootopia/drizzle"
 import { db } from "@server/db/client"
+import { getInactiveUsersToDelete } from "@server/features/users"
+import { getToday } from "@server/utils/helpers/times"
 import { lt } from "drizzle-orm"
 
 const deleteInactiveUsers = async () => {
-  const today = new Date()
+  const today = getToday()
 
-  const usersToDelete = await db.query.users.findMany({
-    where: (users, { eq, and, lt }) =>
-      and(eq(users.active, false), lt(users.deletionDate, today)),
-  })
+  const usersToDelete = await getInactiveUsersToDelete(today)
+
 
   if (usersToDelete.length === 0) {
     return

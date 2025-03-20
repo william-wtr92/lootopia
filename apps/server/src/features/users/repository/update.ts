@@ -51,3 +51,13 @@ export const updateReactivationUser = async (email: string) => {
     })
     .where(eq(users.email, email))
 }
+
+export const deactivateUserByEmail = async (email: string, nowDate: Date, sixMonthsDate: Date) => {
+  return await db.update(users)
+    .set({
+      active: false,
+      deactivationDate: nowDate,
+      deletionDate: sixMonthsDate,
+    })
+    .where(eq(users.email, email))
+}

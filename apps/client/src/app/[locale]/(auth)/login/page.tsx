@@ -1,5 +1,6 @@
 "use client"
 
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger } from "@lootopia/ui"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { loginSchema, type LoginSchemaType } from "@lootopia/common"
 import {
@@ -40,6 +41,9 @@ const LoginPage = () => {
 
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [emailInput, setEmailInput] = useState("")
+
 
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
@@ -83,36 +87,36 @@ const LoginPage = () => {
   }
 
   const handleReactivateAccount = async () => {
-    const { email, password } = form.getValues()
-
-    if (!email || !password) {
+    if (!emailInput) {
       toast({
         variant: "destructive",
         description: t("reactiveChamp"),
       })
-
       return
     }
-
+  
     setIsLoading(true)
-
-    const [status, key] = await reactivateAccountRequest({email, password})
-
+  
+    const [status, key] = await reactivateAccountRequest({ email: emailInput })
+  
+    setIsLoading(false)
+  
     if (!status) {
       toast({
         variant: "destructive",
         description: translateDynamicKey(t, `errors.${key}`),
       })
-
       return
     }
-
+  
     toast({
       variant: "default",
-      description: "Envoyé mail",
+      description: translateDynamicKey(t, `reactivateEmail`),
     })
+  
+    setIsDialogOpen(false)
   }
-
+  
   return (
     <main className="relative flex flex-1 items-center justify-center">
       <Card className="w-2/5">
@@ -194,14 +198,38 @@ const LoginPage = () => {
                 >
                   {isLoading ? t("form.loading") : t("form.submit")}
                 </Button>
-                <Button
-                  variant="link"
-                  type="button"
-                  onClick={handleReactivateAccount}
-                  className="text-secondary"
-                >
-                  {t("reactivateAccount")}
-                </Button>
+                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button variant="link" type="button" className="text-secondary">
+                      {t("reactivateAccount")}
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle className="text-primary text-center font-bold" >{t("reactivateAccount")}</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <p className="text-sm text-gray-600">{t("reactivateAccountDescription")}</p>
+                      <FormControl>
+                      <Input
+                        type="email"
+                        className="border-primary text-primary focus:ring-secondary"
+                        autoComplete="email"
+                        value={emailInput}
+                        onChange={(e) => setEmailInput(e.target.value)}
+                      />
+                      </FormControl>
+                    </div>
+                    <DialogFooter className="flex justify-end space-x-2">
+                      <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+                        {t("cancel")}
+                      </Button>
+                      <Button onClick={handleReactivateAccount} disabled={isLoading} >
+                        {isLoading ? t("form.loading") : t("confirm")}
+                      </Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
               </div>
             </form>
           </Form>

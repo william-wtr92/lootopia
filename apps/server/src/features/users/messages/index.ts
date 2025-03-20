@@ -75,24 +75,9 @@ export const accountAlreadyDisabled = {
   key: "accountAlreadyDisabled",
 } as const
 
-export const missingToken = {
-  result: "missing or expired token",
-  key: "missingToken",
-} as const
-
-export const invalidToken = {
-  result: "invalid or e",
-  key: "invalidToken",
-} as const
-
-export const reactivationFailed = {
-  result: "Account reactivation failed",
-  key: "reactivationFailed",
-} as const
-
 export const reactivationLinkFailed = {
   result: "The reactivation link is invalid or expired.",
-  key: "reactivationFailed",
+  key: "reactivationLinkFailed",
 } as const
 
 export const emailRequired = {
@@ -142,14 +127,9 @@ export const logoutSuccess = {
   key: "logoutSuccess",
 } as const
 
-export const deactivatedSucces = {
+export const deactivatedSuccess = {
   result: "Your account has been deactivated and will be deleted in 6 months.",
-  key: "deactivatedSucces",
-} as const
-
-export const reactivationSuccess = {
-  result: "Your account has been successfully reactivated!",
-  key: "reactivationSuccess",
+  key: "deactivatedSuccess",
 } as const
 
 export const reactivationEmailSuccess = {
