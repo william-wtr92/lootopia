@@ -1,8 +1,10 @@
+/* eslint-disable complexity */
 import {
   type ChestSchema,
   type PositionCords,
   calculateHuntRange,
 } from "@lootopia/common"
+import type { LatLngExpression } from "leaflet"
 import dynamic from "next/dynamic"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
@@ -10,8 +12,13 @@ import { useEffect, useState } from "react"
 import MapEvents from "./MapEvents"
 import AlertDeleteChest from "./utils/AlertDeleteChest"
 import RecenterControl from "./utils/RecenterControl"
-import { leafletDef } from "@client/utils/def/leaflet"
+import { fredoka } from "@client/app/[locale]/layout"
 import { useHuntStore } from "@client/web/store/useHuntStore"
+import { convertPositionToLatLng } from "@client/web/utils/convertPosition"
+import { leafletDef } from "@client/web/utils/def/leaflet"
+import { getZoomByRadius } from "@client/web/utils/getZoomByRadius"
+
+const DEFAULT_MAP_ZOOM = 12
 
 const MapContainer = dynamic(
   () => import("react-leaflet").then((mod) => mod.MapContainer),
@@ -40,9 +47,23 @@ type Props = {
   map: L.Map | null
   setMap: (map: L.Map) => void
   chests: ChestSchema[]
+  heightClass?: string
+  widthClass?: string
+  centerOnHuntRadius?: boolean
+  displayChests?: boolean
+  canDeleteChest?: boolean
 }
 
-const Map = ({ map, setMap, chests }: Props) => {
+const Map = ({
+  map,
+  setMap,
+  chests,
+  heightClass = "h-full",
+  widthClass = "w-full",
+  centerOnHuntRadius = false,
+  displayChests = false,
+  canDeleteChest = false,
+}: Props) => {
   const t = useTranslations("Components.Hunts.Map")
 
   const {
@@ -59,6 +80,8 @@ const Map = ({ map, setMap, chests }: Props) => {
   const [L, setL] = useState<typeof import("leaflet") | null>(null)
   const [customMarker, setCustomMarker] = useState<L.Icon>()
   const [chestMarker, setChestMarker] = useState<L.Icon>()
+  const [center, setCenter] = useState<LatLngExpression | undefined>(undefined)
+  const [zoom, setZoom] = useState(DEFAULT_MAP_ZOOM)
 
   const [huntCenter, setHuntCenter] = useState<PositionCords | null>(null)
   const [huntRadius, setHuntRadius] = useState<number>(0)
@@ -78,6 +101,24 @@ const Map = ({ map, setMap, chests }: Props) => {
   }
 
   useEffect(() => {
+    if (!map) {
+      return
+    }
+
+    const container = map.getContainer()
+
+    const stopPropagation = (e: Event) => {
+      e.stopPropagation()
+    }
+
+    container.addEventListener("click", stopPropagation)
+
+    return () => {
+      container.removeEventListener("click", stopPropagation)
+    }
+  }, [map])
+
+  useEffect(() => {
     import("leaflet").then((L) => {
       setL(L)
       setCustomMarker(
@@ -95,26 +136,19 @@ const Map = ({ map, setMap, chests }: Props) => {
           popupAnchor: [0, -18],
         })
       )
-    })
 
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        setPosition({
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
-        })
-      })
-    }
+      //handleRecenter()
+    })
   }, [setPosition, position])
 
   useEffect(() => {
     if (chests.length >= 1) {
-      const chestPoints = chests.map((chest) => ({
-        lat: chest.position.lat,
-        lng: chest.position.lng,
-      }))
+      const chestPoints = chests.map((chest) =>
+        convertPositionToLatLng(chest.position)
+      )
       const { center, radius } = calculateHuntRange(chestPoints)
 
+      setZoom(getZoomByRadius(radius))
       setHuntCenter(center)
       setHuntRadius(radius)
     } else {
@@ -123,15 +157,26 @@ const Map = ({ map, setMap, chests }: Props) => {
     }
   }, [chests])
 
-  if (!L || !customMarker || !chestMarker) {
+  useEffect(() => {
+    if (huntCenter !== null) {
+      const centerPosition = {
+        lat: huntCenter.lat,
+        lng: huntCenter.lng,
+      }
+
+      setCenter(centerPosition)
+    }
+  }, [huntCenter, position])
+
+  if (!L || !customMarker || !chestMarker || (centerOnHuntRadius && !center)) {
     return <p className="mt-4 text-center">{t("loading")}</p>
   }
 
   return (
     <MapContainer
-      className={`mx-auto h-[75vh] w-full rounded-md ${isSheetOpen ? "z-0" : "z-10"}`}
-      center={position}
-      zoom={11}
+      className={`rounded-md ${isSheetOpen ? "z-0" : "z-10"} ${heightClass} ${widthClass}`}
+      center={centerOnHuntRadius ? center : position}
+      zoom={zoom}
       scrollWheelZoom={false}
       attributionControl={false}
       ref={setMap}
@@ -154,16 +199,34 @@ const Map = ({ map, setMap, chests }: Props) => {
         <Popup>{t("marker")}</Popup>
       </Marker>
 
-      {chests.map((chest) => (
-        <Marker key={chest.id} position={chest.position} icon={chestMarker}>
-          <Popup>
-            <AlertDeleteChest
-              chest={chest}
-              onDelete={() => handleDeleteChest(chest.id)}
-            />
-          </Popup>
-        </Marker>
-      ))}
+      {chests.map((chest) => {
+        const position = convertPositionToLatLng(chest.position)
+
+        if ((!displayChests && chest.visibility) || displayChests) {
+          return (
+            <Marker key={chest.id} position={position} icon={chestMarker}>
+              <Popup className={`bg-primaryBg ${fredoka.className}`}>
+                <div className="flex flex-col justify-center gap-2">
+                  <span className="text-primary text-center text-base font-semibold">
+                    {chest.description}
+                  </span>
+                  <span className="text-secondary text-center text-sm">
+                    <span className="text-primary">{t("reward")} :</span>{" "}
+                    {chest.reward}
+                  </span>
+
+                  {canDeleteChest && (
+                    <AlertDeleteChest
+                      chest={chest}
+                      onDelete={() => handleDeleteChest(chest.id)}
+                    />
+                  )}
+                </div>
+              </Popup>
+            </Marker>
+          )
+        }
+      })}
 
       {huntCenter && huntRadius > 0 && (
         <Circle

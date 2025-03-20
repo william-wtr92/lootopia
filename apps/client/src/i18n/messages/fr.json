@@ -3,7 +3,7 @@
     "NotFound": {
       "title": "404 - Page non trouvée",
       "description": "Désolé, la page que vous recherchez n'existe pas.",
-      "cta":{
+      "cta": {
         "home": "Retour à l'accueil"
       }
     },
@@ -54,7 +54,7 @@
             "error": "Adresse e-mail invalide"
           },
           "phone": {
-            "label": "Téléphone", 
+            "label": "Téléphone",
             "error": "Numéro de téléphone invalide"
           },
           "birthdate": {
@@ -88,7 +88,7 @@
           "invalidExtension": "L'extension du fichier n'est pas valide"
         }
       },
-       "EmailValidation": {
+      "EmailValidation": {
         "title": "Confirmez votre adresse e-mail",
         "description": "Afin de valider votre compte, veuillez cliquer sur le bouton ci-dessous.",
         "cta": {
@@ -145,13 +145,16 @@
         },
         "success": "Un e-mail de validation a été envoyé avec succès !"
       },
-      "ReactivateAccount": {
-        "title" : "Réactiver votre compte",
-        "cta" : {
-          "validate" : "Valider la réactivation"
+      "ConfirmReactivateAccount": {
+        "title": "Reactiver votre compte",
+        "description": "Veuillez cliquer sur le bouton ci-dessous pour réactiver votre compte.",
+        "cta": {
+          "confirm": "Confirmer"
         },
-        "success": "Votre compte a bien été reactivé ! "
-
+        "success": "Votre compte a été réactivé avec succès !", 
+        "errors": {
+          "tokenNotFound": "Token introuvable"
+        }
       },
       "Login": {
         "title": "Se connecter",
@@ -168,7 +171,8 @@
             "error": "Adresse e-mail invalide"
           },
           "password": {
-            "label": "Mot de passe"
+            "label": "Mot de passe",
+            "forgotten": "Mot de passe oublié ?"
           },
           "submit": "Se connecter",
           "loading": "Connexion..."
@@ -183,6 +187,42 @@
           "userNotFound": "Cet email n'existe pas",
           "accountDisabled": "Votre compte a été désactivé. Si vous souhaitez vous connecter, veuillez le réactiver."
         }
+      },
+      "RequestPasswordReset": {
+        "title": "Demander une réinitialisation de mot de passe",
+        "description": "Entrez l'adresse e-mail associée à votre compte pour recevoir un lien de réinitialisation de mot de passe.",
+        "form": {
+          "email": {
+            "label": "Email",
+            "error": "Adresse email invalide"
+          },
+          "submit": "Envoyer l'email"
+        },
+        "errors": {
+          "waitBeforeRequestingPasswordReset": "Veuillez patienter avant de demander un autre e-mail !",
+          "userNotFound": "L'adresse e-mail n'existe pas"
+        },
+        "success": "Un email de réinitialisation de mot de passe a été envoyé avec succès !"
+      },
+      "PasswordReset": {
+        "title": "Réinitialiser le mot de passe",
+        "description": "Entrez un nouveau mot de passe pour votre compte.",
+        "form": {
+          "password": {
+            "label": "Mot de passe"
+          },
+          "confirmPassword": {
+            "label": "Confirmer le mot de passe",
+            "error": "Les mots de passe ne correspondent pas"
+          },
+          "submit": "Réinitialiser le mot de passe"
+        },
+        "errors": {
+          "passwordNotMatch": "Les mots de passe ne correspondent pas.",
+          "tokenExpired": "Votre lien de validation a expiré. Veuillez refaire une demande.",
+          "userNotFound": "Votre lien de validation est invalide. Veuillez refaire une demande."
+        },
+        "success": "Votre mot de passe a été réinitialisé avec succès !"
       }
     },
     "Hunts": {
@@ -208,12 +248,25 @@
         },
         "success": "La chasse a été créée avec succès !"
       },
-      "List": {
+      "Drafts": {
         "title": "Brouillons des chasses",
         "empty": "Aucune chasse enregistrée en brouillon, créez-en une !",
         "cta": {
-          "create": "Créer une chasse"
-        } 
+          "create-a-hunt": "Créer une chasse"
+        }
+      },
+      "List": {
+        "loading": "Chargement...", 
+        "no-hunts-available": "Aucune chasses disponible",
+        "no-hunts-hint": "Il semble qu'il n'y ait aucune chasse au trésor disponible pour le moment. Revenez plus tard ou créez votre propre aventure !",
+        "no-hunts-search": "Aucune chasse trouvée pour la recherche : ", 
+        "no-hunts-search-hint": "Il semble qu'il n'y ait aucune chasse au trésor correspondant à votre recherche. Essayez une autre recherche ou créez votre propre aventure !",
+        "cta": {
+          "create-a-hunt": "Créer une chasse",
+          "load-more": "Charger plus",
+          "refresh": "Rafraîchir",
+          "delete-search-value": "Supprimer la recherche"
+        }
       }
     },
     "Users": {
@@ -262,12 +315,12 @@
           "confirmPassword": {
             "label": "Confirmer le mot de passe",
             "error": "Les mots de passe ne correspondent pas"
-          }        
+          }
         },
         "success": {
           "updateSuccess": "Profil mis à jour avec succès !",
           "updateSuccessWithEmailChange": "Profil mis à jour avec succès ! Un e-mail de validation a été envoyé à votre nouvelle adresse e-mail.",
-          "succes": "Votre compte a été désactivé et sera supprimé dans 6 mois"
+           "accountDeactivated": "Votre compte a été désactivé et sera supprimé dans 6 mois"
         },
         "errors": {
           "nicknameAlreadyExists": "Le pseudo existe déjà",
@@ -280,7 +333,7 @@
           "accountAlreadyDisabled":"Votre compte est déjà désactivé"
         },
         "cta": {
-          "logout": "Déconnexion", 
+          "logout": "Déconnexion",
           "editProfile": "Éditer mon profil",
           "treasureMap": "Carte des trésors",
           "trophies": "Trophées",
@@ -288,19 +341,11 @@
           "settings": "Paramètres"
         }
       }
-    },
-    "ReactivateAccountConfirm":{
-      "title": "Activation du Compte",
-      "activationProgress":"Activation en cours...",
-      "activateAccount":"Activer mon compte",
-      "errors": {
-        "tokenNotFound":"Token introuvable"
-      } 
     }
   },
   "Components": {
     "SelectLocale": {
-       "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 Français} other {Unknown}}"
+      "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 Français} other {Unknown}}"
     },
     "NavBar": {
       "title": "Lootopia",
@@ -319,10 +364,38 @@
       "special": "Un caractère spécial",
       "length": "Au moins 12 caractères"
     },
-     "Hunts": {
+    "Users": {
+      "ReactivateAccountRequestForm": {
+        "label": "Compte désactivé ?",
+        "trigger": "Réactiver le maintenant",
+        "title": "Réactivation du compte",
+        "form": {
+          "email": {
+            "label": "Email",
+            "error": "Adresse e-mail invalide"
+          }
+        },
+        "cta": {
+          "cancel": "Annuler",
+          "confirm": "Confirmer"
+        },
+        "success": "Un email de réactivation a été envoyé."
+      },
+      "DeactivateAccountDialog": {
+        "trigger": "Désactiver mon compte",
+        "title": "Désactivation du compte",
+        "description": "Êtes-vous sûr de vouloir désactiver votre compte ?",
+        "cta": {
+          "cancel": "Annuler",
+          "confirm": "Confirmer"
+        }
+      }
+    },
+    "Hunts": {
       "Map": {
         "loading": "Chargement de la carte...",
-        "marker": "Vous êtes ici"
+        "marker": "Vous êtes ici",
+        "reward": "Récompense"
       },
       "Form": {
         "ChestForm": {
@@ -330,10 +403,25 @@
             "label": "Description",
             "placeholder": "Entrez une description pour le coffre"
           },
+          "rewardType": {
+            "label": "Type de récompense",
+            "placeholder": "Choisissez un type de récompense",
+            "select": {
+              "crown": "Couronne(s)",
+              "artifact": "Artefact"
+            },
+            "error": "Type de récompense invalide"
+          },
           "reward": {
-            "label": "Récompense",
-            "placeholder": "Entrez une récompense pour le coffre",
-            "error": "Récompense invalide"
+            "crown": {
+              "label": "Montant de couronnes",
+              "error": "Montant de couronnes invalide"
+            },
+            "artifact": {
+              "label": "Choisissez un artefact",
+              "placeholder": "Selectionnez un artefact",
+              "empty": "Aucun artefact trouvé"
+            }
           },
           "size": {
             "label": "Taille du coffre",
@@ -347,6 +435,11 @@
             "label": "Visibilité",
             "description": "Rendre le coffre visible pour tous les utilisateurs (par défaut désactivé)"
           },
+          "errors": {
+            "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action.",
+            "artifactAlreadyExists": "L'artefact existe déjà, retrouvez le dans la liste des artefacts."
+          },
+          "artifactCreated": "Artefact ajouté avec succès !",
           "submit": "Ajouter un coffre"
         },
         "HuntForm": {
@@ -359,6 +452,12 @@
             "label": "Description",
             "placeholder": "Entrez une description pour la chasse",
             "error": "Description invalide"
+          },
+          "city": {
+            "label": "Ville",
+            "other": "Autre",
+            "placeholder": "Choisissez une ville",
+            "error": "Ville invalide"
           },
           "startDate": {
             "label": "Date de début",
@@ -414,6 +513,35 @@
           "description": "Cette action est irréversible.",
           "cancel": "Annuler",
           "confirm": "Supprimer"
+        }
+      },
+      "SearchBar": {
+        "options": {  
+          "city": "Par ville",
+          "name": "Par nom"
+        },
+        "placeholder": {
+          "city": "La légende du joyau perdu",
+          "name": "Paris, Le Havre, Marseille..."
+        },
+        "cta": {
+          "create-a-hunt": "Créer une chasse"
+        }
+      }
+    },
+    "Artifacts": {
+      "ArtifactPopover": {
+        "button": "Ajouter un artefact",
+        "Form": {
+          "name": {
+            "label": "Nom",
+            "error": "Nom invalide"
+          },
+          "file": {
+            "label": "Choisissez un modèle",
+            "error": "Fichier invalide"
+          },
+          "submit": "Ajouter"
         }
       }
     }

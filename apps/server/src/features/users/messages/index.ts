@@ -5,11 +5,6 @@ export const userNotFound = {
   key: "userNotFound",
 } as const
 
-export const accountNotFound = {
-  result: "Account not found.",
-  key: "accountNotFound",
-} as const
-
 export const emailAlreadyExists = {
   result: "Email already exists.",
   key: "emailAlreadyExists",
@@ -70,14 +65,9 @@ export const accountDisabled = {
   key: "accountDisabled",
 } as const
 
-export const accountAlreadyDisabled = {
-  result: "Your account is already disabled.",
-  key: "accountAlreadyDisabled",
-} as const
-
-export const reactivationLinkFailed = {
+export const invalidReactivationLink = {
   result: "The reactivation link is invalid or expired.",
-  key: "reactivationLinkFailed",
+  key: "invalidReactivationLink",
 } as const
 
 export const emailRequired = {
@@ -85,9 +75,14 @@ export const emailRequired = {
   key: "emailRequired",
 } as const
 
-export const accountAlreadyExist = {
+export const accountAlreadyActive = {
   result: "Your account is already active.",
-  key: "accountAlreadyExist",
+  key: "accountAlreadyActive",
+} as const
+
+export const waitBeforeRequestingPasswordReset = {
+  result: "Wait before requesting password reset.",
+  key: "waitBeforeRequestingPasswordReset",
 } as const
 
 // SUCCESS MESSAGES
@@ -127,17 +122,27 @@ export const logoutSuccess = {
   key: "logoutSuccess",
 } as const
 
-export const deactivatedSuccess = {
+export const deactivatedAccountSuccess = {
   result: "Your account has been deactivated and will be deleted in 6 months.",
-  key: "deactivatedSuccess",
+  key: "deactivatedAccountSuccess",
 } as const
 
-export const reactivationEmailSuccess = {
+export const emailReactivationSuccess = {
   result: "Reactivation email sent successfully.",
-  key: "reactivationEmailSuccess",
+  key: "emailReactivationSuccess",
 } as const
 
-export const accountReactivatedSuccess = {
+export const reactivatedAccountSuccess = {
   result: "Your account has been successfully reactivated.",
-  key: "accountReactivatedSuccess",
+  key: "reactivatedAccountSuccess",
+} as const
+
+export const passwordResetRequestSentSuccess = {
+  result: "Password reset request sent.",
+  key: "passwordResetRequestSentSuccess",
+} as const
+
+export const passwordResetSuccess = {
+  result: "Password reset successfully.",
+  key: "passwordResetSuccess",
 } as const

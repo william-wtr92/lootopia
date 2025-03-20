@@ -29,14 +29,14 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 
 import { Link } from "@client/i18n/routing"
+import PasswordStrengthChecker from "@client/web/components/utils/form/PasswordStrengthChecker"
+import { routes } from "@client/web/routes"
+import { register } from "@client/web/services/auth/register"
 import {
   checkPasswordStrength,
   type PasswordStrength,
-} from "@client/utils/helpers/passwordChecker"
-import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
-import { routes } from "@client/utils/routes"
-import PasswordStrengthChecker from "@client/web/components/utils/form/PasswordStrengthChecker"
-import { register } from "@client/web/services/auth/register"
+} from "@client/web/utils/passwordChecker"
+import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 const RegisterPage = () => {
   const t = useTranslations("Pages.Auth.Register")
@@ -287,7 +287,8 @@ const RegisterPage = () => {
                       </FormControl>
                       <Button
                         type="button"
-                        className="text-primary hover:text-secondary absolute inset-y-0 right-0 flex items-center bg-transparent pr-3 shadow-none"
+                        variant="ghost"
+                        className="text-primary absolute inset-y-0 right-0 flex items-center pr-3 shadow-none hover:bg-transparent"
                         onClick={handleShowPassword}
                       >
                         {showPassword ? (

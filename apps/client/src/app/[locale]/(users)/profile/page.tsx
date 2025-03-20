@@ -16,20 +16,24 @@ import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 
 import { config } from "@client/env"
-import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
-import { routes } from "@client/utils/routes"
+import DeactivateAccountDialog from "@client/web/components/features/users/profile/DeactivateAccountDialog"
 import EditProfileForm from "@client/web/components/features/users/profile/EditProfileForm"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
+import { routes } from "@client/web/routes"
 import { logout } from "@client/web/services/auth/logout"
 import { deactivateAccount } from "@client/web/services/users/deactivateAccount"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
+import { useAuthStore } from "@client/web/store/useAuthStore"
 import anim from "@client/web/utils/anim"
+import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 // eslint-disable-next-line complexity
 const ProfilePage = () => {
   const t = useTranslations("Pages.Users.Profile")
+
   const router = useRouter()
   const { toast } = useToast()
+  const { clearAuthToken } = useAuthStore()
 
   const qc = useQueryClient()
   const { data } = useQuery({
@@ -95,12 +99,14 @@ const ProfilePage = () => {
   const logoutUser = async () => {
     await logout()
 
-    router.push(routes.auth.login)
+    clearAuthToken()
 
-    qc.invalidateQueries({ queryKey: ["user"] })
+    qc.removeQueries({ queryKey: ["user"] })
+
+    router.push(routes.auth.login)
   }
 
-  const handleToggleAccount = async () => {
+  const handleDeactivateAccount = async () => {
     const [status, key] = await deactivateAccount()
 
     if (!status) {
@@ -114,8 +120,10 @@ const ProfilePage = () => {
 
     toast({
       variant: "default",
-      description: translateDynamicKey(t, `success`),
+      description: t("success.accountDeactivated"),
     })
+
+    router.push(routes.auth.login)
   }
 
   return (
@@ -141,16 +149,15 @@ const ProfilePage = () => {
               <p className="text-secondary">{user?.role}</p>
             </div>
           </CardContent>
-          <div className="mb-6 mr-6 flex flex-col gap-2 self-end">
+          <div className="mr-6 flex flex-col gap-2 self-center">
             {user && <EditProfileForm user={user} />}
 
             <Button onClick={logoutUser}>
               <LogOutIcon /> {t("cta.logout")}
             </Button>
+
             {user?.active && (
-              <Button onClick={handleToggleAccount} className="bg-red-500">
-                Désactiver mon compte {t("deactivateAccount")} 
-              </Button>
+              <DeactivateAccountDialog onConfirm={handleDeactivateAccount} />
             )}
           </div>
         </Card>

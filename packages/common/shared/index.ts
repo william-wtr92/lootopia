@@ -4,7 +4,7 @@ export * from "./global/position"
 
 // Global types
 
-export { ROLES, type Roles } from "./users/global"
+export { ROLES, type Roles, userSchema, type UserSchema } from "./users"
 
 // Features types
 
@@ -22,13 +22,27 @@ export {
   type ResendEmailValidationSchema,
 } from "./users/auth/emailValidation"
 
-export { loginSchema, type LoginSchemaType } from "./users/auth/login"
+export { loginSchema, type LoginSchema } from "./users/auth/login"
 
 export {
   updateSchema,
   type UpdateSchema,
   type UpdateUser,
 } from "./users/auth/update"
+
+export {
+  requestPasswordResetSchema,
+  type RequestPasswordResetSchema,
+  passwordResetSchema,
+  type PasswordResetSchema,
+} from "./users/auth/passwordReset"
+
+export {
+  reactivateAccountRequestSchema,
+  type ReactivateAccountRequestSchema,
+  reactivateAccountConfirmSchema,
+  type ReactivateAccountConfirmSchema,
+} from "./users/auth/reactivateAccount"
 
 // Hunts types
 
@@ -37,9 +51,26 @@ export {
   type HuntSchema,
   combinedHuntSchema,
   type CombinedHuntSchema,
+  defaultLimit,
+  defaultPage,
 } from "./hunts"
 
+export { cities, type City, OTHER_CITY_OPTION } from "./hunts/utils/cities"
 export { calculateHuntRange } from "./hunts/utils/calculateHuntRange"
 
 // Chests types
-export { chestSchema, type ChestSchema } from "./hunts/chests"
+export {
+  chestSchema,
+  type ChestSchema,
+  type ChestRewardType,
+  CHEST_REWARD_TYPES,
+} from "./hunts/chests"
+
+// Artifacts types
+export {
+  ACCEPTED_FILE_TYPES,
+  artifactUploadSchema,
+  type ArtifactUploadSchema,
+  artifactSchema,
+  type ArtifactSchema,
+} from "./artifacts"

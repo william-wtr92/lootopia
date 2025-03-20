@@ -13,13 +13,12 @@ import {
   waitThirtyDaysBeforeUpdatingNickname,
 } from "@server/features/users"
 import {
-  selectIfUserIsActive,
   selectUserByEmail,
   selectUserByNickname,
   selectUserByPhone,
 } from "@server/features/users/repository/select"
 import { updateUser } from "@server/features/users/repository/update"
-import { uploadImage } from "@server/utils/actions/azureActions"
+import { azureDirectory, uploadImage } from "@server/utils/actions/azureActions"
 import { redis } from "@server/utils/clients/redis"
 import { allowedMimeTypes, defaultMimeType } from "@server/utils/helpers/files"
 import { mailBuilder, sendMail } from "@server/utils/helpers/mail"
@@ -89,7 +88,11 @@ export const profileRoute = app
         return c.json(invalidExtension, SC.errors.BAD_REQUEST)
       }
 
-      avatarUrl = await uploadImage(body.avatar, mimeType)
+      avatarUrl = await uploadImage(
+        azureDirectory.avatars,
+        body.avatar,
+        mimeType
+      )
     }
 
     let newNickname: string = userToUpdate.nickname
@@ -170,5 +173,3 @@ export const profileRoute = app
 
     return c.json(updateSuccessKey, SC.success.OK)
   })
-
-export default app

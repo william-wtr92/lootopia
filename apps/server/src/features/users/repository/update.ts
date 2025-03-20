@@ -1,6 +1,7 @@
 import type { UpdateUser } from "@lootopia/common"
 import { users } from "@lootopia/drizzle"
 import { db } from "@server/db/client"
+import { nowDate, sixMonthsDate } from "@server/utils/helpers/times"
 import { eq } from "drizzle-orm"
 
 export const updateUser = async (
@@ -52,12 +53,26 @@ export const updateReactivationUser = async (email: string) => {
     .where(eq(users.email, email))
 }
 
-export const deactivateUserByEmail = async (email: string, nowDate: Date, sixMonthsDate: Date) => {
-  return await db.update(users)
+export const deactivateUserByEmail = async (email: string) => {
+  return await db
+    .update(users)
     .set({
       active: false,
       deactivationDate: nowDate,
       deletionDate: sixMonthsDate,
+    })
+    .where(eq(users.email, email))
+}
+
+export const updatePassword = async (
+  email: string,
+  [passwordHash, passwordSalt]: string[]
+) => {
+  return db
+    .update(users)
+    .set({
+      passwordHash,
+      passwordSalt,
     })
     .where(eq(users.email, email))
 }

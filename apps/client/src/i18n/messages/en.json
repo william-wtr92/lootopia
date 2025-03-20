@@ -3,7 +3,7 @@
     "NotFound": {
       "title": "404 - Page not found",
       "description": "Sorry, the page you are looking for does not exist.",
-      "cta":{
+      "cta": {
         "home": "Back to home"
       }
     },
@@ -108,26 +108,26 @@
           "userNotFound": "The validation link is invalid. Please request a new one."
         }
       },
-       "EmailChangeValidation": {
-          "title": "Confirm your new email address",
-          "description": "To validate your new email adress, please click on the button below.",
-          "cta": {
-            "validate": "Validate my email address",
-            "resend": {
-              "label": "You didn't receive the email?",
-              "link": "Click here to resend it"
-            }
-          },
-          "success": "Your email address has been validated successfully!",
-          "errors": {
-            "tokenNotProvided": "Please request a new validation.",
-            "tokenExpired": "Your validation link has expired. Please request a new one.",
-            "tokenSignatureMismatched": "The validation link is invalid. Please request a new one.",
-            "tokenInvalidStructure": "The validation link is invalid. Please request a new one.",
-            "unspecifiedErrorOccurred": "An unknown error occurred. Please try again.",
-            "userNotFound": "The validation link is invalid. Please request a new one."
+      "EmailChangeValidation": {
+        "title": "Confirm your new email address",
+        "description": "To validate your new email adress, please click on the button below.",
+        "cta": {
+          "validate": "Validate my email address",
+          "resend": {
+            "label": "Didn't receive the email?",
+            "link": "Click here to resend it"
           }
         },
+        "success": "Your email address has been validated successfully!",
+        "errors": {
+          "tokenNotProvided": "Please request a new validation.",
+          "tokenExpired": "Your validation link has expired. Please request a new one.",
+          "tokenSignatureMismatched": "The validation link is invalid. Please request a new one.",
+          "tokenInvalidStructure": "The validation link is invalid. Please request a new one.",
+          "unspecifiedErrorOccurred": "An unknown error occurred. Please try again.",
+          "userNotFound": "The validation link is invalid. Please request a new one."
+        }
+      },
       "ResendEmailValidation": {
         "title": "Resend validation email",
         "description": "Enter the email address associated with your account to receive a new validation link.",
@@ -145,34 +145,34 @@
         },
         "success": "The validation email has been sent successfully!"
       },
-      "ReactivateAccount": {
-        "title" : "Reactivate your account",
-        "cta" : {
-          "validate" : "Validate reactivation"
+      "ConfirmReactivateAccount": {
+        "title": "Account reactivation",
+        "description": "To reactivate your account, please click on the button below.",
+        "cta": {
+          "confirm": "Confirm"
         },
-        "success": "Your account has been successfully reactivated!"
-
+        "success": "Your account has been reactivated successfully!", 
+        "errors": {
+          "tokenNotFound": "Token not found"
+        }
       },
       "Login": {
         "title": "Log in",
         "description": "Start your adventure now!",
-        "reactivateAccount" :"Reactivate your account",
-        "reactiveChamp":"Please enter your email address to reactivate your account.",
-        "reactivateEmail":"A reactivation email has been sent.",
-        "cancel":"Cancel",
-        "confirm":"Confirm",
-        "reactivateAccountDescription":"Please enter your email address to receive a reactivation link for your account.",
+        "reactivateAccount": "Reactivate your account",
+        "reactiveChamp": "Please enter your email address to reactivate your account.",
+        "reactivateEmail": "A reactivation email has been sent.",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "reactivateAccountDescription": "Please enter your email address to receive a reactivation link for your account.",
         "form": {
           "email": {
             "label": "Email",
             "error": "Invalid email address"
           },
-          "phone": {
-            "label": "Phone",
-            "error": "Invalid phone number"
-          },
           "password": {
-            "label": "Password"
+            "label": "Password",
+            "forgotten": "Forgot your password ?"
           },
           "submit": "Login",
           "loading": "Connecting..."
@@ -187,6 +187,42 @@
           "userNotFound": "This email does not exist",
           "accountDisabled": "Your account has been deactivated. If you wish to log in, please reactivate it."
         }
+      },
+      "RequestPasswordReset": {
+        "title": "Request a password reset",
+        "description": "Enter the email address associated with your account to receive a password reset link.",
+        "form": {
+          "email": {
+            "label": "Email",
+            "error": "Invalid email address"
+          },
+          "submit": "Send email"
+        },
+        "errors": {
+          "waitBeforeRequestingPasswordReset": "Please wait before requesting another email!",
+          "userNotFound": "The email address does not exist"
+        },
+        "success": "An email has been sent to reset your password!"
+      },
+      "PasswordReset": {
+        "title": "Reset your password",
+        "description": "Enter your new password to reset it.",
+        "form": {
+          "password": {
+            "label": "Password"
+          },
+          "confirmPassword": {
+            "label": "Confirm password",
+            "error": "Passwords do not match"
+          },
+          "submit": "Reset password"
+        },
+        "errors": {
+          "passwordNotMatch": "Passwords do not match",
+          "tokenExpired": "Your validation link has expired. Please request a new one.",
+          "userNotFound": "Your validation link is invalid. Please request a new one."
+        },
+        "success": "Your password has been reset successfully!"
       }
     },
     "Hunts": {
@@ -212,17 +248,30 @@
           "userNotFound": "You are not authorized to perform this action"
         }
       },
-      "List": {
+      "Drafts": {
         "title": "Draft hunts",
         "empty": "No hunt saved in draft, create one!",
         "cta": {
-          "create": "Create a hunt"
+          "create-a-hunt": "Create a hunt"
+        }
+      },
+      "List": {
+        "loading": "Loading hunts...",
+        "no-hunts-available": "No hunts available",
+        "no-hunts-hint": "There don't seem to be any treasure hunts available at the moment. Come back later or create your own adventure!",
+        "no-hunts-search": "No hunts found for search : ",
+        "no-hunts-search-hint": "There don't seem to be any treasure hunts matching your search. Try another search or create your own adventure!",
+        "cta": {
+          "create-a-hunt": "Create a hunt",
+          "load-more": "Load more",
+          "refresh": "Refresh",
+          "delete-search-value": "Delete search"
         }
       }
     },
     "Users": {
       "Profile": {
-        "deactivateAccount":"Deactivate my account",
+        "deactivateAccount": "Deactivate my account",
         "statistics": {
           "title": "Statistics",
           "treasuresFound": "Treasures found",
@@ -271,7 +320,7 @@
         "success": {
           "updateSuccess": "Profile updated successfully!",
           "updateSuccessWithEmailChange": "Profile updated successfully! A validation mail has been sent to your new email address.",
-          "succes": "Your account has been deactivated and will be deleted in 6 months"
+          "accountDeactivated": "Your account has been deactivated and will be deleted in 6 months"
         },
         "errors": {
           "nicknameAlreadyExists": "The nickname already exists",
@@ -280,11 +329,11 @@
           "invalidExtension": "The file extension is not valid",
           "waitThirtyDaysBeforeUpdatingNickname": "You must wait 30 days before changing your nickname",
           "incorrectPassword": "Incorrect password",
-          "userNotFound" :"User not found",
-          "accountAlreadyDisabled":"Your account is already disabled"
+          "userNotFound": "User not found",
+          "accountAlreadyDisabled": "Your account is already disabled"
         },
         "cta": {
-          "logout": "Logout", 
+          "logout": "Logout",
           "editProfile": "Edit my profile",
           "treasureMap": "Treasure map",
           "trophies": "Trophies",
@@ -292,19 +341,11 @@
           "settings": "Settings"
         }
       }
-    },
-    "ReactivateAccountConfirm":{
-      "title":"Account activation",
-      "activationProgress":"Activation in progress...",
-      "activateAccount":"Activate my account",
-      "errors": {
-        "tokenNotFound":"Token not found"
-      } 
     }
-  },  
+  },
   "Components": {
     "SelectLocale": {
-       "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 Français} other {Unknown}}"
+      "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 Français} other {Unknown}}"
     },
     "NavBar": {
       "title": "Lootopia",
@@ -323,10 +364,38 @@
       "special": "A special character",
       "length": "At least 12 characters"
     },
+    "Users": {
+      "ReactivateAccountRequestForm": {
+        "label": "Disabled account?",
+        "trigger": "Reactivate it now",
+        "title": "Reactivate your account",
+        "form": {
+          "email": {
+            "label": "Email",
+            "error": "Invalid email address"
+          }
+        },
+        "cta": {
+          "cancel": "Cancel",
+          "confirm": "Confirm"
+        },
+        "success": "An email has been sent to reactivate your account!"
+      },
+      "DeactivateAccountDialog": {
+        "trigger": "Deactivate my account",
+        "title": "Deactivate your account",
+        "description": "Are you sure you want to deactivate your account?",
+        "cta": {
+          "cancel": "Cancel",
+          "confirm": "Confirm"
+        }
+      }
+    },
     "Hunts": {
       "Map": {
         "loading": "Loading map...",
-        "marker": "You are here"
+        "marker": "You are here",
+        "reward": "Reward"
       },
       "Form": {
         "ChestForm": {
@@ -334,10 +403,25 @@
             "label": "Description",
             "placeholder": "Enter a description for the chest"
           },
+          "rewardType": {
+            "label": "Reward type",
+            "select": {
+              "crown": "Crown(s)",
+              "artifact": "Artifact"
+            },
+            "placeholder": "Select the type of reward",
+            "error": "Invalid reward type"
+          },
           "reward": {
-            "label": "Reward",
-            "placeholder": "Enter the reward for the chest",
-            "error": "Invalid reward"
+            "crown": {
+              "label": "Amout of crowns",
+              "error": "Invalid amount"
+            },
+            "artifact": {
+              "label": "Choose an Artifact",
+              "placeholder": "Select an artifact",
+              "empty": "No artifact available"
+            }
           },
           "size": {
             "label": "Chest size",
@@ -351,6 +435,11 @@
             "label": "Visibility",
             "description": "Make safe visible to all users (default: disabled)"
           },
+          "errors": {
+            "userNotFound": "You are not authorized to perform this action",
+            "artifactAlreadyExists": "The artifact already exists, retrieve it from the list"
+          },
+          "artifactCreated": "The artifact has been added successfully!",
           "submit": "Add chest"
         },
         "HuntForm": {
@@ -363,6 +452,12 @@
             "label": "Description",
             "placeholder": "Enter a description for the hunt",
             "error": "Invalid description"
+          },
+          "city": {
+            "label": "City",
+            "other": "Other",
+            "placeholder": "Select a city",
+            "error": "Invalid city"
           },
           "startDate": {
             "label": "Start date",
@@ -418,6 +513,35 @@
           "description": "Action cannot be undone.",
           "cancel": "Cancel",
           "confirm": "Delete"
+        }
+      },
+      "SearchBar": {
+        "options": {
+          "city": "By city",
+          "name": "By Name"
+        },
+        "placeholder": {
+          "city": "The legend of the lost jewel",
+          "name": "Paris, Le Havre, Marseille..."
+        },
+        "cta": {
+          "create-a-hunt": "Create a hunt"
+        }
+      }
+    },
+    "Artifacts": {
+      "ArtifactPopover": {
+        "button": "Add artifact",
+        "Form": {
+          "name": {
+            "label": "Name",
+            "error": "Invalid name"
+          },
+          "file": {
+            "label": "Choose a model",
+            "error": "Invalid file"
+          },
+          "submit": "Upload"
         }
       }
     }

@@ -4,62 +4,71 @@ import {
   Button,
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
   useToast,
 } from "@lootopia/ui"
+import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useQueryState } from "nuqs"
-import { useState, useEffect } from "react"
 
-import { translateDynamicKey } from "@client/utils/helpers/translateDynamicKey"
+import { routes } from "@client/web/routes"
 import { reactivateAccountConfirm } from "@client/web/services/auth/reactivateAccountConfirm"
+import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 const ConfirmReactivationPage = () => {
-  const t = useTranslations("Pages.ReactivateAccountConfirm")
+  const t = useTranslations("Pages.Auth.ConfirmReactivateAccount")
+
+  const router = useRouter()
   const { toast } = useToast()
   const [token] = useQueryState("token")
-  const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    if (!token) {
-      toast({
-        variant: "destructive",
-        description: translateDynamicKey(t, `errors.tokenNotFound`),
-      })
-    }
-  }, [token, toast])
 
   const handleConfirm = async () => {
     if (!token) {
       toast({
         variant: "destructive",
-        description: translateDynamicKey(t, `errors.tokenNotFound`),        
+        description: t("errors.tokenNotFound"),
       })
 
       return
     }
 
-    setLoading(true)
-    await reactivateAccountConfirm({ token })
-    setLoading(false)
+    const [status, keys] = await reactivateAccountConfirm({ token })
+
+    if (!status) {
+      toast({
+        variant: "destructive",
+        description: translateDynamicKey(t, `errors.${keys}`),
+      })
+
+      return
+    }
+
+    toast({
+      variant: "default",
+      description: t("success"),
+    })
+
+    router.push(routes.auth.login)
   }
 
   return (
     <main className="relative flex flex-1 items-center justify-center">
-      <Card className="text-primary flex h-fit w-2/5 flex-col items-center justify-start gap-6">
+      <Card className="text-primary flex h-fit w-2/5 flex-col items-center justify-start">
         <CardHeader>
-          <CardTitle className="text-center text-3xl">
-          {t("title")}
-          </CardTitle>
+          <CardTitle className="text-center text-3xl">{t("title")}</CardTitle>
+          <CardDescription className="text-cente text-md">
+            {t("description")}
+          </CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col items-center justify-center gap-8">
+        <CardContent className="flex flex-col items-center justify-center">
           <Button
             className="text-primary bg-accent hover:bg-accentHover w-full"
-            disabled={!token || loading}
+            disabled={!token}
             onClick={handleConfirm}
           >
-            {loading ? t("activationProgress") : t("activateAccount")}
+            {t("cta.confirm")}
           </Button>
         </CardContent>
       </Card>

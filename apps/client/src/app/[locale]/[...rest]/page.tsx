@@ -2,7 +2,7 @@ import { Button } from "@lootopia/ui"
 import { useTranslations } from "next-intl"
 
 import { Link } from "@client/i18n/routing"
-import { routes } from "@client/utils/routes"
+import { routes } from "@client/web/routes"
 
 const CatchAllPage = () => {
   const t = useTranslations("Pages.NotFound")

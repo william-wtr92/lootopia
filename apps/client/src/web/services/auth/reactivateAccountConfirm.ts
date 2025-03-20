@@ -1,10 +1,12 @@
+import type { ReactivateAccountConfirmSchema } from "@common/index"
+
 import { client } from "@client/web/utils/client"
 
-export const reactivateAccountConfirm = async ({ token }: { token: string }) => {
+export const reactivateAccountConfirm = async (
+  query: ReactivateAccountConfirmSchema
+) => {
   const response = await client.auth["reactivate-account"].confirm.$post({
-    query: {
-      token
-    }
+    query,
   })
 
   if (response.ok) {

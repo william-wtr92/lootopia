@@ -1,9 +1,13 @@
 import { z } from "zod"
-import { chestSchema } from "./chests"
+import { baseChestSchema } from "./chests"
+
+export const defaultLimit = 10
+export const defaultPage = 0
 
 export const huntSchema = z.object({
   name: z.string().min(3),
   description: z.string().min(3),
+  city: z.string().min(3),
   startDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
     message: "Start date must be a valid date.",
   }),
@@ -23,7 +27,7 @@ export type HuntSchema = z.infer<typeof huntSchema>
 
 export const combinedHuntSchema = z.object({
   hunt: huntSchema,
-  chests: z.array(chestSchema.omit({ id: true })),
+  chests: z.array(baseChestSchema.omit({ id: true })),
 })
 
 export type CombinedHuntSchema = z.infer<typeof combinedHuntSchema>

@@ -1,9 +1,90 @@
 {
-  "id": "5361fa6e-0f4b-48ab-b512-72b23a6271df",
+  "id": "00ca4d67-1f46-4fa9-b28e-c1e057c5cf02",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.artifacts": {
+      "name": "artifacts",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "link": {
+          "name": "link",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "shaKey": {
+          "name": "shaKey",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "userId": {
+          "name": "userId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "sha_key_idx": {
+          "name": "sha_key_idx",
+          "columns": [
+            {
+              "expression": "shaKey",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "artifacts_userId_users_id_fk": {
+          "name": "artifacts_userId_users_id_fk",
+          "tableFrom": "artifacts",
+          "tableTo": "users",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.chests": {
       "name": "chests",
       "schema": "",
@@ -27,11 +108,17 @@
           "primaryKey": false,
           "notNull": true
         },
+        "rewardType": {
+          "name": "rewardType",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "reward": {
           "name": "reward",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "size": {
           "name": "size",
@@ -73,6 +160,12 @@
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
+        },
+        "artifactId": {
+          "name": "artifactId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {
@@ -105,6 +198,19 @@
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
+        },
+        "chests_artifactId_artifacts_id_fk": {
+          "name": "chests_artifactId_artifacts_id_fk",
+          "tableFrom": "chests",
+          "tableTo": "artifacts",
+          "columnsFrom": [
+            "artifactId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -133,6 +239,12 @@
         "description": {
           "name": "description",
           "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "city": {
+          "name": "city",
+          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
         },

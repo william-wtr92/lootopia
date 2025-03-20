@@ -5,5 +5,4 @@ export const loginSchema = z.object({
   password: z.string().nonempty("Password is required."),
 })
 
-export type LoginSchemaType = z.infer<typeof loginSchema>
-export const emailSchema = loginSchema.pick({ email: true })
+export type LoginSchema = z.infer<typeof loginSchema>

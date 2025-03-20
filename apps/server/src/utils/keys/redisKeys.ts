@@ -6,6 +6,15 @@ export const redisKeys = {
       `auth:email-change-validation:${token}`,
     emailValidationCooldown: (email: string) =>
       `auth:email-validation-cooldown:${email}`,
+    requestPasswordResetCooldown: (email: string) =>
+      `auth:request-password-reset-cooldown:${email}`,
+    passwordReset: (token: string) => `auth:password-reset:${token}`,
+    passwordResetCooldown: (email: string) =>
+      `auth:password-reset-cooldown:${email}`,
+    reactivateAccountEmail: (token: string) =>
+      `auth:reactivate-account-email:${token}`,
+    reactivateAccountEmailCooldown: (email: string) =>
+      `auth:reactivate-account-email-cooldown:${email}`,
   },
   users: {
     nicknameUpdateCooldown: (userId: string) =>

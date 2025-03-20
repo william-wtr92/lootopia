@@ -6,18 +6,22 @@ import { useTranslations } from "next-intl"
 
 import Logo from "./Logo"
 import { Link } from "@client/i18n/routing"
-import { routes } from "@client/utils/routes"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
 import SelectLocale from "@client/web/components/utils/SelectLocale"
+import { routes } from "@client/web/routes"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
+import { useAuthStore } from "@client/web/store/useAuthStore"
 import anim from "@client/web/utils/anim"
 
 const Navbar = () => {
   const t = useTranslations("Components.NavBar")
 
+  const token = useAuthStore((state) => state.token)
+
   const { data } = useQuery({
     queryKey: ["user"],
     queryFn: () => getUserLoggedIn(),
+    enabled: !!token,
   })
 
   const user = data ? data : undefined
@@ -51,11 +55,11 @@ const Navbar = () => {
   }
 
   return (
-    <header className="sticky left-0 top-0 z-[9998] h-fit px-16 py-8">
+    <header className="sticky left-0 top-0 z-[11] h-fit px-16 py-8">
       <nav className="flex items-center justify-between">
         <Link href={routes.home}>
           <MotionComponent
-            className="flex items-center gap-2"
+            className="z-20 flex items-center gap-2"
             {...anim(logoVariant)}
           >
             <Logo width={50} height={50} />
@@ -72,7 +76,7 @@ const Navbar = () => {
         >
           <SelectLocale />
 
-          <div className="flex items-center space-x-4">
+          <div className="z-20 flex items-center space-x-4">
             {!user ? (
               <>
                 <Link href={routes.auth.login}>

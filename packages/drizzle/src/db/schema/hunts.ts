@@ -10,11 +10,14 @@ import {
   varchar,
 } from "drizzle-orm/pg-core"
 import { users } from "./users"
+import { artifacts } from "./artifacts"
+import type { ChestRewardType } from "@lootopia/common"
 
 export const hunts = pgTable("hunts", {
   id: uuid().defaultRandom().primaryKey().notNull(),
   name: varchar({ length: 255 }).notNull(),
   description: text().notNull(),
+  city: varchar({ length: 255 }).notNull(),
   startDate: timestamp().notNull(),
   endDate: timestamp().notNull(),
   mode: boolean().notNull().default(true),
@@ -37,7 +40,8 @@ export const chests = pgTable(
       mode: "xy",
       srid: 4326,
     }).notNull(),
-    reward: text().notNull(),
+    rewardType: text().$type<ChestRewardType>().notNull(),
+    reward: text(),
     size: integer().notNull().default(80),
     maxUsers: integer().notNull().default(1),
     visibility: boolean().notNull().default(false),
@@ -46,6 +50,7 @@ export const chests = pgTable(
     huntId: uuid()
       .notNull()
       .references(() => hunts.id, { onDelete: "cascade" }),
+    artifactId: uuid().references(() => artifacts.id),
   },
-  (t) => [index("chests_position_index").using("gist", t.position)]
+  (table) => [index("chests_position_index").using("gist", table.position)]
 )
