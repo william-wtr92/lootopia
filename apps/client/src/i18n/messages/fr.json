@@ -482,6 +482,24 @@
           "create-a-hunt": "Créer une chasse"
         }
       },
+      "List": {
+        "Rewards": {
+          "crown": "Couronne",
+          "artifact": "Artéfact",
+          "loading": "Chargement...",
+          "fileNotFoundOrNotSupported": "Fichier non trouvé ou non supporté",
+          "rarities": {
+            "common": "Commun",
+            "uncommon": "Peu commun", 
+            "rare": "Rare",
+            "epic": "Épique", 
+            "legendary": "Légendaire"
+          },
+          "cta": {
+            "close": "Fermer"
+          }
+        }
+      },
       "ListItem": {
         "title": "Modifier la chasse",
         "errors": {

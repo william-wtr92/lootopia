@@ -482,6 +482,24 @@
           "create-a-hunt": "Create a hunt"
         }
       },
+      "List": {
+        "Rewards": {
+          "crown": "Crown",
+          "artifact": "Artifact",
+          "loading": "Loading...",
+          "fileNotFoundOrNotSupported": "File not found or not supported",
+          "rarities": {
+            "common": "Common",
+            "uncommon": "Not common", 
+            "rare": "Rare",
+            "epic": "Epic", 
+            "legendary": "Legendary"
+          },
+          "cta": {
+            "close": "Close"
+          }
+        }
+      },
       "ListItem": {
         "title": "Update hunt",
         "errors": {

@@ -45,7 +45,7 @@ export const profileRoute = app
       return c.json(userNotFound, SC.errors.NOT_FOUND)
     }
 
-    return c.json({ result: sanitizeUser(user) }, SC.success.OK)
+    return c.json({ result: sanitizeUser(user, ["avatar"]) }, SC.success.OK)
   })
   .put("/me", zValidator("form", updateSchema), async (c) => {
     const body = c.req.valid("form")
