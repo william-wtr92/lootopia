@@ -379,6 +379,12 @@
           "cancel": "Cancel",
           "confirm": "Confirm"
         },
+        "errors": {
+          "emailRequired":"You must enter an email address to receive a reactivation email",
+          "userNotFound":"Email address does not exist",
+          "waitBeforeResendAnotherEmail":"Wait before resend another email",
+          "accountAlreadyActive":"Your account is already active"
+        },
         "success": "An email has been sent to reactivate your account!"
       },
       "DeactivateAccountDialog": {

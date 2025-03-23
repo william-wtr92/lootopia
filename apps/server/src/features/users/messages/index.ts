@@ -127,7 +127,7 @@ export const deactivatedAccountSuccess = {
   key: "deactivatedAccountSuccess",
 } as const
 
-export const emailReactivationSuccess = {
+export const reactivationEmailSentSuccess = {
   result: "Reactivation email sent successfully.",
   key: "emailReactivationSuccess",
 } as const

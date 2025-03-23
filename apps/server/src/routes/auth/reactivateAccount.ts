@@ -8,7 +8,7 @@ import appConfig from "@server/config"
 import { tokenExpired, tokenNotProvided } from "@server/features/global"
 import {
   emailRequired,
-  emailReactivationSuccess,
+  reactivationEmailSentSuccess,
   updateReactivationUser,
   userNotFound,
   accountAlreadyActive,
@@ -83,7 +83,7 @@ export const reactivateAccountRoute = app
 
       await sendMail(reactivateAccountMail)
 
-      return c.json(emailReactivationSuccess, SC.success.OK)
+      return c.json(reactivationEmailSentSuccess, SC.success.OK)
     }
   )
   .post(
