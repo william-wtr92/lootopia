@@ -12,8 +12,9 @@ import { CrownIcon, ShovelIcon, XIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import React, { useState } from "react"
 
-import { ThreeDViewer } from "../../../artifacts/ThreeDViewer"
+import { ThreeDViewer } from "../../../artifacts/three/ThreeDViewer"
 import { config } from "@client/env"
+import Loader from "@client/web/components/utils/Loader"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
 import { getArtifactById } from "@client/web/services/artifacts/getArtifactById"
 import anim from "@client/web/utils/anim"
@@ -29,8 +30,8 @@ const HuntRewardPill = (props: Props) => {
   const [open, setOpen] = useState(false)
   const [isModelLoaded, setModelLoaded] = useState(false)
 
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: ["artifact"],
+  const { data, refetch } = useQuery({
+    queryKey: ["artifact", chest.artifactId],
     queryFn: () => getArtifactById(chest.artifactId as string),
     enabled: !!chest.artifactId && open && chest.rewardType === "artifact",
   })
@@ -76,9 +77,6 @@ const HuntRewardPill = (props: Props) => {
       scale: 1,
       transition: {
         delay: 0.3,
-        // type: "spring",
-        // damping: 25,
-        // stiffness: 300,
       },
     },
   }
@@ -136,6 +134,17 @@ const HuntRewardPill = (props: Props) => {
     },
   }
 
+  const testVariant = {
+    initial: {},
+    enter: {
+      transition: {
+        type: "spring",
+        damping: 25,
+        stiffness: 300,
+      },
+    },
+  }
+
   return (
     <MotionComponent variants={rewardItemVariant}>
       <Dialog key={chest.rewardType} open={open} onOpenChange={handleOpen}>
@@ -174,61 +183,71 @@ const HuntRewardPill = (props: Props) => {
             />
           </DialogTitle>
 
-          <div className="flex w-[500px] flex-col items-center gap-3 rounded-md p-4">
-            {chest.rewardType === "artifact" ? (
-              <div className="mb-4 h-[300px] w-full rounded-md">
-                {isLoading && !isModelLoaded ? (
-                  <p>{t("loading")}</p>
-                ) : fileUrl ? (
-                  <ThreeDViewer
-                    fileUrl={fileUrl}
-                    fileType={fileType}
-                    onLoaded={handleModelLoaded}
-                  />
+          <MotionComponent
+            className="flex min-h-[400px] w-[500px] flex-col items-center gap-3 rounded-md p-8"
+            {...anim(testVariant)}
+          >
+            {data ? (
+              <>
+                {chest.rewardType === "artifact" ? (
+                  <div className="mb-4 h-[300px] w-full cursor-grab rounded-md">
+                    {fileUrl ? (
+                      <ThreeDViewer
+                        fileUrl={fileUrl}
+                        fileType={fileType}
+                        isModelLoaded={isModelLoaded}
+                        handleModelLoaded={handleModelLoaded}
+                      />
+                    ) : (
+                      <p>{t("fileNotFoundOrNotSupported")}</p>
+                    )}
+                  </div>
                 ) : (
-                  <p>{t("fileNotFoundOrNotSupported")}</p>
+                  <MotionComponent {...anim(rewardItemVariant)}>
+                    <CrownIcon size={160} className="text-primary" />
+                  </MotionComponent>
                 )}
-              </div>
+
+                <MotionComponent
+                  type="span"
+                  className="text-primary text-2xl font-medium"
+                  {...anim(rewardNameVariant)}
+                >
+                  {rewardName}
+                </MotionComponent>
+
+                <MotionComponent
+                  type="span"
+                  className="text-primary rounded-full bg-[#FFAA00] px-4 py-1"
+                  {...anim(rarityPillVariant)}
+                >
+                  {t("rarities.legendary")}
+                </MotionComponent>
+
+                <MotionComponent
+                  type="span"
+                  className="text-primary mb-2 text-center text-lg font-normal"
+                  {...anim(descriptionVariant)}
+                >
+                  {rewardDescription}
+                </MotionComponent>
+
+                <MotionComponent {...anim(closeBtnVariant)}>
+                  <Button
+                    variant={"secondary"}
+                    size={"lg"}
+                    onClick={() => handleOpen(false)}
+                  >
+                    {t("cta.close")}
+                  </Button>
+                </MotionComponent>
+              </>
             ) : (
-              <MotionComponent {...anim(rewardItemVariant)}>
-                <CrownIcon size={160} className="text-primary" />
-              </MotionComponent>
+              <div className="flex size-full items-center justify-center">
+                <Loader label="Chargement de l'artéfact..." />
+              </div>
             )}
-
-            <MotionComponent
-              type="span"
-              className="text-primary text-2xl font-medium"
-              {...anim(rewardNameVariant)}
-            >
-              {rewardName}
-            </MotionComponent>
-
-            <MotionComponent
-              type="span"
-              className="text-primary rounded-full bg-[#FFAA00] px-4 py-1"
-              {...anim(rarityPillVariant)}
-            >
-              {t("rarities.legendary")}
-            </MotionComponent>
-
-            <MotionComponent
-              type="span"
-              className="text-primary mb-2 text-center text-lg font-normal"
-              {...anim(descriptionVariant)}
-            >
-              {rewardDescription}
-            </MotionComponent>
-
-            <MotionComponent {...anim(closeBtnVariant)}>
-              <Button
-                variant={"secondary"}
-                size={"lg"}
-                onClick={() => handleOpen(false)}
-              >
-                {t("cta.close")}
-              </Button>
-            </MotionComponent>
-          </div>
+          </MotionComponent>
 
           <div className="h-2 w-full bg-gradient-to-r from-[#4A0E4E] via-[#8A4FFF] to-[#FFD700]"></div>
         </DialogContent>
