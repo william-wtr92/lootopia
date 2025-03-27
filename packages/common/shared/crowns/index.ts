@@ -12,4 +12,4 @@ export const DEFAULT_CROWN_AMOUNT = 50 as const
 export const crownCosts: Record<TransactionKey, number> = {
   huntParticipation: 20,
   artifactPurchase: 100,
-} as const
+}
