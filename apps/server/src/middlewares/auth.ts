@@ -15,11 +15,9 @@ import { oneDayTTL } from "@server/utils/helpers/times"
 import { contextKeys } from "@server/utils/keys/contextKeys"
 import { cookiesKeys } from "@server/utils/keys/cookiesKeys"
 import { redisKeys } from "@server/utils/keys/redisKeys"
-import { createFactory } from "hono/factory"
+import { createMiddleware } from "hono/factory"
 
-const factory = createFactory()
-
-export const auth = factory.createMiddleware(async (c, next) => {
+export const auth = createMiddleware(async (c, next) => {
   const authToken = await getCookie(c, cookiesKeys.auth.session)
 
   if (!authToken) {

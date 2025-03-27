@@ -1,6 +1,6 @@
 "use client"
 
-import type { ChestSchema, HuntSchema, UserSchema } from "@common/index"
+import type { ChestSchema, HuntSchema, UserSchema } from "@lootopia/common"
 import { AnimatePresence } from "framer-motion"
 import { Award, ChevronRightIcon, Clock, MapPin, UsersIcon } from "lucide-react"
 import Image from "next/image"

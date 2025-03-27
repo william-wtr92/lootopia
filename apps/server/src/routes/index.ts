@@ -9,6 +9,7 @@ import { passwordResetRoute } from "./auth/passwordReset"
 import { registerRoute } from "./auth/register"
 import { createHuntRoute } from "./hunts/create"
 import { listHuntRoute } from "./hunts/list"
+import { partipateHuntRoute } from "./hunts/participate"
 import { profileRoute } from "./users/profile"
 
 const DEFAULT_PATH = "/" as const
@@ -25,6 +26,7 @@ const huntsRoutes = new Hono()
   .use(auth)
   .route(DEFAULT_PATH, createHuntRoute)
   .route(DEFAULT_PATH, listHuntRoute)
+  .route(DEFAULT_PATH, partipateHuntRoute)
 
 const artifactsRoutes = new Hono()
   .use(auth)
