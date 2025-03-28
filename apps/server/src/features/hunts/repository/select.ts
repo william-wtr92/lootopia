@@ -1,4 +1,4 @@
-import type { ChestSchema } from "@common/index"
+import type { ChestSchema } from "@lootopia/common"
 import { chests, hunts, users } from "@lootopia/drizzle"
 import { db } from "@server/db/client"
 import { count, eq, ilike, sql } from "drizzle-orm"

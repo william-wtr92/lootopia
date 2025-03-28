@@ -11,13 +11,12 @@ import {
   updateSuccessWithEmailChange,
   userNotFound,
   waitThirtyDaysBeforeUpdatingNickname,
-} from "@server/features/users"
-import {
   selectUserByEmail,
   selectUserByNickname,
   selectUserByPhone,
-} from "@server/features/users/repository/select"
-import { updateUser } from "@server/features/users/repository/update"
+  selectUserWithCrowns,
+  updateUser,
+} from "@server/features/users"
 import { azureDirectory, uploadImage } from "@server/utils/actions/azureActions"
 import { redis } from "@server/utils/clients/redis"
 import { allowedMimeTypes, defaultMimeType } from "@server/utils/helpers/files"
@@ -40,7 +39,7 @@ export const profileRoute = app
   .get("/me", async (c) => {
     const email = c.get(contextKeys.loggedUserEmail)
 
-    const user = await selectUserByEmail(email)
+    const user = await selectUserWithCrowns(email)
 
     if (!user) {
       return c.json(userNotFound, SC.errors.NOT_FOUND)

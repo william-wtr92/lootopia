@@ -9,9 +9,10 @@ import {
   uuid,
   varchar,
 } from "drizzle-orm/pg-core"
+import type { ChestRewardType } from "@lootopia/common"
+
 import { users } from "./users"
 import { artifacts } from "./artifacts"
-import type { ChestRewardType } from "@lootopia/common"
 
 export const hunts = pgTable("hunts", {
   id: uuid().defaultRandom().primaryKey().notNull(),

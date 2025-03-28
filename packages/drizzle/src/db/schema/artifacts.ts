@@ -5,6 +5,7 @@ import {
   timestamp,
   uniqueIndex,
 } from "drizzle-orm/pg-core"
+
 import { users } from "./users"
 
 export const artifacts = pgTable(

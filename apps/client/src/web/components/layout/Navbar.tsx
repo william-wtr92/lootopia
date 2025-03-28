@@ -2,6 +2,7 @@
 
 import { Button } from "@lootopia/ui"
 import { useQuery } from "@tanstack/react-query"
+import { Crown, Plus } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 import Logo from "./Logo"
@@ -12,6 +13,7 @@ import { routes } from "@client/web/routes"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import { useAuthStore } from "@client/web/store/useAuthStore"
 import anim from "@client/web/utils/anim"
+import { formatCrowns } from "@client/web/utils/formatCrowns"
 
 const Navbar = () => {
   const t = useTranslations("Components.NavBar")
@@ -95,6 +97,18 @@ const Navbar = () => {
               </>
             ) : (
               <>
+                <div className="flex items-center rounded-md">
+                  <div className="text-primary bg-accent relative left-2 z-10 flex flex-1 items-center gap-2 rounded-l-xl px-4 py-1 font-semibold">
+                    <span className="whitespace-nowrap">
+                      {formatCrowns(user.crowns)}
+                    </span>
+                    <Crown size={20} />
+                  </div>
+                  <Button className="bg-primary text-accent hover:bg-secondary z-20 size-8 cursor-pointer rounded-r-md p-1">
+                    <Plus size={10} />
+                  </Button>
+                </div>
+
                 <Link href={routes.hunts.list}>
                   <Button className="bg-primary text-accent hover:bg-secondary">
                     {t("hunts")}

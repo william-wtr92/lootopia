@@ -1,4 +1,4 @@
-import { SC } from "@common/index"
+import { SC } from "@lootopia/common"
 import { selectArtifactsByUserId } from "@server/features/artifacts"
 import { selectUserByEmail, userNotFound } from "@server/features/users"
 import { contextKeys } from "@server/utils/keys/contextKeys"
