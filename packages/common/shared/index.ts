@@ -66,7 +66,11 @@ export {
   type ArtifactUploadSchema,
   artifactSchema,
   type ArtifactSchema,
+  ARTIFACT_RARITY_TIERS,
+  type ArtifactRarityTier,
 } from "./artifacts"
+
+export { getRarityFromAvailability } from "./artifacts/utils/getRarityFromAvailabilty"
 
 // Crowns types
 export {

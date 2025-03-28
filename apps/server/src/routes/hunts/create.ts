@@ -1,14 +1,22 @@
 import { zValidator } from "@hono/zod-validator"
-import { combinedHuntSchema, SC } from "@lootopia/common"
+import {
+  combinedHuntSchema,
+  crownCosts,
+  SC,
+  transactionTypes,
+} from "@lootopia/common"
 import {
   artifactNotFound,
   selectArtifactById,
+  updateArtifactRarity,
 } from "@server/features/artifacts"
+import { updateHuntCrownsTransaction } from "@server/features/crowns"
 import {
   huntCreatedSuccess,
   insertHuntWithChests,
 } from "@server/features/hunts"
 import { userNotFound, selectUserByEmail } from "@server/features/users"
+import { requiredCrowns } from "@server/middlewares/requiredCrowns"
 import { contextKeys } from "@server/utils/keys/contextKeys"
 import { Hono } from "hono"
 
@@ -17,6 +25,7 @@ const app = new Hono()
 export const createHuntRoute = app.post(
   "/",
   zValidator("json", combinedHuntSchema),
+  requiredCrowns(crownCosts.huntCreation),
   async (c) => {
     const email = c.get(contextKeys.loggedUserEmail)
     const body = c.req.valid("json")
@@ -27,17 +36,33 @@ export const createHuntRoute = app.post(
       return c.json(userNotFound, SC.errors.NOT_FOUND)
     }
 
+    const artifactIdsToUpdate = new Set<string>()
+
     for (const chest of body.chests) {
       if (chest.rewardType === "artifact") {
-        const artifact = await selectArtifactById(chest.reward.toString())
+        const artifactId = chest.reward.toString()
+        const artifact = await selectArtifactById(artifactId)
 
         if (!artifact) {
           return c.json(artifactNotFound, SC.errors.NOT_FOUND)
         }
+
+        artifactIdsToUpdate.add(artifactId)
       }
     }
 
-    insertHuntWithChests(body, user.id)
+    const huntId = await insertHuntWithChests(body, user.id)
+
+    await updateHuntCrownsTransaction(
+      transactionTypes.huntCreation,
+      huntId,
+      user.id,
+      crownCosts.huntCreation
+    )
+
+    for (const artifactId of artifactIdsToUpdate) {
+      await updateArtifactRarity(artifactId)
+    }
 
     return c.json(huntCreatedSuccess, SC.success.CREATED)
   }
