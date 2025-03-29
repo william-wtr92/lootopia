@@ -226,7 +226,8 @@
         },
         "success": "The hunt has been created successfully!",
         "errors": {
-          "userNotFound": "You are not authorized to perform this action"
+          "userNotFound": "You are not authorized to perform this action",
+          "notEnoughCrowns": "You don't have enough crowns to create a hunt, put it in draft or buy some"
         }
       },
       "Drafts": {
