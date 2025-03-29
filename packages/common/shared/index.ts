@@ -70,7 +70,7 @@ export {
   type ArtifactRarityTier,
 } from "./artifacts"
 
-export { getRarityFromAvailability } from "./artifacts/utils/getRarityFromAvailabilty"
+export { getRarityFromAvailability } from "./artifacts/utils/getRarityFromAvailability"
 
 // Crowns types
 export {
