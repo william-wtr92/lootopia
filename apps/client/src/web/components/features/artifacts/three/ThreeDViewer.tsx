@@ -2,24 +2,17 @@ import { useState } from "react"
 
 import {
   ObjModel,
-  GltfModel,
   FbxModel,
   StlModel,
+  GlbModel,
 } from "@client/web/components/features/artifacts/three/Model"
 
 export type ThreeDViewerProps = {
   fileUrl: string
   fileType: string
-  isModelLoaded: boolean
-  handleModelLoaded: () => void
 }
 
-export const ThreeDViewer = ({
-  fileUrl,
-  fileType,
-  isModelLoaded,
-  handleModelLoaded,
-}: ThreeDViewerProps) => {
+export const ThreeDViewer = ({ fileUrl, fileType }: ThreeDViewerProps) => {
   const [isCameraAdjusted, setIsCameraAdjusted] = useState(false)
 
   const handleIsCameraAdjusted = (value: boolean) => {
@@ -32,22 +25,16 @@ export const ThreeDViewer = ({
         <ObjModel
           fileUrl={fileUrl}
           isCameraAdjusted={isCameraAdjusted}
-          isModelLoaded={isModelLoaded}
           handleIsCameraAdjusted={handleIsCameraAdjusted}
-          handleModelLoaded={handleModelLoaded}
         />
       )
 
-    case "gltf":
-
     case "glb":
       return (
-        <GltfModel
+        <GlbModel
           fileUrl={fileUrl}
           isCameraAdjusted={isCameraAdjusted}
-          isModelLoaded={isModelLoaded}
           handleIsCameraAdjusted={handleIsCameraAdjusted}
-          handleModelLoaded={handleModelLoaded}
         />
       )
 
@@ -56,9 +43,7 @@ export const ThreeDViewer = ({
         <FbxModel
           fileUrl={fileUrl}
           isCameraAdjusted={isCameraAdjusted}
-          isModelLoaded={isModelLoaded}
           handleIsCameraAdjusted={handleIsCameraAdjusted}
-          handleModelLoaded={handleModelLoaded}
         />
       )
 
@@ -67,9 +52,7 @@ export const ThreeDViewer = ({
         <StlModel
           fileUrl={fileUrl}
           isCameraAdjusted={isCameraAdjusted}
-          isModelLoaded={isModelLoaded}
           handleIsCameraAdjusted={handleIsCameraAdjusted}
-          handleModelLoaded={handleModelLoaded}
         />
       )
 

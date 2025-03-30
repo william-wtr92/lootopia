@@ -28,7 +28,6 @@ const HuntRewardPill = (props: Props) => {
   const t = useTranslations("Components.Hunts.List.Rewards")
 
   const [open, setOpen] = useState(false)
-  const [isModelLoaded, setModelLoaded] = useState(false)
 
   const { data, refetch } = useQuery({
     queryKey: ["artifact", chest.artifactId],
@@ -39,10 +38,6 @@ const HuntRewardPill = (props: Props) => {
   const handleOpen = (bool: boolean) => {
     setOpen(bool)
     refetch()
-  }
-
-  const handleModelLoaded = () => {
-    setModelLoaded(true)
   }
 
   const artifactName = data?.name
@@ -192,12 +187,7 @@ const HuntRewardPill = (props: Props) => {
                 {chest.rewardType === "artifact" ? (
                   <div className="mb-4 h-[300px] w-full cursor-grab rounded-md">
                     {fileUrl ? (
-                      <ThreeDViewer
-                        fileUrl={fileUrl}
-                        fileType={fileType}
-                        isModelLoaded={isModelLoaded}
-                        handleModelLoaded={handleModelLoaded}
-                      />
+                      <ThreeDViewer fileUrl={fileUrl} fileType={fileType} />
                     ) : (
                       <p>{t("fileNotFoundOrNotSupported")}</p>
                     )}

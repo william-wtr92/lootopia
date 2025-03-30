@@ -1,12 +1,6 @@
 import { z } from "zod"
 
-export const ACCEPTED_FILE_TYPES = [
-  ".glb",
-  ".gltf",
-  ".obj",
-  ".fbx",
-  ".stl",
-] as const
+export const ACCEPTED_FILE_TYPES = [".glb", ".obj", ".fbx", ".stl"] as const
 
 export const artifactUploadSchema = z.object({
   name: z.string().min(3),
