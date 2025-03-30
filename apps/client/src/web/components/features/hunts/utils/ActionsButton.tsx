@@ -1,4 +1,5 @@
 import { Button } from "@lootopia/ui"
+import { Crown } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 type Props = {
@@ -26,9 +27,13 @@ const ActionsButton = ({
       <Button
         onClick={handleSubmitAll}
         disabled={!isValid}
-        className="text-primary bg-accent hover:bg-accentHover w-48"
+        className="text-primary bg-accent hover:bg-accentHover flex w-48 items-center gap-2"
       >
-        {t("submit")}
+        <span>{t("submit")}</span>
+        <div className="flex items-center gap-1 font-bold">
+          <span>{t("crownsAmount")}</span>
+          <Crown size={16} />
+        </div>
       </Button>
     </div>
   )

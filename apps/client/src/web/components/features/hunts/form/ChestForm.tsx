@@ -6,6 +6,7 @@ import {
   type ChestRewardType,
   chestSchema,
   type ChestSchema,
+  MAX_CROWN_REWARD,
 } from "@lootopia/common"
 import {
   Button,
@@ -188,6 +189,7 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
                     {...field}
                     type="number"
                     min={1}
+                    max={MAX_CROWN_REWARD}
                     value={field.value ? field.value.toString() : ""}
                     onChange={(e) => handleRewardChange(e.target.value)}
                   />

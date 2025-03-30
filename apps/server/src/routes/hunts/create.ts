@@ -2,6 +2,7 @@ import { zValidator } from "@hono/zod-validator"
 import {
   combinedHuntSchema,
   crownCosts,
+  MAX_CROWN_REWARD,
   SC,
   transactionTypes,
 } from "@lootopia/common"
@@ -14,6 +15,7 @@ import { updateHuntCrownsTransaction } from "@server/features/crowns"
 import {
   huntCreatedSuccess,
   insertHuntWithChests,
+  maxCrownRewardExceeded,
 } from "@server/features/hunts"
 import { userNotFound, selectUserByEmail } from "@server/features/users"
 import { requiredCrowns } from "@server/middlewares/requiredCrowns"
@@ -39,6 +41,15 @@ export const createHuntRoute = app.post(
     const artifactIdsToUpdate = new Set<string>()
 
     for (const chest of body.chests) {
+      if (chest.rewardType === "crown") {
+        if (
+          typeof chest.reward === "number" &&
+          chest.reward > MAX_CROWN_REWARD
+        ) {
+          return c.json(maxCrownRewardExceeded, SC.errors.BAD_REQUEST)
+        }
+      }
+
       if (chest.rewardType === "artifact") {
         const artifactId = chest.reward.toString()
         const artifact = await selectArtifactById(artifactId)

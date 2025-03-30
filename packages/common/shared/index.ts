@@ -57,6 +57,7 @@ export {
   type ChestSchema,
   type ChestRewardType,
   CHEST_REWARD_TYPES,
+  MAX_CROWN_REWARD,
 } from "./hunts/chests"
 
 // Artifacts types
