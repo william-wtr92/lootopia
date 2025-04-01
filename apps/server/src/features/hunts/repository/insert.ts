@@ -42,5 +42,7 @@ export const insertHuntWithChests = async (
           chest.rewardType === "artifact" ? chest.reward?.toString() : null,
       }))
     )
+
+    return huntInserted.huntId
   })
 }

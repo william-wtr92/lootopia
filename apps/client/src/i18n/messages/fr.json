@@ -224,10 +224,12 @@
           "title": "Ajouter un coffre",
           "description": "Décrivez le coffre et ajoutez une récompense pour les participants."
         },
-        "errors": {
-          "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action."
-        },
-        "success": "La chasse a été créée avec succès !"
+        "success": "La chasse a été créée avec succès !",
+         "errors": {
+          "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action.",
+           "notEnoughCrowns": "Vous n'avez pas assez de couronnes pour créer une chasse, mettez la en brouillon ou achetez en.",
+           "maxCrownRewardExceeded": "Le montant de la récompense maximale est de 100 couronnes par coffre."
+        }
       },
       "Drafts": {
         "title": "Brouillons des chasses",
@@ -365,7 +367,7 @@
           "reward": {
             "crown": {
               "label": "Montant de couronnes",
-              "error": "Montant de couronnes invalide"
+              "error": "Montant de couronnes invalide, maximum 100 couronnes"
             },
             "artifact": {
               "label": "Choisissez un artefact",
@@ -449,7 +451,8 @@
       "Utils": {
         "ActionsButton": {
           "saveDraft": "Enregistrer le brouillon",
-          "submit": "Soumettre la chasse"
+          "submit": "Soumettre la chasse",
+          "crownsAmount": "50"
         },
         "AlertDeleteChest": {
           "trigger": "Supprimer",

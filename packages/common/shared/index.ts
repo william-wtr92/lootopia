@@ -57,6 +57,7 @@ export {
   type ChestSchema,
   type ChestRewardType,
   CHEST_REWARD_TYPES,
+  MAX_CROWN_REWARD,
 } from "./hunts/chests"
 
 // Artifacts types
@@ -66,7 +67,11 @@ export {
   type ArtifactUploadSchema,
   artifactSchema,
   type ArtifactSchema,
+  ARTIFACT_RARITY_TIERS,
+  type ArtifactRarityTier,
 } from "./artifacts"
+
+export { getRarityFromAvailability } from "./artifacts/utils/getRarityFromAvailability"
 
 // Crowns types
 export {

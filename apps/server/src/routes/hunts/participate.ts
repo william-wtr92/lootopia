@@ -1,5 +1,5 @@
-import { crownCosts, SC } from "@lootopia/common"
-import { updateCrownsHuntParticipation } from "@server/features/crowns"
+import { crownCosts, SC, transactionTypes } from "@lootopia/common"
+import { updateHuntCrownsTransaction } from "@server/features/crowns"
 import { selectUserByEmail, userNotFound } from "@server/features/users"
 import { requiredCrowns } from "@server/middlewares/requiredCrowns"
 import { contextKeys } from "@server/utils/keys/contextKeys"
@@ -20,7 +20,8 @@ export const partipateHuntRoute = app.post(
       return c.json(userNotFound, SC.errors.NOT_FOUND)
     }
 
-    await updateCrownsHuntParticipation(
+    await updateHuntCrownsTransaction(
+      transactionTypes.huntParticipation,
       huntId,
       user.id,
       crownCosts.huntParticipation

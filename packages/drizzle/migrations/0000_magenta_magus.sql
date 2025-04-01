@@ -3,6 +3,7 @@ CREATE TABLE "artifacts" (
 	"name" text NOT NULL,
 	"link" text NOT NULL,
 	"shaKey" text NOT NULL,
+	"rarity" text DEFAULT 'common' NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"userId" uuid NOT NULL
 );
