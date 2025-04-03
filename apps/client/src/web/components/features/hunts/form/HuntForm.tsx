@@ -60,7 +60,7 @@ const HuntForm = ({ onSubmit, mode = "draft", updateHunt }: Props) => {
     resolver: zodResolver(huntSchema),
     mode: "onBlur",
     defaultValues: {
-      name: activeHunt?.name ?? "",
+      name: activeHunt()?.name ?? "",
       description: activeHunt()?.description ?? "",
       city: activeHunt()?.city ?? "",
       startDate: activeHunt()?.startDate ?? "",

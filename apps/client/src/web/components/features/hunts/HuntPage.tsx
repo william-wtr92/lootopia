@@ -208,7 +208,7 @@ const HuntPage = ({ huntId }: Props) => {
             </CardContent>
             <CardFooter className="text-primary flex justify-center gap-1 text-sm">
               {t("tabs.content.link")}
-              <Link href={routes.hunts.list}>
+              <Link href={routes.hunts.drafts}>
                 <span className="text-secondary font-semibold">
                   {t("tabs.content.here")}
                 </span>
