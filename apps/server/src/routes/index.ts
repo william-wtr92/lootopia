@@ -10,6 +10,7 @@ import { registerRoute } from "./auth/register"
 import { createHuntRoute } from "./hunts/create"
 import { listHuntRoute } from "./hunts/list"
 import { partipateHuntRoute } from "./hunts/participate"
+import { updateHuntRoute } from "./hunts/update"
 import { profileRoute } from "./users/profile"
 
 const DEFAULT_PATH = "/" as const
@@ -27,6 +28,7 @@ const huntsRoutes = new Hono()
   .route(DEFAULT_PATH, createHuntRoute)
   .route(DEFAULT_PATH, listHuntRoute)
   .route(DEFAULT_PATH, partipateHuntRoute)
+  .route(DEFAULT_PATH, updateHuntRoute)
 
 const artifactsRoutes = new Hono()
   .use(auth)

@@ -1,29 +1,43 @@
+/* eslint-disable complexity */
 "use client"
 
-import type { ChestSchema, HuntSchema, UserSchema } from "@lootopia/common"
+import type { ChestSchema } from "@common/index"
+import { useQuery } from "@tanstack/react-query"
 import { AnimatePresence } from "framer-motion"
-import { Award, ChevronRightIcon, Clock, MapPin, UsersIcon } from "lucide-react"
+import {
+  Award,
+  ChevronRightIcon,
+  Clock,
+  MapPin,
+  PencilRulerIcon,
+  UsersIcon,
+} from "lucide-react"
 import Image from "next/image"
 import { useState } from "react"
 
 import { config } from "@client/env"
 import Map from "@client/web/components/features/hunts/Map"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
+import type { HuntResponse } from "@client/web/services/hunts/getHunts"
+import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import anim from "@client/web/utils/anim"
 import { capitalizeFirstLetter } from "@client/web/utils/capitalizeFirstLetter"
 import { formatDate } from "@client/web/utils/formatDate"
 
 type Props = {
-  hunt: HuntSchema & {
-    chests: ChestSchema[]
-    organizer: UserSchema
-  }
+  hunt: HuntResponse
+  handleDisplayUpdateForm: (huntId: string) => void
 }
 
 const mapHeight = 300
 
 const HuntListItem = (props: Props) => {
-  const { hunt } = props
+  const { hunt, handleDisplayUpdateForm } = props
+
+  const { data: user } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => getUserLoggedIn(),
+  })
 
   const [map, setMap] = useState<L.Map | null>(null)
   const [isDeployed, setIsDeployed] = useState(false)
@@ -33,6 +47,8 @@ const HuntListItem = (props: Props) => {
   }
 
   const hiddenRewards = hunt.chests.slice(1)
+
+  const isOrganizer = hunt.organizerId === user?.id
 
   const mapVariant = {
     initial: { opacity: 0, height: 0 },
@@ -92,8 +108,8 @@ const HuntListItem = (props: Props) => {
       <div className="flex w-full items-center gap-4 p-4">
         <Image
           src={
-            hunt.organizer.avatar
-              ? config.blobUrl + hunt.organizer.avatar
+            hunt.organizer?.avatar
+              ? config.blobUrl + hunt.organizer?.avatar
               : "/avatar-placeholder.png"
           }
           alt="Avatar"
@@ -156,6 +172,17 @@ const HuntListItem = (props: Props) => {
           </div>
         </div>
 
+        {isOrganizer && (
+          <PencilRulerIcon
+            size={26}
+            className="text-accent hover:text-primary duration-300"
+            onClick={(e) => {
+              e.stopPropagation()
+              handleDisplayUpdateForm(hunt.id)
+            }}
+          />
+        )}
+
         <ChevronRightIcon
           className={`text-primary duration-300 ${isDeployed ? "rotate-90" : ""} `}
           size={32}
@@ -168,7 +195,7 @@ const HuntListItem = (props: Props) => {
             <Map
               map={map}
               setMap={setMap}
-              chests={hunt.chests}
+              chests={hunt.chests as ChestSchema[]}
               heightClass="h-[300px]"
               centerOnHuntRadius={true}
               displayChests={false}

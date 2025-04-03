@@ -244,6 +244,16 @@
         "no-hunts-hint": "Il semble qu'il n'y ait aucune chasse au trésor disponible pour le moment. Revenez plus tard ou créez votre propre aventure !",
         "no-hunts-search": "Aucune chasse trouvée pour la recherche : ", 
         "no-hunts-search-hint": "Il semble qu'il n'y ait aucune chasse au trésor correspondant à votre recherche. Essayez une autre recherche ou créez votre propre aventure !",
+        "update": {
+          "title": "Modifier la chasse",
+          "errors": {
+            "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+            "huntNotFound": "Chasse introuvable",
+            "huntEndDateEarlierThanStartDate": "La date de fin doit être postérieure à la date de début",
+            "notHuntOrganizer": "Vous n'êtes pas l'organisateur de cette chasse"
+          },
+          "success": "La chasse a été mise à jour avec succès !"
+        },
         "cta": {
           "create-a-hunt": "Créer une chasse",
           "load-more": "Charger plus",
@@ -471,7 +481,8 @@
       "SearchBar": {
         "options": {  
           "city": "Par ville",
-          "name": "Par nom"
+          "name": "Par nom",
+          "organizer": "Mes chasses"
         },
         "placeholder": {
           "city": "La légende du joyau perdu",

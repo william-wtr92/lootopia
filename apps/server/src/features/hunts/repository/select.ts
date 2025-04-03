@@ -1,14 +1,47 @@
 import type { ChestSchema } from "@lootopia/common"
 import { chests, hunts, users } from "@lootopia/drizzle"
 import { db } from "@server/db/client"
-import { count, eq, ilike, sql } from "drizzle-orm"
+import { and, count, eq, ilike, or, sql } from "drizzle-orm"
 
-export const selectHunts = async (
-  limit: number,
-  page: number,
-  name: string | undefined,
-  city: string | undefined
-) => {
+import type { HuntWithChests } from "../types"
+
+export const selectHunts = async ({
+  limit,
+  page,
+  filters = {},
+}: {
+  limit: number
+  page: number
+  filters?: {
+    name?: string
+    city?: string
+    search?: string
+    organizerId?: string
+  }
+}) => {
+  const conditions = []
+
+  if (filters.search && filters.search.trim() !== "") {
+    conditions.push(
+      or(
+        ilike(hunts.name, `%${filters.search}%`),
+        ilike(hunts.city, `%${filters.search}%`)
+      )
+    )
+  }
+
+  if (filters.name) {
+    conditions.push(ilike(hunts.name, `%${filters.name}%`))
+  }
+
+  if (filters.city) {
+    conditions.push(ilike(hunts.city, `%${filters.city}%`))
+  }
+
+  if (filters.organizerId) {
+    conditions.push(eq(hunts.organizerId, filters.organizerId))
+  }
+
   const query = db
     .select({
       hunt: hunts,
@@ -30,12 +63,8 @@ export const selectHunts = async (
     .limit(limit)
     .offset(page * limit)
 
-  if (name) {
-    query.where(ilike(hunts.name, `%${name}%`))
-  }
-
-  if (city) {
-    query.where(ilike(hunts.city, `%${city}%`))
+  if (conditions.length > 0) {
+    query.where(and(...conditions))
   }
 
   const result = await query
@@ -56,7 +85,7 @@ export const selectHunts = async (
     })
 
     return acc
-  }, [] as any[])
+  }, [] as HuntWithChests[])
 
   return processedResult
 }
@@ -76,4 +105,17 @@ export const selectHuntsCount = async (
   }
 
   return query
+}
+
+export const selectHuntById = async (huntId: string) => {
+  return db.query.hunts.findFirst({
+    where: (hunts, { eq }) => eq(hunts.id, huntId),
+  })
+}
+
+export const selectOrganizerHuntsCount = async (organizerId: string) => {
+  return db
+    .select({ count: count() })
+    .from(hunts)
+    .where(eq(hunts.organizerId, organizerId))
 }
