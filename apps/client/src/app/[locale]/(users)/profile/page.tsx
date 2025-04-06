@@ -155,10 +155,7 @@ const ProfilePage = () => {
             <Button onClick={logoutUser}>
               <LogOutIcon /> {t("cta.logout")}
             </Button>
-
-            {user?.active && (
-              <DeactivateAccountDialog onConfirm={handleDeactivateAccount} />
-            )}
+            <DeactivateAccountDialog onConfirm={handleDeactivateAccount} />
           </div>
         </Card>
       </MotionComponent>

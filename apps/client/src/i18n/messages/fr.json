@@ -159,12 +159,6 @@
       "Login": {
         "title": "Se connecter",
         "description": "Commencez votre aventure dès maintenant !",
-        "reactivateAccount" :"Reactivez votre compte",
-        "reactiveChamp":"Veuillez renseigner votre email pour réactiver votre compte.",
-        "reactivateEmail":"Un email de réactivation a été envoyé.",
-        "cancel":"Annuler",
-        "confirm":"Confirmer",
-        "reactivateAccountDescription":"Veuillez saisir votre adresse e-mail pour recevoir un lien de réactivation de votre compte.",
         "form": {
           "email": {
             "label": "Email",

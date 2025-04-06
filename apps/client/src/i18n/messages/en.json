@@ -159,12 +159,6 @@
       "Login": {
         "title": "Log in",
         "description": "Start your adventure now!",
-        "reactivateAccount": "Reactivate your account",
-        "reactiveChamp": "Please enter your email address to reactivate your account.",
-        "reactivateEmail": "A reactivation email has been sent.",
-        "cancel": "Cancel",
-        "confirm": "Confirm",
-        "reactivateAccountDescription": "Please enter your email address to receive a reactivation link for your account.",
         "form": {
           "email": {
             "label": "Email",

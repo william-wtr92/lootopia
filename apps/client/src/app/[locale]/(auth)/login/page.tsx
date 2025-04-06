@@ -180,7 +180,6 @@ const LoginPage = () => {
             {t("cta.title")}
             <Link href={routes.auth.register}>
               <span className="text-secondary hover:font-semibold">
-                {" "}
                 {t("cta.register")}
               </span>
             </Link>
