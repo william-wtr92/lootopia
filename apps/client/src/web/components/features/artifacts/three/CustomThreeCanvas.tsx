@@ -9,7 +9,7 @@ type CustomThreeCanvasProps = {
 const CustomThreeCanvas = ({ children }: CustomThreeCanvasProps) => {
   return (
     <Canvas
-      camera={{ position: [0, 0, 100], fov: 50, near: 0.01, far: 5000 }}
+      camera={{ position: [0, 0, 100], fov: 50 }}
       className="h-full w-full"
     >
       <ambientLight intensity={0.5} />
