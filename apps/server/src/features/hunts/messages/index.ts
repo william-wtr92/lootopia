@@ -20,6 +20,26 @@ export const maxCrownRewardExceeded = {
   key: "maxCrownRewardExceeded",
 } as const
 
+export const noHintFound = {
+  result: "No hint found.",
+  key: "noHintFound",
+} as const
+
+export const waitBeforeRequestingHint = {
+  result: "You need to wait before requesting a hint.",
+  key: "waitBeforeRequestingHint",
+} as const
+
+export const noChestFoundInArea = {
+  result: "No chest found in the specified area.",
+  key: "noChestFoundInArea",
+} as const
+
+export const waitBeforeDigging = {
+  result: "You need to wait before digging again.",
+  key: "waitBeforeDigging",
+} as const
+
 // SUCCESS MESSAGES
 
 export const huntCreatedSuccess = {

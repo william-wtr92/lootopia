@@ -6,7 +6,8 @@ import { eq, sql } from "drizzle-orm"
 export const updateHuntCrownsTransaction = async (
   type:
     | typeof transactionTypes.huntParticipation
-    | typeof transactionTypes.huntCreation,
+    | typeof transactionTypes.huntCreation
+    | typeof transactionTypes.hintPurchase,
   huntId: string,
   userId: string,
   amount: number

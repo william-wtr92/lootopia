@@ -1,8 +1,8 @@
 import type { HuntSchema } from "@lootopia/common"
-import { hunts } from "@lootopia/drizzle"
+import { chests, hunts } from "@lootopia/drizzle"
 import { db } from "@server/db/client"
 import type { Hunt } from "@server/features/hunts/types"
-import { eq } from "drizzle-orm"
+import { and, eq } from "drizzle-orm"
 
 export const updateHunt = async (hunt: Hunt, updatedHunt: HuntSchema) => {
   await db
@@ -28,4 +28,18 @@ export const updateHunt = async (hunt: Hunt, updatedHunt: HuntSchema) => {
       updatedAt: new Date(),
     })
     .where(eq(hunts.id, hunt.id))
+}
+
+export const updateHuntChestDigged = async (
+  huntId: string,
+  chestId: string,
+  maxUsers: number
+) => {
+  return db
+    .update(chests)
+    .set({
+      maxUsers: maxUsers - 1,
+      updatedAt: new Date(),
+    })
+    .where(and(eq(chests.huntId, huntId), eq(chests.id, chestId)))
 }

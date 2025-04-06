@@ -8,6 +8,7 @@ import { loginRoute } from "./auth/login"
 import { passwordResetRoute } from "./auth/passwordReset"
 import { registerRoute } from "./auth/register"
 import { createHuntRoute } from "./hunts/create"
+import { digRoute } from "./hunts/dig"
 import { listHuntRoute } from "./hunts/list"
 import { partipateHuntRoute } from "./hunts/participate"
 import { updateHuntRoute } from "./hunts/update"
@@ -29,6 +30,7 @@ const huntsRoutes = new Hono()
   .route(DEFAULT_PATH, listHuntRoute)
   .route(DEFAULT_PATH, partipateHuntRoute)
   .route(DEFAULT_PATH, updateHuntRoute)
+  .route(DEFAULT_PATH, digRoute)
 
 const artifactsRoutes = new Hono()
   .use(auth)

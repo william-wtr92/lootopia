@@ -2,6 +2,7 @@ export const transactionTypes = {
   huntParticipation: "hunt_participation",
   huntCreation: "hunt_creation",
   artifactPurchase: "artifact_purchase",
+  hintPurchase: "hint_purchase",
 } as const
 
 export type TransactionType =
@@ -14,4 +15,5 @@ export const crownCosts: Record<TransactionKey, number> = {
   huntParticipation: 20,
   huntCreation: 50,
   artifactPurchase: 100,
+  hintPurchase: 5,
 }
