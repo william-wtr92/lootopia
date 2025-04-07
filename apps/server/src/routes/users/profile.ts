@@ -172,3 +172,26 @@ export const profileRoute = app
 
     return c.json(updateSuccessKey, SC.success.OK)
   })
+  .get("/:nickname", async (c) => {
+    const email = c.get(contextKeys.loggedUserEmail)
+    const nickname = c.req.param("nickname")
+
+    const user = await selectUserByEmail(email)
+
+    if (!user) {
+      return c.json(userNotFound, SC.errors.NOT_FOUND)
+    }
+
+    const userProfile = await selectUserByNickname(nickname)
+
+    if (!userProfile) {
+      return c.json(userNotFound, SC.errors.NOT_FOUND)
+    }
+
+    return c.json(
+      {
+        result: sanitizeUser(userProfile, ["avatar", "createdAt"]),
+      },
+      SC.success.OK
+    )
+  })

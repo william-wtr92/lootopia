@@ -19,6 +19,12 @@ export const userSchema = z.object({
 
 export type UserSchema = z.infer<typeof userSchema>
 
+export const userNicknameSchema = z.object({
+  nickname: userSchema.shape.nickname,
+})
+
+export type UserNicknameSchema = z.infer<typeof userNicknameSchema>
+
 export const ROLES = {
   admin: "admin",
   partner: "partner",

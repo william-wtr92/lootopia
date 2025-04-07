@@ -225,10 +225,10 @@
           "description": "Décrivez le coffre et ajoutez une récompense pour les participants."
         },
         "success": "La chasse a été créée avec succès !",
-         "errors": {
+        "errors": {
           "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action.",
-           "notEnoughCrowns": "Vous n'avez pas assez de couronnes pour créer une chasse, mettez la en brouillon ou achetez en.",
-           "maxCrownRewardExceeded": "Le montant de la récompense maximale est de 100 couronnes par coffre."
+          "notEnoughCrowns": "Vous n'avez pas assez de couronnes pour créer une chasse, mettez la en brouillon ou achetez en.",
+          "maxCrownRewardExceeded": "Le montant de la récompense maximale est de 100 couronnes par coffre."
         }
       },
       "Drafts": {
@@ -239,10 +239,10 @@
         }
       },
       "List": {
-        "loading": "Chargement...", 
+        "loading": "Chargement...",
         "no-hunts-available": "Aucune chasses disponible",
         "no-hunts-hint": "Il semble qu'il n'y ait aucune chasse au trésor disponible pour le moment. Revenez plus tard ou créez votre propre aventure !",
-        "no-hunts-search": "Aucune chasse trouvée pour la recherche : ", 
+        "no-hunts-search": "Aucune chasse trouvée pour la recherche : ",
         "no-hunts-search-hint": "Il semble qu'il n'y ait aucune chasse au trésor correspondant à votre recherche. Essayez une autre recherche ou créez votre propre aventure !",
         "update": {
           "title": "Modifier la chasse",
@@ -329,6 +329,23 @@
           "leaderboard": "Classement",
           "settings": "Paramètres"
         }
+      },
+      "UserProfile": {
+        "loading": "Chargement du profil utilisateur...",
+        "role": "Chasseur de trésors",
+        "joined": "Inscrit depuis le {date}",
+        "tabs": {
+          "recentHunts": {
+            "trigger": "Chasses récentes",
+            "title": "Chasses récentes",
+            "subtitle": "Découvrez les dernières chasses au trésor complétées par {nickname}"
+            },
+            "artifacts": {
+            "trigger": "Artefacts",
+            "title": "Collection d'artefacts",
+            "subtitle": "Découvrez les artefacts collectés par {nickname}, classés par rareté" 
+            }
+        }
       }
     }
   },
@@ -352,6 +369,48 @@
       "number": "Un chiffre",
       "special": "Un caractère spécial",
       "length": "Au moins 12 caractères"
+    },
+    "Users": {
+      "ReportDialog": {
+        "trigger": "Signaler",
+        "form": {
+          "title": "Signaler l'utilisateur : {nickname}",
+          "subtitle": "Veuillez fournir des détails sur la raison pour laquelle vous signalez cet utilisateur. Tous les signalements sont confidentiels.",          
+          "reason": {
+            "placeholder": "Sélectionnez une raison",
+            "options": {
+              "inappropriate_behavior": "Comportement inapproprié",
+              "cheating": "Tricherie",
+              "harassment": "Harcèlement",
+              "impersonation": "Usurpation d'identité",
+              "other": "Autre"
+            },
+            "error": "Veuillez sélectionner une raison"
+          },
+          "description": {
+            "label": "Description",
+            "placeholder": "Fournissez une description détaillée du problème",
+            "error": "Veuillez fournir une description"
+          },
+          "attachment": {
+            "label": "Pièce jointe (Optionnel)",
+            "placeholder": "Joignez une capture d'écran ou un fichier (optionnel)",
+            "remove": "Supprimer",
+            "acceptedExtensions": "Formats acceptés : JPG, PNG, GIF, MP4, PDF (max 10 Mo)",
+            "error": "Type de fichier invalide"
+          },
+          "cta": {
+            "submit": "Envoyer le signalement",
+            "cancel": "Annuler"
+          }
+        },
+        "success": "Votre rapport a été soumis avec succès ! Notre équipe l'examinera et prendra les mesures qui s'imposent.",
+        "errors": {
+          "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+          "userReportedNotFound": "L'utilisateur que vous essayez de signaler n'existe pas",
+          "invalidExtension": "L'extension du fichier n'est pas valide"
+        }
+      }
     },
     "Hunts": {
       "Map": {
@@ -479,7 +538,7 @@
         }
       },
       "SearchBar": {
-        "options": {  
+        "options": {
           "city": "Par ville",
           "name": "Par nom",
           "organizer": "Mes chasses"

@@ -4,7 +4,14 @@ export * from "./global/position"
 
 // Global types
 
-export { ROLES, type Roles, userSchema, type UserSchema } from "./users"
+export {
+  ROLES,
+  type Roles,
+  userSchema,
+  type UserSchema,
+  userNicknameSchema,
+  type UserNicknameSchema,
+} from "./users"
 
 // Features types
 
@@ -38,7 +45,6 @@ export {
 } from "./users/auth/passwordReset"
 
 // Hunts types
-
 export {
   huntSchema,
   type HuntSchema,
@@ -86,3 +92,12 @@ export {
   DEFAULT_CROWN_AMOUNT,
   crownCosts,
 } from "./crowns"
+
+// Reports types
+export {
+  reportReasons,
+  type ReportReason,
+  reportSchema,
+  type ReportSchema,
+  ACCEPTED_ATTATCHMENT_FILE_TYPES,
+} from "./reports"

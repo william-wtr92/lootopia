@@ -4,6 +4,7 @@ import { Button } from "@lootopia/ui"
 import { useQuery } from "@tanstack/react-query"
 import { Crown, Plus } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { useEffect, useState } from "react"
 
 import Logo from "./Logo"
 import { Link } from "@client/i18n/routing"
@@ -25,6 +26,8 @@ const Navbar = () => {
     queryFn: () => getUserLoggedIn(),
     enabled: !!token,
   })
+
+  const [isScrolled, setIsScrolled] = useState(false)
 
   const user = data ? data : undefined
 
@@ -56,8 +59,22 @@ const Navbar = () => {
     },
   }
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10)
+    }
+
+    window.addEventListener("scroll", handleScroll)
+
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
   return (
-    <header className="sticky left-0 top-0 z-[11] h-fit px-16 py-8">
+    <header
+      className={`sticky left-0 top-0 z-[11] h-fit px-16 py-8 transition-colors duration-300 ${
+        isScrolled ? "bg-white/20 shadow-md backdrop-blur" : ""
+      }`}
+    >
       <nav className="flex items-center justify-between">
         <Link href={routes.home}>
           <MotionComponent
@@ -100,7 +117,7 @@ const Navbar = () => {
                 <div className="flex items-center rounded-md">
                   <div className="text-primary bg-accent relative left-2 z-10 flex flex-1 items-center gap-2 rounded-l-xl px-4 py-1 font-semibold">
                     <span className="whitespace-nowrap">
-                      {formatCrowns(user.crowns)}
+                      {formatCrowns(user.crowns!)}
                     </span>
                     <Crown size={20} />
                   </div>
