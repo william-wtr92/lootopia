@@ -239,21 +239,11 @@
         }
       },
       "List": {
-        "loading": "Loading hunts...", 
+        "loading": "Loading hunts...",
         "no-hunts-available": "No hunts available",
         "no-hunts-hint": "There don't seem to be any treasure hunts available at the moment. Come back later or create your own adventure!",
-        "no-hunts-search": "No hunts found for search : ", 
+        "no-hunts-search": "No hunts found for search : ",
         "no-hunts-search-hint": "There don't seem to be any treasure hunts matching your search. Try another search or create your own adventure!",
-        "update": {
-          "title": "Update hunt",
-          "errors": {
-            "userNotFound": "You are not authorized to perform this action",
-            "huntNotFound": "Hunt not found",
-            "huntEndDateEarlierThanStartDate": "The end date must be later than the start date",
-            "notHuntOrganizer": "You are not the organizer of this hunt"
-          },
-          "success": "The hunt has been updated successfully!"
-        },
         "cta": {
           "create-a-hunt": "Create a hunt",
           "load-more": "Load more",
@@ -479,18 +469,28 @@
         }
       },
       "SearchBar": {
-        "options": {  
+        "options": {
           "city": "By city",
           "name": "By Name",
           "organizer": "My hunts"
         },
         "placeholder": {
-          "city": "The legend of the lost jewel",
-          "name": "Paris, Le Havre, Marseille..."
+          "name": "The legend of the lost jewel",
+          "city": "Paris, Le Havre, Marseille..."
         },
         "cta": {
           "create-a-hunt": "Create a hunt"
         }
+      },
+      "ListItem": {
+        "title": "Update hunt",
+        "errors": {
+          "userNotFound": "You are not authorized to perform this action",
+          "huntNotFound": "Hunt not found",
+          "huntEndDateEarlierThanStartDate": "The end date must be later than the start date",
+          "notHuntOrganizer": "You are not the organizer of this hunt"
+        },
+        "success": "The hunt has been updated successfully!"
       }
     },
     "Artifacts": {
@@ -499,7 +499,7 @@
         "Form": {
           "name": {
             "label": "Name",
-            "error": "Invalid name" 
+            "error": "Invalid name"
           },
           "file": {
             "label": "Choose a model",
