@@ -64,7 +64,7 @@ const ReportDialog = ({ userNickname }: Props) => {
 
   const { errors } = form.formState
 
-  const handleAttatchmentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAttachmentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
 
     if (file) {
@@ -197,7 +197,7 @@ const ReportDialog = ({ userNickname }: Props) => {
                             ACCEPTED_ATTATCHMENT_FILE_TYPES
                           ).join(",")}
                           onChange={(e) => {
-                            handleAttatchmentChange(e)
+                            handleAttachmentChange(e)
                             field.onChange(e.target.files?.[0])
                           }}
                         />
