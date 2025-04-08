@@ -1,6 +1,10 @@
 import { z } from "zod"
 
-export const ACCEPTED_FILE_TYPES = [".glb", ".obj", ".fbx", ".stl"] as const
+export const ACCEPTED_FILE_TYPES = {
+  obj: ".obj",
+  glb: ".glb",
+  fbx: ".fbx",
+} as const
 
 export const artifactUploadSchema = z.object({
   name: z.string().min(3),
@@ -16,6 +20,12 @@ export const artifactSchema = z.object({
 })
 
 export type ArtifactSchema = z.infer<typeof artifactSchema>
+
+export const artifactParamSchema = z.object({
+  id: z.string(),
+})
+
+export type ArtifactParamSchema = z.infer<typeof artifactParamSchema>
 
 export const ARTIFACT_RARITY_TIERS = {
   legendary: 5,

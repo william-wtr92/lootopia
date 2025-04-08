@@ -176,7 +176,7 @@ const HuntListItem = (props: Props) => {
                 <AnimatePresence>
                   {isDeployed && (
                     <MotionComponent
-                      className="flex gap-1"
+                      className="ml-1 flex gap-1"
                       {...anim(hiddenRewardsListVariant)}
                     >
                       {hiddenRewards.map((chest, index) => (

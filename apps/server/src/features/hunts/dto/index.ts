@@ -1,4 +1,4 @@
-import type { ChestSchema } from "@common/index"
+import type { ChestSchema } from "@lootopia/common"
 
 type AdditionalChestFields = Pick<ChestSchema, "position">
 
@@ -6,8 +6,8 @@ export const sanitizeChest = <T extends keyof AdditionalChestFields>(
   chest: ChestSchema,
   additionalFields: T[] = []
 ) => {
-  if (chest.visibility) {
-    additionalFields.push("position" as T)
+  if (!chest.visibility) {
+    delete (chest as Partial<ChestSchema>).position
   }
 
   const additionalData: any = additionalFields.reduce((acc, field) => {

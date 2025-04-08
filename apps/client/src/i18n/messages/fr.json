@@ -487,7 +487,9 @@
           "crown": "Couronne",
           "artifact": "Artéfact",
           "loading": "Chargement...",
+          "artifactLoading": "Chargement de l'artéfact...",
           "fileNotFoundOrNotSupported": "Fichier non trouvé ou non supporté",
+          "crownsExtension": " couronnes",
           "rarities": {
             "common": "Commun",
             "uncommon": "Peu commun", 

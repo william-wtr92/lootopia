@@ -487,10 +487,12 @@
           "crown": "Crown",
           "artifact": "Artifact",
           "loading": "Loading...",
+          "artifactLoading": "Loading artifact...",
           "fileNotFoundOrNotSupported": "File not found or not supported",
+          "crownsExtension": " crowns",
           "rarities": {
             "common": "Common",
-            "uncommon": "Not common", 
+            "uncommon": "Uncommon", 
             "rare": "Rare",
             "epic": "Epic", 
             "legendary": "Legendary"

@@ -74,9 +74,6 @@ export const selectHunts = async ({
   const processedResult = result.reduce((acc, { hunt, chests, organizer }) => {
     acc.push({
       ...hunt,
-      // chests: (chests as ChestSchema[]).map((chest: any) =>
-      //   sanitizeChest(chest)
-      // ),
       chests: (chests as ChestSchema[]).map((chest: any) => {
         return {
           ...chest,

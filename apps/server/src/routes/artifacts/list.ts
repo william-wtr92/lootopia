@@ -1,5 +1,7 @@
-import { SC } from "@common/index"
+import { zValidator } from "@hono/zod-validator"
+import { artifactParamSchema, SC } from "@lootopia/common"
 import {
+  artifactNotFound,
   selectArtifactById,
   selectArtifactsByUserId,
 } from "@server/features/artifacts"
@@ -28,13 +30,13 @@ export const listArtifactsRoute = app
       SC.success.OK
     )
   })
-  .get("/:id", async (c) => {
+  .get("/:id", zValidator("param", artifactParamSchema), async (c) => {
     const id = c.req.param("id")
 
     const artifact = await selectArtifactById(id)
 
     if (!artifact) {
-      return c.json(SC.errors.NOT_FOUND, SC.errors.NOT_FOUND)
+      return c.json(artifactNotFound, SC.errors.NOT_FOUND)
     }
 
     return c.json({ result: artifact }, SC.success.OK)

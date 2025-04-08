@@ -73,6 +73,8 @@ export {
   type ArtifactUploadSchema,
   artifactSchema,
   type ArtifactSchema,
+  artifactParamSchema,
+  type ArtifactParamSchema,
   ARTIFACT_RARITY_TIERS,
   type ArtifactRarityTier,
 } from "./artifacts"

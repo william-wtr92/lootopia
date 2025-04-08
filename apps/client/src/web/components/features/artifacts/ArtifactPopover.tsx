@@ -110,7 +110,7 @@ const ArtifactPopover = ({ onUpload }: Props) => {
                   <FormControl>
                     <Input
                       type="file"
-                      accept={ACCEPTED_FILE_TYPES.join(",")}
+                      accept={Object.values(ACCEPTED_FILE_TYPES).join(",")}
                       className="hidden"
                       onChange={(e) => handleChangeFile(e)}
                     />

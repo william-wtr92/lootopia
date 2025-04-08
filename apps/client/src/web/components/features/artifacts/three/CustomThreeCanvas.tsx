@@ -2,14 +2,14 @@
 import { Canvas } from "@react-three/fiber"
 import { type ReactNode } from "react"
 
-type CustomThreeCanvasProps = {
+type Props = {
   children: ReactNode
 }
 
-const CustomThreeCanvas = ({ children }: CustomThreeCanvasProps) => {
+const CustomThreeCanvas = ({ children }: Props) => {
   return (
     <Canvas
-      camera={{ position: [0, 0, 100], fov: 50 }}
+      camera={{ position: [0, 0, 100], fov: 50, near: 0.1, far: 5000 }}
       className="h-full w-full"
     >
       <ambientLight intensity={0.5} />
