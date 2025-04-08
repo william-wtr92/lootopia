@@ -1,4 +1,13 @@
-import { Button } from "@lootopia/ui"
+import {
+  Button,
+  Input,
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@lootopia/ui"
 import { CirclePlusIcon, SearchIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
@@ -32,9 +41,9 @@ const HuntSearchBar = (props: Props) => {
     <div className="flex gap-2">
       <div className="bg-primaryBg flex h-12 w-full items-center gap-4 overflow-hidden rounded-[12px] pl-4">
         <SearchIcon className="text-primary h-full" />
-        <input
+        <Input
           type="text"
-          className="text-primary bg-primaryBg h-full flex-1 border-0 outline-0"
+          className="text-primary bg-primaryBg h-full flex-1 border-0 outline-0 ring-0 focus-visible:ring-0"
           placeholder={
             huntFilterType === huntFilterTypeEnum.name
               ? t("placeholder.name")
@@ -43,21 +52,38 @@ const HuntSearchBar = (props: Props) => {
           value={inputValue}
           onChange={(e) => handleInputValue(e.target.value)}
         />
-        <select
-          className="bg-primary text-accent primary border-l-primary h-full border-l-2 px-3 font-medium outline-0"
-          onChange={(e) =>
-            handleHuntFilterType(e.target.value as HuntFilterType)
+        <Select
+          onValueChange={(value) =>
+            handleHuntFilterType(value as HuntFilterType)
           }
+          defaultValue={huntFilterTypeEnum.name}
         >
-          <option value={huntFilterTypeEnum.name}>{t("options.name")}</option>
-          <option value={huntFilterTypeEnum.city}>{t("options.city")}</option>
-        </select>
+          <SelectTrigger className="bg-primary text-accent primary border-l-primary h-full w-[180px] select-none border-l-2 px-3 font-medium outline-0 ring-0 focus:ring-0">
+            <SelectValue placeholder={t("options.name")} />
+          </SelectTrigger>
+          <SelectContent className="text-primary bg-accent h-full font-medium outline-0">
+            <SelectGroup>
+              <SelectItem
+                value={huntFilterTypeEnum.name}
+                className="text-primary"
+              >
+                {t("options.name")}
+              </SelectItem>
+              <SelectItem value={huntFilterTypeEnum.city}>
+                {t("options.city")}
+              </SelectItem>
+              <SelectItem value={huntFilterTypeEnum.organizer}>
+                {t("options.organizer")}
+              </SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       </div>
       <div className="min-h-full">
         <Button
           variant={"secondary"}
           size={"fit"}
-          className="text-md rounded-[12px]"
+          className="text-md select-none rounded-[12px]"
           onClick={redirectToHuntPage}
         >
           <CirclePlusIcon className="size-5" />

@@ -19,6 +19,7 @@ export const sanitizeUser = <T extends keyof AdditionalUserFields>(
   )
 
   return {
+    id: user.id,
     nickname: user.nickname,
     email: user.email,
     phone: user.phone,

@@ -10,19 +10,35 @@ import HuntSearchBar from "@client/web/components/features/hunts/list/HuntSearch
 import NoResultHuntList from "@client/web/components/features/hunts/list/NoResultHuntList"
 import Loader from "@client/web/components/utils/Loader"
 import { getHunts } from "@client/web/services/hunts/getHunts"
-import type { HuntFilterType } from "@client/web/utils/def/huntFilter"
+import { getOrganizerHunts } from "@client/web/services/hunts/getOrganizerHunts"
+import {
+  huntFilterTypeEnum,
+  type HuntFilterType,
+} from "@client/web/utils/def/huntFilter"
 
 const HuntsListPage = () => {
   const t = useTranslations("Pages.Hunts.List")
 
-  const [inputValue, setInputValue] = useState<string>("")
+  const [inputValue, setInputValue] = useState("")
+  const [searchValue, setSearchValue] = useState("")
+
   const [huntFilterType, setHuntFilterType] = useState<HuntFilterType>("name")
+
+  const getHuntFetcher = (filter: HuntFilterType, input: string) => {
+    if (filter === huntFilterTypeEnum.organizer) {
+      return (pageParam: number) =>
+        getOrganizerHunts({ page: pageParam.toString(), search: input })
+    }
+
+    return (pageParam: number) =>
+      getHunts(input, { page: pageParam.toString() }, filter)
+  }
 
   const { data, hasNextPage, isLoading, isFetching, refetch, fetchNextPage } =
     useInfiniteQuery({
-      queryKey: ["hunts"],
+      queryKey: ["hunts", huntFilterType, searchValue],
       queryFn: ({ pageParam = 0 }) =>
-        getHunts(inputValue, huntFilterType, pageParam),
+        getHuntFetcher(huntFilterType, searchValue)(pageParam),
       getNextPageParam: (previousResults, allPages) => {
         if (!previousResults) {
           return undefined
@@ -46,6 +62,8 @@ const HuntsListPage = () => {
 
   const handleHuntFilterType = (value: HuntFilterType) => {
     setHuntFilterType(value)
+    setInputValue("")
+    setSearchValue("")
   }
 
   const loadMore = () => {
@@ -55,7 +73,7 @@ const HuntsListPage = () => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Enter") {
-        refetch()
+        setSearchValue(inputValue)
       }
     }
 
@@ -64,7 +82,7 @@ const HuntsListPage = () => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown)
     }
-  }, [refetch])
+  }, [refetch, inputValue])
 
   return (
     <main className="relative mx-auto mb-8 flex w-[70%] flex-1 flex-col gap-4">
@@ -81,8 +99,12 @@ const HuntsListPage = () => {
         </div>
       ) : hunts.length > 0 ? (
         <div className="flex w-full flex-col gap-4">
-          {hunts.map((hunt, index) => (
-            <HuntListItem key={index} hunt={hunt} />
+          {hunts.map((hunt) => (
+            <HuntListItem
+              key={hunt.id}
+              hunt={hunt}
+              huntFilterType={huntFilterType}
+            />
           ))}
 
           {hasNextPage &&

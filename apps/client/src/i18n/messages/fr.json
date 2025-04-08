@@ -225,10 +225,10 @@
           "description": "Décrivez le coffre et ajoutez une récompense pour les participants."
         },
         "success": "La chasse a été créée avec succès !",
-         "errors": {
+        "errors": {
           "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action.",
-           "notEnoughCrowns": "Vous n'avez pas assez de couronnes pour créer une chasse, mettez la en brouillon ou achetez en.",
-           "maxCrownRewardExceeded": "Le montant de la récompense maximale est de 100 couronnes par coffre."
+          "notEnoughCrowns": "Vous n'avez pas assez de couronnes pour créer une chasse, mettez la en brouillon ou achetez en.",
+          "maxCrownRewardExceeded": "Le montant de la récompense maximale est de 100 couronnes par coffre."
         }
       },
       "Drafts": {
@@ -239,10 +239,10 @@
         }
       },
       "List": {
-        "loading": "Chargement...", 
+        "loading": "Chargement...",
         "no-hunts-available": "Aucune chasses disponible",
         "no-hunts-hint": "Il semble qu'il n'y ait aucune chasse au trésor disponible pour le moment. Revenez plus tard ou créez votre propre aventure !",
-        "no-hunts-search": "Aucune chasse trouvée pour la recherche : ", 
+        "no-hunts-search": "Aucune chasse trouvée pour la recherche : ",
         "no-hunts-search-hint": "Il semble qu'il n'y ait aucune chasse au trésor correspondant à votre recherche. Essayez une autre recherche ou créez votre propre aventure !",
         "cta": {
           "create-a-hunt": "Créer une chasse",
@@ -469,17 +469,28 @@
         }
       },
       "SearchBar": {
-        "options": {  
+        "options": {
           "city": "Par ville",
-          "name": "Par nom"
+          "name": "Par nom",
+          "organizer": "Mes chasses"
         },
         "placeholder": {
-          "city": "La légende du joyau perdu",
-          "name": "Paris, Le Havre, Marseille..."
+          "name": "La légende du joyau perdu",
+          "city": "Paris, Le Havre, Marseille..."
         },
         "cta": {
           "create-a-hunt": "Créer une chasse"
         }
+      },
+      "ListItem": {
+        "title": "Modifier la chasse",
+        "errors": {
+          "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+          "huntNotFound": "Chasse introuvable",
+          "huntEndDateEarlierThanStartDate": "La date de fin doit être postérieure à la date de début",
+          "notHuntOrganizer": "Vous n'êtes pas l'organisateur de cette chasse"
+        },
+        "success": "La chasse a été mise à jour avec succès !"
       }
     },
     "Artifacts": {

@@ -31,3 +31,27 @@ export const combinedHuntSchema = z.object({
 })
 
 export type CombinedHuntSchema = z.infer<typeof combinedHuntSchema>
+
+export const huntIdSchema = z.object({
+  huntId: z.string().uuid(),
+})
+
+export type HuntIdSchema = z.infer<typeof huntIdSchema>
+
+const huntBaseQuerySchema = z.object({
+  limit: z.string().optional().default(defaultLimit.toString()).optional(),
+  page: z.string().optional().default(defaultPage.toString()),
+})
+
+export const huntListQuerySchema = huntBaseQuerySchema.extend({
+  name: z.string().optional(),
+  city: z.string().optional(),
+})
+
+export type HuntListQuerySchema = z.infer<typeof huntListQuerySchema>
+
+export const huntMineListQuerySchema = huntBaseQuerySchema.extend({
+  search: z.string().optional(),
+})
+
+export type HuntMineListQuerySchema = z.infer<typeof huntMineListQuerySchema>
