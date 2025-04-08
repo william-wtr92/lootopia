@@ -58,7 +58,7 @@ const HuntListItem = (props: Props) => {
 
   const [map, setMap] = useState<L.Map | null>(null)
   const [isDeployed, setIsDeployed] = useState(false)
-  const [isUpdateFormVisible, setIsUpdateFormVisible] = useState(false)
+  const [showUpdateForm, setShowUpdateForm] = useState(false)
 
   const hiddenRewards = hunt.chests.slice(1)
 
@@ -68,8 +68,8 @@ const HuntListItem = (props: Props) => {
     setIsDeployed((prev) => !prev)
   }
 
-  const handleTiggerUpdateForm = () => {
-    setIsUpdateFormVisible((prev) => !prev)
+  const handleShowUpdateForm = () => {
+    setShowUpdateForm((prev) => !prev)
   }
 
   const handleUpdateHunt = async (data: HuntSchema) => {
@@ -89,7 +89,7 @@ const HuntListItem = (props: Props) => {
       description: t("success"),
     })
 
-    handleTiggerUpdateForm()
+    handleShowUpdateForm()
 
     qc.invalidateQueries({ queryKey: ["hunts"] })
     qc.invalidateQueries({ queryKey: ["hunt", hunt.id] })
@@ -227,7 +227,7 @@ const HuntListItem = (props: Props) => {
               className="text-accent hover:text-primary duration-300"
               onClick={(e) => {
                 e.stopPropagation()
-                handleTiggerUpdateForm()
+                handleShowUpdateForm()
               }}
             />
           )}
@@ -254,7 +254,7 @@ const HuntListItem = (props: Props) => {
         </AnimatePresence>
       </div>
 
-      <Sheet open={isUpdateFormVisible} onOpenChange={handleTiggerUpdateForm}>
+      <Sheet open={showUpdateForm} onOpenChange={handleShowUpdateForm}>
         <SheetContent className="bg-primaryBg text-primary">
           <SheetHeader>
             <SheetTitle>{t("title")}</SheetTitle>
