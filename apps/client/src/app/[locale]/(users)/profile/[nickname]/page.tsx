@@ -32,6 +32,7 @@ import { getArtifacts, getRarityColor, getRecentHunts } from "./mock-data"
 import { config } from "@client/env"
 import ReportDialog from "@client/web/components/features/reports/ReportDialog"
 import { getUserByNickname } from "@client/web/services/users/getUserByNickname"
+import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import { formatDate } from "@client/web/utils/formatDate"
 
 const UserProfilePage = () => {
@@ -39,6 +40,11 @@ const UserProfilePage = () => {
   const { nickname } = useParams<{ nickname: string }>()
 
   const [activeTab, setActiveTab] = useState("hunts")
+
+  const { data: userLoggedIn } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => getUserLoggedIn(),
+  })
 
   const { data: userProfile, isLoading } = useQuery({
     queryKey: ["userProfile", nickname],
@@ -106,7 +112,10 @@ const UserProfilePage = () => {
                     </div>
                   </div>
                 </div>
-                <ReportDialog userNickname={userProfile.nickname} />
+
+                {userLoggedIn?.id !== userProfile.id && (
+                  <ReportDialog userNickname={userProfile.nickname} />
+                )}
               </div>
 
               <div className="mt-6 grid grid-cols-3 gap-4">

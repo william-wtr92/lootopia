@@ -46,7 +46,6 @@ export const updateHunt = async (hunt: Hunt, updatedHunt: HuntSchema) => {
         "maxParticipants",
         updatedHunt.maxParticipants ?? null
       ),
-
       updatedAt: new Date(),
     })
     .where(eq(hunts.id, hunt.id))

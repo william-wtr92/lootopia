@@ -1,3 +1,4 @@
+import { defaultLimit, defaultPage } from "@common/global/pagination"
 import { z } from "zod"
 
 export const userSchema = z.object({
@@ -24,6 +25,14 @@ export const userNicknameSchema = z.object({
 })
 
 export type UserNicknameSchema = z.infer<typeof userNicknameSchema>
+
+export const userSearchParamsSchema = z.object({
+  limit: z.string().optional().default(defaultLimit.toString()).optional(),
+  page: z.string().optional().default(defaultPage.toString()),
+  search: z.string().optional(),
+})
+
+export type UserSearchParamsSchema = z.infer<typeof userSearchParamsSchema>
 
 export const ROLES = {
   admin: "admin",

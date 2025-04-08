@@ -2,12 +2,13 @@
 
 import { Button } from "@lootopia/ui"
 import { useQuery } from "@tanstack/react-query"
-import { Crown, Plus } from "lucide-react"
+import { Crown, Plus, Swords, UserCog } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 
 import Logo from "./Logo"
 import { Link } from "@client/i18n/routing"
+import UsersSearchCommand from "@client/web/components/features/users/UsersSearchCommand"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
 import SelectLocale from "@client/web/components/utils/SelectLocale"
 import { routes } from "@client/web/routes"
@@ -93,8 +94,6 @@ const Navbar = () => {
           className="flex items-center justify-end space-x-4"
           {...anim(buttonsVariant)}
         >
-          <SelectLocale />
-
           <div className="z-20 flex items-center space-x-4">
             {!user ? (
               <>
@@ -126,19 +125,25 @@ const Navbar = () => {
                   </Button>
                 </div>
 
+                <UsersSearchCommand />
+
                 <Link href={routes.hunts.list}>
                   <Button className="bg-primary text-accent hover:bg-secondary">
-                    {t("hunts")}
+                    <Swords />
+                    <span>{t("hunts")}</span>
                   </Button>
                 </Link>
                 <Link href={routes.users.profile}>
                   <Button className="bg-primary text-accent hover:bg-secondary">
-                    {t("profile")}
+                    <UserCog />
+                    <span> {t("profile")}</span>
                   </Button>
                 </Link>
               </>
             )}
           </div>
+
+          <SelectLocale />
         </MotionComponent>
       </nav>
     </header>

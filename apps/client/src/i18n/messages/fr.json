@@ -339,12 +339,12 @@
             "trigger": "Chasses récentes",
             "title": "Chasses récentes",
             "subtitle": "Découvrez les dernières chasses au trésor complétées par {nickname}"
-            },
-            "artifacts": {
+          },
+          "artifacts": {
             "trigger": "Artefacts",
             "title": "Collection d'artefacts",
-            "subtitle": "Découvrez les artefacts collectés par {nickname}, classés par rareté" 
-            }
+            "subtitle": "Découvrez les artefacts collectés par {nickname}, classés par rareté"
+          }
         }
       }
     }
@@ -375,7 +375,7 @@
         "trigger": "Signaler",
         "form": {
           "title": "Signaler l'utilisateur : {nickname}",
-          "subtitle": "Veuillez fournir des détails sur la raison pour laquelle vous signalez cet utilisateur. Tous les signalements sont confidentiels.",          
+          "subtitle": "Veuillez fournir des détails sur la raison pour laquelle vous signalez cet utilisateur. Tous les signalements sont confidentiels.",
           "reason": {
             "placeholder": "Sélectionnez une raison",
             "options": {
@@ -410,6 +410,39 @@
           "userReportedNotFound": "L'utilisateur que vous essayez de signaler n'existe pas",
           "invalidExtension": "L'extension du fichier n'est pas valide"
         }
+      },
+      "SearchCommand": {
+        "trigger": "Rechercher ( ⌘ + K )",
+        "placeholder": "Rechercher des utilisateurs...",
+        "empty": {
+          "title": "Aucun utilisateur trouvé",
+          "description": "Essayez un autre terme pour \"{term}\""
+        },
+        "group": {
+          "title": "Utilisateurs",
+          "users": {
+            "level": "Niveau. {level}"
+          }
+        },
+        "help": {
+          "title": "Rechercher des utilisateurs",
+          "description": "Trouvez des joueurs par nom, rôle ou localisation pour consulter leur profil et leurs statistiques",
+          "command": {
+            "escape": {
+              "trigger": "Échap",
+              "description": "pour fermer"
+            },
+            "arrows": {
+              "trigger": "↑ / ↓",
+              "description": "pour naviguer"
+            },
+            "enter": {
+              "trigger": "Entrée",
+              "description": "pour sélectionner"
+            }
+          }
+        },
+        "about": "Recherche propulsée par Lootopia"
       }
     },
     "Hunts": {

@@ -28,3 +28,11 @@ export const sanitizeUser = <T extends keyof AdditionalUserFields>(
     ...additionalData,
   }
 }
+
+export const sanitizeUsers = (users: User[]) => {
+  return users.map((user) => ({
+    id: user.id,
+    nickname: user.nickname,
+    avatar: user.avatar,
+  }))
+}

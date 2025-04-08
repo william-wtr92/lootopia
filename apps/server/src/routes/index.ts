@@ -12,6 +12,7 @@ import { listHuntRoute } from "./hunts/list"
 import { partipateHuntRoute } from "./hunts/participate"
 import { updateHuntRoute } from "./hunts/update"
 import { reportUploadRoute } from "./reports/upload"
+import { userListRoute } from "./users/list"
 import { profileRoute } from "./users/profile"
 
 const DEFAULT_PATH = "/" as const
@@ -22,7 +23,10 @@ const authRoutes = new Hono()
   .route(DEFAULT_PATH, loginRoute)
   .route(DEFAULT_PATH, passwordResetRoute)
 
-const usersRoutes = new Hono().use(auth).route(DEFAULT_PATH, profileRoute)
+const usersRoutes = new Hono()
+  .use(auth)
+  .route(DEFAULT_PATH, userListRoute)
+  .route(DEFAULT_PATH, profileRoute)
 
 const huntsRoutes = new Hono()
   .use(auth)

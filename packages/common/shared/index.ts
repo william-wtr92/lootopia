@@ -1,6 +1,7 @@
 export * from "./global/status"
 export * from "./global/server"
 export * from "./global/position"
+export * from "./global/pagination"
 
 // Global types
 
@@ -11,6 +12,8 @@ export {
   type UserSchema,
   userNicknameSchema,
   type UserNicknameSchema,
+  userSearchParamsSchema,
+  type UserSearchParamsSchema,
 } from "./users"
 
 // Features types
@@ -50,8 +53,6 @@ export {
   type HuntSchema,
   combinedHuntSchema,
   type CombinedHuntSchema,
-  defaultLimit,
-  defaultPage,
   huntIdSchema,
   type HuntIdSchema,
   huntListQuerySchema,

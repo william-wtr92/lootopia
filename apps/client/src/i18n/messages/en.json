@@ -410,6 +410,39 @@
           "userReportedNotFound": "The user you are trying to report does not exist",
           "invalidExtension": "The file extension is not valid"
         }
+      },
+      "SearchCommand": {
+        "trigger": "Search ( ⌘ + K )",
+        "placeholder": "Search for users...",
+        "empty": {
+          "title": "No users found",
+          "description": "Try another term for \"{term}\""
+        },
+        "group": {
+          "title": "Users",
+          "users": {
+            "level": "Level. {level}"
+          } 
+        },
+        "help": {
+          "title": "Search for users",
+          "description": "Find players by name, role or location to view their view their profile and statistics",
+          "command": {
+            "escape": {
+              "trigger": "ESC",
+              "description": "to close"
+            },
+            "arrows": {
+              "trigger": "↑ / ↓",
+              "description": "to navigate"
+            },
+            "enter": {
+              "trigger": "Enter",
+              "description": "to select"
+            }
+          }
+        },
+        "about": "Search powered by Lootopia"
       }
     },
     "Hunts": {
