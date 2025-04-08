@@ -1,4 +1,4 @@
-import { db } from "@server/db/client"
+import { db } from "@server/utils/clients/postgres"
 
 export const selectArtifactByShaKey = async (shaKey: string) => {
   return db.query.artifacts.findFirst({

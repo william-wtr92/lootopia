@@ -50,3 +50,5 @@ export * from "./src/components/tooltip"
 
 export * from "./src/hooks/use-mobile"
 export * from "./src/hooks/use-toast"
+
+export * from "./src/lib/utils"

@@ -21,5 +21,18 @@ export default {
       },
     },
   },
+  safelist: [
+    "bg-gradient-to-r",
+    "from-amber-400",
+    "to-amber-600",
+    "from-blue-400",
+    "to-blue-600",
+    "from-purple-500",
+    "to-purple-700",
+    "from-emerald-400",
+    "to-emerald-600",
+    "from-rose-500",
+    "to-rose-700",
+  ],
   plugins: [tailwindcssAnimate],
 } satisfies Config

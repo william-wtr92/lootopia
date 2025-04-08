@@ -1,6 +1,6 @@
 import { crowns, users } from "@lootopia/drizzle"
-import { db } from "@server/db/client"
 import type { User } from "@server/features/users/types"
+import { db } from "@server/utils/clients/postgres"
 import { eq } from "drizzle-orm"
 
 export const selectUserByEmail = async (email: string) => {
@@ -35,4 +35,10 @@ export const selectUserWithCrowns = async (email: string) => {
     ...row.user,
     crowns: row.crowns ?? null,
   } satisfies User
+}
+
+export const selectUserById = async (id: string) => {
+  return db.query.users.findFirst({
+    where: (users, { eq }) => eq(users.id, id),
+  })
 }

@@ -320,6 +320,15 @@
           "settings": "Settings"
         }
       }
+    },
+    "Shop": {
+      "Return": {
+        "title": "Tanks for your purchase!",
+        "description": "Your crowns have been added to your account. You can now continue your adventure!",
+        "cta": {
+          "home": "Back to home"
+        }
+      }
     }
   },
   "Components": {
@@ -506,6 +515,71 @@
             "error": "Invalid file"
           },
           "submit": "Upload"
+        }
+      }
+    },
+    "Shop": {
+      "Popup": {
+        "title": "Crowns Shop",
+        "description": "Boost your adventure with more crowns!",
+        "specialOffers": {
+          "title": "Special Offers",
+          "first": {
+            "title": "First Purchase Bonus",
+            "description": "Get 50% more crowns on your first purchase!"
+          },
+          "flash": {
+            "title": "Weekend Flash Sale",
+            "description": "Limited-time offer: 25% off all crown packs this weekend!"
+          }
+        },
+        "about": {
+          "title": "About Crowns",
+          "description": "Crowns are Lootopia's virtual currency. They buy clues, unlock exclusive treasure hunts and access exclusive treasure hunts and access premium features."
+        },
+        "tos": {
+          "disclaimer": "Crowns are used for premium features and exclusive hunts. All purchases are final. See our",
+          "link": "Terms of Use",
+          "more": "for more details."
+        }
+      },
+      "Card": {
+        "popular": "POPULAR",
+        "discount": "-{discount}%",
+        "discountedPrice": "{price}€",
+        "price": "{price}€",
+        "bonus": "{bonus} crowns bonus",
+        "instantDelivery": "Instant delivery",
+        "singlePurchase": "Single purchase",
+        "names": {
+          "starter_pack": "Starter Pack",
+          "explorer_pack": "Explorer Pack",
+          "adventurer_pack": "Adventurer Pack",
+          "treasure_hunter_pack": "Treasure Hunter Pack",
+          "legendary_pack": "Legendary Pack"
+        },
+        "cta": {
+          "buy": "Buy"
+        }
+      },
+      "StripeElements": {
+        "title": "Lootopia Payment",
+        "info": "Secure payment by Stripe. Your payment information is protected."
+      },
+      "ThankYou": {
+        "title": "Successful purchase!",
+        "subtitle": "Thank you for your purchase!",
+        "description": "Your {packageName} have been added to your account.",
+        "bonus": "+{bonus} bonus crowns!",
+        "names": {
+          "starter_pack": "Starter Pack",
+          "explorer_pack": "Explorer Pack",
+          "adventurer_pack": "Adventurer Pack",
+          "treasure_hunter_pack": "Treasure Hunter Pack",
+          "legendary_pack": "Legendary Pack"
+        },
+        "cta": {
+          "continue": "Continue adventure"
         }
       }
     }

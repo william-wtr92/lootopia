@@ -11,6 +11,9 @@ import { createHuntRoute } from "./hunts/create"
 import { listHuntRoute } from "./hunts/list"
 import { partipateHuntRoute } from "./hunts/participate"
 import { updateHuntRoute } from "./hunts/update"
+import { crownPackagesRoute } from "./shop/crownPackages"
+import { paymentsRoute } from "./shop/payments"
+import { webhookRoute } from "./shop/webhook"
 import { profileRoute } from "./users/profile"
 
 const DEFAULT_PATH = "/" as const
@@ -35,9 +38,16 @@ const artifactsRoutes = new Hono()
   .route(DEFAULT_PATH, uploadArtifactRoute)
   .route(DEFAULT_PATH, listArtifactsRoute)
 
+const shopRoutes = new Hono()
+  .route(DEFAULT_PATH, webhookRoute)
+  .use(auth)
+  .route(DEFAULT_PATH, crownPackagesRoute)
+  .route(DEFAULT_PATH, paymentsRoute)
+
 export const routes = {
   auth: authRoutes,
   hunts: huntsRoutes,
   users: usersRoutes,
   artifacts: artifactsRoutes,
+  shop: shopRoutes,
 }

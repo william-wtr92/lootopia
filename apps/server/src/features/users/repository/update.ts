@@ -1,6 +1,6 @@
 import type { UpdateUser } from "@lootopia/common"
 import { users } from "@lootopia/drizzle"
-import { db } from "@server/db/client"
+import { db } from "@server/utils/clients/postgres"
 import { eq } from "drizzle-orm"
 
 export const updateUser = async (

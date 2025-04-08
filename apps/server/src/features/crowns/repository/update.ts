@@ -1,6 +1,6 @@
 import type { transactionTypes } from "@lootopia/common"
 import { crowns, transactions } from "@lootopia/drizzle"
-import { db } from "@server/db/client"
+import { db } from "@server/utils/clients/postgres"
 import { eq, sql } from "drizzle-orm"
 
 export const updateHuntCrownsTransaction = async (
@@ -27,4 +27,14 @@ export const updateHuntCrownsTransaction = async (
       userId,
     })
   })
+}
+
+export const updateCrownsShop = async (userId: string, amount: number) => {
+  return db
+    .update(crowns)
+    .set({
+      amount: sql`${crowns.amount} + ${amount}`,
+      updatedAt: new Date(),
+    })
+    .where(eq(crowns.userId, userId))
 }

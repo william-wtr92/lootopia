@@ -31,9 +31,9 @@ import type { HuntResponse } from "@client/web/services/hunts/getHunts"
 import { updateHunt } from "@client/web/services/hunts/updateHunt"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import anim from "@client/web/utils/anim"
-import { capitalizeFirstLetter } from "@client/web/utils/capitalizeFirstLetter"
 import type { HuntFilterType } from "@client/web/utils/def/huntFilter"
-import { formatDate } from "@client/web/utils/formatDate"
+import { capitalizeFirstLetter } from "@client/web/utils/helpers/capitalizeFirstLetter"
+import { formatDate } from "@client/web/utils/helpers/formatDate"
 import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 type Props = {

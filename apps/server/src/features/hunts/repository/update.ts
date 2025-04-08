@@ -1,7 +1,7 @@
 import type { HuntSchema } from "@lootopia/common"
 import { hunts } from "@lootopia/drizzle"
-import { db } from "@server/db/client"
 import type { Hunt } from "@server/features/hunts/types"
+import { db } from "@server/utils/clients/postgres"
 import { getUpdateValue } from "@server/utils/helpers/getUpdatedValue"
 import { eq } from "drizzle-orm"
 

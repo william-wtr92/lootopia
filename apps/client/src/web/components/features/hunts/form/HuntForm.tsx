@@ -30,7 +30,7 @@ import { useCallback, useEffect } from "react"
 import { useForm } from "react-hook-form"
 
 import { useHuntStore } from "@client/web/store/useHuntStore"
-import { capitalizeFirstLetter } from "@client/web/utils/capitalizeFirstLetter"
+import { capitalizeFirstLetter } from "@client/web/utils/helpers/capitalizeFirstLetter"
 
 type Props = {
   onSubmit: (data: HuntSchema) => void

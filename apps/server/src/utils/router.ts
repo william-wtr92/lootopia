@@ -3,4 +3,11 @@ export const router = {
   hunts: "/hunts",
   users: "/users",
   artifacts: "/artifacts",
+  shop: "/shop",
+} as const
+
+export const clientRoutes = {
+  shop: {
+    return: "/shop/return",
+  },
 } as const

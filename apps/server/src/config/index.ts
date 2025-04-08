@@ -63,6 +63,10 @@ const appConfigSchema = z
         passwordReset: z.string(),
       }),
     }),
+    stripe: z.object({
+      secret: z.string(),
+      webhook: z.string(),
+    }),
   })
   .strict()
 
@@ -123,6 +127,10 @@ const appConfig = appConfigSchema.parse({
         process.env.SENDGRID_TEMPLATE_EMAIL_CHANGE_VALIDATION,
       passwordReset: process.env.SENDGRID_TEMPLATE_PASSWORD_RESET,
     },
+  },
+  stripe: {
+    secret: process.env.STRIPE_SECRET,
+    webhook: process.env.STRIPE_WEBHOOK_SECRET,
   },
 })
 
