@@ -2,14 +2,11 @@ import { zValidator } from "@hono/zod-validator"
 import {
   defaultLimit,
   defaultPage,
-  huntIdSchema,
   huntListQuerySchema,
   huntMineListQuerySchema,
   SC,
 } from "@lootopia/common"
 import {
-  huntNotFound,
-  selectHuntById,
   selectHunts,
   selectHuntsCount,
   selectOrganizerHuntsCount,
@@ -66,22 +63,4 @@ export const listHuntRoute = app
     const lastPage = Math.ceil(count / limit) - 1
 
     return c.json({ result: hunts, lastPage })
-  })
-  .get("/:huntId", zValidator("param", huntIdSchema), async (c) => {
-    const email = c.get(contextKeys.loggedUserEmail)
-    const huntId = c.req.param("huntId")
-
-    const user = await selectUserByEmail(email)
-
-    if (!user) {
-      return c.json(userNotFound, SC.errors.NOT_FOUND)
-    }
-
-    const hunt = await selectHuntById(huntId)
-
-    if (!hunt) {
-      return c.json(huntNotFound, SC.errors.NOT_FOUND)
-    }
-
-    return c.json({ result: hunt }, SC.success.OK)
   })
