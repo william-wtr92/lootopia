@@ -341,6 +341,7 @@
         "loading": "Loading user profile...",
         "role": "Treasure hunter",
         "joined": "Joined {date}",
+        "level": "Level {level}",
         "tabs": {
           "recentHunts": {
             "trigger": "Recent hunts",

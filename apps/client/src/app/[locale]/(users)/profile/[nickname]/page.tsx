@@ -90,11 +90,16 @@ const UserProfilePage = () => {
                 alt="Avatar"
                 width={60}
                 height={60}
-                className="size-16 rounded-full bg-white object-contain p-1"
+                className="relative top-1 size-16 rounded-full bg-white object-contain p-1"
               />
 
-              <h1 className="flex items-center text-3xl font-bold">
+              <h1 className="flex flex-col items-start justify-start gap-2 text-3xl font-bold">
                 {userProfile.nickname}
+                <Badge className="bg-accent text-primary">
+                  {t("level", {
+                    level: 23, // TD: replace with actual level
+                  })}
+                </Badge>
               </h1>
             </div>
 
@@ -106,7 +111,9 @@ const UserProfilePage = () => {
         <CardContent className="relative flex flex-col gap-6 pt-16 md:flex-row md:pt-4">
           <div className="flex-grow">
             <div className="mb-6 ml-16 flex flex-col gap-2">
-              <p className="text-secondary text-xl italic">{t("role")}</p>
+              <p className="text-secondary text-xl font-semibold italic">
+                {t("role")}
+              </p>
               <div className="text-primary flex items-center gap-2 text-sm font-semibold">
                 <Calendar className="h-4 w-4" />
                 <span>
@@ -125,10 +132,10 @@ const UserProfilePage = () => {
               ].map(({ label, value }) => (
                 <div
                   key={label}
-                  className="border-primary rounded-lg border bg-white p-2 text-center"
+                  className="border-primary/20 from-secondary to-primary/80 rounded-lg border bg-gradient-to-r p-2 text-center"
                 >
-                  <div className="text-primary text-2xl font-bold">{value}</div>
-                  <div className="text-secondary text-sm">{label}</div>
+                  <div className="text-2xl font-bold text-white">{value}</div>
+                  <div className="text-sm text-white">{label}</div>
                 </div>
               ))}
             </div>

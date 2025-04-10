@@ -90,7 +90,7 @@ const ReportListDialog = ({ open, setIsOpen }: Props) => {
       <DialogContent className="border-primary bg-primaryBg h-[60vh] max-w-4xl overflow-hidden p-0">
         <div className="flex h-full flex-col">
           <div className="border-primary from-primary to-secondary flex items-center justify-between border-b bg-gradient-to-r p-6">
-            <DialogTitle className="flex items-center text-white">
+            <DialogTitle className="text-accent flex items-center">
               <Flag className="mr-2 size-5" />
               {t("title")}
             </DialogTitle>

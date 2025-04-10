@@ -101,10 +101,7 @@ const ReportForm = ({ userNickname }: Props) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button
-          variant="outline"
-          className="relative top-2 border-white text-white hover:bg-transparent hover:text-white"
-        >
+        <Button className="bg-primary hover:bg-primary/60 text-accent relative top-2">
           <Flag className="mr-2 size-4" />
           {t("trigger")}
         </Button>

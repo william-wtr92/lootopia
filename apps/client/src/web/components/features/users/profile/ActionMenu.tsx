@@ -23,13 +23,13 @@ const ActionMenu = ({ onLogout, onEditProfile, onListReports }: Props) => {
     <div className="self-center md:self-start">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="border-primary text-primary">
+          <Button>
             <MoreHorizontal className="mr-2 size-4" />
             {t("title")}
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="border-primary bg-primaryBg w-56 md:relative md:right-8">
-          <DropdownMenuLabel className="text-primary">
+        <DropdownMenuContent className="border-primary bg-primaryBg w-56 md:relative md:right-14">
+          <DropdownMenuLabel className="text-primary bg-primary/15">
             {t("label")}
           </DropdownMenuLabel>
           <DropdownMenuSeparator className="bg-primary/20" />

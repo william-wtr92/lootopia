@@ -341,6 +341,7 @@
         "loading": "Chargement du profil utilisateur...",
         "role": "Chasseur de trésors",
         "joined": "Inscrit depuis le {date}",
+        "level": "Niveau {level}",
         "tabs": {
           "recentHunts": {
             "trigger": "Chasses récentes",
