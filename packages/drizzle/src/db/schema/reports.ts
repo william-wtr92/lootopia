@@ -1,13 +1,14 @@
 import { pgTable, timestamp, uuid, text } from "drizzle-orm/pg-core"
 import { users } from "./users"
 
-import type { ReportReason } from "@lootopia/common"
+import type { ReportReason, ReportStatus } from "@lootopia/common"
 
 export const reports = pgTable("reports", {
   id: uuid().defaultRandom().primaryKey().notNull(),
   reason: text().$type<ReportReason>().notNull(),
   description: text().notNull(),
   attachment: text(),
+  status: text().$type<ReportStatus>().notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
   reporterId: uuid()

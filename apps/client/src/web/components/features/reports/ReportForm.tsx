@@ -45,8 +45,8 @@ type Props = {
   userNickname: string
 }
 
-const ReportDialog = ({ userNickname }: Props) => {
-  const t = useTranslations("Components.Users.ReportDialog")
+const ReportForm = ({ userNickname }: Props) => {
+  const t = useTranslations("Components.Users.Reports.ReportForm")
   const { toast } = useToast()
 
   const [attachment, setAttachment] = useState<string | null>(null)
@@ -103,9 +103,9 @@ const ReportDialog = ({ userNickname }: Props) => {
       <AlertDialogTrigger asChild>
         <Button
           variant="outline"
-          className="hover:border-accent border-white text-white"
+          className="relative top-2 border-white text-white hover:bg-transparent hover:text-white"
         >
-          <Flag className="mr-2 h-4 w-4" />
+          <Flag className="mr-2 size-4" />
           {t("trigger")}
         </Button>
       </AlertDialogTrigger>
@@ -117,7 +117,7 @@ const ReportDialog = ({ userNickname }: Props) => {
           >
             <AlertDialogHeader className="text-primary">
               <AlertDialogTitle className="text-primary flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-red-500" />
+                <AlertTriangle className="text-error h-5 w-5" />
                 {t("form.title", {
                   nickname: userNickname,
                 })}
@@ -210,7 +210,7 @@ const ReportDialog = ({ userNickname }: Props) => {
                             document.getElementById("attachment")?.click()
                           }
                         >
-                          <Upload className="mr-2 h-4 w-4" />
+                          <Upload className="mr-2 size-4" />
                         </Button>
 
                         {attachment && (
@@ -218,7 +218,7 @@ const ReportDialog = ({ userNickname }: Props) => {
                             type="button"
                             variant="ghost"
                             size="sm"
-                            className="text-red-500 hover:text-red-700"
+                            className="text-error/80 hover:text-error hover:bg-error/10"
                             onClick={() => {
                               setAttachment(null)
                               field.onChange(undefined)
@@ -228,7 +228,7 @@ const ReportDialog = ({ userNickname }: Props) => {
                           </Button>
                         )}
                       </div>
-                      <p className="text-xs text-[#8A4FFF]">
+                      <p className="text-secondary text-xs">
                         {t("form.attachment.acceptedExtensions")}
                       </p>
                     </div>
@@ -257,4 +257,4 @@ const ReportDialog = ({ userNickname }: Props) => {
   )
 }
 
-export default ReportDialog
+export default ReportForm

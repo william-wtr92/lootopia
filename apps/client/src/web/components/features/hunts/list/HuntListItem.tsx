@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 "use client"
 
 import type { ChestSchema, HuntSchema } from "@lootopia/common"

@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 "use client"
 
 import { defaultPage } from "@lootopia/common"
@@ -22,13 +21,14 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Search, Users, ArrowRight } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useRef, type KeyboardEvent } from "react"
 
 import { config } from "@client/env"
 import { useCommandShortcut } from "@client/web/hooks/useCommandShortcut"
 import { usePaginationObserver } from "@client/web/hooks/usePaginationObserver"
 import { routes } from "@client/web/routes"
 import { getUserList } from "@client/web/services/users/getUserList"
+import anim from "@client/web/utils/anim"
 
 const UsersSearchCommand = () => {
   const t = useTranslations("Components.Users.SearchCommand")
@@ -78,6 +78,7 @@ const UsersSearchCommand = () => {
 
   const handleShowCommand = () => {
     setOpen((prev) => !prev)
+    setInputValue("")
   }
 
   const handleSetValue = (value: string) => {
@@ -89,6 +90,14 @@ const UsersSearchCommand = () => {
     handleShowCommand()
     setInputValue("")
     router.push(routes.users.profileNickname(nickname))
+  }
+
+  const handleTriggerNextPageOnKeyDown = (
+    e: KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      checkIfShouldFetchNextPage()
+    }
   }
 
   useEffect(() => {
@@ -110,27 +119,20 @@ const UsersSearchCommand = () => {
           <CommandDialog
             open={open}
             onOpenChange={handleShowCommand}
-            className="overflow-hidden rounded-xl border border-gray-600/20 p-0 shadow-2xl"
+            className="border-primary/20 overflow-hidden rounded-xl border p-0 shadow-2xl"
           >
             <motion.div
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              variants={dialogAnim}
+              {...anim(dialogVariant)}
               className="bg-primaryBg overflow-hidden rounded-xl"
             >
-              <div className="flex items-center border-b border-gray-600/20 px-4 py-3">
+              <div className="border-primary/20 flex items-center border-b px-4 py-3">
                 <Search className="text-secondary mr-2 h-5 w-5 shrink-0" />
                 <CommandInput
                   ref={inputRef}
                   placeholder={t("placeholder")}
                   value={inputValue}
                   onValueChange={(value) => handleSetValue(value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-                      checkIfShouldFetchNextPage()
-                    }
-                  }}
+                  onKeyDown={(e) => handleTriggerNextPageOnKeyDown(e)}
                   className="text-primary placeholder:text-primary w-full border-none text-lg focus:ring-0"
                 />
               </div>
@@ -141,11 +143,7 @@ const UsersSearchCommand = () => {
                 {inputValue.length > 0 && (
                   <>
                     <CommandEmpty className="text-primary py-6 text-center">
-                      <motion.div
-                        initial="initial"
-                        animate="animate"
-                        variants={emptyStateAnim}
-                      >
+                      <motion.div {...anim(emptyStateVariant)}>
                         <Users className="text-secondary mx-auto mb-3 h-12 w-12 opacity-50" />
                         <p className="text-lg font-medium">
                           {t("empty.title")}
@@ -164,9 +162,7 @@ const UsersSearchCommand = () => {
                           {[...Array(3)].map((_, i) => (
                             <motion.div
                               key={i}
-                              initial="initial"
-                              animate="animate"
-                              variants={skeletonAnim(i)}
+                              {...anim(skeletonVariant(i))}
                               className="flex items-center gap-3"
                             >
                               <Skeleton className="h-12 w-12 rounded-full" />
@@ -187,7 +183,7 @@ const UsersSearchCommand = () => {
                           heading={t("group.title")}
                         >
                           <div className="space-y-1">
-                            {users.map((user, index) => (
+                            {users.map((user, i) => (
                               <CommandItem
                                 key={user?.id}
                                 value={user?.nickname}
@@ -195,17 +191,14 @@ const UsersSearchCommand = () => {
                                   user?.nickname &&
                                   handleSelectUser(user.nickname)
                                 }
-                                className="group cursor-pointer rounded-lg px-2 py-3 transition-all duration-200 hover:bg-gray-600/5 data-[selected=true]:bg-gray-600/10"
+                                className="hover:bg-primary/5 data-[selected=true]:bg-primary/10 group cursor-pointer rounded-lg px-2 py-3 transition-all duration-200"
                               >
                                 <motion.div
-                                  initial="initial"
-                                  animate="animate"
-                                  whileHover={{ x: 5 }}
-                                  variants={itemFadeAnim(index)}
+                                  {...anim(itemFadeVariant(i))}
                                   className="flex w-full items-center gap-3"
                                 >
                                   <div className="relative">
-                                    <Avatar className="h-12 w-12 border border-gray-600/20 shadow-sm">
+                                    <Avatar className="border-primary/20 h-12 w-12 border shadow-sm">
                                       <AvatarImage
                                         className="object-contain"
                                         src={
@@ -230,10 +223,10 @@ const UsersSearchCommand = () => {
                                       </span>
                                       <Badge
                                         variant="outline"
-                                        className="text-primary ml-2 bg-gray-600/10 font-semibold"
+                                        className="text-primary bg-primary/10 ml-2 font-semibold"
                                       >
                                         {t("group.users.level", {
-                                          level: 42, // replace with user level
+                                          level: 42, // TD: Replace with user level
                                         })}
                                       </Badge>
                                     </div>
@@ -254,11 +247,7 @@ const UsersSearchCommand = () => {
 
                 {inputValue.length === 0 && (
                   <div className="text-primary px-4 py-6 text-center">
-                    <motion.div
-                      initial="initial"
-                      animate="animate"
-                      variants={emptyStateEnterAnim}
-                    >
+                    <motion.div {...anim(emptyStateEnterVariant)}>
                       <Users className="text-secondary mx-auto mb-3 h-16 w-16" />
                       <p className="mb-2 text-lg font-medium">
                         {t("help.title")}
@@ -267,9 +256,9 @@ const UsersSearchCommand = () => {
                         {t("help.description")}
                       </p>
 
-                      <div className="mt-6 flex flex-wrap justify-center gap-2 text-xs text-gray-600/70">
+                      <div className="text-primary/70 mt-6 flex flex-wrap justify-center gap-2 text-xs">
                         <div className="flex items-center">
-                          <kbd className="rounded border border-gray-600/20 bg-gray-600/5 px-2 py-1 font-mono">
+                          <kbd className="bg-primary/5 border-primary/20 rounded border px-2 py-1 font-mono">
                             {t("help.command.escape.trigger")}
                           </kbd>
                           <span className="mx-2">
@@ -277,7 +266,7 @@ const UsersSearchCommand = () => {
                           </span>
                         </div>
                         <div className="flex items-center">
-                          <kbd className="rounded border border-gray-600/20 bg-gray-600/5 px-2 py-1 font-mono">
+                          <kbd className="border-primary/20 bg-primary/5 rounded border px-2 py-1 font-mono">
                             {t("help.command.arrows.trigger")}
                           </kbd>
                           <span className="mx-2">
@@ -285,7 +274,7 @@ const UsersSearchCommand = () => {
                           </span>
                         </div>
                         <div className="flex items-center">
-                          <kbd className="rounded border border-gray-600/20 bg-gray-600/5 px-2 py-1 font-mono">
+                          <kbd className="border-primary/20 bg-primary/5 rounded border px-2 py-1 font-mono">
                             {t("help.command.enter.trigger")}
                           </kbd>
                           <span className="mx-2">
@@ -298,7 +287,7 @@ const UsersSearchCommand = () => {
                 )}
               </CommandList>
 
-              <div className="text-primary border-t border-gray-600/10 p-2 text-center text-xs">
+              <div className="text-primary border-primary/10 border-t p-2 text-center text-xs">
                 <span>{t("about")}</span>
               </div>
             </motion.div>
@@ -311,34 +300,50 @@ const UsersSearchCommand = () => {
 
 export default UsersSearchCommand
 
-const dialogAnim = {
-  initial: { opacity: 0, y: -20 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.2 } },
-  exit: { opacity: 0, y: -20, transition: { duration: 0.2 } },
+const dialogVariant = {
+  initial: { opacity: 0, y: -30, scale: 0.95 },
+  enter: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 300,
+      damping: 24,
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -20,
+    scale: 0.95,
+    transition: {
+      duration: 0.2,
+    },
+  },
 }
 
-const emptyStateAnim = {
+const emptyStateVariant = {
   initial: { opacity: 0, scale: 0.9 },
-  animate: { opacity: 1, scale: 1, transition: { duration: 0.2 } },
+  enter: { opacity: 1, scale: 1, transition: { duration: 0.2 } },
 }
 
-const emptyStateEnterAnim = {
+const emptyStateEnterVariant = {
   initial: { opacity: 0, scale: 0.9 },
-  animate: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
+  enter: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
 }
 
-const itemFadeAnim = (index = 0) => ({
+const itemFadeVariant = (index = 0) => ({
   initial: { opacity: 0, y: 10 },
-  animate: {
+  enter: {
     opacity: 1,
     y: 0,
     transition: { duration: 0.3, delay: index * 0.05 },
   },
 })
 
-const skeletonAnim = (index = 0) => ({
+const skeletonVariant = (index = 0) => ({
   initial: { opacity: 0, y: 10 },
-  animate: {
+  enter: {
     opacity: 1,
     y: 0,
     transition: { duration: 0.2, delay: index * 0.1 },

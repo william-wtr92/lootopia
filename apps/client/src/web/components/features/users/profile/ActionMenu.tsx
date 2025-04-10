@@ -1,0 +1,64 @@
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  Button,
+} from "@lootopia/ui"
+import { Edit, Flag, LogOut, MoreHorizontal } from "lucide-react"
+import { useTranslations } from "next-intl"
+
+type Props = {
+  onLogout: () => void
+  onEditProfile: () => void
+  onListReports: () => void
+}
+
+const ActionMenu = ({ onLogout, onEditProfile, onListReports }: Props) => {
+  const t = useTranslations("Components.Users.Profile.ActionMenu")
+
+  return (
+    <div className="self-center md:self-start">
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline" className="border-primary text-primary">
+            <MoreHorizontal className="mr-2 size-4" />
+            {t("title")}
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="border-primary bg-primaryBg w-56 md:relative md:right-8">
+          <DropdownMenuLabel className="text-primary">
+            {t("label")}
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator className="bg-primary/20" />
+          <DropdownMenuItem
+            className="text-primary focus:bg-primary/10 cursor-pointer"
+            onClick={onEditProfile}
+          >
+            <Edit className="mr-2 size-4" />
+            <span>{t("actions.editProfile")}</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="text-primary focus:bg-primary/10 cursor-pointer"
+            onClick={onListReports}
+          >
+            <Flag className="mr-2 size-4" />
+            <span>{t("actions.myReports")}</span>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator className="bg-primary/20" />
+          <DropdownMenuItem
+            className="text-error focus:bg-error cursor-pointer focus:text-white"
+            onClick={onLogout}
+          >
+            <LogOut className="mr-2 size-4" />
+            <span>{t("actions.logout")}</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  )
+}
+
+export default ActionMenu

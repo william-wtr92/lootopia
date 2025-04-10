@@ -3,7 +3,7 @@ import type { UserNicknameSchema } from "@lootopia/common"
 import { client } from "@client/web/utils/client"
 
 export const getUserByNickname = async (query: UserNicknameSchema) => {
-  const response = await client.users[":nickname"].$get({
+  const response = await client.users.find[":nickname"].$get({
     param: query,
   })
 

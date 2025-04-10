@@ -10,14 +10,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "var(--primary)",
+        primary: "rgb(var(--primary) / <alpha-value>)",
         secondary: "var(--secondary)",
         accent: "var(--accent)",
         accentHover: "var(--accent-hover)",
         primaryBg: "var(--primary-bg)",
         secondaryBg: "var(--secondary-bg)",
-        error: "var(--error)",
-        success: "var(--success)",
+        error: "rgb(var(--error) / <alpha-value>)",
+        success: "rgb(var(--success) / <alpha-value>)",
       },
     },
   },

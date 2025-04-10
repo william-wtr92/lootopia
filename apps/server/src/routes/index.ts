@@ -11,6 +11,7 @@ import { createHuntRoute } from "./hunts/create"
 import { listHuntRoute } from "./hunts/list"
 import { partipateHuntRoute } from "./hunts/participate"
 import { updateHuntRoute } from "./hunts/update"
+import { reportListRoute } from "./reports/list"
 import { reportUploadRoute } from "./reports/upload"
 import { userListRoute } from "./users/list"
 import { profileRoute } from "./users/profile"
@@ -43,6 +44,7 @@ const artifactsRoutes = new Hono()
 const reportsRoutes = new Hono()
   .use(auth)
   .route(DEFAULT_PATH, reportUploadRoute)
+  .route(DEFAULT_PATH, reportListRoute)
 
 export const routes = {
   auth: authRoutes,

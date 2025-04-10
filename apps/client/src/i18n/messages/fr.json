@@ -264,6 +264,13 @@
     },
     "Users": {
       "Profile": {
+        "info": {
+          "role": {
+            "user": "Chasseur de trésors",
+            "admin": "Administrateur",
+            "partner": "Partenaire"
+          }
+        },
         "statistics": {
           "title": "Statistiques",
           "treasuresFound": "Trésors trouvés",
@@ -371,44 +378,124 @@
       "length": "Au moins 12 caractères"
     },
     "Users": {
-      "ReportDialog": {
-        "trigger": "Signaler",
-        "form": {
-          "title": "Signaler l'utilisateur : {nickname}",
-          "subtitle": "Veuillez fournir des détails sur la raison pour laquelle vous signalez cet utilisateur. Tous les signalements sont confidentiels.",
-          "reason": {
-            "placeholder": "Sélectionnez une raison",
-            "options": {
+      "Reports": {
+        "ReportForm": {
+          "trigger": "Signaler",
+          "form": {
+            "title": "Signaler l'utilisateur : {nickname}",
+            "subtitle": "Veuillez fournir des détails sur la raison pour laquelle vous signalez cet utilisateur. Tous les signalements sont confidentiels.",
+            "reason": {
+              "placeholder": "Sélectionnez une raison",
+              "options": {
+                "inappropriate_behavior": "Comportement inapproprié",
+                "cheating": "Tricherie",
+                "harassment": "Harcèlement",
+                "impersonation": "Usurpation d'identité",
+                "other": "Autre"
+              },
+              "error": "Veuillez sélectionner une raison"
+            },
+            "description": {
+              "label": "Description",
+              "placeholder": "Fournissez une description détaillée du problème",
+              "error": "Veuillez fournir une description"
+            },
+            "attachment": {
+              "label": "Pièce jointe (Optionnel)",
+              "placeholder": "Joignez une capture d'écran ou un fichier (optionnel)",
+              "remove": "Supprimer",
+              "acceptedExtensions": "Formats acceptés : JPG, PNG, GIF, MP4, PDF (max 10 Mo)",
+              "error": "Type de fichier invalide"
+            },
+            "cta": {
+              "submit": "Envoyer le signalement",
+              "cancel": "Annuler"
+            }
+          },
+          "success": "Votre rapport a été soumis avec succès ! Notre équipe l'examinera et prendra les mesures qui s'imposent.",
+          "errors": {
+            "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+            "userReportedNotFound": "L'utilisateur que vous essayez de signaler n'existe pas",
+            "invalidExtension": "L'extension du fichier n'est pas valide"
+          }
+        },
+        "List": {
+          "ReportDialog": {
+            "title": "Mes signalements"
+          },
+          "ReportListSidebar": {
+            "placeholder": "Rechercher des signalements...",
+            "empty": "Aucun signalement trouvé pour \"{term}\""
+          },
+          "ReportListItem": {
+            "id": "ID: #{id}",
+            "status": {
+              "pending": "En attente",
+              "resolved": "Résolu",
+              "rejected": "Rejeté"
+            },
+            "reasons": {
               "inappropriate_behavior": "Comportement inapproprié",
               "cheating": "Tricherie",
               "harassment": "Harcèlement",
               "impersonation": "Usurpation d'identité",
               "other": "Autre"
+            }
+          },
+          "ReportDetails": {
+            "noSelection": "Aucun signalement sélectionné",
+            "info": "Sélectionnez un signalement dans la liste pour voir ses détails."
+          },
+          "ReportDetailsTabs": {
+            "title": "Détails du signalement",
+            "tabs": {
+              "details": "Détails",
+              "users": "Utilisateurs",
+              "attachment": "Pièce jointe"
             },
-            "error": "Veuillez sélectionner une raison"
-          },
-          "description": {
-            "label": "Description",
-            "placeholder": "Fournissez une description détaillée du problème",
-            "error": "Veuillez fournir une description"
-          },
-          "attachment": {
-            "label": "Pièce jointe (Optionnel)",
-            "placeholder": "Joignez une capture d'écran ou un fichier (optionnel)",
-            "remove": "Supprimer",
-            "acceptedExtensions": "Formats acceptés : JPG, PNG, GIF, MP4, PDF (max 10 Mo)",
-            "error": "Type de fichier invalide"
-          },
-          "cta": {
-            "submit": "Envoyer le signalement",
-            "cancel": "Annuler"
+            "content": {
+              "report": {
+                "reasons": {
+                  "label": "Raison du signalement :",
+                  "options": {
+                    "inappropriate_behavior": "Comportement inapproprié",
+                    "cheating": "Tricherie",
+                    "harassment": "Harcèlement",
+                    "impersonation": "Usurpation d'identité",
+                    "other": "Autre"
+                  }
+                },
+                "description": "Description :",
+                "createdAt": "Créé le :",
+                "updatedAt": "Dernière mise à jour :",
+                "status": {
+                  "title": "Statut :",
+                  "pending": "En attente",
+                  "resolved": "Résolu",
+                  "rejected": "Rejeté"
+                }
+              },
+              "reporter": {
+                "title": "Signalé par :",
+                "cta": {
+                  "profile": "Voir le profil"
+                }
+              },
+              "reported": {
+                "title": "Utilisateur signalé :",
+                "cta": {
+                  "profile": "Voir le profil"
+                }
+              },
+              "attachment": {
+                "title": "Pièce jointe :",
+                "cta": "Ouvrir dans un nouvel onglet"
+              },
+              "errors": {
+                "userNotAvailable": "Utilisateur non disponible"
+              }
+            }
           }
-        },
-        "success": "Votre rapport a été soumis avec succès ! Notre équipe l'examinera et prendra les mesures qui s'imposent.",
-        "errors": {
-          "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
-          "userReportedNotFound": "L'utilisateur que vous essayez de signaler n'existe pas",
-          "invalidExtension": "L'extension du fichier n'est pas valide"
         }
       },
       "SearchCommand": {
@@ -443,6 +530,17 @@
           }
         },
         "about": "Recherche propulsée par Lootopia"
+      },
+      "Profile": {
+        "ActionMenu": {
+          "title": "Actions",
+          "label": "Mon Compte",
+          "actions": {
+            "editProfile": "Editer mon profil",
+            "myReports": "Mes signalements",
+            "logout": "Déconnexion"
+          }
+        }
       }
     },
     "Hunts": {

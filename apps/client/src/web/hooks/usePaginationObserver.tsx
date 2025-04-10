@@ -27,7 +27,7 @@ export const usePaginationObserver = ({
           fetchNextPage()
         }
       },
-      { threshold: 1 }
+      { root: containerRef.current, threshold: 0.5 }
     )
 
     observer.observe(sentinelRef.current)
