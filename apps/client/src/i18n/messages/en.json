@@ -244,6 +244,16 @@
         "no-hunts-hint": "There don't seem to be any treasure hunts available at the moment. Come back later or create your own adventure!",
         "no-hunts-search": "No hunts found for search : ",
         "no-hunts-search-hint": "There don't seem to be any treasure hunts matching your search. Try another search or create your own adventure!",
+        "update": {
+          "title": "Update hunt",
+          "errors": {
+            "userNotFound": "You are not authorized to perform this action",
+            "huntNotFound": "Hunt not found",
+            "huntEndDateEarlierThanStartDate": "The end date must be later than the start date",
+            "notHuntOrganizer": "You are not the organizer of this hunt"
+          },
+          "success": "The hunt has been updated successfully!"
+        },
         "cta": {
           "create-a-hunt": "Create a hunt",
           "load-more": "Load more",
@@ -254,6 +264,13 @@
     },
     "Users": {
       "Profile": {
+        "info": {
+          "role": {
+            "user": "Treasure hunter",
+            "admin": "Administrator",
+            "partner": "Partner"
+          }
+        },
         "statistics": {
           "title": "Statistics",
           "treasuresFound": "Treasures found",
@@ -319,6 +336,24 @@
           "leaderboard": "Leaderboard",
           "settings": "Settings"
         }
+      },
+      "UserProfile": {
+        "loading": "Loading user profile...",
+        "role": "Treasure hunter",
+        "joined": "Joined {date}",
+        "level": "Level {level}",
+        "tabs": {
+          "recentHunts": {
+            "trigger": "Recent hunts",
+            "title": "Recent hunts",
+            "subtitle": "Discover the latest treasure hunts completed by {nickname}"
+          },
+          "artifacts": {
+            "trigger": "Artifacts",
+            "title": " Artifacts Collection",
+            "subtitle": "Discover the artifacts collected by {nickname}, sorted by rarity"
+          }
+        }
       }
     }
   },
@@ -342,6 +377,172 @@
       "number": "A number",
       "special": "A special character",
       "length": "At least 12 characters"
+    },
+    "Users": {
+      "Reports": {
+        "ReportForm": {
+          "trigger": "Report",
+          "form": {
+            "title": "Report user: {nickname}",
+            "subtitle": "Please provide details about why you're reporting this user. All reports are confidential.",
+            "reason": {
+              "placeholder": "Select a reason",
+              "options": {
+                "inappropriate_behavior": "Inappropriate behavior",
+                "cheating": "Cheating",
+                "harassment": "Harassment",
+                "impersonation": "Impersonation",
+                "other": "Other"
+              },
+              "error": "Please select a reason"
+            },
+            "description": {
+              "label": "Description",
+              "placeholder": "Provide a detailed description of the issue",
+              "error": "Please provide a description"
+            },
+            "attachment": {
+              "label": "Attachment (Optional)",
+              "placeholder": "Attach a screenshot or file (optional)",
+              "remove": "Remove",
+              "acceptedExtensions": "Accepted formats: JPG, PNG, GIF, MP4, PDF (max 10MB)",
+              "error": "Invalid file type"
+            },
+            "cta": {
+              "submit": "Submit report",
+              "cancel": "Cancel"
+            }
+          },
+          "success": "Your report has been submitted successfully! Our team will review it and take appropriate action.",
+          "errors": {
+            "userNotFound": "You are not authorized to perform this action",
+            "userReportedNotFound": "The user you are trying to report does not exist",
+            "invalidExtension": "The file extension is not valid"
+          }
+        },
+        "List": {
+          "ReportDialog": {
+            "title": "My reports"
+          },
+          "ReportListSidebar": {
+            "placeholder": "Search for reports...",
+            "empty": "No reports found for \"{term}\""
+          },
+          "ReportListItem": {
+            "id": "ID: #{id}",
+            "status": {
+              "pending": "Pending",
+              "resolved": "Resolved",
+              "rejected": "Rejected"
+            },
+            "reasons": {
+              "inappropriate_behavior": "Inappropriate behavior",
+              "cheating": "Cheating",
+              "harassment": "Harassement",
+              "impersonation": "Impersonation",
+              "other": "Other"
+            }
+          },
+          "ReportDetails": {
+            "noSelection": "No report selected",
+            "info": "Select a report to view its details."
+          },
+          "ReportDetailsTabs": {
+            "title": "Report details",
+            "tabs": {
+              "details": "Details",
+              "users": "Users",
+              "attachment": "Attachment"
+            },
+            "content": {
+              "report": {
+                "reasons": {
+                  "label": "Reason of report:",
+                  "options": {
+                    "inappropriate_behavior": "Inappropriate behavior",
+                    "cheating": "Cheating",
+                    "harassment": "Harassment",
+                    "impersonation": "Impersonation",
+                    "other": "Other"
+                  }
+                },
+                "description": "Description:",
+                "createdAt": "Created at:",
+                "updatedAt": "Last updated at:",
+                "status": {
+                  "title": "Status:",
+                  "pending": "Pending",
+                  "resolved": "Resolved",
+                  "rejected": "Rejected"
+                }
+              },
+              "reporter": {
+                "title": "Reported by:",
+                "cta": {
+                  "profile": "See profile"
+                }
+              },
+              "reported": {
+                "title": "User reported:",
+                "cta": {
+                  "profile": "See profile"
+                }
+              },
+              "attachment": {
+                "title": "Attachment:",
+                "cta": "Open in a new tab"
+              },
+              "errors": {
+                "userNotAvailable": "User not available"
+              }
+            }
+          }
+        }
+      },
+      "SearchCommand": {
+        "trigger": "Search ( ⌘ + K )",
+        "placeholder": "Search for users...",
+        "empty": {
+          "title": "No users found",
+          "description": "Try another term for \"{term}\""
+        },
+        "group": {
+          "title": "Users",
+          "users": {
+            "level": "Level. {level}"
+          }
+        },
+        "help": {
+          "title": "Search for users",
+          "description": "Find players by name, role or location to view their view their profile and statistics",
+          "command": {
+            "escape": {
+              "trigger": "ESC",
+              "description": "to close"
+            },
+            "arrows": {
+              "trigger": "↑ / ↓",
+              "description": "to navigate"
+            },
+            "enter": {
+              "trigger": "Enter",
+              "description": "to select"
+            }
+          }
+        },
+        "about": "Search powered by Lootopia"
+      },
+      "Profile": {
+        "ActionMenu": {
+          "title": "Actions",
+          "label": "My Account",
+          "actions": {
+            "editProfile": "Edit my profile",
+            "myReports": "My reports",
+            "logout": "Logout"
+          }
+        }
+      }
     },
     "Hunts": {
       "Map": {

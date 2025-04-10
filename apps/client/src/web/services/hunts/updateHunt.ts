@@ -1,4 +1,4 @@
-import type { HuntIdSchema, HuntSchema } from "@common/hunts"
+import type { HuntIdSchema, HuntSchema } from "@lootopia/common"
 
 import { client } from "@client/web/utils/client"
 

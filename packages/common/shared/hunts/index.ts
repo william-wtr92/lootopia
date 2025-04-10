@@ -1,8 +1,6 @@
 import { z } from "zod"
 import { baseChestSchema } from "./chests"
-
-export const defaultLimit = 10
-export const defaultPage = 0
+import { defaultLimit, defaultPage } from "@common/global/pagination"
 
 export const huntSchema = z.object({
   name: z.string().min(3),

@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   cities,

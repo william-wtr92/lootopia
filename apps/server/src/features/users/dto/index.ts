@@ -24,7 +24,15 @@ export const sanitizeUser = <T extends keyof AdditionalUserFields>(
     email: user.email,
     phone: user.phone,
     birthdate: user.birthdate,
-    crowns: user.crowns,
+    ...(user.crowns !== undefined ? { crowns: user.crowns } : {}),
     ...additionalData,
   }
+}
+
+export const sanitizeUsers = (users: User[]) => {
+  return users.map((user) => ({
+    id: user.id,
+    nickname: user.nickname,
+    avatar: user.avatar,
+  }))
 }
