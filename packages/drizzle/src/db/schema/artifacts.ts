@@ -7,7 +7,7 @@ import {
 } from "drizzle-orm/pg-core"
 
 import { users } from "./users"
-import type { ArtifactRarityTier } from "@lootopia/common"
+import type { ArtifactRarity } from "@lootopia/common"
 
 export const artifacts = pgTable(
   "artifacts",
@@ -16,10 +16,7 @@ export const artifacts = pgTable(
     name: text().notNull(),
     link: text().notNull(),
     shaKey: text().notNull(),
-    rarity: text("rarity")
-      .$type<ArtifactRarityTier>()
-      .notNull()
-      .default("common"),
+    rarity: text("rarity").$type<ArtifactRarity>().notNull().default("common"),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     userId: uuid()
       .notNull()

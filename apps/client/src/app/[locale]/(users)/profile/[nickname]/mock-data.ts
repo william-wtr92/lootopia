@@ -70,25 +70,3 @@ export const getArtifacts = () => [
     acquiredDate: "2023-07-15",
   },
 ]
-
-export const getRarityColor = (rarity: string) => {
-  switch (rarity) {
-    case "legendary":
-      return "bg-amber-500 text-black"
-
-    case "epic":
-      return "bg-purple-600 text-white"
-
-    case "rare":
-      return "bg-blue-600 text-white"
-
-    case "uncommon":
-      return "bg-green-600 text-white"
-
-    case "common":
-      return "bg-gray-500 text-white"
-
-    default:
-      return "bg-gray-500 text-white"
-  }
-}

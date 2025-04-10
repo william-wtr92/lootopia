@@ -1,8 +1,4 @@
-import {
-  type ReportStatus,
-  reportStatus,
-  type ReportReason,
-} from "@lootopia/common"
+import { reportStatus } from "@lootopia/common"
 import { Badge } from "@lootopia/ui"
 import { motion } from "framer-motion"
 import { Calendar, CheckCircle, XCircle } from "lucide-react"
@@ -10,6 +6,10 @@ import { useTranslations } from "next-intl"
 
 import type { ReportResponse } from "@client/web/services/reports/getUserReportList"
 import anim from "@client/web/utils/anim"
+import {
+  getReportReasonColor,
+  getReportStatusColor,
+} from "@client/web/utils/def/colors"
 import { formatDate } from "@client/web/utils/formatDate"
 
 type Props = {
@@ -42,7 +42,7 @@ const ReportListItem = ({
         <div>
           <div className="flex items-center gap-2">
             <Badge
-              className={`${getReasonColor(reportDetails.report.reason)} text-white`}
+              className={getReportReasonColor(reportDetails.report.reason)}
             >
               {t(`reasons.${reportDetails.report.reason}`)}
             </Badge>
@@ -64,7 +64,7 @@ const ReportListItem = ({
         </div>
         <div>
           <Badge
-            className={`flex items-center ${getBadgeColor(reportDetails.report.status)} text-xs text-white`}
+            className={`flex items-center text-xs ${getReportStatusColor(reportDetails.report.status)}`}
           >
             {reportDetails.report.status === reportStatus.resolved && (
               <CheckCircle className="mr-1 size-2" />
@@ -87,42 +87,4 @@ const hoverVariants = {
   enter: { x: 0 },
   exit: { x: 0 },
   hover: { x: 5 },
-}
-
-const getReasonColor = (reason: ReportReason) => {
-  switch (reason) {
-    case "cheating":
-      return "bg-yellow-500 hover:bg-yellow-600"
-
-    case "harassment":
-      return "bg-orange-500 hover:bg-orange-600"
-
-    case "inappropriate_behavior":
-      return "bg-red-500 hover:bg-red-600"
-
-    case "impersonation":
-      return "bg-red-700 hover:bg-red-800"
-
-    case "other":
-      return "bg-blue-500 hover:bg-blue-600"
-
-    default:
-      return "bg-gray-500 hover:bg-primary/20"
-  }
-}
-
-const getBadgeColor = (status: ReportStatus) => {
-  switch (status) {
-    case reportStatus.pending:
-      return "bg-amber-500"
-
-    case reportStatus.resolved:
-      return "bg-success"
-
-    case reportStatus.rejected:
-      return "bg-error"
-
-    default:
-      return "bg-gray-500"
-  }
 }

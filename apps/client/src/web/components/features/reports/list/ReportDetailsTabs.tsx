@@ -1,4 +1,3 @@
-import type { ReportReason } from "@lootopia/common"
 import {
   Badge,
   Tabs,
@@ -24,6 +23,7 @@ import { config } from "@client/env"
 import { Link } from "@client/i18n/routing"
 import { routes } from "@client/web/routes"
 import type { ReportResponse } from "@client/web/services/reports/getUserReportList"
+import { getReportReasonColor } from "@client/web/utils/def/colors"
 import { formatDate } from "@client/web/utils/formatDate"
 
 type Props = {
@@ -41,9 +41,7 @@ const ReportDetailsTabs = ({ selectedReport }: Props) => {
     <>
       <div className="mb-6 flex items-start justify-between">
         <h3 className="text-primary text-xl font-bold">{t("title")}</h3>
-        <Badge
-          className={`${getReasonColor(selectedReport.report.reason)} text-white`}
-        >
+        <Badge className={getReportReasonColor(selectedReport.report.reason)}>
           {t(`content.report.reasons.options.${selectedReport.report.reason}`)}
         </Badge>
       </div>
@@ -266,25 +264,3 @@ const ReportDetailsTabs = ({ selectedReport }: Props) => {
 }
 
 export default ReportDetailsTabs
-
-const getReasonColor = (reason: ReportReason) => {
-  switch (reason) {
-    case "cheating":
-      return "bg-yellow-500 hover:bg-yellow-600"
-
-    case "harassment":
-      return "bg-orange-500 hover:bg-orange-600"
-
-    case "inappropriate_behavior":
-      return "bg-red-500 hover:bg-red-600"
-
-    case "impersonation":
-      return "bg-red-700 hover:bg-red-800"
-
-    case "other":
-      return "bg-blue-500 hover:bg-blue-600"
-
-    default:
-      return "bg-gray-500 hover:bg-primary/20"
-  }
-}

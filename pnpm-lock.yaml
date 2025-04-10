@@ -53,6 +53,9 @@ importers:
       '@tanstack/react-query-devtools':
         specifier: ^5.62.10
         version: 5.66.0(@tanstack/react-query@5.66.0(react@19.0.0))(react@19.0.0)
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0

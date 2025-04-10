@@ -80,8 +80,9 @@ export {
   type ArtifactUploadSchema,
   artifactSchema,
   type ArtifactSchema,
+  artifactRarity,
   ARTIFACT_RARITY_TIERS,
-  type ArtifactRarityTier,
+  type ArtifactRarity,
 } from "./artifacts"
 
 export { getRarityFromAvailability } from "./artifacts/utils/getRarityFromAvailability"

@@ -1,5 +1,6 @@
 "use client"
 
+import type { ArtifactRarity } from "@lootopia/common"
 import {
   Card,
   CardContent,
@@ -28,11 +29,12 @@ import { useParams } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
-import { getArtifacts, getRarityColor, getRecentHunts } from "./mock-data"
+import { getArtifacts, getRecentHunts } from "./mock-data"
 import { config } from "@client/env"
 import ReportForm from "@client/web/components/features/reports/ReportForm"
 import { getUserByNickname } from "@client/web/services/users/getUserByNickname"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
+import { getArtifactRarityColor } from "@client/web/utils/def/colors"
 import { formatDate } from "@client/web/utils/formatDate"
 
 const UserProfilePage = () => {
@@ -224,13 +226,13 @@ const UserProfilePage = () => {
                       <h3 className="text-primary mb-1 flex items-center gap-2 font-bold">
                         <span>{artifact.name}</span>
                         <Badge
-                          className={`text-xs ${getRarityColor(artifact.rarity)}`}
+                          className={`text-xs ${getArtifactRarityColor(artifact.rarity as ArtifactRarity)}`}
                         >
                           {artifact.rarity}
                         </Badge>
                       </h3>
                       <div className="text-primary mb-1 flex items-center gap-1 text-xs">
-                        <Award className="h-3 w-3" />
+                        <Award className="size-3" />
                         <span>
                           Found on {formatDate(artifact.acquiredDate)}
                         </span>
