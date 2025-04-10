@@ -47,6 +47,8 @@ Lootopia is an innovative platform, structured as an immersive ecosystem, dedica
 
 - You need to have **PNPM** installed, if not you can install it by following
   the [instructions](https://pnpm.io/installation).
+- You need to have **Stripe CLI** installed, if not you can install it by following
+  the [instructions](https://docs.stripe.com/stripe-cli).
 - Setup ur **.env** file with the following
   variables -> [See example](https://github.com/william-wtr92/lootopia/blob/main/.env.example).
 - Install [PostgreSQL](https://www.postgresql.org/download/) & [PostGIS](https://postgis.net/documentation/getting_started/) & [Redis](https://redis.io/docs/install/install-redis/) on

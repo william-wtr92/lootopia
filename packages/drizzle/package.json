@@ -9,7 +9,7 @@
     "db:generate:custom": "pnpm exec drizzle-kit generate --custom",
     "db:generate": "pnpm exec drizzle-kit generate",
     "db:migrate": "pnpm exec drizzle-kit migrate",
-    "db:seed": "node  dist/src/db/seed/index.js",
+    "db:seed": "node dist/src/db/seed/index.js",
     "db:drop": "pnpm exec drizzle-kit drop",
     "build": "tsc && tsc-alias",
     "prepare": "pnpm run build"
