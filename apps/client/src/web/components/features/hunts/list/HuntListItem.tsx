@@ -22,6 +22,7 @@ import Image from "next/image"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
+import HuntRewardPill from "./rewards/HuntRewardPill"
 import { config } from "@client/env"
 import HuntForm from "@client/web/components/features/hunts/form/HuntForm"
 import Map from "@client/web/components/features/hunts/Map"
@@ -97,18 +98,12 @@ const HuntListItem = (props: Props) => {
 
   return (
     <>
-      <div
-        className="bg-primaryBg flex w-full cursor-pointer flex-col overflow-hidden rounded-[12px]"
-        onClick={(e) => {
-          handleIsDeployed()
-          e.stopPropagation()
-        }}
-      >
+      <div className="bg-primaryBg flex w-full flex-col overflow-hidden rounded-[12px]">
         <div className="flex w-full items-center gap-4 p-4">
           <Image
             src={
-              hunt.organizer?.avatar
-                ? config.blobUrl + hunt.organizer?.avatar
+              hunt?.organizer?.avatar
+                ? config.blobUrl + hunt?.organizer.avatar
                 : "/avatar-placeholder.png"
             }
             alt="Avatar"
@@ -146,25 +141,16 @@ const HuntListItem = (props: Props) => {
               <div className="flex cursor-help items-center">
                 <Award size={24} className="text-accent inline-block" />
 
-                <span className="border-primary bg-primary text-accent mr-1 rounded-xl border px-2 py-1">
-                  {hunt.chests[0].reward}
-                </span>
+                <HuntRewardPill chest={hunt.chests[0]} />
 
                 <AnimatePresence>
                   {isDeployed && (
                     <MotionComponent
-                      className="flex gap-1"
+                      className="ml-1 flex gap-1"
                       {...anim(hiddenRewardsListVariant)}
                     >
                       {hiddenRewards.map((chest, index) => (
-                        <MotionComponent
-                          type="span"
-                          key={index}
-                          variants={rewardItemVariant}
-                          className="text-primary border-accent bg-accent rounded-xl border px-2 py-1"
-                        >
-                          {chest.reward}
-                        </MotionComponent>
+                        <HuntRewardPill key={index} chest={chest} />
                       ))}
                     </MotionComponent>
                   )}
@@ -185,8 +171,12 @@ const HuntListItem = (props: Props) => {
           )}
 
           <ChevronRightIcon
-            className={`text-primary duration-300 ${isDeployed ? "rotate-90" : ""} `}
+            className={`text-primary cursor-pointer duration-300 ${isDeployed ? "rotate-90" : ""} `}
             size={32}
+            onClick={(e) => {
+              handleIsDeployed()
+              e.stopPropagation()
+            }}
           />
         </div>
 
@@ -255,20 +245,20 @@ const hiddenRewardsListVariant = {
   },
 }
 
-const rewardItemVariant = {
-  initial: { opacity: 0, scale: 0 },
-  enter: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      duration: 0.3,
-    },
-  },
-  exit: {
-    opacity: 0,
-    scale: 0,
-    transition: {
-      duration: 0.3,
-    },
-  },
-}
+// const rewardItemVariant = {
+//   initial: { opacity: 0, scale: 0 },
+//   enter: {
+//     opacity: 1,
+//     scale: 1,
+//     transition: {
+//       duration: 0.3,
+//     },
+//   },
+//   exit: {
+//     opacity: 0,
+//     scale: 0,
+//     transition: {
+//       duration: 0.3,
+//     },
+//   },
+// }

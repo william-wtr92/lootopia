@@ -59,6 +59,12 @@ export default {
     "hover:bg-success/80",
     "bg-error",
     "hover:bg-error/80",
+    "bg-white",
+    "text-black",
+    "bg-green-500",
+    "bg-blue-500",
+    "bg-purple-500",
+    "bg-amber-400",
   ],
   plugins: [tailwindcssAnimate],
 } satisfies Config

@@ -80,6 +80,8 @@ export {
   type ArtifactUploadSchema,
   artifactSchema,
   type ArtifactSchema,
+  artifactParamSchema,
+  type ArtifactParamSchema,
   artifactRarity,
   ARTIFACT_RARITY_TIERS,
   type ArtifactRarity,

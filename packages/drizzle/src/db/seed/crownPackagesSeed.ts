@@ -1,6 +1,7 @@
 import { client, db } from "@drizzle/utils/client"
+import { crownPackageName } from "@lootopia/common"
+
 import { crownPackages } from "../schema"
-import { crownPackageName } from "@common/shop"
 
 export const crownPackagesSeed = async () => {
   await db

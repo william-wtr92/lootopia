@@ -1,6 +1,6 @@
 "use client"
 
-import { stripeReturnUrlParams } from "@common/shop"
+import { stripeReturnUrlParams } from "@lootopia/common"
 import { Button } from "@lootopia/ui"
 import { useQuery } from "@tanstack/react-query"
 import { Crown } from "lucide-react"

@@ -4,8 +4,13 @@ const DEFAULT_CHEST_SIZE = 80 as const
 
 export const MAX_CROWN_REWARD = 100 as const
 
-export const CHEST_REWARD_TYPES = ["artifact", "crown"] as const
-export type ChestRewardType = (typeof CHEST_REWARD_TYPES)[number]
+export const CHEST_REWARD_TYPES = {
+  artifact: "artifact",
+  crown: "crown",
+} as const
+
+export type ChestRewardType =
+  (typeof CHEST_REWARD_TYPES)[keyof typeof CHEST_REWARD_TYPES]
 
 export const baseChestSchema = z.object({
   id: z.string(),
@@ -14,7 +19,7 @@ export const baseChestSchema = z.object({
     y: z.number(),
   }),
   description: z.string().optional(),
-  rewardType: z.enum(CHEST_REWARD_TYPES),
+  rewardType: z.enum(Object.values(CHEST_REWARD_TYPES) as [ChestRewardType]),
   reward: z.union([
     z
       .string()

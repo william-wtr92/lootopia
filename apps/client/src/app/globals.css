@@ -83,8 +83,10 @@ body {
 
 /* Loader */
 .lds-circle,
+.lds-circle,
 .lds-circle div {
   box-sizing: border-box;
+  transform-style: preserve-3d;
 }
 
 .lds-circle {
@@ -97,24 +99,19 @@ body {
   width: 64px;
   height: 64px;
   margin: 8px;
-  background: var(--primary);
+  background: rgb(var(--primary));
   border-radius: 50%;
-  animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  animation: lds-coin-spin 0.5s linear infinite;
 }
 
-@keyframes lds-circle {
-  0%,
-  100% {
-    animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
-  }
+@keyframes lds-coin-spin {
   0% {
     transform: rotateY(0deg);
   }
   50% {
-    transform: rotateY(1800deg);
-    animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+    transform: rotateY(180deg);
   }
   100% {
-    transform: rotateY(3600deg);
+    transform: rotateY(360deg);
   }
 }
