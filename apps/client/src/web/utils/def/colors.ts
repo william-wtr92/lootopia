@@ -99,7 +99,7 @@ export const getCrownPackageColor = (name: CrownPackageName) => {
 }
 
 export const getRewardPillRarityColor = (rarity: ArtifactRarity) => {
-  return cva("text-white", {
+  return cva("", {
     variants: {
       rarity: {
         [artifactRarity.common]: "bg-white text-black",

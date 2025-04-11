@@ -21,8 +21,8 @@ import {
   Trophy,
   Award,
   Clock,
-  MapPinnedIcon,
-  AmphoraIcon,
+  MapPinned,
+  Amphora,
 } from "lucide-react"
 import Image from "next/image"
 import { useParams } from "next/navigation"
@@ -177,7 +177,7 @@ const UserProfilePage = () => {
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <MapPinnedIcon className="text-primary size-10" />
+                  <MapPinned className="text-primary size-10" />
                   <div className="flex-grow">
                     <h3 className="text-primary mb-2 font-bold">
                       {hunt.title}
@@ -227,7 +227,7 @@ const UserProfilePage = () => {
                 >
                   <div className="flex items-center gap-4">
                     <div className="relative">
-                      <AmphoraIcon className="text-primary size-8" />
+                      <Amphora className="text-primary size-8" />
                     </div>
                     <div>
                       <h3 className="text-primary mb-1 flex items-center gap-2 font-bold">

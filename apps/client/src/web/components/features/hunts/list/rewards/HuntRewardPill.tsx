@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from "@lootopia/ui"
 import { useQuery } from "@tanstack/react-query"
-import { Crown, CrownIcon, Shovel, X } from "lucide-react"
+import { Crown, Shovel, X } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
@@ -107,7 +107,7 @@ const HuntRewardPill = (props: Props) => {
                   </div>
                 ) : (
                   <MotionComponent {...anim(rewardItemVariant)}>
-                    <CrownIcon size={160} className="text-primary" />
+                    <Crown size={160} className="text-primary" />
                   </MotionComponent>
                 )}
 

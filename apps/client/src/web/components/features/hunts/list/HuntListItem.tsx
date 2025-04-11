@@ -12,11 +12,11 @@ import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { AnimatePresence } from "framer-motion"
 import {
   Award,
-  ChevronRightIcon,
+  ChevronRight,
   Clock,
   MapPin,
-  PencilRulerIcon,
-  UsersIcon,
+  PencilRuler,
+  Users,
 } from "lucide-react"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
@@ -134,7 +134,7 @@ const HuntListItem = (props: Props) => {
               </span>
 
               <span>
-                <UsersIcon size={24} className="text-accent inline-block" />{" "}
+                <Users size={24} className="text-accent inline-block" />{" "}
                 {hunt.maxParticipants ? hunt.maxParticipants : "∞"}
               </span>
 
@@ -160,7 +160,7 @@ const HuntListItem = (props: Props) => {
           </div>
 
           {isOrganizer && (
-            <PencilRulerIcon
+            <PencilRuler
               size={26}
               className="text-accent hover:text-primary duration-300"
               onClick={(e) => {
@@ -170,9 +170,9 @@ const HuntListItem = (props: Props) => {
             />
           )}
 
-          <ChevronRightIcon
-            className={`text-primary cursor-pointer duration-300 ${isDeployed ? "rotate-90" : ""} `}
+          <ChevronRight
             size={32}
+            className={`text-primary cursor-pointer duration-300 ${isDeployed ? "rotate-90" : ""} `}
             onClick={(e) => {
               handleIsDeployed()
               e.stopPropagation()
