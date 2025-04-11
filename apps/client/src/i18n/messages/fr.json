@@ -801,10 +801,16 @@
             "treasure_hunter_pack": "Pack du Chasseur de Trésors",
             "legendary_pack": "Pack Légendaire"
           },
+          "tooltip": {
+            "copied": "Copié !",
+            "cta": {
+              "copy": "Cliquer pour copier"
+            }
+          },
           "status": {
             "amount": {
-              "min": "-{amount}€",
-              "plus": "+{amount}€"
+              "min": "-{amount} €",
+              "plus": "+{amount} €"
             },
             "options": {
               "paid": "Terminée",
@@ -815,6 +821,9 @@
         },
         "PaymentListExporter": {
           "transactions": "transactions trouvées",
+            "errors": {
+            "waitBeforeExportPayments": "L'exportation des paiements est limitée à une fois toutes les 24 heures."
+          },
           "cta": {
             "export": "Exporter les transactions"
           }

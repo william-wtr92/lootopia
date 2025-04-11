@@ -801,10 +801,16 @@
             "treasure_hunter_pack": "Treasure Hunter Pack",
             "legendary_pack": "Legendary Pack"
           },
+          "tooltip": {
+            "copied": "Copied!",
+            "cta": {
+              "copy": "Click to copy"
+            }
+          },
           "status": {
             "amount": {
-              "min": "-{amount}€",
-              "plus": "+{amount}€"
+              "min": "-{amount} €",
+              "plus": "+{amount} €"
             },
             "options": {
               "paid": "Terminated",
@@ -815,6 +821,9 @@
         },
         "PaymentListExporter": {
           "transactions": "transactions found",
+          "errors": {
+            "waitBeforeExportPayments": "Export payments is limited to once every 24 hours."
+          },
           "cta": {
             "export": "Export transactions"
           }

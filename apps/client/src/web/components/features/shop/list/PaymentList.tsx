@@ -1,9 +1,10 @@
 import { paymentStatus } from "@lootopia/common"
 import { Badge } from "@lootopia/ui"
 import { motion } from "framer-motion"
-import { Calendar, Crown, Receipt } from "lucide-react"
+import { Calendar, Copy, Crown, Receipt } from "lucide-react"
 import { useTranslations } from "next-intl"
 
+import { useCopyToClipboard } from "@client/web/hooks/useCopyToClipboard"
 import type { PaymentResponse } from "@client/web/services/shop/getUserPaymentList"
 import { getPaymentStatusColor } from "@client/web/utils/def/colors"
 import { formatDate } from "@client/web/utils/helpers/formatDate"
@@ -22,6 +23,8 @@ const PaymentList = ({
   listRef,
 }: Props) => {
   const t = useTranslations("Components.Shop.List.PaymentList")
+
+  const { copiedText, copy } = useCopyToClipboard()
 
   const mappedPayments = filteredPayments.map((transaction) => ({
     id: transaction.payment.id,
@@ -64,19 +67,46 @@ const PaymentList = ({
                       {t(`package.${transaction.package!}`)}
                     </h3>
                     <div className="text-secondary flex items-center gap-2 text-xs">
-                      <span>{transaction.id}</span>
-                      <span>•</span>
-                      <span className="flex items-center">
-                        <Calendar className="mr-1 size-3" />
-                        {formatDate(transaction.date)}
-                      </span>
+                      <div className="text-secondary flex items-center gap-2 text-xs">
+                        <span
+                          className="group relative flex cursor-pointer items-center gap-3"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            copy(transaction.id)
+                          }}
+                        >
+                          {transaction.id}
+
+                          <span className="relative flex items-center gap-1">
+                            <Copy className="text-secondary size-3" />
+                          </span>
+
+                          <span
+                            className={`${
+                              copiedText === transaction.id
+                                ? "bg-success text-white"
+                                : "bg-primary text-accent"
+                            } absolute bottom-5 left-40 w-32 whitespace-nowrap rounded px-2 py-1 text-center text-xs opacity-0 transition-opacity group-hover:opacity-100`}
+                          >
+                            {copiedText === transaction.id
+                              ? t("tooltip.copied")
+                              : t("tooltip.cta.copy")}
+                          </span>
+
+                          <span>•</span>
+                          <span className="flex items-center">
+                            <Calendar className="mr-1 size-3" />
+                            {formatDate(transaction.date)}
+                          </span>
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="flex flex-col items-end gap-1">
                   <div
-                    className={`flex font-bold ${transaction.status === paymentStatus.paid ? "text-error" : "text-success"}`}
+                    className={`flex font-semibold ${transaction.status === paymentStatus.paid ? "text-error" : "text-success"}`}
                   >
                     {t(
                       `status.amount.${transaction.status === paymentStatus.paid ? "min" : "plus"}`,

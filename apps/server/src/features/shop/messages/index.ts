@@ -25,6 +25,11 @@ export const webhookSignatureError = {
   key: "webhookSignatureError",
 } as const
 
+export const waitBeforeExportPayments = {
+  result: "Export payments is limited to once every 24 hours.",
+  key: "waitBeforeExportPayments",
+} as const
+
 // SUCCESS MESSAGES
 
 export const crownPackageStripeSuccess = (clientSecret: string) =>

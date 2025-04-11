@@ -176,7 +176,7 @@ const ShopPopup = ({ isOpen, onClose, currentCrowns }: Props) => {
                     </div>
                   </div>
 
-                  <div className="bg-primary/10 mt-8 flex items-start gap-3 rounded-lg bg-gray-600/10 p-4">
+                  <div className="bg-primary/10 mt-8 flex items-start gap-3 rounded-lg p-4">
                     <Info className="text-primary mt-0.5 h-5 w-5 flex-shrink-0" />
                     <div className="text-primary text-sm">
                       <p className="mb-1 font-semibold">{t("about.title")}</p>

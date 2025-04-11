@@ -80,14 +80,16 @@ const ProfilePage = () => {
               alt="Avatar"
               width={100}
               height={100}
-              className="aspect-square rounded-full"
+              className="aspect-square rounded-full object-contain"
             />
             <div>
               <h1 className="text-primary text-3xl font-bold">
                 {user?.nickname}
               </h1>
               {user?.role && (
-                <p className="text-secondary">{t(`info.role.${user.role}`)}</p>
+                <p className="text-secondary font-medium italic">
+                  {t(`info.role.${user.role}`)}
+                </p>
               )}
             </div>
           </CardContent>

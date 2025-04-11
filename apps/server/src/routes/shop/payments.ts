@@ -13,18 +13,25 @@ import {
   crownPackageNotFound,
   crownPackageStripeError,
   crownPackageStripeSuccess,
+  selectAllPayments,
   selectCrownPackageById,
   selectPaymentsByUserId,
   selectPaymentsByUserIdCount,
   sessionNotFound,
+  waitBeforeExportPayments,
 } from "@server/features/shop"
 import { selectUserByEmail, userNotFound } from "@server/features/users"
+import { azureDirectory, uploadCSV } from "@server/utils/actions/azureActions"
+import { redis } from "@server/utils/clients/redis"
 import { stripe } from "@server/utils/clients/stripe"
+import { generateCsvFromObjects } from "@server/utils/helpers/csv"
 import {
   buildStripeProductDataName,
   buildStripeReturnUrl,
 } from "@server/utils/helpers/stripe"
+import { now, oneDayTTL } from "@server/utils/helpers/times"
 import { contextKeys } from "@server/utils/keys/contextKeys"
+import { redisKeys } from "@server/utils/keys/redisKeys"
 import { Hono } from "hono"
 
 const app = new Hono()
@@ -154,6 +161,51 @@ export const paymentsRoute = app
         result: userPayments,
         count,
         lastPage,
+      },
+      SC.success.OK
+    )
+  })
+  .get("/payments/export", async (c) => {
+    const email = c.get(contextKeys.loggedUserEmail)
+
+    const user = await selectUserByEmail(email)
+
+    if (!user) {
+      return c.json(userNotFound, SC.errors.NOT_FOUND)
+    }
+
+    const paymentsExportCooldownKey = redisKeys.shop.payments.export(user.id)
+    const paymentsExportCooldown = await redis.get(paymentsExportCooldownKey)
+
+    if (paymentsExportCooldown) {
+      return c.json(waitBeforeExportPayments, SC.errors.BAD_REQUEST)
+    }
+
+    const payments = await selectAllPayments(user.id)
+
+    const mappedPayments = payments.map((p) => ({
+      id: p.payment.id,
+      date: p.payment.createdAt.toISOString(),
+      pack: p.crownPackage?.name,
+      amount: p.payment.amount,
+      status: p.payment.status,
+    }))
+
+    const csv = generateCsvFromObjects(mappedPayments, [
+      "id",
+      "date",
+      "pack",
+      "amount",
+      "status",
+    ])
+
+    const url = await uploadCSV(azureDirectory.paymentExports, csv)
+
+    await redis.set(paymentsExportCooldownKey, now, "EX", oneDayTTL)
+
+    return c.json(
+      {
+        result: url,
       },
       SC.success.OK
     )

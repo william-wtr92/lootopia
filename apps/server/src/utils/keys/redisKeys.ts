@@ -16,4 +16,9 @@ export const redisKeys = {
     nicknameUpdateCooldown: (userId: string) =>
       `users:nickname-update-cooldown:${userId}`,
   },
+  shop: {
+    payments: {
+      export: (userId: string) => `shop:payments:export:${userId}`,
+    },
+  },
 } as const

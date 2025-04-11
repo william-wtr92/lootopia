@@ -78,3 +78,16 @@ export const selectPaymentsByUserIdCount = async (
       )
     )
 }
+
+export const selectAllPayments = async (userId: string) => {
+  return db
+    .select({
+      payment: payments,
+      crownPackage: {
+        name: crownPackages.name,
+      },
+    })
+    .from(payments)
+    .where(eq(payments.userId, userId))
+    .leftJoin(crownPackages, eq(payments.crownPackageId, crownPackages.id))
+}
