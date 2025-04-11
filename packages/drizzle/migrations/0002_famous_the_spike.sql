@@ -1,1 +1,0 @@
-ALTER TABLE "crown_packages" ADD CONSTRAINT "crown_packages_name_unique" UNIQUE("name");

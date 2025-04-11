@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import { Button, useToast } from "@lootopia/ui"
 import { useQuery } from "@tanstack/react-query"
 import { motion, AnimatePresence } from "framer-motion"

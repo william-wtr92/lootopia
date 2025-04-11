@@ -44,6 +44,7 @@ const appRouter = app
   .route(router.hunts, routes.hunts)
   .route(router.users, routes.users)
   .route(router.artifacts, routes.artifacts)
+  .route(router.reports, routes.reports)
   .route(router.shop, routes.shop)
 
 serve({

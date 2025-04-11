@@ -2,7 +2,10 @@
 import { zValidator } from "@hono/zod-validator"
 import {
   calculateDiscountedPrice,
+  defaultLimit,
+  defaultPage,
   packageIdSchema,
+  paymentListParamsSchema,
   SC,
   sessionIdSchema,
 } from "@lootopia/common"
@@ -11,6 +14,8 @@ import {
   crownPackageStripeError,
   crownPackageStripeSuccess,
   selectCrownPackageById,
+  selectPaymentsByUserId,
+  selectPaymentsByUserIdCount,
   sessionNotFound,
 } from "@server/features/shop"
 import { selectUserByEmail, userNotFound } from "@server/features/users"
@@ -117,12 +122,39 @@ export const paymentsRoute = app
         return c.json(crownPackageNotFound, SC.errors.NOT_FOUND)
       }
 
-      const result = {
-        name: crownPackage.name,
-        crowns: crownPackage.crowns,
-        bonus: crownPackage.bonus ?? 0,
-      }
-
-      return c.json({ result }, SC.success.OK)
+      return c.json({ result: crownPackage }, SC.success.OK)
     }
   )
+  .get("/payments", zValidator("query", paymentListParamsSchema), async (c) => {
+    const email = c.get(contextKeys.loggedUserEmail)
+    const { limit: limitString, page: offsetString, search } = c.req.query()
+
+    const user = await selectUserByEmail(email)
+
+    if (!user) {
+      return c.json(userNotFound, SC.errors.NOT_FOUND)
+    }
+
+    const limit = parseInt(limitString, 10) || defaultLimit
+    const page = parseInt(offsetString, 10) || defaultPage
+
+    const userPayments = await selectPaymentsByUserId(
+      user.id,
+      limit,
+      page,
+      search
+    )
+
+    const [{ count }] = await selectPaymentsByUserIdCount(user.id, search)
+
+    const lastPage = Math.ceil(count / limit) - 1
+
+    return c.json(
+      {
+        result: userPayments,
+        count,
+        lastPage,
+      },
+      SC.success.OK
+    )
+  })

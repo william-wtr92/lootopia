@@ -1,19 +1,18 @@
 "use client"
 
-import type { CrownPackageSchema } from "@common/shop"
 import { Button } from "@lootopia/ui"
 import { motion, AnimatePresence } from "framer-motion"
 import { Crown, CheckCircle, X, Gift, Sparkles } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useState, useRef } from "react"
 
+import type { CrownPackage } from "@client/web/services/shop/getCrownPackages"
 import { buildCanvas, launchConfetti } from "@client/web/utils/helpers/confetti"
-import type { ColorMap } from "@client/web/utils/helpers/crownPackagesColor"
 
 type Props = {
   isOpen: boolean
   onClose: () => void
-  crownPackage: Pick<CrownPackageSchema, "name" | "crowns" | "bonus">
+  crownPackage: CrownPackage
 }
 
 const ThankYouPopup = ({ isOpen, onClose, crownPackage }: Props) => {
@@ -121,7 +120,7 @@ const ThankYouPopup = ({ isOpen, onClose, crownPackage }: Props) => {
                 </h3>
                 <p className="text-secondary mb-4">
                   {t("description", {
-                    packageName: t(`names.${crownPackage.name as ColorMap}`),
+                    packageName: t(`names.${crownPackage.name}`),
                   })}
                 </p>
 

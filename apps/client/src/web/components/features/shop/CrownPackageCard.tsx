@@ -1,7 +1,4 @@
-import {
-  type CrownPackageSchema,
-  calculateDiscountedPrice,
-} from "@lootopia/common"
+import { calculateDiscountedPrice } from "@lootopia/common"
 import {
   Separator,
   Card,
@@ -16,13 +13,11 @@ import { motion } from "framer-motion"
 import { Crown } from "lucide-react"
 import { useTranslations } from "next-intl"
 
-import {
-  type ColorMap,
-  getColorForPackage,
-} from "@client/web/utils/helpers/crownPackagesColor"
+import type { CrownPackage } from "@client/web/services/shop/getCrownPackages"
+import { getCrownPackageColor } from "@client/web/utils/def/colors"
 
 type Props = {
-  package: CrownPackageSchema
+  package: CrownPackage
   isSelected: boolean
   onSelect: () => void
   onPurchase: () => void
@@ -40,7 +35,7 @@ const CrownPackageCard = ({
     parseFloat(pkg.price),
     pkg.discount ?? undefined
   )
-  const color = getColorForPackage(pkg.name as ColorMap)
+  const color = getCrownPackageColor(pkg.name)
 
   return (
     <motion.div
@@ -77,7 +72,7 @@ const CrownPackageCard = ({
 
         <CardHeader className={color}>
           <CardTitle className="text-center">
-            {t(`names.${pkg.name as ColorMap}`)}
+            {t(`names.${pkg.name}`)}
           </CardTitle>
         </CardHeader>
 

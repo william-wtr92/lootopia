@@ -3,6 +3,7 @@ export const router = {
   hunts: "/hunts",
   users: "/users",
   artifacts: "/artifacts",
+  reports: "/reports",
   shop: "/shop",
 } as const
 

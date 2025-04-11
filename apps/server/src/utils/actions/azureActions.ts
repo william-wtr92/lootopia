@@ -4,6 +4,7 @@ import { v4 } from "uuid"
 export const azureDirectory = {
   avatars: "avatars/",
   artifacts: "artifacts/",
+  reports: "reports/",
 } as const
 
 type AzureDirectory = (typeof azureDirectory)[keyof typeof azureDirectory]

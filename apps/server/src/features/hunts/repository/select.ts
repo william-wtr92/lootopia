@@ -1,9 +1,8 @@
 import type { ChestSchema } from "@lootopia/common"
 import { chests, hunts, users } from "@lootopia/drizzle"
+import type { HuntWithChests } from "@server/features/hunts/types"
 import { db } from "@server/utils/clients/postgres"
 import { and, count, eq, ilike, or, sql } from "drizzle-orm"
-
-import type { HuntWithChests } from "../types"
 
 export const selectHunts = async ({
   limit,

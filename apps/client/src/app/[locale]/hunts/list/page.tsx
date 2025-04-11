@@ -1,5 +1,6 @@
 "use client"
 
+import { defaultPage } from "@lootopia/common"
 import { Button } from "@lootopia/ui"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
@@ -37,7 +38,7 @@ const HuntsListPage = () => {
   const { data, hasNextPage, isLoading, isFetching, refetch, fetchNextPage } =
     useInfiniteQuery({
       queryKey: ["hunts", huntFilterType, searchValue],
-      queryFn: ({ pageParam = 0 }) =>
+      queryFn: ({ pageParam = defaultPage }) =>
         getHuntFetcher(huntFilterType, searchValue)(pageParam),
       getNextPageParam: (previousResults, allPages) => {
         if (!previousResults) {
@@ -48,7 +49,7 @@ const HuntsListPage = () => {
           ? allPages.length
           : undefined
       },
-      initialPageParam: 0,
+      initialPageParam: defaultPage,
     })
 
   const hunts =

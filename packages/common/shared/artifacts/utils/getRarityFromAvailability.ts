@@ -1,13 +1,10 @@
-import {
-  ARTIFACT_RARITY_TIERS,
-  type ArtifactRarityTier,
-} from "@common/artifacts"
+import { ARTIFACT_RARITY_TIERS, type ArtifactRarity } from "@common/artifacts"
 
 export const getRarityFromAvailability = (
   availability: number
-): ArtifactRarityTier => {
+): ArtifactRarity => {
   for (const [key, max] of Object.entries(ARTIFACT_RARITY_TIERS)) {
-    if (availability <= max) return key as ArtifactRarityTier
+    if (availability <= max) return key as ArtifactRarity
   }
   return "common"
 }

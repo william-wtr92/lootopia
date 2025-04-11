@@ -1,5 +1,16 @@
 import { z } from "zod"
 
+export const crownPackageName = {
+  starterPack: "starter_pack",
+  explorerPack: "explorer_pack",
+  adventurerPack: "adventurer_pack",
+  treasureHunterPack: "treasure_hunter_pack",
+  legendaryPack: "legendary_pack",
+} as const
+
+export type CrownPackageName =
+  (typeof crownPackageName)[keyof typeof crownPackageName]
+
 export const crownPackageSchema = z.object({
   id: z.string(),
   name: z.string(),

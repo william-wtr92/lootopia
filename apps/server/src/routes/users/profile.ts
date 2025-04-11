@@ -1,5 +1,5 @@
 import { zValidator } from "@hono/zod-validator"
-import { SC, updateSchema } from "@lootopia/common"
+import { SC, updateSchema, userNicknameSchema } from "@lootopia/common"
 import appConfig from "@server/config"
 import {
   invalidExtension,
@@ -45,7 +45,10 @@ export const profileRoute = app
       return c.json(userNotFound, SC.errors.NOT_FOUND)
     }
 
-    return c.json({ result: sanitizeUser(user) }, SC.success.OK)
+    return c.json(
+      { result: sanitizeUser(user, ["role", "avatar"]) },
+      SC.success.OK
+    )
   })
   .put("/me", zValidator("form", updateSchema), async (c) => {
     const body = c.req.valid("form")
@@ -172,3 +175,30 @@ export const profileRoute = app
 
     return c.json(updateSuccessKey, SC.success.OK)
   })
+  .get(
+    "/find/:nickname",
+    zValidator("param", userNicknameSchema),
+    async (c) => {
+      const email = c.get(contextKeys.loggedUserEmail)
+      const nickname = c.req.param("nickname")
+
+      const user = await selectUserByEmail(email)
+
+      if (!user) {
+        return c.json(userNotFound, SC.errors.NOT_FOUND)
+      }
+
+      const userProfile = await selectUserByNickname(nickname)
+
+      if (!userProfile) {
+        return c.json(userNotFound, SC.errors.NOT_FOUND)
+      }
+
+      return c.json(
+        {
+          result: sanitizeUser(userProfile, ["avatar", "createdAt"]),
+        },
+        SC.success.OK
+      )
+    }
+  )

@@ -1,12 +1,13 @@
 import { client, db } from "@drizzle/utils/client"
 import { crownPackages } from "../schema"
+import { crownPackageName } from "@common/shop"
 
 export const crownPackagesSeed = async () => {
   await db
     .insert(crownPackages)
     .values([
       {
-        name: "starter_pack",
+        name: crownPackageName.starterPack,
         crowns: 100,
         price: "4.99",
         discount: undefined,
@@ -14,7 +15,7 @@ export const crownPackagesSeed = async () => {
         popular: false,
       },
       {
-        name: "explorer_pack",
+        name: crownPackageName.explorerPack,
         crowns: 500,
         price: "24.99",
         discount: 20,
@@ -22,7 +23,7 @@ export const crownPackagesSeed = async () => {
         popular: false,
       },
       {
-        name: "adventurer_pack",
+        name: crownPackageName.adventurerPack,
         crowns: 1200,
         price: "49.99",
         discount: 20,
@@ -30,7 +31,7 @@ export const crownPackagesSeed = async () => {
         popular: true,
       },
       {
-        name: "treasure_hunter_pack",
+        name: crownPackageName.treasureHunterPack,
         crowns: 2500,
         price: "99.99",
         discount: 20,
@@ -38,7 +39,7 @@ export const crownPackagesSeed = async () => {
         popular: false,
       },
       {
-        name: "legendary_pack",
+        name: crownPackageName.legendaryPack,
         crowns: 5000,
         price: "199.99",
         discount: 25,

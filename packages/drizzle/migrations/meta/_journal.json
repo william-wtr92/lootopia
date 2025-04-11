@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1743181143474,
-      "tag": "0000_magenta_magus",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1744053864724,
-      "tag": "0001_windy_namor",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1744054603539,
-      "tag": "0002_famous_the_spike",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1744055490456,
-      "tag": "0003_colossal_flatman",
+      "when": 1744392715838,
+      "tag": "0000_blue_famine",
       "breakpoints": true
     }
   ]

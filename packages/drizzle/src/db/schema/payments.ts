@@ -9,9 +9,11 @@ import {
 } from "drizzle-orm/pg-core"
 import { users } from "./users"
 
+import type { CrownPackageName, PaymentStatus } from "@lootopia/common"
+
 export const crownPackages = pgTable("crown_packages", {
   id: uuid().defaultRandom().primaryKey().notNull(),
-  name: text().notNull().unique(),
+  name: text().notNull().$type<CrownPackageName>().unique(),
   crowns: integer().notNull(),
   price: numeric("price", { precision: 10, scale: 2 }).notNull(),
   discount: integer(),
@@ -31,6 +33,6 @@ export const payments = pgTable("payments", {
     .references(() => crownPackages.id),
   amount: numeric("amount", { precision: 10, scale: 2 }).notNull(),
   providerPaymentId: text().notNull(),
-  status: text().notNull(),
+  status: text().$type<PaymentStatus>().notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
