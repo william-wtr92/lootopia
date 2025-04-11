@@ -48,6 +48,7 @@ const appConfigSchema = z
       db: z.string(),
     }),
     azure: z.object({
+      maxAgeInSeconds: z.number(),
       blob: z.object({
         connection: z.string(),
         container: z.string(),
@@ -108,6 +109,7 @@ const appConfig = appConfigSchema.parse({
     db: process.env.REDIS_DB,
   },
   azure: {
+    maxAgeInSeconds: 3600,
     blob: {
       connection: process.env.AZURE_BLOB_CONNECTION,
       container: process.env.AZURE_BLOB_CONTAINER,
