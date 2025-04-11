@@ -1,4 +1,4 @@
-import type { ArtifactParamSchema } from "@common/artifacts"
+import type { ArtifactParamSchema } from "@lootopia/common"
 
 import { client } from "@client/web/utils/client"
 

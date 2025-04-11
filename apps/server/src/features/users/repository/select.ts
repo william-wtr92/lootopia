@@ -1,7 +1,7 @@
 import { crowns, users } from "@lootopia/drizzle"
 import { db } from "@server/db/client"
 import type { User } from "@server/features/users/types"
-import { eq } from "drizzle-orm"
+import { count, eq, ilike } from "drizzle-orm"
 
 export const selectUserByEmail = async (email: string) => {
   return db.query.users.findFirst({
@@ -35,4 +35,29 @@ export const selectUserWithCrowns = async (email: string) => {
     ...row.user,
     crowns: row.crowns ?? null,
   } satisfies User
+}
+
+export const selectUsers = async (
+  limit: number,
+  page: number,
+  search: string
+) => {
+  return db.query.users.findMany({
+    where: (users, { ilike }) => {
+      if (search) {
+        return ilike(users.nickname, `%${search}%`)
+      }
+
+      return undefined
+    },
+    limit,
+    offset: page * limit,
+  })
+}
+
+export const selectUsersCount = async (search: string) => {
+  return db
+    .select({ count: count() })
+    .from(users)
+    .where(ilike(users.nickname, `%${search}%`))
 }

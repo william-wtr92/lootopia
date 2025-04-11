@@ -1,5 +1,4 @@
-/* eslint-disable complexity */
-import { CHEST_REWARD_TYPES, type ArtifactRarityTier } from "@lootopia/common"
+import { CHEST_REWARD_TYPES, type ArtifactRarity } from "@lootopia/common"
 import {
   Button,
   Dialog,
@@ -44,7 +43,7 @@ const HuntRewardPill = (props: Props) => {
     refetch()
   }
 
-  const getRarityColor = (rarity: ArtifactRarityTier) => {
+  const getRarityColor = (rarity: ArtifactRarity) => {
     switch (rarity) {
       case "common":
         return "bg-white text-black"

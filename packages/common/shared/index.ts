@@ -1,10 +1,20 @@
 export * from "./global/status"
 export * from "./global/server"
 export * from "./global/position"
+export * from "./global/pagination"
 
 // Global types
 
-export { ROLES, type Roles, userSchema, type UserSchema } from "./users"
+export {
+  ROLES,
+  type Roles,
+  userSchema,
+  type UserSchema,
+  userNicknameSchema,
+  type UserNicknameSchema,
+  userSearchParamsSchema,
+  type UserSearchParamsSchema,
+} from "./users"
 
 // Features types
 
@@ -38,14 +48,11 @@ export {
 } from "./users/auth/passwordReset"
 
 // Hunts types
-
 export {
   huntSchema,
   type HuntSchema,
   combinedHuntSchema,
   type CombinedHuntSchema,
-  defaultLimit,
-  defaultPage,
   huntIdSchema,
   type HuntIdSchema,
   huntListQuerySchema,
@@ -75,8 +82,9 @@ export {
   type ArtifactSchema,
   artifactParamSchema,
   type ArtifactParamSchema,
+  artifactRarity,
   ARTIFACT_RARITY_TIERS,
-  type ArtifactRarityTier,
+  type ArtifactRarity,
 } from "./artifacts"
 
 export { getRarityFromAvailability } from "./artifacts/utils/getRarityFromAvailability"
@@ -88,3 +96,16 @@ export {
   DEFAULT_CROWN_AMOUNT,
   crownCosts,
 } from "./crowns"
+
+// Reports types
+export {
+  reportReasons,
+  type ReportReason,
+  reportStatus,
+  type ReportStatus,
+  ACCEPTED_ATTATCHMENT_FILE_TYPES,
+  reportSchema,
+  type ReportSchema,
+  reportListParamsSchema,
+  type ReportListParamsSchema,
+} from "./reports"

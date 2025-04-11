@@ -12,6 +12,11 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.config({ extends: ["@lootopia/eslint-config-client"] }),
+  {
+    rules: {
+      complexity: "off",
+    },
+  },
 ]
 
 export default eslintConfig

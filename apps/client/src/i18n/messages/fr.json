@@ -244,6 +244,16 @@
         "no-hunts-hint": "Il semble qu'il n'y ait aucune chasse au trésor disponible pour le moment. Revenez plus tard ou créez votre propre aventure !",
         "no-hunts-search": "Aucune chasse trouvée pour la recherche : ",
         "no-hunts-search-hint": "Il semble qu'il n'y ait aucune chasse au trésor correspondant à votre recherche. Essayez une autre recherche ou créez votre propre aventure !",
+        "update": {
+          "title": "Modifier la chasse",
+          "errors": {
+            "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+            "huntNotFound": "Chasse introuvable",
+            "huntEndDateEarlierThanStartDate": "La date de fin doit être postérieure à la date de début",
+            "notHuntOrganizer": "Vous n'êtes pas l'organisateur de cette chasse"
+          },
+          "success": "La chasse a été mise à jour avec succès !"
+        },
         "cta": {
           "create-a-hunt": "Créer une chasse",
           "load-more": "Charger plus",
@@ -254,6 +264,13 @@
     },
     "Users": {
       "Profile": {
+        "info": {
+          "role": {
+            "user": "Chasseur de trésors",
+            "admin": "Administrateur",
+            "partner": "Partenaire"
+          }
+        },
         "statistics": {
           "title": "Statistiques",
           "treasuresFound": "Trésors trouvés",
@@ -319,6 +336,24 @@
           "leaderboard": "Classement",
           "settings": "Paramètres"
         }
+      },
+      "UserProfile": {
+        "loading": "Chargement du profil utilisateur...",
+        "role": "Chasseur de trésors",
+        "joined": "Inscrit depuis le {date}",
+        "level": "Niveau {level}",
+        "tabs": {
+          "recentHunts": {
+            "trigger": "Chasses récentes",
+            "title": "Chasses récentes",
+            "subtitle": "Découvrez les dernières chasses au trésor complétées par {nickname}"
+          },
+          "artifacts": {
+            "trigger": "Artefacts",
+            "title": "Collection d'artefacts",
+            "subtitle": "Découvrez les artefacts collectés par {nickname}, classés par rareté"
+          }
+        }
       }
     }
   },
@@ -342,6 +377,172 @@
       "number": "Un chiffre",
       "special": "Un caractère spécial",
       "length": "Au moins 12 caractères"
+    },
+    "Users": {
+      "Reports": {
+        "ReportForm": {
+          "trigger": "Signaler",
+          "form": {
+            "title": "Signaler l'utilisateur : {nickname}",
+            "subtitle": "Veuillez fournir des détails sur la raison pour laquelle vous signalez cet utilisateur. Tous les signalements sont confidentiels.",
+            "reason": {
+              "placeholder": "Sélectionnez une raison",
+              "options": {
+                "inappropriate_behavior": "Comportement inapproprié",
+                "cheating": "Tricherie",
+                "harassment": "Harcèlement",
+                "impersonation": "Usurpation d'identité",
+                "other": "Autre"
+              },
+              "error": "Veuillez sélectionner une raison"
+            },
+            "description": {
+              "label": "Description",
+              "placeholder": "Fournissez une description détaillée du problème",
+              "error": "Veuillez fournir une description"
+            },
+            "attachment": {
+              "label": "Pièce jointe (Optionnel)",
+              "placeholder": "Joignez une capture d'écran ou un fichier (optionnel)",
+              "remove": "Supprimer",
+              "acceptedExtensions": "Formats acceptés : JPG, PNG, GIF, MP4, PDF (max 10 Mo)",
+              "error": "Type de fichier invalide"
+            },
+            "cta": {
+              "submit": "Envoyer le signalement",
+              "cancel": "Annuler"
+            }
+          },
+          "success": "Votre rapport a été soumis avec succès ! Notre équipe l'examinera et prendra les mesures qui s'imposent.",
+          "errors": {
+            "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+            "userReportedNotFound": "L'utilisateur que vous essayez de signaler n'existe pas",
+            "invalidExtension": "L'extension du fichier n'est pas valide"
+          }
+        },
+        "List": {
+          "ReportDialog": {
+            "title": "Mes signalements"
+          },
+          "ReportListSidebar": {
+            "placeholder": "Rechercher des signalements...",
+            "empty": "Aucun signalement trouvé pour \"{term}\""
+          },
+          "ReportListItem": {
+            "id": "ID: #{id}",
+            "status": {
+              "pending": "En attente",
+              "resolved": "Résolu",
+              "rejected": "Rejeté"
+            },
+            "reasons": {
+              "inappropriate_behavior": "Comportement inapproprié",
+              "cheating": "Tricherie",
+              "harassment": "Harcèlement",
+              "impersonation": "Usurpation d'identité",
+              "other": "Autre"
+            }
+          },
+          "ReportDetails": {
+            "noSelection": "Aucun signalement sélectionné",
+            "info": "Sélectionnez un signalement dans la liste pour voir ses détails."
+          },
+          "ReportDetailsTabs": {
+            "title": "Détails du signalement",
+            "tabs": {
+              "details": "Détails",
+              "users": "Utilisateurs",
+              "attachment": "Pièce jointe"
+            },
+            "content": {
+              "report": {
+                "reasons": {
+                  "label": "Raison du signalement :",
+                  "options": {
+                    "inappropriate_behavior": "Comportement inapproprié",
+                    "cheating": "Tricherie",
+                    "harassment": "Harcèlement",
+                    "impersonation": "Usurpation d'identité",
+                    "other": "Autre"
+                  }
+                },
+                "description": "Description :",
+                "createdAt": "Créé le :",
+                "updatedAt": "Dernière mise à jour :",
+                "status": {
+                  "title": "Statut :",
+                  "pending": "En attente",
+                  "resolved": "Résolu",
+                  "rejected": "Rejeté"
+                }
+              },
+              "reporter": {
+                "title": "Signalé par :",
+                "cta": {
+                  "profile": "Voir le profil"
+                }
+              },
+              "reported": {
+                "title": "Utilisateur signalé :",
+                "cta": {
+                  "profile": "Voir le profil"
+                }
+              },
+              "attachment": {
+                "title": "Pièce jointe :",
+                "cta": "Ouvrir dans un nouvel onglet"
+              },
+              "errors": {
+                "userNotAvailable": "Utilisateur non disponible"
+              }
+            }
+          }
+        }
+      },
+      "SearchCommand": {
+        "trigger": "Rechercher ( ⌘ + K )",
+        "placeholder": "Rechercher des utilisateurs...",
+        "empty": {
+          "title": "Aucun utilisateur trouvé",
+          "description": "Essayez un autre terme pour \"{term}\""
+        },
+        "group": {
+          "title": "Utilisateurs",
+          "users": {
+            "level": "Niveau. {level}"
+          }
+        },
+        "help": {
+          "title": "Rechercher des utilisateurs",
+          "description": "Trouvez des joueurs par nom, rôle ou localisation pour consulter leur profil et leurs statistiques",
+          "command": {
+            "escape": {
+              "trigger": "Échap",
+              "description": "pour fermer"
+            },
+            "arrows": {
+              "trigger": "↑ / ↓",
+              "description": "pour naviguer"
+            },
+            "enter": {
+              "trigger": "Entrée",
+              "description": "pour sélectionner"
+            }
+          }
+        },
+        "about": "Recherche propulsée par Lootopia"
+      },
+      "Profile": {
+        "ActionMenu": {
+          "title": "Actions",
+          "label": "Mon Compte",
+          "actions": {
+            "editProfile": "Editer mon profil",
+            "myReports": "Mes signalements",
+            "logout": "Déconnexion"
+          }
+        }
+      }
     },
     "Hunts": {
       "Map": {

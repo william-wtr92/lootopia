@@ -16,11 +16,11 @@ const containerClient = blobServiceClient.getContainerClient(container)
 
   serviceProperties.cors = [
     {
-      allowedOrigins: "http://localhost:3000",
+      allowedOrigins: appConfig.security.cors.origin,
       allowedMethods: "GET, POST, OPTIONS",
       allowedHeaders: "*",
       exposedHeaders: "*",
-      maxAgeInSeconds: 3600,
+      maxAgeInSeconds: appConfig.azure.maxAgeInSeconds,
     },
   ]
 

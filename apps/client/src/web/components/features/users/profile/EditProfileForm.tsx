@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import { zodResolver } from "@hookform/resolvers/zod"
 import { type Roles, type UpdateSchema, updateSchema } from "@lootopia/common"
 import {
@@ -8,7 +7,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   Form,
   FormControl,
   FormField,
@@ -20,7 +18,7 @@ import {
   useToast,
 } from "@lootopia/ui"
 import { useQuery } from "@tanstack/react-query"
-import { ArrowLeft, Edit, Save } from "lucide-react"
+import { ArrowLeft, Save } from "lucide-react"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
 import { useRef, useState, type ChangeEvent } from "react"
@@ -35,6 +33,8 @@ import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 type AvatarType = string | File | undefined
 
 type Props = {
+  open: boolean
+  setIsOpen: (open: boolean) => void
   user: {
     id: string
     email: string
@@ -47,7 +47,7 @@ type Props = {
 }
 
 const EditProfileForm = (props: Props) => {
-  const { user } = props
+  const { open, setIsOpen, user } = props
 
   const t = useTranslations("Pages.Users.Profile")
   const { toast } = useToast()
@@ -73,7 +73,6 @@ const EditProfileForm = (props: Props) => {
   })
   const { errors } = form.formState
 
-  const [isOpen, setIsOpen] = useState<boolean>(false)
   const [avatar, setAvatar] = useState<string | null>(user?.avatar)
   const [password, setPassword] = useState<string>("")
   const [showPasswordValidationStep, setShowPasswordValidationStep] =
@@ -163,14 +162,7 @@ const EditProfileForm = (props: Props) => {
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={handleIsOpen}>
-      <DialogTrigger asChild>
-        <Button variant={"secondary"}>
-          <Edit className="mr-2 h-4 w-4" />
-          {t("cta.editProfile")}
-        </Button>
-      </DialogTrigger>
-
+    <Dialog open={open} onOpenChange={handleIsOpen}>
       <DialogContent className="text-primary" size="xl">
         <DialogHeader>
           <DialogTitle className="text-center">
@@ -359,7 +351,7 @@ const EditProfileForm = (props: Props) => {
                     variant="secondary"
                     type="submit"
                   >
-                    <Save className="mr-2 h-4 w-4" /> {t("editModal.save")}
+                    <Save className="mr-2 size-4" /> {t("editModal.save")}
                   </Button>
                 </>
               ) : (
@@ -388,7 +380,7 @@ const EditProfileForm = (props: Props) => {
                     variant="secondary"
                     type="submit"
                   >
-                    <Save className="mr-2 h-4 w-4" /> {t("editModal.confirm")}
+                    <Save className="mr-2 size-4" /> {t("editModal.confirm")}
                   </Button>
                 </>
               )}
