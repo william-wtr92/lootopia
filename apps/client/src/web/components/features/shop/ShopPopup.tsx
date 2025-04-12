@@ -11,6 +11,7 @@ import StripeElements from "./StripeElements"
 import { Link } from "@client/i18n/routing"
 import { getCrownPackages } from "@client/web/services/shop/getCrownPackages"
 import { paymentCheckout } from "@client/web/services/shop/paymentCheckout"
+import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 type Props = {
   isOpen: boolean
@@ -43,8 +44,10 @@ const ShopPopup = ({ isOpen, onClose, currentCrowns }: Props) => {
 
       toast({
         variant: "destructive",
-        description: errorKey,
+        description: translateDynamicKey(t, `errors.${errorKey}`),
       })
+
+      return
     }
 
     if (typeof clientSecretOrErrorKey === "string") {
@@ -103,7 +106,7 @@ const ShopPopup = ({ isOpen, onClose, currentCrowns }: Props) => {
                     <div>
                       <h2 className="flex items-center text-3xl font-bold">
                         {t("title")}
-                        <Sparkles className="text-accent ml-2 h-6 w-6" />
+                        <Sparkles className="text-accent ml-2 size-6" />
                       </h2>
                       <p className="mt-1 text-lg opacity-90">
                         {t("description")}
@@ -112,7 +115,7 @@ const ShopPopup = ({ isOpen, onClose, currentCrowns }: Props) => {
 
                     <div className="flex items-center space-x-4">
                       <div className="flex items-center rounded-full bg-white/20 px-4 py-2">
-                        <Crown className="text-accent mr-2 h-5 w-5" />
+                        <Crown className="text-accent mr-2 size-5" />
                         <span className="font-bold">
                           {currentCrowns?.toLocaleString()}
                         </span>
@@ -123,7 +126,7 @@ const ShopPopup = ({ isOpen, onClose, currentCrowns }: Props) => {
                         className="rounded-full text-white hover:bg-white/20"
                         onClick={onClose}
                       >
-                        <X className="h-6 w-6" />
+                        <X className="size-6" />
                       </Button>
                     </div>
                   </div>
@@ -157,27 +160,27 @@ const ShopPopup = ({ isOpen, onClose, currentCrowns }: Props) => {
 
                   <div className="mt-8">
                     <h3 className="text-primary mb-4 flex items-center text-xl font-bold">
-                      <Gift className="text-accent mr-2 h-5 w-5" />
+                      <Gift className="text-accent mr-2 size-5" />
                       {t("specialOffers.title")}
                     </h3>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                       <SpecialOfferCard
                         title={t("specialOffers.first.title")}
                         description={t("specialOffers.first.description")}
-                        icon={<Star className="text-accent h-10 w-10" />}
+                        icon={<Star className="text-accent size-10" />}
                         color="bg-gradient-to-r from-amber-500 to-orange-600"
                       />
                       <SpecialOfferCard
                         title={t("specialOffers.flash.title")}
                         description={t("specialOffers.flash.description")}
-                        icon={<Crown className="text-accent h-10 w-10" />}
+                        icon={<Crown className="text-accent size-10" />}
                         color="bg-gradient-to-r from-purple-500 to-pink-600"
                       />
                     </div>
                   </div>
 
                   <div className="bg-primary/10 mt-8 flex items-start gap-3 rounded-lg p-4">
-                    <Info className="text-primary mt-0.5 h-5 w-5 flex-shrink-0" />
+                    <Info className="text-primary mt-0.5 size-5 flex-shrink-0" />
                     <div className="text-primary text-sm">
                       <p className="mb-1 font-semibold">{t("about.title")}</p>
                       <p>{t("about.description")}</p>

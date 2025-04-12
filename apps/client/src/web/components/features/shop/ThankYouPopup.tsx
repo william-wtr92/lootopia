@@ -74,8 +74,8 @@ const ThankYouPopup = ({ isOpen, onClose, crownPackage }: Props) => {
                     initial="initial"
                     animate="animate"
                   >
-                    <div className="bg-accent text-primary flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold shadow-lg">
-                      <Crown className="h-4 w-4" />
+                    <div className="bg-accent text-primary flex size-8 items-center justify-center rounded-full text-xs font-bold shadow-lg">
+                      <Crown className="size-4" />
                     </div>
                   </motion.div>
                 ))}
@@ -85,14 +85,14 @@ const ThankYouPopup = ({ isOpen, onClose, crownPackage }: Props) => {
             <div className="from-primary to-secondary bg-gradient-to-r p-4 text-white">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <CheckCircle className="text-accent mr-2 h-6 w-6" />
+                  <CheckCircle className="text-accent mr-2 size-6" />
                   <h2 className="text-xl font-bold">{t("title")}</h2>
                 </div>
                 <button
                   onClick={onClose}
                   className="hover:text-accent text-white transition-colors"
                 >
-                  <X className="h-5 w-5" />
+                  <X className="size-5" />
                 </button>
               </div>
             </div>
@@ -100,12 +100,12 @@ const ThankYouPopup = ({ isOpen, onClose, crownPackage }: Props) => {
             <div className="p-6">
               <div className="mb-6 flex justify-center">
                 <motion.div
-                  className="bg-primary flex h-24 w-24 items-center justify-center rounded-full"
+                  className="bg-primary flex size-24 items-center justify-center rounded-full"
                   variants={giftIconVariant}
                   initial="initial"
                   animate="animate"
                 >
-                  <Gift className="text-accent h-12 w-12" />
+                  <Gift className="text-accent size-12" />
                 </motion.div>
               </div>
 
@@ -134,7 +134,7 @@ const ThankYouPopup = ({ isOpen, onClose, crownPackage }: Props) => {
 
                   {(crownPackage?.bonus ?? 0) > 0 && (
                     <div className="flex items-center justify-center gap-2">
-                      <Sparkles className="text-secondary h-4 w-4" />
+                      <Sparkles className="text-secondary size-4" />
                       <span className="text-secondary text-sm font-medium">
                         {t("bonus", {
                           bonus: crownPackage.bonus,

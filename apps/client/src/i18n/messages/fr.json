@@ -763,6 +763,11 @@
           "disclaimer": "Les couronnes sont utilisées pour les fonctionnalités premium et les chasses exclusives. Tous les achats sont définitifs. Consultez nos",
           "link": "Conditions d'Utilisation",
           "more": "pour plus de détails."
+        },
+        "errors": {
+          "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+          "crownPackageNotFound": "Le pack de couronnes n'existe pas",
+          "crownPackageStripeError": "Une erreur s'est produite lors de la création de l'intention de paiement. Veuillez réessayer."
         }
       },
       "Card": {

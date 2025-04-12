@@ -38,7 +38,7 @@ const StripeElements = ({ clientSecret, onClose }: Props) => {
 
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <Crown className="text-accent mr-2 h-6 w-6" />
+              <Crown className="text-accent mr-2 size-6" />
               <h2 className="text-xl font-bold">{t("title")}</h2>
             </div>
 
@@ -47,7 +47,7 @@ const StripeElements = ({ clientSecret, onClose }: Props) => {
                 onClick={onClose}
                 className="rounded-full p-1 text-white transition-colors hover:bg-white/20"
               >
-                <X className="h-5 w-5" />
+                <X className="size-5" />
               </button>
             )}
           </div>

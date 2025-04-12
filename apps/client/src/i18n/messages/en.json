@@ -763,6 +763,11 @@
           "disclaimer": "Crowns are used for premium features and exclusive hunts. All purchases are final. See our",
           "link": "Terms of Use",
           "more": "for more details."
+        },
+        "errors": {
+          "userNotFound": "You are not authorized to perform this action",
+          "crownPackageNotFound": "The crown package does not exist",
+          "crownPackageStripeError": "An error occurred while creating the payment intent. Please try again."
         }
       },
       "Card": {
