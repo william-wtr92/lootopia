@@ -8,10 +8,14 @@ export const useInitCookieConsent = () => {
   const setIsVisible = useCookieConsentStore((state) => state.setIsVisible)
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true)
-    }, 1000)
+    const storedConsent = localStorage.getItem("cookie-consent")
 
-    return () => clearTimeout(timer)
+    if (!storedConsent) {
+      const timer = setTimeout(() => {
+        setIsVisible(true)
+      }, 1000)
+
+      return () => clearTimeout(timer)
+    }
   }, [setIsVisible])
 }
