@@ -11,6 +11,7 @@ export const redisKeys = {
     passwordReset: (token: string) => `auth:password-reset:${token}`,
     passwordResetCooldown: (email: string) =>
       `auth:password-reset-cooldown:${email}`,
+    mfaSession: (mfaSessionId: string) => `mfa:session:${mfaSessionId}`,
   },
   users: {
     nicknameUpdateCooldown: (userId: string) =>

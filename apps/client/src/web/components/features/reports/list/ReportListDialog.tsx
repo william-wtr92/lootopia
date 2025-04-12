@@ -88,7 +88,7 @@ const ReportListDialog = ({ open, setIsOpen }: Props) => {
 
   return (
     <Dialog open={open} onOpenChange={setIsOpen}>
-      <DialogContent className="border-primary bg-primaryBg h-[60vh] max-w-4xl overflow-hidden p-0">
+      <DialogContent className="border-primary bg-primaryBg h-[60vh] max-w-4xl overflow-hidden">
         <div className="flex h-full flex-col">
           <div className="border-primary from-primary to-secondary flex items-center justify-between border-b bg-gradient-to-r p-6">
             <DialogTitle className="flex items-center text-white">

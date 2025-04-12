@@ -435,7 +435,7 @@
           },
           "ReportListSidebar": {
             "placeholder": "Rechercher des signalements...",
-            "empty": "Aucun signalement trouvé pour \"{term}\""
+            "empty": "Aucun signalement trouvé"
           },
           "ReportListItem": {
             "id": "ID: #{id}",
@@ -549,7 +549,75 @@
             "editProfile": "Editer mon profil",
             "myReports": "Mes signalements",
             "myPayments": "Mes paiements",
-            "logout": "Déconnexion"
+            "logout": "Déconnexion",
+            "activateMfa": "Activer l'A2F",
+            "deactivateMfa": "Désactiver l'A2F"
+          }
+        },
+        "Mfa": {
+          "MfaVerificationForm": {
+            "title": "Authentification à deux facteurs",
+            "description": "Veuillez entrer le code à 6 chiffres généré par <br></br> votre application d'authentification",
+            "form": {
+              "token": {
+                "label": "Code d'authentification"
+              },
+              "cta": {
+                "verify": "Vérifier"
+              }
+            },
+            "success": "Vous êtes connecté !",
+            "errors": {
+              "mfaSessionExpired": "Votre session a expiré. Veuillez vous reconnecter",
+              "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+              "mfaInvalidToken": "Code invalide. Veuillez vérifier votre application d'authentification et réessayer"
+            }
+          },
+          "MfaForm": {
+            "form": {
+              "token": {
+                "label": "Code d'authentification",
+                "placeholder": "123456"
+              }
+            }
+          },
+          "MfaDeactivationDialog": {
+            "title": "Désactiver l'A2F",
+            "alert": {
+              "title": "Avertissement de sécurité",
+              "description": "Désactiver l'authentification à deux facteurs rendra votre compte plus vulnérable. Nous vous recommandons de conserver cette sécurité supplémentaire activée."
+            },
+            "cta": {
+              "cancel": "Annuler",
+              "submit": "Désactiver"
+            },
+            "success": "L'authentification à deux facteurs a été désactivée avec succès !",
+            "errors": {
+              "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+              "mfaAlreadyDisabled": "L'authentification à deux facteurs est déjà désactivée",
+              "mfaInvalidToken": "Code invalide. Veuillez vérifier votre application d'authentification et réessayer"
+            }
+          },
+          "MfaActivationDialog": {
+            "title": "Activer l'A2F",
+            "qrcode": {
+              "info": "Scannez ce code QR avec votre application d'authentification (Google Authenticator, Authy, etc.)",
+              "cta": {
+                "continue": "Continuer"
+              }
+            },
+            "verify": {
+              "cta": {
+                "back": "Retour",
+                "activate": "Activer"
+              }
+            },
+            "errors": {
+              "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+              "mfaNotEnabled": "L'authentification à deux facteurs n'est pas activée",
+              "mfaInvalidToken": "Code invalide. Veuillez vérifier votre application d'authentification et réessayer"
+            },
+            "success": "L'authentification à deux facteurs a été activée avec succès !"
           }
         }
       }
@@ -703,9 +771,9 @@
           "crownsExtension": " couronnes",
           "rarities": {
             "common": "Commun",
-            "uncommon": "Peu commun", 
+            "uncommon": "Peu commun",
             "rare": "Rare",
-            "epic": "Épique", 
+            "epic": "Épique",
             "legendary": "Légendaire"
           },
           "cta": {
@@ -816,7 +884,7 @@
         },
         "PaymentList": {
           "empty": {
-            "title": "Aucune de transactions trouvées pour {term}",
+            "title": "Aucune de transactions trouvées",
             "description": "Essayez de modifier vos critères de recherche"
           },
           "package": {
@@ -846,7 +914,7 @@
         },
         "PaymentListExporter": {
           "transactions": "transactions trouvées",
-            "errors": {
+          "errors": {
             "waitBeforeExportPayments": "L'exportation des paiements est limitée à une fois toutes les 24 heures."
           },
           "cta": {

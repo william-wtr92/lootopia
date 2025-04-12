@@ -132,7 +132,7 @@ const HuntPage = ({ huntId }: Props) => {
   }
 
   const handleDraftSave = () => {
-    router.push(routes.hunts.list)
+    router.push(routes.hunts.drafts)
   }
 
   const handleSubmitAll = async () => {

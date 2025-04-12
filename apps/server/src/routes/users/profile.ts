@@ -46,7 +46,7 @@ export const profileRoute = app
     }
 
     return c.json(
-      { result: sanitizeUser(user, ["role", "avatar"]) },
+      { result: sanitizeUser(user, ["role", "avatar", "mfaEnabled"]) },
       SC.success.OK
     )
   })

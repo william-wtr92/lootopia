@@ -163,7 +163,7 @@ const EditProfileForm = (props: Props) => {
 
   return (
     <Dialog open={open} onOpenChange={handleIsOpen}>
-      <DialogContent className="text-primary" size="xl">
+      <DialogContent className="text-primary p-6" size="xl">
         <DialogHeader>
           <DialogTitle className="text-center">
             {!showPasswordValidationStep

@@ -53,3 +53,31 @@ export const updatePassword = async (
     })
     .where(eq(users.email, email))
 }
+
+export const updateMFASecret = async (email: string, secret: string) => {
+  return db
+    .update(users)
+    .set({
+      mfaSecret: secret,
+    })
+    .where(eq(users.email, email))
+}
+
+export const updateMFAEnable = async (email: string) => {
+  return db
+    .update(users)
+    .set({
+      mfaEnabled: true,
+    })
+    .where(eq(users.email, email))
+}
+
+export const updateMFADisable = async (email: string) => {
+  return db
+    .update(users)
+    .set({
+      mfaEnabled: false,
+      mfaSecret: null,
+    })
+    .where(eq(users.email, email))
+}
