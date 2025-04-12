@@ -10,6 +10,7 @@ import TanStackProvider from "@client/providers/TanstackProvider"
 import Footer from "@client/web/components/layout/Footer"
 import Navbar from "@client/web/components/layout/Navbar"
 import TreasureMapBackground from "@client/web/components/layout/TreasureMapBackground"
+import CookieConsent from "@client/web/components/utils/cookies/CookieConsent"
 
 export const fredoka = Fredoka({
   variable: "--font-fredoka",
@@ -38,6 +39,8 @@ export default async function LocaleLayout({
               {children}
               <Toaster />
               <Footer />
+
+              <CookieConsent />
             </TanStackProvider>
           </IntlClientProvider>
         </NuqsAdapter>

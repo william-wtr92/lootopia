@@ -20,7 +20,7 @@ import anim from "@client/web/utils/anim"
 import { formatCrowns } from "@client/web/utils/helpers/formatCrowns"
 
 const Navbar = () => {
-  const t = useTranslations("Components.NavBar")
+  const t = useTranslations("Components.Utils.Layout.NavBar")
 
   const { scrollY } = useScroll()
   const token = useAuthStore((state) => state.token)

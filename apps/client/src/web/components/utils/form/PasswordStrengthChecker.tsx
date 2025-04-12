@@ -11,7 +11,7 @@ type Props = {
 }
 
 const PasswordStrengthChecker = ({ passwordStrength }: Props) => {
-  const t = useTranslations("Components.PasswordStrengthChecker")
+  const t = useTranslations("Components.Utils.Helpers.PasswordStrengthChecker")
 
   return (
     <div className="mt-2 space-y-1">

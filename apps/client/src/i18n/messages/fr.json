@@ -367,25 +367,59 @@
     }
   },
   "Components": {
-    "SelectLocale": {
-      "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 Français} other {Unknown}}"
-    },
-    "NavBar": {
-      "title": "Lootopia",
-      "register": "S'inscrire",
-      "login": "Connexion",
-      "profile": "Profil",
-      "hunts": "Chasses"
-    },
-    "Footer": {
-      "content": "{year} Lootopia. Tous droits réservés."
-    },
-    "PasswordStrengthChecker": {
-      "uppercase": "Une lettre majuscule",
-      "lowercase": "Une lettre minuscule",
-      "number": "Un chiffre",
-      "special": "Un caractère spécial",
-      "length": "Au moins 12 caractères"
+    "Utils": {
+      "Layout": {
+        "NavBar": {
+          "title": "Lootopia",
+          "register": "S'inscrire",
+          "login": "Connexion",
+          "profile": "Profil",
+          "hunts": "Chasses"
+        },
+        "Footer": {
+          "content": "{year} Lootopia. Tous droits réservés."
+        }
+      },
+      "Helpers": {
+        "SelectLocale": {
+          "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 Français} other {Unknown}}"
+        },
+        "PasswordStrengthChecker": {
+          "uppercase": "Une lettre majuscule",
+          "lowercase": "Une lettre minuscule",
+          "number": "Un chiffre",
+          "special": "Un caractère spécial",
+          "length": "Au moins 12 caractères"
+        },
+        "CookieConsent": {
+          "title": "Trésors de navigation",
+          "description": "Lootopia utilise des cookies pour améliorer votre expérience de chasse au trésor. Choisissez quels types de cookies vous souhaitez accepter.",
+          "cta": {
+            "accept": "Tout accepter",
+            "personalize": "Personnaliser",
+            "reject": "Refuser",
+            "save": "Enregistrer mes préférences"
+          },
+          "options": {
+            "necessary": {
+              "title": "Nécessaires",
+              "description": "Ces cookies sont essentiels au fonctionnement du site."
+            },
+            "functional": {
+              "title": "Fonctionnels",
+              "description": "Ces cookies permettent d'améliorer les fonctionnalités et la personnalisation."
+            },
+            "analytics": {
+              "title": "Analytiques",
+              "description": "Ces cookies nous aident à comprendre comment les visiteurs interagissent avec le site."
+            },
+            "marketing": {
+              "title": "Publicitaires",
+              "description": "Ces cookies sont utilisés pour vous proposer des publicités pertinentes."
+            }
+          }
+        }
+      }
     },
     "Users": {
       "Reports": {
