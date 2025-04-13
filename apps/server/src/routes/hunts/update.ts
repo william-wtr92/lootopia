@@ -15,7 +15,7 @@ import { Hono } from "hono"
 const app = new Hono()
 
 export const updateHuntRoute = app.put(
-  "/:huntId",
+  "/update/:huntId",
   zValidator("param", huntIdSchema),
   zValidator("json", huntSchema),
   async (c) => {

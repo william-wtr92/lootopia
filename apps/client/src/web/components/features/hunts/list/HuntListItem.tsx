@@ -10,18 +10,13 @@ import {
 } from "@lootopia/ui"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { AnimatePresence } from "framer-motion"
-import {
-  Award,
-  ChevronRight,
-  Clock,
-  MapPin,
-  PencilRuler,
-  Users,
-} from "lucide-react"
+import { Award, ChevronRight, Clock, MapPin, Users } from "lucide-react"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
+import HuntListItemActions from "./HuntListItemActions"
+import HuntListItemBadges from "./HuntListItemBadges"
 import HuntRewardPill from "./rewards/HuntRewardPill"
 import { config } from "@client/env"
 import HuntForm from "@client/web/components/features/hunts/form/HuntForm"
@@ -46,7 +41,7 @@ const mapHeight = 300
 const HuntListItem = (props: Props) => {
   const { hunt, huntFilterType } = props
 
-  const t = useTranslations("Components.Hunts.ListItem")
+  const t = useTranslations("Components.Hunts.List.ListItem")
 
   const { toast } = useToast()
   const qc = useQueryClient()
@@ -56,13 +51,13 @@ const HuntListItem = (props: Props) => {
     queryFn: () => getUserLoggedIn(),
   })
 
+  const isOrganizer = hunt.organizerId === user?.id
+
   const [map, setMap] = useState<L.Map | null>(null)
   const [isDeployed, setIsDeployed] = useState(false)
   const [showUpdateForm, setShowUpdateForm] = useState(false)
 
   const hiddenRewards = hunt.chests.slice(1)
-
-  const isOrganizer = hunt.organizerId === user?.id
 
   const handleIsDeployed = () => {
     setIsDeployed((prev) => !prev)
@@ -114,9 +109,13 @@ const HuntListItem = (props: Props) => {
 
           <div className="flex-1 space-y-3">
             <div className="space-y-2">
-              <h1 className="text-primary text-xl font-semibold">
-                {hunt.name}
-              </h1>
+              <div className="flex items-center gap-2">
+                <h1 className="text-primary text-xl font-semibold">
+                  {hunt.name}
+                </h1>
+
+                <HuntListItemBadges hunt={hunt} isOrganizer={isOrganizer} />
+              </div>
               <span className="text-secondary text-md">{hunt.description}</span>
             </div>
 
@@ -133,8 +132,9 @@ const HuntListItem = (props: Props) => {
                 {formatDate(hunt.startDate) + " - " + formatDate(hunt.endDate)}
               </span>
 
-              <span>
+              <span className="flex items-center gap-1">
                 <Users size={24} className="text-accent inline-block" />{" "}
+                {hunt.participantCount} /{" "}
                 {hunt.maxParticipants ? hunt.maxParticipants : "∞"}
               </span>
 
@@ -159,16 +159,11 @@ const HuntListItem = (props: Props) => {
             </div>
           </div>
 
-          {isOrganizer && (
-            <PencilRuler
-              size={26}
-              className="text-accent hover:text-primary duration-300"
-              onClick={(e) => {
-                e.stopPropagation()
-                handleShowUpdateForm()
-              }}
-            />
-          )}
+          <HuntListItemActions
+            hunt={hunt}
+            isOrganizer={isOrganizer}
+            onShowUpdateForm={handleShowUpdateForm}
+          />
 
           <ChevronRight
             size={32}

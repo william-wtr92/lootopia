@@ -10,14 +10,12 @@ import { getPaymentStatusColor } from "@client/web/utils/def/colors"
 import { formatDate } from "@client/web/utils/helpers/formatDate"
 
 type Props = {
-  inputValue: string
   filteredPayments: PaymentResponse[]
   listContainerRef: React.RefObject<HTMLDivElement | null>
   listRef: React.RefObject<HTMLDivElement | null>
 }
 
 const PaymentList = ({
-  inputValue,
   filteredPayments,
   listContainerRef,
   listRef,
@@ -42,11 +40,7 @@ const PaymentList = ({
       {filteredPayments.length === 0 ? (
         <div className="flex h-64 flex-col items-center justify-center p-6 text-center">
           <Receipt className="text-primary mb-4 size-12 opacity-30" />
-          <p className="text-secondary font-medium">
-            {t("empty.title", {
-              term: inputValue,
-            })}
-          </p>
+          <p className="text-secondary font-medium">{t("empty.title")}</p>
           <p className="text-primary mt-2 text-sm">{t("empty.description")}</p>
         </div>
       ) : (

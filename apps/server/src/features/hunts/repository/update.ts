@@ -37,9 +37,9 @@ export const updateHunt = async (hunt: Hunt, updatedHunt: HuntSchema) => {
         new Date(updatedHunt.endDate)
       ),
       ...getUpdateValue<Hunt>(
-        updatedHunt.mode !== hunt.mode,
-        "mode",
-        updatedHunt.mode
+        updatedHunt.public !== hunt.public,
+        "public",
+        updatedHunt.public
       ),
       ...getUpdateValue<Hunt>(
         updatedHunt.maxParticipants !== hunt.maxParticipants,

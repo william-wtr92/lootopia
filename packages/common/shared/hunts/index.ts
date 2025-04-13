@@ -12,7 +12,7 @@ export const huntSchema = z.object({
   endDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
     message: "End date must be a valid date.",
   }),
-  mode: z.boolean().default(true),
+  public: z.boolean().default(true),
   maxParticipants: z
     .number()
     .int()

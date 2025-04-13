@@ -1,7 +1,7 @@
 import type { UpdateUser } from "@lootopia/common"
 import { users } from "@lootopia/drizzle"
 import { db } from "@server/utils/clients/postgres"
-import { eq } from "drizzle-orm"
+import { eq, sql } from "drizzle-orm"
 
 export const updateUser = async (
   data: UpdateUser,
@@ -18,7 +18,7 @@ export const updateUser = async (
       birthdate: new Date(data.birthdate!),
       passwordHash,
       passwordSalt,
-      updatedAt: new Date(),
+      updatedAt: sql`NOW()`,
     })
     .where(eq(users.email, data.email))
 }

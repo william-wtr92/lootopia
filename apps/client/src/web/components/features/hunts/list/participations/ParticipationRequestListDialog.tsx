@@ -1,37 +1,43 @@
 import { defaultPage } from "@lootopia/common"
 import { Button, Dialog, DialogContent, DialogTitle, Input } from "@lootopia/ui"
-import { useInfiniteQuery, keepPreviousData } from "@tanstack/react-query"
-import { Loader2, Receipt, Search, X } from "lucide-react"
+import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query"
+import { ListPlus, Loader2, Search, X } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useRef, useState } from "react"
 
-import PaymentList from "./PaymentList"
-import PaymentListExporter from "./PaymentListExporter"
+import ParticipationRequestList from "./ParticipationRequestList"
 import { usePaginationObserver } from "@client/web/hooks/usePaginationObserver"
+import type { HuntResponse } from "@client/web/services/hunts/getHunts"
 import {
-  getUserPaymentList,
-  type PaymentResponse,
-} from "@client/web/services/shop/getUserPaymentList"
+  type RequestResponse,
+  getParticipationRequestList,
+} from "@client/web/services/participations/getParticipationRequestList"
 
 type Props = {
   open: boolean
   setIsOpen: (open: boolean) => void
+  hunt: HuntResponse
 }
 
-const PaymentListDialog = ({ open, setIsOpen }: Props) => {
-  const t = useTranslations("Components.Shop.List.PaymentListDialog")
+const ParticipationRequestListDialog = ({ open, setIsOpen, hunt }: Props) => {
+  const t = useTranslations(
+    "Components.Hunts.List.Participations.ParticipationRequestListDialog"
+  )
 
   const [inputValue, setInputValue] = useState("")
   const inputRef = useRef<HTMLInputElement>(null)
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isFetching } =
     useInfiniteQuery({
-      queryKey: ["payments", inputValue],
+      queryKey: ["requests", inputValue],
       queryFn: ({ pageParam = defaultPage }) =>
-        getUserPaymentList({
-          search: inputValue,
-          page: pageParam.toString(),
-        }),
+        getParticipationRequestList(
+          { huntId: hunt.id },
+          {
+            search: inputValue,
+            page: pageParam.toString(),
+          }
+        ),
       getNextPageParam: (lastPage, allPages) => {
         if (!lastPage) {
           return undefined
@@ -57,8 +63,8 @@ const PaymentListDialog = ({ open, setIsOpen }: Props) => {
   })
 
   const count = data?.pages[0]?.count || 0
-  const filteredPayments = (data?.pages.flatMap((page) => page?.result) ??
-    []) as PaymentResponse[]
+  const filteredRequests = (data?.pages.flatMap((page) => page?.result) ??
+    []) as RequestResponse[]
 
   const handleSetValue = (query: string) => {
     setInputValue(query)
@@ -84,9 +90,11 @@ const PaymentListDialog = ({ open, setIsOpen }: Props) => {
       <DialogContent className="border-primary bg-primaryBg h-[60vh] max-w-4xl overflow-hidden">
         <div className="flex h-full flex-col">
           <div className="border-primary/20 from-primary to-secondary flex items-center justify-between border-b bg-gradient-to-r px-4 py-3">
-            <DialogTitle className="flex items-center text-white">
-              <Receipt className="text-accent mr-2 size-5" />
-              {t("title")}
+            <DialogTitle className="flex items-center gap-2 text-white">
+              <ListPlus className="text-accent mr-2 size-5" />
+              {t("title", {
+                huntName: hunt.name,
+              })}
             </DialogTitle>
             <Button
               variant="ghost"
@@ -104,7 +112,7 @@ const PaymentListDialog = ({ open, setIsOpen }: Props) => {
               <Input
                 ref={inputRef}
                 type="text"
-                placeholder={t("search")}
+                placeholder={t("searchPlaceholder")}
                 className="text-primary placeholder:text-primary/50 w-full border-none bg-transparent shadow-none focus-visible:ring-0"
                 value={inputValue}
                 onChange={(e) => handleSetValue(e.target.value)}
@@ -126,17 +134,22 @@ const PaymentListDialog = ({ open, setIsOpen }: Props) => {
             </div>
           </div>
 
-          <PaymentList
-            filteredPayments={filteredPayments}
+          <ParticipationRequestList
+            filteredRequests={filteredRequests}
             listContainerRef={listContainerRef}
             listRef={listRef}
+            huntId={hunt.id}
           />
 
-          <PaymentListExporter count={count} />
+          <div className="border-primary/20 bg-primaryBg flex h-16 items-center border-t px-4">
+            <div className="text-primary text-md flex items-center gap-1">
+              <span className="font-medium">{count}</span>
+              <span className="text-primary/50">{t("pendingRequests")}</span>
+            </div>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
   )
 }
-
-export default PaymentListDialog
+export default ParticipationRequestListDialog

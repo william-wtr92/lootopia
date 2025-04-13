@@ -65,7 +65,7 @@ const HuntForm = ({ onSubmit, mode = "draft", updateHunt }: Props) => {
       startDate: activeHunt()?.startDate ?? "",
       endDate: activeHunt()?.endDate ?? "",
       maxParticipants: activeHunt()?.maxParticipants ?? undefined,
-      mode: activeHunt()?.mode ?? true,
+      public: activeHunt()?.public ?? true,
     },
   })
 
@@ -261,7 +261,7 @@ const HuntForm = ({ onSubmit, mode = "draft", updateHunt }: Props) => {
 
         <FormField
           control={form.control}
-          name="mode"
+          name="public"
           render={({ field }) => (
             <FormItem className="border-primary flex w-full items-center justify-between rounded-lg border p-4 shadow-md">
               <FormDescription className="text-md flex gap-1">

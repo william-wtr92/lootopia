@@ -20,7 +20,7 @@ export const insertHuntWithChests = async (
         city: huntData.city,
         startDate,
         endDate,
-        mode: huntData.mode,
+        public: huntData.public,
         maxParticipants: huntData.maxParticipants,
         organizerId,
       })

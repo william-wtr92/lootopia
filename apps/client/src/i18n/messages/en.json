@@ -813,17 +813,126 @@
           "cta": {
             "close": "Close"
           }
-        }
-      },
-      "ListItem": {
-        "title": "Update hunt",
-        "errors": {
-          "userNotFound": "You are not authorized to perform this action",
-          "huntNotFound": "Hunt not found",
-          "huntEndDateEarlierThanStartDate": "The end date must be later than the start date",
-          "notHuntOrganizer": "You are not the organizer of this hunt"
         },
-        "success": "The hunt has been updated successfully!"
+        "ListItem": {
+          "title": "Update hunt",
+          "errors": {
+            "userNotFound": "You are not authorized to perform this action",
+            "huntNotFound": "Hunt not found",
+            "huntEndDateEarlierThanStartDate": "The end date must be later than the start date",
+            "notHuntOrganizer": "You are not the organizer of this hunt"
+          },
+          "success": "The hunt has been updated successfully!"
+        },
+        "ListItemActions": {
+          "tooltip": {
+            "info": "Manage participation requests",
+            "max": "+99"
+          },
+          "cta": {
+            "leave": "Leave",
+            "pending": "Pending",
+            "join": "Join",
+            "request": "Request"
+          }
+        },
+        "ListItemBadges": {
+          "tooltip": {
+            "private": {
+              "title": "Private",
+              "description": "This hunt is private, you need to send a request to join."
+            },
+            "public": {
+              "title": "Public",
+              "description": "This hunt is public, you can join it directly."
+            }
+          },
+          "badges": {
+            "toCome": "To come",
+            "ongoing": "Ongoing",
+            "organizer": "Organizer"
+          }
+        },
+        "Participations": {
+          "ParticipationRequestListDialog": {
+            "title": "Manage participation requests for your treasure hunt \"{huntName}\"",
+            "searchPlaceholder": "Search by users nickname...",
+            "pendingRequests": "pending requests"
+          },
+          "ParticipationRequestList": {
+            "empty": "No pending requests",
+            "info": {
+              "received": "Received: {date}"
+            },
+            "actions": {
+              "accept": {
+                "success": "The user request has been accepted!",
+                "errors": {
+                  "userNotFound": "You are not authorized to perform this action",
+                  "huntNotFound": "Hunt not found",
+                  "userIsNotOrganizerOfHunt": "You are not the organizer of this hunt",
+                  "participationRequestNotFound": "The participation request does not exist",
+                  "userRequestingNotHaveEnoughCrowns": "The user does not have enough crowns to join the hunt"
+                }
+              },
+              "reject": {
+                "success": "The user request has been rejected!",
+                "errors": {
+                  "userNotFound": "You are not authorized to perform this action",
+                  "huntNotFound": "Hunt not found",
+                  "userIsNotOrganizerOfHunt": "You are not the organizer of this hunt",
+                  "participationRequestNotFound": "The participation request does not exist"
+                }
+              }
+            }
+          },
+          "ParticipationRequestDialog": {
+            "title": "Apply to participate",
+            "description": "Would you like to join this private treasure hunt? <br></br> Your request will be reviewed by the hunt creator. If it is rejected, please wait 24 hours before submitting a new request.",
+            "cta": {
+              "cancel": "Cancel",
+              "submit": "Request to join"
+            },
+            "success": "You have successfully sent a request to join the hunt!",
+            "errors": {
+              "userNotFound": "You are not authorized to perform this action",
+              "huntNotFound": "Hunt not found",
+              "organizerCannotBeParticipant": "You cannot join your own hunt",
+              "cannotRequestOnPublicHunt": "You cannot send a request to join a public hunt",
+              "cannotResendRequestYet": "You cannot send a new request yet. Please wait 24 hours before sending another request.",
+              "participationAlreadyExists": "You are already a participant in this hunt"
+            }
+          },
+          "ParticipateDialog": {
+            "title": "Join the hunt",
+            "description": "Would you like to join this treasure hunt? You will be able to see all the details and participate in the adventure.",
+            "cta": {
+              "cancel": "Cancel",
+              "submit": "Join"
+            },
+            "success": "You have successfully joined the hunt!",
+            "errors": {
+              "userNotFound": "You are not authorized to perform this action",
+              "huntNotFound": "Hunt not found",
+              "organizerCannotBeParticipant": "You cannot join your own hunt",
+              "cannotJoinPrivateHuntDirectly": "You cannot join a private hunt directly. Please send a request to the organizer.",
+              "huntIsFull": "The hunt is full, you cannot join it"
+            }
+          },
+          "DeleteParticipationDialog": {
+            "title": "Leave the hunt",
+            "description": "Do you want to withdraw your participation from this treasure hunt? You will no longer be able to see the hunt details and will no longer participate in the adventure. <br></br> <strong>You will also lose the 50 crowns you spent to participate.</strong>",
+            "cta": {
+              "cancel": "Cancel",
+              "submit": "Withdraw my participation"
+            },
+            "success": "You have successfully withdrawn your participation from the hunt!",
+            "errors": {
+              "userNotFound": "You are not authorized to perform this action",
+              "huntNotFound": "Hunt not found"
+            }
+          }
+        }
       }
     },
     "Artifacts": {

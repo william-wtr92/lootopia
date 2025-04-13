@@ -16,7 +16,7 @@ export const updateHuntCrownsTransaction = async (
       .update(crowns)
       .set({
         amount: sql`${crowns.amount} - ${amount}`,
-        updatedAt: new Date(),
+        updatedAt: sql`NOW()`,
       })
       .where(eq(crowns.userId, userId))
 

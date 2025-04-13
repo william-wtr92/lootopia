@@ -141,3 +141,13 @@ export {
 } from "./shop/payments"
 
 export { calculateDiscountedPrice } from "./shop/utils/calculateDiscountedPrice"
+
+// Participations types
+export {
+  participationRequestStatus,
+  type ParticipationRequestStatus,
+  participationRequestsParamsSchema,
+  type ParticipationRequestsParamsSchema,
+  participationRequestIds,
+  type ParticipationRequestIds,
+} from "./participations"
