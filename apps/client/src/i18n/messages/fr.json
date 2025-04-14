@@ -872,7 +872,8 @@
                   "huntNotFound": "Chasse introuvable",
                   "userIsNotOrganizerOfHunt": "Vous n'êtes pas l'organisateur de cette chasse",
                   "participationRequestNotFound": "La demande de participation n'existe pas",
-                  "userRequestingNotHaveEnoughCrowns": "L'utilisateur n'a pas assez de couronnes pour rejoindre la chasse"
+                  "userRequestingNotHaveEnoughCrowns": "L'utilisateur n'a pas assez de couronnes pour rejoindre la chasse",
+                  "huntIsFull": "La chasse est complète, vous ne pouvez pas accepter cette demande"
                 }
               },
               "reject": {
@@ -900,7 +901,8 @@
               "organizerCannotBeParticipant": "Vous ne pouvez pas rejoindre votre propre chasse",
               "cannotRequestOnPublicHunt": "Vous ne pouvez pas envoyer une demande pour rejoindre une chasse publique",
               "cannotResendRequestYet": "Vous ne pouvez pas encore envoyer une nouvelle demande. Veuillez attendre 24 heures avant d'envoyer une autre demande.",
-              "participationAlreadyExists": "Vous êtes déjà participant à cette chasse"
+              "participationAlreadyExists": "Vous êtes déjà participant à cette chasse",
+              "huntIsFull": "La chasse est complète, vous ne pouvez pas envoyer de demande"
             }
           },
           "ParticipateDialog": {

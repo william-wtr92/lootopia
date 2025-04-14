@@ -2,7 +2,7 @@ import { paymentStatus } from "@lootopia/common"
 import { Badge } from "@lootopia/ui"
 import { motion } from "framer-motion"
 import { Calendar, Copy, Crown, Receipt } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 
 import { useCopyToClipboard } from "@client/web/hooks/useCopyToClipboard"
 import type { PaymentResponse } from "@client/web/services/shop/getUserPaymentList"
@@ -21,6 +21,7 @@ const PaymentList = ({
   listRef,
 }: Props) => {
   const t = useTranslations("Components.Shop.List.PaymentList")
+  const locale = useLocale()
 
   const { copiedText, copy } = useCopyToClipboard()
 
@@ -90,7 +91,7 @@ const PaymentList = ({
                           <span>•</span>
                           <span className="flex items-center">
                             <Calendar className="mr-1 size-3" />
-                            {formatDate(transaction.date)}
+                            {formatDate(transaction.date, locale)}
                           </span>
                         </span>
                       </div>

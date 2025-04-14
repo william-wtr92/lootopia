@@ -46,7 +46,7 @@ const LoginPage = () => {
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
-    mode: "onBlur",
+    mode: "onTouched",
     defaultValues: {
       email: "",
       password: "",

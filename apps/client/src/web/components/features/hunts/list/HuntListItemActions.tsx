@@ -47,6 +47,10 @@ const HuntListItemActions = ({
   const isPending =
     hunt.participationStatus === participationRequestStatus.PENDING
 
+  const huntIsFull = hunt.maxParticipants
+    ? hunt.participantCount >= hunt.maxParticipants
+    : false
+
   const handleShowParticipatePopup = () => {
     setShowParticipatePopup((prev) => !prev)
   }
@@ -139,6 +143,7 @@ const HuntListItemActions = ({
             size="lg"
             className="w-[140px]"
             onClick={handleShowParticipatePopup}
+            disabled={huntIsFull}
           >
             <UserPlus size={16} className="mr-1" />
             {t("cta.join")}
@@ -149,6 +154,7 @@ const HuntListItemActions = ({
             variant="outline"
             className="w-[140px] border-blue-500 text-blue-500 hover:bg-blue-500/10 hover:text-blue-500"
             onClick={handleShowRequestPopup}
+            disabled={huntIsFull}
           >
             <UserPlus size={12} className="mr-1" />
             {t("cta.request")}

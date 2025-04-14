@@ -12,7 +12,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { AnimatePresence } from "framer-motion"
 import { Award, ChevronRight, Clock, MapPin, Users } from "lucide-react"
 import Image from "next/image"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useState } from "react"
 
 import HuntListItemActions from "./HuntListItemActions"
@@ -42,7 +42,7 @@ const HuntListItem = (props: Props) => {
   const { hunt, huntFilterType } = props
 
   const t = useTranslations("Components.Hunts.List.ListItem")
-
+  const locale = useLocale()
   const { toast } = useToast()
   const qc = useQueryClient()
 
@@ -116,7 +116,11 @@ const HuntListItem = (props: Props) => {
 
                 <HuntListItemBadges hunt={hunt} isOrganizer={isOrganizer} />
               </div>
-              <span className="text-secondary text-md">{hunt.description}</span>
+              <span
+                className={`text-secondary text-md line-clamp-1 ${isDeployed ? "line-clamp-none" : ""}`}
+              >
+                {hunt.description}
+              </span>
             </div>
 
             <div className="text-primary flex items-center gap-6 text-sm font-medium">
@@ -129,7 +133,9 @@ const HuntListItem = (props: Props) => {
 
               <span>
                 <Clock size={24} className="text-accent inline-block" />{" "}
-                {formatDate(hunt.startDate) + " - " + formatDate(hunt.endDate)}
+                {formatDate(hunt.startDate, locale) +
+                  " - " +
+                  formatDate(hunt.endDate, locale)}
               </span>
 
               <span className="flex items-center gap-1">

@@ -4,7 +4,7 @@ import { useQueryClient } from "@tanstack/react-query"
 import { motion } from "framer-motion"
 import { Check, ListPlus, X } from "lucide-react"
 import Image from "next/image"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 
 import { config } from "@client/env"
 import { acceptParticipationRequest } from "@client/web/services/participations/acceptParticipationRequest"
@@ -29,6 +29,7 @@ const ParticipationRequestList = ({
   const t = useTranslations(
     "Components.Hunts.List.Participations.ParticipationRequestList"
   )
+  const locale = useLocale()
   const { toast } = useToast()
   const qc = useQueryClient()
 
@@ -126,7 +127,7 @@ const ParticipationRequestList = ({
                       </h3>
                       <span className="text-primary text-sm">
                         {t("info.received", {
-                          date: formatDate(request.requestedAt),
+                          date: formatDate(request.requestedAt, locale),
                         })}
                       </span>
                     </div>

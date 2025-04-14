@@ -36,8 +36,11 @@ import {
   participationRequestRejected,
   selectParticipationRequestsByHuntId,
   selectParticipationRequestsByHuntIdCount,
+  selectParticipantsByHuntIdCount,
+  huntIsFull,
 } from "@server/features/participations"
 import { selectUserByEmail, userNotFound } from "@server/features/users"
+import { oneDayInMs } from "@server/utils/helpers/times"
 import { contextKeys } from "@server/utils/keys/contextKeys"
 import { Hono } from "hono"
 
@@ -71,6 +74,12 @@ export const requestParticipationRoute = app
         return c.json(cannotRequestOnPublicHunt, SC.errors.BAD_REQUEST)
       }
 
+      const [{ count }] = await selectParticipantsByHuntIdCount(huntId)
+
+      if (hunt.maxParticipants && count >= hunt.maxParticipants) {
+        return c.json(huntIsFull, SC.errors.BAD_REQUEST)
+      }
+
       const existingParticipationRequest =
         await selectParticipationRequestByHuntIdAndUserId(huntId, user.id)
 
@@ -81,8 +90,7 @@ export const requestParticipationRoute = app
           existingParticipationRequest.respondedAt
         ) {
           const twentyFourHoursLater = new Date(
-            existingParticipationRequest.respondedAt.getTime() +
-              24 * 60 * 60 * 1000
+            existingParticipationRequest.respondedAt.getTime() + oneDayInMs
           )
 
           if (twentyFourHoursLater < new Date()) {
@@ -156,6 +164,12 @@ export const requestParticipationRoute = app
 
       if (user.id !== hunt.organizerId) {
         return c.json(userIsNotOrganizerOfHunt, SC.errors.BAD_REQUEST)
+      }
+
+      const [{ count }] = await selectParticipantsByHuntIdCount(huntId)
+
+      if (hunt.maxParticipants && count >= hunt.maxParticipants) {
+        return c.json(huntIsFull, SC.errors.BAD_REQUEST)
       }
 
       const request = await selectParticipationRequestByHuntIdAndRequestId(

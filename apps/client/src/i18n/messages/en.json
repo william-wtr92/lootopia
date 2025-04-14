@@ -872,7 +872,8 @@
                   "huntNotFound": "Hunt not found",
                   "userIsNotOrganizerOfHunt": "You are not the organizer of this hunt",
                   "participationRequestNotFound": "The participation request does not exist",
-                  "userRequestingNotHaveEnoughCrowns": "The user does not have enough crowns to join the hunt"
+                  "userRequestingNotHaveEnoughCrowns": "The user does not have enough crowns to join the hunt",
+                  "huntIsFull": "The hunt is full, you cannot accept this request"
                 }
               },
               "reject": {
@@ -900,7 +901,8 @@
               "organizerCannotBeParticipant": "You cannot join your own hunt",
               "cannotRequestOnPublicHunt": "You cannot send a request to join a public hunt",
               "cannotResendRequestYet": "You cannot send a new request yet. Please wait 24 hours before sending another request.",
-              "participationAlreadyExists": "You are already a participant in this hunt"
+              "participationAlreadyExists": "You are already a participant in this hunt",
+              "huntIsFull": "The hunt is full, you cannot send a request to join it"
             }
           },
           "ParticipateDialog": {

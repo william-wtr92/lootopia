@@ -2,7 +2,7 @@ import { reportStatus } from "@lootopia/common"
 import { Badge } from "@lootopia/ui"
 import { motion } from "framer-motion"
 import { Calendar, CheckCircle, XCircle } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 
 import type { ReportResponse } from "@client/web/services/reports/getUserReportList"
 import anim from "@client/web/utils/anim"
@@ -24,6 +24,7 @@ const ReportListItem = ({
   handleSelectReport,
 }: Props) => {
   const t = useTranslations("Components.Users.Reports.List.ReportListItem")
+  const locale = useLocale()
 
   return (
     <motion.div
@@ -60,7 +61,7 @@ const ReportListItem = ({
       <div className="mt-2 flex items-center justify-between">
         <div className="text-primary/60 flex items-center text-xs">
           <Calendar className="mr-1 h-3 w-3" />
-          {formatDate(reportDetails.report.createdAt)}
+          {formatDate(reportDetails.report.createdAt, locale)}
         </div>
         <div>
           <Badge

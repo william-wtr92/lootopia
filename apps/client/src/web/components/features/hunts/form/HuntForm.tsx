@@ -57,7 +57,7 @@ const HuntForm = ({ onSubmit, mode = "draft", updateHunt }: Props) => {
 
   const form = useForm<HuntSchema>({
     resolver: zodResolver(huntSchema),
-    mode: "onBlur",
+    mode: "onTouched",
     defaultValues: {
       name: activeHunt()?.name ?? "",
       description: activeHunt()?.description ?? "",
