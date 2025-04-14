@@ -1,4 +1,7 @@
-import type { HuntIdSchema } from "@lootopia/common"
+import {
+  defaultParticipationRequestCount,
+  type HuntIdSchema,
+} from "@lootopia/common"
 
 import { client } from "@client/web/utils/client"
 
@@ -15,5 +18,5 @@ export const getParticipationRequestCount = async (param: HuntIdSchema) => {
     return data.count
   }
 
-  return 0
+  return defaultParticipationRequestCount
 }

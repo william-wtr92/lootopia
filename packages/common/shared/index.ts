@@ -144,6 +144,7 @@ export { calculateDiscountedPrice } from "./shop/utils/calculateDiscountedPrice"
 
 // Participations types
 export {
+  defaultParticipationRequestCount,
   participationRequestStatus,
   type ParticipationRequestStatus,
   participationRequestsParamsSchema,

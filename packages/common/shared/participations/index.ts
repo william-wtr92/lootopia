@@ -1,6 +1,8 @@
 import { defaultLimit, defaultPage } from "@common/global/pagination"
 import { z } from "zod"
 
+export const defaultParticipationRequestCount = 0 as const
+
 export const participationRequestStatus = {
   PENDING: "pending",
   APPROVED: "approved",
