@@ -826,8 +826,13 @@
         },
         "ListItemActions": {
           "tooltip": {
-            "info": "Gérer les demandes de participation",
-            "max": "+99"
+            "requests": {
+              "title": "Gérer les demandes de participation",
+              "max": "+99"
+            },
+            "modify": {
+              "title": "Modifier votre chasse"
+            }
           },
           "cta": {
             "leave": "Quitter",

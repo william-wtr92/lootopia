@@ -70,7 +70,7 @@ const HuntListItemActions = ({
   const MAX_COUNT = 99 as const
   const formattedCount =
     participationRequestCount > MAX_COUNT
-      ? t("tooltip.max")
+      ? t("tooltip.requests.max")
       : participationRequestCount
 
   return (
@@ -100,23 +100,31 @@ const HuntListItemActions = ({
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent className="relative bottom-1">
-                    <p>{t("tooltip.info")}</p>
+                    <p>{t("tooltip.requests.title")}</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             )}
-
-            <Button
-              size="icon"
-              variant="outline"
-              className="hover:text-primary hover:bg-white/80"
-              onClick={(e) => {
-                e.stopPropagation()
-                onShowUpdateForm()
-              }}
-            >
-              <PencilRuler size={20} />
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    className="hover:text-primary hover:bg-white/80"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onShowUpdateForm()
+                    }}
+                  >
+                    <PencilRuler size={20} />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent className="relative bottom-1">
+                  <p>{t("tooltip.modify.title")}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </>
         ) : isJoined ? (
           <Button

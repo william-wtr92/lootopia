@@ -826,8 +826,13 @@
         },
         "ListItemActions": {
           "tooltip": {
-            "info": "Manage participation requests",
-            "max": "+99"
+            "requests": {
+              "title": "Manage participation requests",
+              "max": "+99"
+            },
+            "modify": {
+              "title": "Modify your hunt"
+            }
           },
           "cta": {
             "leave": "Leave",
