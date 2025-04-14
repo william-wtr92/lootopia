@@ -6,9 +6,10 @@
   "scripts": {
     "lint": "eslint",
     "dev": "tsx watch src/index.ts",
-    "dev:local": "concurrently \"pnpm run azurite\" \"pnpm run dev\"",
+    "dev:local": "concurrently \"pnpm run azurite\" \"pnpm run dev\" \"stripe listen --forward-to localhost:3001/shop/webhook > /dev/null 2>&1\"",
     "build": "tsc && tsc-alias",
     "start": "node dist/index.js",
+    "start:webhook": "stripe listen --forward-to localhost:3001/shop/webhook",
     "azurite": "azurite --silent --location ./azurite --debug ./azurite/debug.log"
   },
   "dependencies": {
@@ -23,7 +24,9 @@
     "hono": "^4.6.14",
     "ioredis": "^5.4.2",
     "mime": "^4.0.6",
+    "otplib": "^12.0.1",
     "postgres": "^3.4.5",
+    "stripe": "^18.0.0",
     "uuid": "^11.0.5",
     "zod": "^3.24.1"
   },

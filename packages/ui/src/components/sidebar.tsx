@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 "use client"
 
 import { Slot } from "@radix-ui/react-slot"

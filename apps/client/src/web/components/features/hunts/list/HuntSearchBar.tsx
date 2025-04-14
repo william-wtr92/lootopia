@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@lootopia/ui"
-import { CirclePlusIcon, SearchIcon } from "lucide-react"
+import { CirclePlus, Search } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 
@@ -40,7 +40,7 @@ const HuntSearchBar = (props: Props) => {
   return (
     <div className="flex gap-2">
       <div className="bg-primaryBg flex h-12 w-full items-center gap-4 overflow-hidden rounded-[12px] pl-4">
-        <SearchIcon className="text-primary h-full" />
+        <Search className="text-primary h-full" />
         <Input
           type="text"
           className="text-primary bg-primaryBg h-full flex-1 border-0 outline-0 ring-0 focus-visible:ring-0"
@@ -86,7 +86,7 @@ const HuntSearchBar = (props: Props) => {
           className="text-md select-none rounded-[12px]"
           onClick={redirectToHuntPage}
         >
-          <CirclePlusIcon className="size-5" />
+          <CirclePlus className="size-5" />
           {t("cta.create-a-hunt")}
         </Button>
       </div>

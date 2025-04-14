@@ -11,6 +11,7 @@ export const redisKeys = {
     passwordReset: (token: string) => `auth:password-reset:${token}`,
     passwordResetCooldown: (email: string) =>
       `auth:password-reset-cooldown:${email}`,
+    mfaSession: (mfaSessionId: string) => `mfa:session:${mfaSessionId}`,
   },
   users: {
     nicknameUpdateCooldown: (userId: string) =>
@@ -25,5 +26,10 @@ export const redisKeys = {
       `hunts:hint-cooldown:${huntId}:${email}`,
     hintCount: (huntId: string, email: string) =>
       `hunts:hint-count:${huntId}:${email}`,
+  },
+  shop: {
+    payments: {
+      export: (userId: string) => `shop:payments:export:${userId}`,
+    },
   },
 } as const

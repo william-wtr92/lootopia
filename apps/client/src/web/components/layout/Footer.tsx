@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl"
 
 const Footer = () => {
-  const t = useTranslations("Components.Footer")
+  const t = useTranslations("Components.Utils.Layout.Footer")
 
   return (
     <footer className="bg-primary text-accent relative z-10 py-8">

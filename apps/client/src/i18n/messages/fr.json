@@ -225,10 +225,10 @@
           "description": "Décrivez le coffre et ajoutez une récompense pour les participants."
         },
         "success": "La chasse a été créée avec succès !",
-         "errors": {
+        "errors": {
           "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action.",
-           "notEnoughCrowns": "Vous n'avez pas assez de couronnes pour créer une chasse, mettez la en brouillon ou achetez en.",
-           "maxCrownRewardExceeded": "Le montant de la récompense maximale est de 100 couronnes par coffre."
+          "notEnoughCrowns": "Vous n'avez pas assez de couronnes pour créer une chasse, mettez la en brouillon ou achetez en.",
+          "maxCrownRewardExceeded": "Le montant de la récompense maximale est de 100 couronnes par coffre."
         }
       },
       "Drafts": {
@@ -239,10 +239,10 @@
         }
       },
       "List": {
-        "loading": "Chargement...", 
+        "loading": "Chargement...",
         "no-hunts-available": "Aucune chasses disponible",
         "no-hunts-hint": "Il semble qu'il n'y ait aucune chasse au trésor disponible pour le moment. Revenez plus tard ou créez votre propre aventure !",
-        "no-hunts-search": "Aucune chasse trouvée pour la recherche : ", 
+        "no-hunts-search": "Aucune chasse trouvée pour la recherche : ",
         "no-hunts-search-hint": "Il semble qu'il n'y ait aucune chasse au trésor correspondant à votre recherche. Essayez une autre recherche ou créez votre propre aventure !",
         "update": {
           "title": "Modifier la chasse",
@@ -264,6 +264,13 @@
     },
     "Users": {
       "Profile": {
+        "info": {
+          "role": {
+            "user": "Chasseur de trésors",
+            "admin": "Administrateur",
+            "partner": "Partenaire"
+          }
+        },
         "statistics": {
           "title": "Statistiques",
           "treasuresFound": "Trésors trouvés",
@@ -329,29 +336,325 @@
           "leaderboard": "Classement",
           "settings": "Paramètres"
         }
+      },
+      "UserProfile": {
+        "loading": "Chargement du profil utilisateur...",
+        "role": "Chasseur de trésors",
+        "joined": "Inscrit depuis le {date}",
+        "level": "Niveau {level}",
+        "tabs": {
+          "recentHunts": {
+            "trigger": "Chasses récentes",
+            "title": "Chasses récentes",
+            "subtitle": "Découvrez les dernières chasses au trésor complétées par {nickname}"
+          },
+          "artifacts": {
+            "trigger": "Artefacts",
+            "title": "Collection d'artefacts",
+            "subtitle": "Découvrez les artefacts collectés par {nickname}, classés par rareté"
+          }
+        }
+      }
+    },
+    "Shop": {
+      "Return": {
+        "title": "Merci pour votre achat !",
+        "description": "Vos couronnes ont été ajoutées à votre compte. Vous pouvez maintenant continuer votre aventure !",
+        "cta": {
+          "home": "Retour à l'accueil"
+        }
       }
     }
   },
   "Components": {
-    "SelectLocale": {
-      "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 Français} other {Unknown}}"
+    "Utils": {
+      "Layout": {
+        "NavBar": {
+          "title": "Lootopia",
+          "register": "S'inscrire",
+          "login": "Connexion",
+          "profile": "Profil",
+          "hunts": "Chasses"
+        },
+        "Footer": {
+          "content": "{year} Lootopia. Tous droits réservés."
+        }
+      },
+      "Helpers": {
+        "SelectLocale": {
+          "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 Français} other {Unknown}}"
+        },
+        "PasswordStrengthChecker": {
+          "uppercase": "Une lettre majuscule",
+          "lowercase": "Une lettre minuscule",
+          "number": "Un chiffre",
+          "special": "Un caractère spécial",
+          "length": "Au moins 12 caractères"
+        },
+        "CookieConsent": {
+          "title": "Trésors de navigation",
+          "description": "Lootopia utilise des cookies pour améliorer votre expérience de chasse au trésor. Choisissez quels types de cookies vous souhaitez accepter.",
+          "cta": {
+            "accept": "Tout accepter",
+            "personalize": "Personnaliser",
+            "reject": "Refuser",
+            "save": "Enregistrer mes préférences"
+          },
+          "options": {
+            "necessary": {
+              "title": "Nécessaires",
+              "description": "Ces cookies sont essentiels au fonctionnement du site."
+            },
+            "functional": {
+              "title": "Fonctionnels",
+              "description": "Ces cookies permettent d'améliorer les fonctionnalités et la personnalisation."
+            },
+            "analytics": {
+              "title": "Analytiques",
+              "description": "Ces cookies nous aident à comprendre comment les visiteurs interagissent avec le site."
+            },
+            "marketing": {
+              "title": "Publicitaires",
+              "description": "Ces cookies sont utilisés pour vous proposer des publicités pertinentes."
+            }
+          }
+        }
+      }
     },
-    "NavBar": {
-      "title": "Lootopia",
-      "register": "S'inscrire",
-      "login": "Connexion",
-      "profile": "Profil",
-      "hunts": "Chasses"
-    },
-    "Footer": {
-      "content": "{year} Lootopia. Tous droits réservés."
-    },
-    "PasswordStrengthChecker": {
-      "uppercase": "Une lettre majuscule",
-      "lowercase": "Une lettre minuscule",
-      "number": "Un chiffre",
-      "special": "Un caractère spécial",
-      "length": "Au moins 12 caractères"
+    "Users": {
+      "Reports": {
+        "ReportForm": {
+          "trigger": "Signaler",
+          "form": {
+            "title": "Signaler l'utilisateur : {nickname}",
+            "subtitle": "Veuillez fournir des détails sur la raison pour laquelle vous signalez cet utilisateur. Tous les signalements sont confidentiels.",
+            "reason": {
+              "placeholder": "Sélectionnez une raison",
+              "options": {
+                "inappropriate_behavior": "Comportement inapproprié",
+                "cheating": "Tricherie",
+                "harassment": "Harcèlement",
+                "impersonation": "Usurpation d'identité",
+                "other": "Autre"
+              },
+              "error": "Veuillez sélectionner une raison"
+            },
+            "description": {
+              "label": "Description",
+              "placeholder": "Fournissez une description détaillée du problème",
+              "error": "Veuillez fournir une description"
+            },
+            "attachment": {
+              "label": "Pièce jointe (Optionnel)",
+              "placeholder": "Joignez une capture d'écran ou un fichier (optionnel)",
+              "remove": "Supprimer",
+              "acceptedExtensions": "Formats acceptés : JPG, PNG, GIF, MP4, PDF (max 10 Mo)",
+              "error": "Type de fichier invalide"
+            },
+            "cta": {
+              "submit": "Envoyer le signalement",
+              "cancel": "Annuler"
+            }
+          },
+          "success": "Votre rapport a été soumis avec succès ! Notre équipe l'examinera et prendra les mesures qui s'imposent.",
+          "errors": {
+            "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+            "userReportedNotFound": "L'utilisateur que vous essayez de signaler n'existe pas",
+            "invalidExtension": "L'extension du fichier n'est pas valide"
+          }
+        },
+        "List": {
+          "ReportDialog": {
+            "title": "Mes signalements"
+          },
+          "ReportListSidebar": {
+            "placeholder": "Rechercher des signalements...",
+            "empty": "Aucun signalement trouvé"
+          },
+          "ReportListItem": {
+            "id": "ID: #{id}",
+            "status": {
+              "pending": "En attente",
+              "resolved": "Résolu",
+              "rejected": "Rejeté"
+            },
+            "reasons": {
+              "inappropriate_behavior": "Comportement inapproprié",
+              "cheating": "Tricherie",
+              "harassment": "Harcèlement",
+              "impersonation": "Usurpation d'identité",
+              "other": "Autre"
+            }
+          },
+          "ReportDetails": {
+            "noSelection": "Aucun signalement sélectionné",
+            "info": "Sélectionnez un signalement dans la liste pour voir ses détails."
+          },
+          "ReportDetailsTabs": {
+            "title": "Détails du signalement",
+            "tabs": {
+              "details": "Détails",
+              "users": "Utilisateurs",
+              "attachment": "Pièce jointe"
+            },
+            "content": {
+              "report": {
+                "reasons": {
+                  "label": "Raison du signalement :",
+                  "options": {
+                    "inappropriate_behavior": "Comportement inapproprié",
+                    "cheating": "Tricherie",
+                    "harassment": "Harcèlement",
+                    "impersonation": "Usurpation d'identité",
+                    "other": "Autre"
+                  }
+                },
+                "description": "Description :",
+                "createdAt": "Créé le :",
+                "updatedAt": "Dernière mise à jour :",
+                "status": {
+                  "title": "Statut :",
+                  "pending": "En attente",
+                  "resolved": "Résolu",
+                  "rejected": "Rejeté"
+                }
+              },
+              "reporter": {
+                "title": "Signalé par :",
+                "cta": {
+                  "profile": "Voir le profil"
+                }
+              },
+              "reported": {
+                "title": "Utilisateur signalé :",
+                "cta": {
+                  "profile": "Voir le profil"
+                }
+              },
+              "attachment": {
+                "title": "Pièce jointe :",
+                "cta": "Ouvrir dans un nouvel onglet"
+              },
+              "errors": {
+                "userNotAvailable": "Utilisateur non disponible"
+              }
+            }
+          }
+        }
+      },
+      "SearchCommand": {
+        "trigger": "Rechercher ( ⌘ + K )",
+        "placeholder": "Rechercher des utilisateurs...",
+        "empty": {
+          "title": "Aucun utilisateur trouvé",
+          "description": "Essayez un autre terme pour \"{term}\""
+        },
+        "group": {
+          "title": "Utilisateurs",
+          "users": {
+            "level": "Niveau. {level}"
+          }
+        },
+        "help": {
+          "title": "Rechercher des utilisateurs",
+          "description": "Trouvez des joueurs par nom, rôle ou localisation pour consulter leur profil et leurs statistiques",
+          "command": {
+            "escape": {
+              "trigger": "Échap",
+              "description": "pour fermer"
+            },
+            "arrows": {
+              "trigger": "↑ / ↓",
+              "description": "pour naviguer"
+            },
+            "enter": {
+              "trigger": "Entrée",
+              "description": "pour sélectionner"
+            }
+          }
+        },
+        "about": "Recherche propulsée par Lootopia"
+      },
+      "Profile": {
+        "ActionMenu": {
+          "title": "Actions",
+          "label": "Mon Compte",
+          "actions": {
+            "editProfile": "Editer mon profil",
+            "myReports": "Mes signalements",
+            "myPayments": "Mes paiements",
+            "logout": "Déconnexion",
+            "activateMfa": "Activer l'A2F",
+            "deactivateMfa": "Désactiver l'A2F"
+          }
+        },
+        "Mfa": {
+          "MfaVerificationForm": {
+            "title": "Authentification à deux facteurs",
+            "description": "Veuillez entrer le code à 6 chiffres généré par <br></br> votre application d'authentification",
+            "form": {
+              "token": {
+                "label": "Code d'authentification"
+              },
+              "cta": {
+                "verify": "Vérifier"
+              }
+            },
+            "success": "Vous êtes connecté !",
+            "errors": {
+              "mfaSessionExpired": "Votre session a expiré. Veuillez vous reconnecter",
+              "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+              "mfaInvalidToken": "Code invalide. Veuillez vérifier votre application d'authentification et réessayer"
+            }
+          },
+          "MfaForm": {
+            "form": {
+              "token": {
+                "label": "Code d'authentification",
+                "placeholder": "123456"
+              }
+            }
+          },
+          "MfaDeactivationDialog": {
+            "title": "Désactiver l'A2F",
+            "alert": {
+              "title": "Avertissement de sécurité",
+              "description": "Désactiver l'authentification à deux facteurs rendra votre compte plus vulnérable. Nous vous recommandons de conserver cette sécurité supplémentaire activée."
+            },
+            "cta": {
+              "cancel": "Annuler",
+              "submit": "Désactiver"
+            },
+            "success": "L'authentification à deux facteurs a été désactivée avec succès !",
+            "errors": {
+              "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+              "mfaAlreadyDisabled": "L'authentification à deux facteurs est déjà désactivée",
+              "mfaInvalidToken": "Code invalide. Veuillez vérifier votre application d'authentification et réessayer"
+            }
+          },
+          "MfaActivationDialog": {
+            "title": "Activer l'A2F",
+            "qrcode": {
+              "info": "Scannez ce code QR avec votre application d'authentification (Google Authenticator, Authy, etc.)",
+              "cta": {
+                "continue": "Continuer"
+              }
+            },
+            "verify": {
+              "cta": {
+                "back": "Retour",
+                "activate": "Activer"
+              }
+            },
+            "errors": {
+              "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+              "mfaNotEnabled": "L'authentification à deux facteurs n'est pas activée",
+              "mfaInvalidToken": "Code invalide. Veuillez vérifier votre application d'authentification et réessayer"
+            },
+            "success": "L'authentification à deux facteurs a été activée avec succès !"
+          }
+        }
+      }
     },
     "Hunts": {
       "Map": {
@@ -479,17 +782,163 @@
         }
       },
       "SearchBar": {
-        "options": {  
+        "options": {
           "city": "Par ville",
           "name": "Par nom",
           "organizer": "Mes chasses"
         },
         "placeholder": {
-          "city": "La légende du joyau perdu",
-          "name": "Paris, Le Havre, Marseille..."
+          "name": "La légende du joyau perdu",
+          "city": "Paris, Le Havre, Marseille..."
         },
         "cta": {
           "create-a-hunt": "Créer une chasse"
+        }
+      },
+      "List": {
+        "Rewards": {
+          "crown": "Couronne",
+          "artifact": "Artéfact",
+          "loading": "Chargement...",
+          "artifactLoading": "Chargement de l'artéfact...",
+          "fileNotFoundOrNotSupported": "Fichier non trouvé ou non supporté",
+          "crownsExtension": " couronnes",
+          "rarities": {
+            "common": "Commun",
+            "uncommon": "Peu commun",
+            "rare": "Rare",
+            "epic": "Épique",
+            "legendary": "Légendaire"
+          },
+          "cta": {
+            "close": "Fermer"
+          }
+        },
+        "ListItem": {
+          "title": "Modifier la chasse",
+          "errors": {
+            "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+            "huntNotFound": "Chasse introuvable",
+            "huntEndDateEarlierThanStartDate": "La date de fin doit être postérieure à la date de début",
+            "notHuntOrganizer": "Vous n'êtes pas l'organisateur de cette chasse"
+          },
+          "success": "La chasse a été mise à jour avec succès !"
+        },
+        "ListItemActions": {
+          "tooltip": {
+            "requests": {
+              "title": "Gérer les demandes de participation",
+              "max": "+99"
+            },
+            "modify": {
+              "title": "Modifier votre chasse"
+            }
+          },
+          "cta": {
+            "leave": "Quitter",
+            "pending": "En attente",
+            "join": "Rejoindre",
+            "request": "Demander"
+          }
+        },
+        "ListItemBadges": {
+          "tooltip": {
+            "private": {
+              "title": "Privée",
+              "description": "Cette chasse est privée, vous devez envoyer une demande pour y participer."
+            },
+            "public": {
+              "title": "Publique",
+              "description": "Cette chasse est publique, vous pouvez y participer directement."
+            }
+          },
+          "badges": {
+            "toCome": "À venir",
+            "ongoing": "En cours",
+            "organizer": "Organisateur"
+          }
+        },
+        "Participations": {
+          "ParticipationRequestListDialog": {
+            "title": "Gérez les demandes de participation à votre chasse au trésor \"{huntName}\"",
+            "searchPlaceholder": "Rechercher par pseudo d'utilisateur...",
+            "pendingRequests": "demandes en attente"
+          },
+          "ParticipationRequestList": {
+            "empty": "Aucune demande en attente",
+            "info": {
+              "received": "Reçue : {date}"
+            },
+            "actions": {
+              "accept": {
+                "success": "La demande de l'utilisateur a été acceptée !",
+                "errors": {
+                  "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+                  "huntNotFound": "Chasse introuvable",
+                  "userIsNotOrganizerOfHunt": "Vous n'êtes pas l'organisateur de cette chasse",
+                  "participationRequestNotFound": "La demande de participation n'existe pas",
+                  "userRequestingNotHaveEnoughCrowns": "L'utilisateur n'a pas assez de couronnes pour rejoindre la chasse",
+                  "huntIsFull": "La chasse est complète, vous ne pouvez pas accepter cette demande"
+                }
+              },
+              "reject": {
+                "success": "La demande de l'utilisateur a été rejetée !",
+                "errors": {
+                  "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+                  "huntNotFound": "Chasse introuvable",
+                  "userIsNotOrganizerOfHunt": "Vous n'êtes pas l'organisateur de cette chasse",
+                  "participationRequestNotFound": "La demande de participation n'existe pas"
+                }
+              }
+            }
+          },
+          "ParticipationRequestDialog": {
+            "title": "Demander à participer",
+            "description": "Souhaitez-vous rejoindre cette chasse au trésor privée ? <br></br> Votre demande sera examinée par le créateur de la chasse. Si elle est rejetée, veuillez attendre 24 heures avant de soumettre une nouvelle demande.",
+            "cta": {
+              "cancel": "Annuler",
+              "submit": "Demander à rejoindre"
+            },
+            "success": "Vous avez envoyé une demande pour rejoindre la chasse avec succès !",
+            "errors": {
+              "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+              "huntNotFound": "Chasse introuvable",
+              "organizerCannotBeParticipant": "Vous ne pouvez pas rejoindre votre propre chasse",
+              "cannotRequestOnPublicHunt": "Vous ne pouvez pas envoyer une demande pour rejoindre une chasse publique",
+              "cannotResendRequestYet": "Vous ne pouvez pas encore envoyer une nouvelle demande. Veuillez attendre 24 heures avant d'envoyer une autre demande.",
+              "participationAlreadyExists": "Vous êtes déjà participant à cette chasse",
+              "huntIsFull": "La chasse est complète, vous ne pouvez pas envoyer de demande"
+            }
+          },
+          "ParticipateDialog": {
+            "title": "Rejoindre la chasse",
+            "description": "Souhaitez-vous rejoindre cette chasse au trésor ? <space></space> Vous pourrez voir tous les détails et participer à l'aventure.",
+            "cta": {
+              "cancel": "Annuler",
+              "submit": "Rejoindre"
+            },
+            "success": "Vous avez rejoint la chasse avec succès !",
+            "errors": {
+              "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+              "huntNotFound": "Chasse introuvable",
+              "organizerCannotBeParticipant": "Vous ne pouvez pas rejoindre votre propre chasse",
+              "cannotJoinPrivateHuntDirectly": "Vous ne pouvez pas rejoindre une chasse privée directement. Veuillez envoyer une demande à l'organisateur.",
+              "huntIsFull": "La chasse est complète, vous ne pouvez pas la rejoindre"
+            }
+          },
+          "DeleteParticipationDialog": {
+            "title": "Quitter la chasse",
+            "description": "Souhaitez-vous retirer votre participation à cette chasse au trésor ? <space></space> Vous ne pourrez plus voir les détails de la chasse et ne participerez plus à l'aventure. <br></br> <strong>Vous perdrez également les 50 couronnes dépensées pour participer.</strong>",
+            "cta": {
+              "cancel": "Annuler",
+              "submit": "Retirer ma participation"
+            },
+            "success": "Vous avez retiré votre participation à la chasse avec succès !",
+            "errors": {
+              "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+              "huntNotFound": "Chasse introuvable"
+            }
+          }
         }
       }
     },
@@ -506,6 +955,121 @@
             "error": "Fichier invalide"
           },
           "submit": "Ajouter"
+        }
+      }
+    },
+    "Shop": {
+      "Popup": {
+        "title": "Boutique de Couronnes",
+        "description": "Boostez votre aventure avec plus de couronnes !",
+        "specialOffers": {
+          "title": "Offres Spéciales",
+          "first": {
+            "title": "Bonus Premier Achat",
+            "description": "Obtenez 50% de couronnes en plus lors de votre premier achat !"
+          },
+          "flash": {
+            "title": "Vente Flash du Week-end",
+            "description": "Offre limitée : 25% de réduction sur tous les packs de couronnes ce week-end !"
+          }
+        },
+        "about": {
+          "title": "À propos des Couronnes",
+          "description": "Les couronnes sont la monnaie virtuelle de Lootopia. Elles permettent d'acheter des indices, de débloquer des chasses au trésor exclusives et d'accéder à des fonctionnalités premium."
+        },
+        "tos": {
+          "disclaimer": "Les couronnes sont utilisées pour les fonctionnalités premium et les chasses exclusives. Tous les achats sont définitifs. Consultez nos",
+          "link": "Conditions d'Utilisation",
+          "more": "pour plus de détails."
+        },
+        "errors": {
+          "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+          "crownPackageNotFound": "Le pack de couronnes n'existe pas",
+          "crownPackageStripeError": "Une erreur s'est produite lors de la création de l'intention de paiement. Veuillez réessayer."
+        }
+      },
+      "Card": {
+        "popular": "POPULAIRE",
+        "discount": "-{discount}%",
+        "discountedPrice": "{price}€",
+        "price": "{price}€",
+        "bonus": "{bonus} couronnes bonus",
+        "instantDelivery": "Livraison instantanée",
+        "singlePurchase": "Achat unique",
+        "names": {
+          "starter_pack": "Pack de Démarrage",
+          "explorer_pack": "Pack de l'Explorateur",
+          "adventurer_pack": "Pack de l'Aventurier",
+          "treasure_hunter_pack": "Pack du Chasseur de Trésors",
+          "legendary_pack": "Pack Légendaire"
+        },
+        "cta": {
+          "buy": "Acheter"
+        }
+      },
+      "StripeElements": {
+        "title": "Paiement Lootopia",
+        "info": "Paiement sécurisé par Stripe. Vos informations de paiement sont protégées."
+      },
+      "ThankYou": {
+        "title": "Achat réussi !",
+        "subtitle": "Merci pour votre achat !",
+        "description": "Votre {packageName} a été ajouté à votre compte.",
+        "bonus": "+{bonus} couronnes bonus !",
+        "names": {
+          "starter_pack": "Pack de Démarrage",
+          "explorer_pack": "Pack de l'Explorateur",
+          "adventurer_pack": "Pack de l'Aventurier",
+          "treasure_hunter_pack": "Pack du Chasseur de Trésors",
+          "legendary_pack": "Pack Légendaire"
+        },
+        "cta": {
+          "continue": "Continuer l'aventure"
+        }
+      },
+      "List": {
+        "PaymentListDialog": {
+          "title": "Historique des transactions",
+          "search": "Rechercher des transactions..."
+        },
+        "PaymentList": {
+          "empty": {
+            "title": "Aucune de transactions trouvées",
+            "description": "Essayez de modifier vos critères de recherche"
+          },
+          "package": {
+            "starter_pack": "Pack de Démarrage",
+            "explorer_pack": "Pack de l'Explorateur",
+            "adventurer_pack": "Pack de l'Aventurier",
+            "treasure_hunter_pack": "Pack du Chasseur de Trésors",
+            "legendary_pack": "Pack Légendaire"
+          },
+          "tooltip": {
+            "copied": "Copié !",
+            "cta": {
+              "copy": "Cliquer pour copier"
+            }
+          },
+          "status": {
+            "amount": {
+              "min": "-{amount} €",
+              "plus": "+{amount} €"
+            },
+            "options": {
+              "paid": "Terminée",
+              "unpaid": "En attente",
+              "no_payment_required": "Aucun paiement requis"
+            }
+          }
+        },
+        "PaymentListExporter": {
+          "transactions": "transactions trouvées",
+          "errors": {
+            "waitBeforeExportPayments": "L'exportation des paiements est limitée à une fois toutes les 24 heures."
+          },
+          "cta": {
+            "export": "Exporter les transactions"
+          }
         }
       }
     }

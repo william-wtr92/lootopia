@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import {
   type ChestSchema,
   type PositionCords,
@@ -14,9 +13,9 @@ import AlertDeleteChest from "./utils/AlertDeleteChest"
 import RecenterControl from "./utils/RecenterControl"
 import { fredoka } from "@client/app/[locale]/layout"
 import { useHuntStore } from "@client/web/store/useHuntStore"
-import { convertPositionToLatLng } from "@client/web/utils/convertPosition"
 import { leafletDef } from "@client/web/utils/def/leaflet"
-import { getZoomByRadius } from "@client/web/utils/getZoomByRadius"
+import { convertPositionToLatLng } from "@client/web/utils/helpers/convertPosition"
+import { getZoomByRadius } from "@client/web/utils/helpers/getZoomByRadius"
 
 const DEFAULT_MAP_ZOOM = 12
 

@@ -21,7 +21,7 @@ export const hunts = pgTable("hunts", {
   city: varchar({ length: 255 }).notNull(),
   startDate: timestamp().notNull(),
   endDate: timestamp().notNull(),
-  mode: boolean().notNull().default(true),
+  public: boolean().notNull().default(true),
   maxParticipants: integer().default(0),
   active: boolean().notNull().default(true),
   createdAt: timestamp("created_at").notNull().defaultNow(),

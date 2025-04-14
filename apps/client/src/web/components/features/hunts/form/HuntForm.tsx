@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   cities,
@@ -30,7 +29,7 @@ import { useCallback, useEffect } from "react"
 import { useForm } from "react-hook-form"
 
 import { useHuntStore } from "@client/web/store/useHuntStore"
-import { capitalizeFirstLetter } from "@client/web/utils/capitalizeFirstLetter"
+import { capitalizeFirstLetter } from "@client/web/utils/helpers/capitalizeFirstLetter"
 
 type Props = {
   onSubmit: (data: HuntSchema) => void
@@ -58,7 +57,7 @@ const HuntForm = ({ onSubmit, mode = "draft", updateHunt }: Props) => {
 
   const form = useForm<HuntSchema>({
     resolver: zodResolver(huntSchema),
-    mode: "onBlur",
+    mode: "onTouched",
     defaultValues: {
       name: activeHunt()?.name ?? "",
       description: activeHunt()?.description ?? "",
@@ -66,7 +65,7 @@ const HuntForm = ({ onSubmit, mode = "draft", updateHunt }: Props) => {
       startDate: activeHunt()?.startDate ?? "",
       endDate: activeHunt()?.endDate ?? "",
       maxParticipants: activeHunt()?.maxParticipants ?? undefined,
-      mode: activeHunt()?.mode ?? true,
+      public: activeHunt()?.public ?? true,
     },
   })
 
@@ -262,7 +261,7 @@ const HuntForm = ({ onSubmit, mode = "draft", updateHunt }: Props) => {
 
         <FormField
           control={form.control}
-          name="mode"
+          name="public"
           render={({ field }) => (
             <FormItem className="border-primary flex w-full items-center justify-between rounded-lg border p-4 shadow-md">
               <FormDescription className="text-md flex gap-1">

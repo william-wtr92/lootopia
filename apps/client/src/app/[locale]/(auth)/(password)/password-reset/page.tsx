@@ -30,7 +30,7 @@ import { passwordReset } from "@client/web/services/auth/passwordReset"
 import {
   checkPasswordStrength,
   type PasswordStrength,
-} from "@client/web/utils/passwordChecker"
+} from "@client/web/utils/helpers/passwordChecker"
 import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 const PasswordResetPage = () => {

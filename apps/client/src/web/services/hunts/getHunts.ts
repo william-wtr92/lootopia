@@ -9,7 +9,7 @@ import {
 
 const $get = client.hunts.$get
 export type HuntListResponse = InferResponseType<typeof $get>
-export type HuntResponse = HuntListResponse["result"][number]
+export type HuntResponse = Exclude<HuntListResponse["result"][number], string>
 
 export const getHunts = async (
   value: string,

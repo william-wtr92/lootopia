@@ -10,9 +10,17 @@ import { registerRoute } from "./auth/register"
 import { createHuntRoute } from "./hunts/create"
 import { digRoute } from "./hunts/dig"
 import { listHuntRoute } from "./hunts/list"
-import { partipateHuntRoute } from "./hunts/participate"
+import { partipateHuntRoute } from "./hunts/participations/participate"
+import { requestParticipationRoute } from "./hunts/participations/request"
 import { updateHuntRoute } from "./hunts/update"
+import { reportListRoute } from "./reports/list"
+import { reportUploadRoute } from "./reports/upload"
+import { crownPackagesRoute } from "./shop/crownPackages"
+import { paymentsRoute } from "./shop/payments"
+import { webhookRoute } from "./shop/webhook"
+import { userListRoute } from "./users/list"
 import { profileRoute } from "./users/profile"
+import { securityRoute } from "./users/security"
 
 const DEFAULT_PATH = "/" as const
 
@@ -22,24 +30,42 @@ const authRoutes = new Hono()
   .route(DEFAULT_PATH, loginRoute)
   .route(DEFAULT_PATH, passwordResetRoute)
 
-const usersRoutes = new Hono().use(auth).route(DEFAULT_PATH, profileRoute)
+const usersRoutes = new Hono()
+  .use(auth)
+  .route(DEFAULT_PATH, userListRoute)
+  .route(DEFAULT_PATH, profileRoute)
+  .route(DEFAULT_PATH, securityRoute)
 
 const huntsRoutes = new Hono()
   .use(auth)
   .route(DEFAULT_PATH, createHuntRoute)
   .route(DEFAULT_PATH, listHuntRoute)
-  .route(DEFAULT_PATH, partipateHuntRoute)
   .route(DEFAULT_PATH, updateHuntRoute)
   .route(DEFAULT_PATH, digRoute)
+  .route(DEFAULT_PATH, partipateHuntRoute)
+  .route(DEFAULT_PATH, requestParticipationRoute)
 
 const artifactsRoutes = new Hono()
   .use(auth)
   .route(DEFAULT_PATH, uploadArtifactRoute)
   .route(DEFAULT_PATH, listArtifactsRoute)
 
+const reportsRoutes = new Hono()
+  .use(auth)
+  .route(DEFAULT_PATH, reportUploadRoute)
+  .route(DEFAULT_PATH, reportListRoute)
+
+const shopRoutes = new Hono()
+  .route(DEFAULT_PATH, webhookRoute)
+  .use(auth)
+  .route(DEFAULT_PATH, crownPackagesRoute)
+  .route(DEFAULT_PATH, paymentsRoute)
+
 export const routes = {
   auth: authRoutes,
   hunts: huntsRoutes,
   users: usersRoutes,
   artifacts: artifactsRoutes,
+  reports: reportsRoutes,
+  shop: shopRoutes,
 }

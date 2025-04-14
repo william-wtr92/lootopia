@@ -14,6 +14,7 @@ export const routes = {
   },
   users: {
     profile: "/profile",
+    profileNickname: (nickname: string) => `/profile/${nickname}`,
   },
   hunts: {
     list: "/hunts/list",

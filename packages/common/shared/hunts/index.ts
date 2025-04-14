@@ -1,8 +1,6 @@
 import { z } from "zod"
 import { baseChestSchema } from "./chests"
-
-export const defaultLimit = 10
-export const defaultPage = 0
+import { defaultLimit, defaultPage } from "@common/global/pagination"
 
 export const huntSchema = z.object({
   name: z.string().min(3),
@@ -14,7 +12,7 @@ export const huntSchema = z.object({
   endDate: z.string().refine((val) => !isNaN(Date.parse(val)), {
     message: "End date must be a valid date.",
   }),
-  mode: z.boolean().default(true),
+  public: z.boolean().default(true),
   maxParticipants: z
     .number()
     .int()

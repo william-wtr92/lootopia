@@ -16,6 +16,7 @@
     "build:drizzle": "dotenv -e .env -- pnpm --filter @lootopia/drizzle run build",
     "db:generate": "dotenv -e .env -- pnpm --filter @lootopia/drizzle run db:generate",
     "db:generate:custom": "dotenv -e .env -- pnpm --filter @lootopia/drizzle run db:generate:custom",
+    "db:seed": "dotenv -e .env -- pnpm --filter @lootopia/drizzle run db:seed",
     "db:migrate": "dotenv -e .env -- pnpm --filter @lootopia/drizzle run db:migrate",
     "db:drop": "dotenv -e .env -- pnpm --filter @lootopia/drizzle run db:drop",
     "dev:server": "dotenv -e .env -- pnpm --filter @lootopia/server run dev:local",
@@ -31,7 +32,7 @@
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.11"
   },
-  "packageManager": "pnpm@10.7.0",
+  "packageManager": "pnpm@10.8.0",
   "engines": {
     "node": ">=20"
   },

@@ -239,10 +239,10 @@
         }
       },
       "List": {
-        "loading": "Loading hunts...", 
+        "loading": "Loading hunts...",
         "no-hunts-available": "No hunts available",
         "no-hunts-hint": "There don't seem to be any treasure hunts available at the moment. Come back later or create your own adventure!",
-        "no-hunts-search": "No hunts found for search : ", 
+        "no-hunts-search": "No hunts found for search : ",
         "no-hunts-search-hint": "There don't seem to be any treasure hunts matching your search. Try another search or create your own adventure!",
         "update": {
           "title": "Update hunt",
@@ -264,6 +264,13 @@
     },
     "Users": {
       "Profile": {
+        "info": {
+          "role": {
+            "user": "Treasure hunter",
+            "admin": "Administrator",
+            "partner": "Partner"
+          }
+        },
         "statistics": {
           "title": "Statistics",
           "treasuresFound": "Treasures found",
@@ -329,29 +336,325 @@
           "leaderboard": "Leaderboard",
           "settings": "Settings"
         }
+      },
+      "UserProfile": {
+        "loading": "Loading user profile...",
+        "role": "Treasure hunter",
+        "joined": "Joined {date}",
+        "level": "Level {level}",
+        "tabs": {
+          "recentHunts": {
+            "trigger": "Recent hunts",
+            "title": "Recent hunts",
+            "subtitle": "Discover the latest treasure hunts completed by {nickname}"
+          },
+          "artifacts": {
+            "trigger": "Artifacts",
+            "title": " Artifacts Collection",
+            "subtitle": "Discover the artifacts collected by {nickname}, sorted by rarity"
+          }
+        }
+      }
+    },
+    "Shop": {
+      "Return": {
+        "title": "Tanks for your purchase!",
+        "description": "Your crowns have been added to your account. You can now continue your adventure!",
+        "cta": {
+          "home": "Back to home"
+        }
       }
     }
   },
   "Components": {
-    "SelectLocale": {
-      "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 Français} other {Unknown}}"
+    "Utils": {
+      "Layout": {
+        "NavBar": {
+          "title": "Lootopia",
+          "register": "Register",
+          "login": "Login",
+          "profile": "Profile",
+          "hunts": "Hunts"
+        },
+        "Footer": {
+          "content": "{year} Lootopia. All rights reserved."
+        }
+      },
+      "Helpers": {
+        "SelectLocale": {
+          "locale": "{locale, select, en {🇺🇸 English} fr {🇫🇷 Français} other {Unknown}}"
+        },
+        "PasswordStrengthChecker": {
+          "uppercase": "An uppercase letter",
+          "lowercase": "A lowercase letter",
+          "number": "A number",
+          "special": "A special character",
+          "length": "At least 12 characters"
+        },
+        "CookieConsent": {
+          "title": "Browsing treasures",
+          "description": "Lootopia uses cookies to enhance your treasure hunting experience. Choose which types of cookies you wish to accept.",
+          "cta": {
+            "accept": "Accept all",
+            "personalize": "Personalize",
+            "reject": "Reject",
+            "save": "Save my preferences"
+          },
+          "options": {
+            "necessary": {
+              "title": "Necessary",
+              "description": "These cookies are essential for the website to function."
+            },
+            "functional": {
+              "title": "Functional",
+              "description": "These cookies enhance functionality and personalization."
+            },
+            "analytics": {
+              "title": "Analytics",
+              "description": "These cookies help us understand how visitors interact with the site."
+            },
+            "marketing": {
+              "title": "Marketing",
+              "description": "These cookies are used to provide you with relevant advertisements."
+            }
+          }
+        }
+      }
     },
-    "NavBar": {
-      "title": "Lootopia",
-      "register": "Register",
-      "login": "Login",
-      "profile": "Profile",
-      "hunts": "Hunts"
-    },
-    "Footer": {
-      "content": "{year} Lootopia. All rights reserved."
-    },
-    "PasswordStrengthChecker": {
-      "uppercase": "An uppercase letter",
-      "lowercase": "A lowercase letter",
-      "number": "A number",
-      "special": "A special character",
-      "length": "At least 12 characters"
+    "Users": {
+      "Reports": {
+        "ReportForm": {
+          "trigger": "Report",
+          "form": {
+            "title": "Report user: {nickname}",
+            "subtitle": "Please provide details about why you're reporting this user. All reports are confidential.",
+            "reason": {
+              "placeholder": "Select a reason",
+              "options": {
+                "inappropriate_behavior": "Inappropriate behavior",
+                "cheating": "Cheating",
+                "harassment": "Harassment",
+                "impersonation": "Impersonation",
+                "other": "Other"
+              },
+              "error": "Please select a reason"
+            },
+            "description": {
+              "label": "Description",
+              "placeholder": "Provide a detailed description of the issue",
+              "error": "Please provide a description"
+            },
+            "attachment": {
+              "label": "Attachment (Optional)",
+              "placeholder": "Attach a screenshot or file (optional)",
+              "remove": "Remove",
+              "acceptedExtensions": "Accepted formats: JPG, PNG, GIF, MP4, PDF (max 10MB)",
+              "error": "Invalid file type"
+            },
+            "cta": {
+              "submit": "Submit report",
+              "cancel": "Cancel"
+            }
+          },
+          "success": "Your report has been submitted successfully! Our team will review it and take appropriate action.",
+          "errors": {
+            "userNotFound": "You are not authorized to perform this action",
+            "userReportedNotFound": "The user you are trying to report does not exist",
+            "invalidExtension": "The file extension is not valid"
+          }
+        },
+        "List": {
+          "ReportDialog": {
+            "title": "My reports"
+          },
+          "ReportListSidebar": {
+            "placeholder": "Search for reports...",
+            "empty": "No reports found"
+          },
+          "ReportListItem": {
+            "id": "ID: #{id}",
+            "status": {
+              "pending": "Pending",
+              "resolved": "Resolved",
+              "rejected": "Rejected"
+            },
+            "reasons": {
+              "inappropriate_behavior": "Inappropriate behavior",
+              "cheating": "Cheating",
+              "harassment": "Harassement",
+              "impersonation": "Impersonation",
+              "other": "Other"
+            }
+          },
+          "ReportDetails": {
+            "noSelection": "No report selected",
+            "info": "Select a report to view its details."
+          },
+          "ReportDetailsTabs": {
+            "title": "Report details",
+            "tabs": {
+              "details": "Details",
+              "users": "Users",
+              "attachment": "Attachment"
+            },
+            "content": {
+              "report": {
+                "reasons": {
+                  "label": "Reason of report:",
+                  "options": {
+                    "inappropriate_behavior": "Inappropriate behavior",
+                    "cheating": "Cheating",
+                    "harassment": "Harassment",
+                    "impersonation": "Impersonation",
+                    "other": "Other"
+                  }
+                },
+                "description": "Description:",
+                "createdAt": "Created at:",
+                "updatedAt": "Last updated at:",
+                "status": {
+                  "title": "Status:",
+                  "pending": "Pending",
+                  "resolved": "Resolved",
+                  "rejected": "Rejected"
+                }
+              },
+              "reporter": {
+                "title": "Reported by:",
+                "cta": {
+                  "profile": "See profile"
+                }
+              },
+              "reported": {
+                "title": "User reported:",
+                "cta": {
+                  "profile": "See profile"
+                }
+              },
+              "attachment": {
+                "title": "Attachment:",
+                "cta": "Open in a new tab"
+              },
+              "errors": {
+                "userNotAvailable": "User not available"
+              }
+            }
+          }
+        }
+      },
+      "SearchCommand": {
+        "trigger": "Search ( ⌘ + K )",
+        "placeholder": "Search for users...",
+        "empty": {
+          "title": "No users found",
+          "description": "Try another term for \"{term}\""
+        },
+        "group": {
+          "title": "Users",
+          "users": {
+            "level": "Level. {level}"
+          }
+        },
+        "help": {
+          "title": "Search for users",
+          "description": "Find players by name, role or location to view their view their profile and statistics",
+          "command": {
+            "escape": {
+              "trigger": "ESC",
+              "description": "to close"
+            },
+            "arrows": {
+              "trigger": "↑ / ↓",
+              "description": "to navigate"
+            },
+            "enter": {
+              "trigger": "Enter",
+              "description": "to select"
+            }
+          }
+        },
+        "about": "Search powered by Lootopia"
+      },
+      "Profile": {
+        "ActionMenu": {
+          "title": "Actions",
+          "label": "My Account",
+          "actions": {
+            "editProfile": "Edit my profile",
+            "myReports": "My reports",
+            "myPayments": "My payments",
+            "logout": "Logout",
+            "activateMfa": "Activate MFA",
+            "deactivateMfa": "Deactivate MFA"
+          }
+        },
+        "Mfa": {
+          "MfaVerificationForm": {
+            "title": "Two-factor authentication",
+            "description": "Please enter the 6-digit code generated by <br></br> your authentication application authentication application",
+            "form": {
+              "token": {
+                "label": "Authentication code"
+              },
+              "cta": {
+                "verify": "Verify"
+              }
+            },
+            "success": "You are connected!",
+            "errors": {
+              "mfaSessionExpired": "Your session has expired. Please log in again",
+              "userNotFound": "You are not authorized to perform this action",
+              "mfaInvalidToken": "Invalid token. Please check your authenticator app and try again"
+            }
+          },
+          "MfaForm": {
+            "form": {
+              "token": {
+                "label": "Authentication code",
+                "placeholder": "123456"
+              }
+            }
+          },
+          "MfaDeactivationDialog": {
+            "title": "Deactivate MFA",
+            "alert": {
+              "title": "Security warning",
+              "description": "Disabling two-factor authentication will make your your account more vulnerable. We recommend that you keep this additional security active."
+            },
+            "cta": {
+              "cancel": "Cancel",
+              "submit": "Deactivate"
+            },
+            "success": "Two-factor authentication has been deactivated successfully!",
+            "errors": {
+              "userNotFound": "You are not authorized to perform this action",
+              "mfaAlreadyDisabled": "Two-factor authentication is already disabled",
+              "mfaInvalidToken": "Invalid token. Please check your authenticator app and try again"
+            }
+          },
+          "MfaActivationDialog": {
+            "title": "Activate MFA",
+            "qrcode": {
+              "info": "Scan this QR code with your authentication app (Google Authenticator, Authy, etc.)",
+              "cta": {
+                "continue": "Continue"
+              }
+            },
+            "verify": {
+              "cta": {
+                "back": "back",
+                "activate": "Activate"
+              }
+            },
+            "errors": {
+              "userNotFound": "You are not authorized to perform this action",
+              "mfaNotEnabled": "Two-factor authentication is not enabled",
+              "mfaInvalidToken": "Invalid token. Please check your authenticator app and try again"
+            },
+            "success": "Two-factor authentication has been activated successfully!"
+          }
+        }
+      }
     },
     "Hunts": {
       "Map": {
@@ -479,17 +782,163 @@
         }
       },
       "SearchBar": {
-        "options": {  
+        "options": {
           "city": "By city",
           "name": "By Name",
           "organizer": "My hunts"
         },
         "placeholder": {
-          "city": "The legend of the lost jewel",
-          "name": "Paris, Le Havre, Marseille..."
+          "name": "The legend of the lost jewel",
+          "city": "Paris, Le Havre, Marseille..."
         },
         "cta": {
           "create-a-hunt": "Create a hunt"
+        }
+      },
+      "List": {
+        "Rewards": {
+          "crown": "Crown",
+          "artifact": "Artifact",
+          "loading": "Loading...",
+          "artifactLoading": "Loading artifact...",
+          "fileNotFoundOrNotSupported": "File not found or not supported",
+          "crownsExtension": " crowns",
+          "rarities": {
+            "common": "Common",
+            "uncommon": "Uncommon",
+            "rare": "Rare",
+            "epic": "Epic",
+            "legendary": "Legendary"
+          },
+          "cta": {
+            "close": "Close"
+          }
+        },
+        "ListItem": {
+          "title": "Update hunt",
+          "errors": {
+            "userNotFound": "You are not authorized to perform this action",
+            "huntNotFound": "Hunt not found",
+            "huntEndDateEarlierThanStartDate": "The end date must be later than the start date",
+            "notHuntOrganizer": "You are not the organizer of this hunt"
+          },
+          "success": "The hunt has been updated successfully!"
+        },
+        "ListItemActions": {
+          "tooltip": {
+            "requests": {
+              "title": "Manage participation requests",
+              "max": "+99"
+            },
+            "modify": {
+              "title": "Modify your hunt"
+            }
+          },
+          "cta": {
+            "leave": "Leave",
+            "pending": "Pending",
+            "join": "Join",
+            "request": "Request"
+          }
+        },
+        "ListItemBadges": {
+          "tooltip": {
+            "private": {
+              "title": "Private",
+              "description": "This hunt is private, you need to send a request to join."
+            },
+            "public": {
+              "title": "Public",
+              "description": "This hunt is public, you can join it directly."
+            }
+          },
+          "badges": {
+            "toCome": "To come",
+            "ongoing": "Ongoing",
+            "organizer": "Organizer"
+          }
+        },
+        "Participations": {
+          "ParticipationRequestListDialog": {
+            "title": "Manage participation requests for your treasure hunt \"{huntName}\"",
+            "searchPlaceholder": "Search by users nickname...",
+            "pendingRequests": "pending requests"
+          },
+          "ParticipationRequestList": {
+            "empty": "No pending requests",
+            "info": {
+              "received": "Received: {date}"
+            },
+            "actions": {
+              "accept": {
+                "success": "The user request has been accepted!",
+                "errors": {
+                  "userNotFound": "You are not authorized to perform this action",
+                  "huntNotFound": "Hunt not found",
+                  "userIsNotOrganizerOfHunt": "You are not the organizer of this hunt",
+                  "participationRequestNotFound": "The participation request does not exist",
+                  "userRequestingNotHaveEnoughCrowns": "The user does not have enough crowns to join the hunt",
+                  "huntIsFull": "The hunt is full, you cannot accept this request"
+                }
+              },
+              "reject": {
+                "success": "The user request has been rejected!",
+                "errors": {
+                  "userNotFound": "You are not authorized to perform this action",
+                  "huntNotFound": "Hunt not found",
+                  "userIsNotOrganizerOfHunt": "You are not the organizer of this hunt",
+                  "participationRequestNotFound": "The participation request does not exist"
+                }
+              }
+            }
+          },
+          "ParticipationRequestDialog": {
+            "title": "Apply to participate",
+            "description": "Would you like to join this private treasure hunt? <br></br> Your request will be reviewed by the hunt creator. If it is rejected, please wait 24 hours before submitting a new request.",
+            "cta": {
+              "cancel": "Cancel",
+              "submit": "Request to join"
+            },
+            "success": "You have successfully sent a request to join the hunt!",
+            "errors": {
+              "userNotFound": "You are not authorized to perform this action",
+              "huntNotFound": "Hunt not found",
+              "organizerCannotBeParticipant": "You cannot join your own hunt",
+              "cannotRequestOnPublicHunt": "You cannot send a request to join a public hunt",
+              "cannotResendRequestYet": "You cannot send a new request yet. Please wait 24 hours before sending another request.",
+              "participationAlreadyExists": "You are already a participant in this hunt",
+              "huntIsFull": "The hunt is full, you cannot send a request to join it"
+            }
+          },
+          "ParticipateDialog": {
+            "title": "Join the hunt",
+            "description": "Would you like to join this treasure hunt? You will be able to see all the details and participate in the adventure.",
+            "cta": {
+              "cancel": "Cancel",
+              "submit": "Join"
+            },
+            "success": "You have successfully joined the hunt!",
+            "errors": {
+              "userNotFound": "You are not authorized to perform this action",
+              "huntNotFound": "Hunt not found",
+              "organizerCannotBeParticipant": "You cannot join your own hunt",
+              "cannotJoinPrivateHuntDirectly": "You cannot join a private hunt directly. Please send a request to the organizer.",
+              "huntIsFull": "The hunt is full, you cannot join it"
+            }
+          },
+          "DeleteParticipationDialog": {
+            "title": "Leave the hunt",
+            "description": "Do you want to withdraw your participation from this treasure hunt? You will no longer be able to see the hunt details and will no longer participate in the adventure. <br></br> <strong>You will also lose the 50 crowns you spent to participate.</strong>",
+            "cta": {
+              "cancel": "Cancel",
+              "submit": "Withdraw my participation"
+            },
+            "success": "You have successfully withdrawn your participation from the hunt!",
+            "errors": {
+              "userNotFound": "You are not authorized to perform this action",
+              "huntNotFound": "Hunt not found"
+            }
+          }
         }
       }
     },
@@ -499,13 +948,128 @@
         "Form": {
           "name": {
             "label": "Name",
-            "error": "Invalid name" 
+            "error": "Invalid name"
           },
           "file": {
             "label": "Choose a model",
             "error": "Invalid file"
           },
           "submit": "Upload"
+        }
+      }
+    },
+    "Shop": {
+      "Popup": {
+        "title": "Crowns Shop",
+        "description": "Boost your adventure with more crowns!",
+        "specialOffers": {
+          "title": "Special Offers",
+          "first": {
+            "title": "First Purchase Bonus",
+            "description": "Get 50% more crowns on your first purchase!"
+          },
+          "flash": {
+            "title": "Weekend Flash Sale",
+            "description": "Limited-time offer: 25% off all crown packs this weekend!"
+          }
+        },
+        "about": {
+          "title": "About Crowns",
+          "description": "Crowns are Lootopia's virtual currency. They buy clues, unlock exclusive treasure hunts and access exclusive treasure hunts and access premium features."
+        },
+        "tos": {
+          "disclaimer": "Crowns are used for premium features and exclusive hunts. All purchases are final. See our",
+          "link": "Terms of Use",
+          "more": "for more details."
+        },
+        "errors": {
+          "userNotFound": "You are not authorized to perform this action",
+          "crownPackageNotFound": "The crown package does not exist",
+          "crownPackageStripeError": "An error occurred while creating the payment intent. Please try again."
+        }
+      },
+      "Card": {
+        "popular": "POPULAR",
+        "discount": "-{discount}%",
+        "discountedPrice": "{price}€",
+        "price": "{price}€",
+        "bonus": "{bonus} crowns bonus",
+        "instantDelivery": "Instant delivery",
+        "singlePurchase": "Single purchase",
+        "names": {
+          "starter_pack": "Starter Pack",
+          "explorer_pack": "Explorer Pack",
+          "adventurer_pack": "Adventurer Pack",
+          "treasure_hunter_pack": "Treasure Hunter Pack",
+          "legendary_pack": "Legendary Pack"
+        },
+        "cta": {
+          "buy": "Buy"
+        }
+      },
+      "StripeElements": {
+        "title": "Lootopia Payment",
+        "info": "Secure payment by Stripe. Your payment information is protected."
+      },
+      "ThankYou": {
+        "title": "Successful purchase!",
+        "subtitle": "Thank you for your purchase!",
+        "description": "Your {packageName} have been added to your account.",
+        "bonus": "+{bonus} bonus crowns!",
+        "names": {
+          "starter_pack": "Starter Pack",
+          "explorer_pack": "Explorer Pack",
+          "adventurer_pack": "Adventurer Pack",
+          "treasure_hunter_pack": "Treasure Hunter Pack",
+          "legendary_pack": "Legendary Pack"
+        },
+        "cta": {
+          "continue": "Continue adventure"
+        }
+      },
+      "List": {
+        "PaymentListDialog": {
+          "title": "History of transactions",
+          "search": "Search for transactions..."
+        },
+        "PaymentList": {
+          "empty": {
+            "title": "No transactions found",
+            "description": "Try changing your search criteria"
+          },
+          "package": {
+            "starter_pack": "Starter Pack",
+            "explorer_pack": "Explorer Pack",
+            "adventurer_pack": "Adventurer Pack",
+            "treasure_hunter_pack": "Treasure Hunter Pack",
+            "legendary_pack": "Legendary Pack"
+          },
+          "tooltip": {
+            "copied": "Copied!",
+            "cta": {
+              "copy": "Click to copy"
+            }
+          },
+          "status": {
+            "amount": {
+              "min": "-{amount} €",
+              "plus": "+{amount} €"
+            },
+            "options": {
+              "paid": "Terminated",
+              "unpaid": "Pending",
+              "no_payment_required": "No payment required"
+            }
+          }
+        },
+        "PaymentListExporter": {
+          "transactions": "transactions found",
+          "errors": {
+            "waitBeforeExportPayments": "Export payments is limited to once every 24 hours."
+          },
+          "cta": {
+            "export": "Export transactions"
+          }
         }
       }
     }

@@ -1,6 +1,6 @@
 import type { CombinedHuntSchema } from "@lootopia/common"
 import { hunts, chests } from "@lootopia/drizzle"
-import { db } from "@server/db/client"
+import { db } from "@server/utils/clients/postgres"
 
 export const insertHuntWithChests = async (
   data: CombinedHuntSchema,
@@ -17,10 +17,10 @@ export const insertHuntWithChests = async (
       .values({
         name: huntData.name,
         description: huntData.description,
-        city: huntData.city.toLowerCase(),
+        city: huntData.city,
         startDate,
         endDate,
-        mode: huntData.mode,
+        public: huntData.public,
         maxParticipants: huntData.maxParticipants,
         organizerId,
       })

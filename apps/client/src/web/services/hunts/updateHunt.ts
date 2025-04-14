@@ -1,9 +1,9 @@
-import type { HuntIdSchema, HuntSchema } from "@common/hunts"
+import type { HuntIdSchema, HuntSchema } from "@lootopia/common"
 
 import { client } from "@client/web/utils/client"
 
 export const updateHunt = async (huntId: HuntIdSchema, body: HuntSchema) => {
-  const response = await client.hunts[":huntId"].$put({
+  const response = await client.hunts.update[":huntId"].$put({
     param: huntId,
     json: body,
   })

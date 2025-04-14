@@ -9,13 +9,19 @@ import {
   Progress,
 } from "@lootopia/ui"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { LogOutIcon, MapPin, Settings, Star, Trophy } from "lucide-react"
+import { MapPin, Settings, Star, Trophy } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
+import { useState } from "react"
 
 import { config } from "@client/env"
+import ReportListDialog from "@client/web/components/features/reports/list/ReportListDialog"
+import PaymentListDialog from "@client/web/components/features/shop/list/PaymentListDialog"
+import ActionMenu from "@client/web/components/features/users/profile/ActionMenu"
 import EditProfileForm from "@client/web/components/features/users/profile/EditProfileForm"
+import MfaActivationDialog from "@client/web/components/features/users/profile/mfa/MfaActivationDialog"
+import MfaDeactivationDialog from "@client/web/components/features/users/profile/mfa/MfaDeactivationDialog"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
 import { routes } from "@client/web/routes"
 import { logout } from "@client/web/services/auth/logout"
@@ -34,60 +40,13 @@ const ProfilePage = () => {
     queryFn: () => getUserLoggedIn(),
   })
 
+  const [isEditProfileOpen, setIsEditProfileOpen] = useState(false)
+  const [isReportsOpen, setIsReportsOpen] = useState(false)
+  const [isPaymentsOpen, setIsPaymentsOpen] = useState(false)
+  const [isMfaActivateOpen, setIsMfaActivateOpen] = useState(false)
+  const [isMfaDisableOpen, setIsMfaDisableOpen] = useState(false)
+
   const user = data ? data : undefined
-
-  const profileHeaderVariant = {
-    initial: { opacity: 0, y: 20 },
-    enter: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  }
-
-  const statsCardVariant = {
-    initial: { opacity: 0, x: -20 },
-    enter: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.5,
-        delay: 0.2,
-      },
-    },
-  }
-
-  const progressCardVariant = {
-    initial: {
-      opacity: 0,
-      x: -20,
-    },
-    enter: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0,
-        delay: 0.4,
-      },
-    },
-  }
-
-  const bottomButtonsVariant = {
-    initial: {
-      opacity: 0,
-      y: 20,
-    },
-    enter: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        delay: 0.6,
-      },
-    },
-  }
 
   const logoutUser = async () => {
     await logout()
@@ -97,6 +56,26 @@ const ProfilePage = () => {
     qc.removeQueries({ queryKey: ["user"] })
 
     router.push(routes.auth.login)
+  }
+
+  const handleEditProfile = () => {
+    setIsEditProfileOpen((prev) => !prev)
+  }
+
+  const handleReports = () => {
+    setIsReportsOpen((prev) => !prev)
+  }
+
+  const handlePayments = () => {
+    setIsPaymentsOpen((prev) => !prev)
+  }
+
+  const handleActivateMfa = () => {
+    setIsMfaActivateOpen((prev) => !prev)
+  }
+
+  const handleDeactivateMfa = () => {
+    setIsMfaDisableOpen((prev) => !prev)
   }
 
   return (
@@ -113,22 +92,54 @@ const ProfilePage = () => {
               alt="Avatar"
               width={100}
               height={100}
-              className="aspect-square rounded-full"
+              className="aspect-square rounded-full object-contain"
             />
             <div>
               <h1 className="text-primary text-3xl font-bold">
                 {user?.nickname}
               </h1>
-              <p className="text-secondary">{user?.role}</p>
+              {user?.role && (
+                <p className="text-secondary font-medium italic">
+                  {t(`info.role.${user.role}`)}
+                </p>
+              )}
             </div>
           </CardContent>
 
-          <div className="mb-6 mr-6 flex flex-col gap-2 self-end">
-            {user && <EditProfileForm user={user} />}
+          <div className="mr-10 flex flex-col gap-2 self-center">
+            <ActionMenu
+              onEditProfile={handleEditProfile}
+              onLogout={logoutUser}
+              onListReports={handleReports}
+              onListPayments={handlePayments}
+              mfaEnabled={user?.mfaEnabled ?? false}
+              onActivateMFA={handleActivateMfa}
+              onDeactivateMFA={handleDeactivateMfa}
+            />
 
-            <Button onClick={logoutUser}>
-              <LogOutIcon /> {t("cta.logout")}
-            </Button>
+            {user && (
+              <EditProfileForm
+                user={user}
+                open={isEditProfileOpen}
+                setIsOpen={handleEditProfile}
+              />
+            )}
+
+            <ReportListDialog open={isReportsOpen} setIsOpen={handleReports} />
+
+            <PaymentListDialog
+              open={isPaymentsOpen}
+              setIsOpen={handlePayments}
+            />
+
+            <MfaActivationDialog
+              open={isMfaActivateOpen}
+              setIsOpen={handleActivateMfa}
+            />
+            <MfaDeactivationDialog
+              open={isMfaDisableOpen}
+              setIsOpen={handleDeactivateMfa}
+            />
           </div>
         </Card>
       </MotionComponent>
@@ -205,16 +216,16 @@ const ProfilePage = () => {
         {...anim(bottomButtonsVariant)}
       >
         <Button>
-          <MapPin className="mr-2 h-4 w-4" /> {t("cta.treasureMap")}
+          <MapPin className="mr-2 size-4" /> {t("cta.treasureMap")}
         </Button>
         <Button>
-          <Trophy className="mr-2 h-4 w-4" /> {t("cta.trophies")}
+          <Trophy className="mr-2 size-4" /> {t("cta.trophies")}
         </Button>
         <Button>
-          <Star className="mr-2 h-4 w-4" /> {t("cta.leaderboard")}
+          <Star className="mr-2 size-4" /> {t("cta.leaderboard")}
         </Button>
         <Button>
-          <Settings className="mr-2 h-4 w-4" /> {t("cta.settings")}
+          <Settings className="mr-2 size-4" /> {t("cta.settings")}
         </Button>
       </MotionComponent>
     </main>
@@ -222,3 +233,56 @@ const ProfilePage = () => {
 }
 
 export default ProfilePage
+
+const profileHeaderVariant = {
+  initial: { opacity: 0, y: 20 },
+  enter: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+}
+
+const statsCardVariant = {
+  initial: { opacity: 0, x: -20 },
+  enter: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.5,
+      delay: 0.2,
+    },
+  },
+}
+
+const progressCardVariant = {
+  initial: {
+    opacity: 0,
+    x: -20,
+  },
+  enter: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0,
+      delay: 0.4,
+    },
+  },
+}
+
+const bottomButtonsVariant = {
+  initial: {
+    opacity: 0,
+    y: 20,
+  },
+  enter: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      delay: 0.6,
+    },
+  },
+}

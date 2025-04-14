@@ -10,7 +10,7 @@ export const login = async (body: LoginSchema) => {
   if (response.ok) {
     const data = await response.json()
 
-    return data.result
+    return [response.ok, data]
   }
 
   return [response.ok, (await response.json()).key]
