@@ -1,31 +1,43 @@
 import { zValidator } from "@hono/zod-validator"
 import {
+  CHEST_REWARD_TYPES,
   crownCosts,
   huntIdSchema,
   positionSchema,
   SC,
   transactionTypes,
 } from "@lootopia/common"
+import { insertDiggedUserArtifact } from "@server/features/artifacts"
 import {
   notEnoughCrowns,
   selectCrownsByUserId,
+  updateDiggedCrownsTransaction,
   updateHuntCrownsTransaction,
 } from "@server/features/crowns"
 import {
+  chestAlreadyDigged,
+  chestIssueReportToAdmin,
   huntNotFound,
   noChestFoundInArea,
   noHintFound,
+  selectChestIfDigged,
   selectChestInAreaByHuntId,
   selectClosestChestByHuntId,
   selectHuntById,
+  supiciousMovement,
   updateHuntChestDigged,
   waitBeforeDigging,
   waitBeforeRequestingHint,
 } from "@server/features/hunts"
+import {
+  selectParticipantByHuntIdAndUserId,
+  userIsNotParticipant,
+} from "@server/features/participations"
 import { selectUserByEmail, userNotFound } from "@server/features/users"
 import { redis } from "@server/utils/clients/redis"
 import { isMovementSuspicious } from "@server/utils/helpers/anticheat"
 import {
+  huntTimeTTL,
   now,
   oneHourTTL,
   tenMinutesTTL,
@@ -75,10 +87,7 @@ export const digRoute = app
         )
 
         if (suspicious) {
-          return c.json(
-            { message: "Suspicious movement detected. Digging denied." },
-            SC.errors.FORBIDDEN
-          )
+          return c.json(supiciousMovement, SC.errors.FORBIDDEN)
         }
       }
 
@@ -88,25 +97,63 @@ export const digRoute = app
         return c.json(huntNotFound, SC.errors.NOT_FOUND)
       }
 
-      //TD: Verfier que le user est participant du hunt
+      const checkParticipation = await selectParticipantByHuntIdAndUserId(
+        huntId,
+        user.id
+      )
+
+      if (!checkParticipation) {
+        return c.json(userIsNotParticipant, SC.errors.FORBIDDEN)
+      }
 
       const chestInArea = await selectChestInAreaByHuntId(huntId, position)
 
       if (!chestInArea.length) {
-        return c.json(noChestFoundInArea, SC.success.OK)
+        return c.json(noChestFoundInArea, SC.errors.NOT_FOUND)
       }
 
       const randomIndex = randomInt(0, chestInArea.length)
       const selectedChest = chestInArea[randomIndex]
 
+      const checkIfAlreadyDigged = await selectChestIfDigged(
+        user.id,
+        selectedChest.id
+      )
+
+      if (checkIfAlreadyDigged || selectedChest.maxUsers <= 0) {
+        return c.json(chestAlreadyDigged, SC.errors.FORBIDDEN)
+      }
+
+      if (
+        (selectedChest.rewardType === CHEST_REWARD_TYPES.crown &&
+          !selectedChest.reward) ||
+        (selectedChest.rewardType === CHEST_REWARD_TYPES.artifact &&
+          !selectedChest.artifactId)
+      ) {
+        return c.json(chestIssueReportToAdmin, SC.errors.BAD_REQUEST)
+      }
+
+      if (selectedChest.rewardType === CHEST_REWARD_TYPES.artifact) {
+        await insertDiggedUserArtifact(
+          user.id,
+          selectedChest.artifactId!,
+          selectedChest.id
+        )
+      } else if (selectedChest.rewardType === CHEST_REWARD_TYPES.crown) {
+        await updateDiggedCrownsTransaction(
+          transactionTypes.huntDigging,
+          huntId,
+          user.id,
+          parseInt(selectedChest.reward!, 10)
+        )
+      }
+
       await updateHuntChestDigged(
         huntId,
+        user.id,
         selectedChest.id,
         selectedChest.maxUsers
       )
-
-      //TD: Enregistrer que tel user a ouvert tel coffre afin de ne pas le réouvrir
-      //TD: Attribuer la récompense au user
 
       await redis
         .multi()
@@ -125,7 +172,7 @@ export const digRoute = app
 
       return c.json(
         {
-          result: chestInArea,
+          result: selectedChest,
         },
         SC.success.OK
       )
@@ -163,10 +210,8 @@ export const digRoute = app
       const hintCount = await redis.get(hintCountKey)
 
       if (!hintCount) {
-        const huntTimeTTL = Math.floor(
-          (new Date(hunt.endDate).getTime() - now) / 1000
-        )
-        await redis.set(hintCountKey, 1, "EX", huntTimeTTL)
+        const huntTime = huntTimeTTL(hunt.endDate)
+        await redis.set(hintCountKey, 1, "EX", Math.max(huntTime, 1))
       }
 
       const userCrowns = await selectCrownsByUserId(user.id)
@@ -177,6 +222,13 @@ export const digRoute = app
         if (userCrowns?.amount < crownCosts.hintPurchase) {
           return c.json(notEnoughCrowns, SC.errors.FORBIDDEN)
         }
+
+        await updateHuntCrownsTransaction(
+          transactionTypes.hintPurchase,
+          huntId,
+          user.id,
+          crownCosts.hintPurchase
+        )
       } else {
         await redis.incr(hintCountKey)
       }
@@ -187,22 +239,63 @@ export const digRoute = app
         return c.json(noHintFound, SC.success.OK)
       }
 
-      const distanceMeters = hint.distance
+      /*
+        The distance is calculated in meters, but we want to return a range
+        of distances to make it less precise and more fun for the user.
+        So we add a random number between 5 and 10 to the distance.
+        This will give us a range of distances between 5 and 15 meters.
+      */
+      const imprecision = Math.floor(Math.random() * 6) + 5
+      const baseDistance = Math.round(hint.distance)
 
-      await updateHuntCrownsTransaction(
-        transactionTypes.hintPurchase,
-        huntId,
-        user.id,
-        crownCosts.hintPurchase
-      )
+      const minDistance = baseDistance
+      const maxDistance = baseDistance + imprecision
 
       await redis.set(hintCooldownKey, now, "EX", tenMinutesTTL)
 
       return c.json(
         {
-          result: distanceMeters,
+          result: {
+            minDistance,
+            maxDistance,
+          },
         },
         SC.success.OK
       )
     }
   )
+  .get("/:huntId/hint", zValidator("param", huntIdSchema), async (c) => {
+    const email = c.get(contextKeys.loggedUserEmail)
+    const { huntId } = c.req.param()
+
+    const user = await selectUserByEmail(email)
+
+    if (!user) {
+      return c.json(userNotFound, SC.errors.NOT_FOUND)
+    }
+
+    const isParticipant = await selectParticipantByHuntIdAndUserId(
+      huntId,
+      user.id
+    )
+
+    if (!isParticipant) {
+      return c.json(userIsNotParticipant, SC.errors.FORBIDDEN)
+    }
+
+    const hintCountKey = redisKeys.hunts.hintCount(huntId, email)
+    const hintCooldownKey = redisKeys.hunts.hintCooldown(huntId, email)
+
+    const hintCount = await redis.get(hintCountKey)
+    const cooldownTTL = await redis.ttl(hintCooldownKey)
+
+    return c.json(
+      {
+        result: {
+          count: parseInt(hintCount ?? "0"),
+          cooldown: Math.max(cooldownTTL, 0),
+        },
+      },
+      SC.success.OK
+    )
+  })

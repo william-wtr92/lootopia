@@ -155,7 +155,7 @@ export const selectClosestChestByHuntId = async (
   return db
     .select({
       chest: chests,
-      distance: sql`ST_Distance(
+      distance: sql<number>`ST_Distance(
       ${chests.position}::geography,
       ST_SetSRID(ST_MakePoint(${position.lng}, ${position.lat}), 4326)::geography
     )`.as("distance"),
@@ -164,4 +164,11 @@ export const selectClosestChestByHuntId = async (
     .where(and(eq(chests.huntId, huntId), gt(chests.maxUsers, 0)))
     .orderBy(sql`distance ASC`)
     .limit(1)
+}
+
+export const selectChestIfDigged = async (userId: string, chestId: string) => {
+  return db.query.chestOpenings.findFirst({
+    where: (table, { eq, and }) =>
+      and(eq(table.userId, userId), eq(table.chestId, chestId)),
+  })
 }

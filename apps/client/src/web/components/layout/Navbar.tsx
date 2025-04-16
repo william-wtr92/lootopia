@@ -47,11 +47,11 @@ const Navbar = () => {
 
   return (
     <motion.header
-      className={`sticky left-0 top-0 z-[11] h-fit px-16 py-8 transition-colors duration-300 ${
+      className={`sticky left-0 top-0 z-[11] h-fit w-full transition-colors duration-300 ${
         isScrolled ? "bg-white/20 shadow-md backdrop-blur" : ""
       }`}
     >
-      <nav className="flex items-center justify-between">
+      <nav className="flex items-center justify-between px-4 py-6 md:px-16">
         <Link href={routes.home}>
           <MotionComponent
             className="z-20 flex items-center gap-2"
@@ -66,10 +66,10 @@ const Navbar = () => {
         </Link>
 
         <MotionComponent
-          className="flex items-center justify-end space-x-4"
+          className="flex items-center justify-end space-x-0 md:space-x-4"
           {...anim(buttonsVariant)}
         >
-          <div className="z-20 flex items-center space-x-4">
+          <div className="z-20 flex items-center space-x-0 md:space-x-4">
             <SelectLocale />
             {!user ? (
               <>

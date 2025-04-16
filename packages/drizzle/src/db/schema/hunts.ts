@@ -55,3 +55,17 @@ export const chests = pgTable(
   },
   (table) => [index("chests_position_index").using("gist", table.position)]
 )
+
+export const chestOpenings = pgTable("chest_openings", {
+  id: uuid().defaultRandom().primaryKey().notNull(),
+  userId: uuid()
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  chestId: uuid()
+    .notNull()
+    .references(() => chests.id, { onDelete: "cascade" }),
+  huntId: uuid()
+    .notNull()
+    .references(() => hunts.id, { onDelete: "cascade" }),
+  obtainedAt: timestamp("obtained_at").notNull().defaultNow(),
+})

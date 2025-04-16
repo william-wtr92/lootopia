@@ -22,6 +22,9 @@ export const routes = {
     drafts: "/hunts/drafts",
     id: (huntId: string) => `/hunts/${huntId}`,
   },
+  artifacts: {
+    viewer: "/artifacts",
+  },
   api: {
     users: {
       me: "users/me",

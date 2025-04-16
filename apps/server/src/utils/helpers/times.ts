@@ -23,3 +23,8 @@ export const thirtyDaysTTL = oneDayTTL * 30
 
 /* Times in ms */
 export const oneDayInMs = oneDayTTL * 1000
+
+/* Times Custom */
+export const huntTimeTTL = (endDate: Date) => {
+  return Math.floor((new Date(endDate).getTime() - Date.now()) / 1000)
+}

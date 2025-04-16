@@ -53,3 +53,25 @@ export const huntMineListQuerySchema = huntBaseQuerySchema.extend({
 })
 
 export type HuntMineListQuerySchema = z.infer<typeof huntMineListQuerySchema>
+
+export const huntParticipationStatusQuery = {
+  started: "started",
+  upcoming: "upcoming",
+} as const
+
+export type HuntParticipationStatusQuery =
+  (typeof huntParticipationStatusQuery)[keyof typeof huntParticipationStatusQuery]
+
+export const participatedHuntQuerySchema = huntBaseQuerySchema.extend({
+  search: z.string().optional(),
+  status: z
+    .enum([
+      huntParticipationStatusQuery.started,
+      huntParticipationStatusQuery.upcoming,
+    ])
+    .optional(),
+})
+
+export type ParticipatedHuntQuerySchema = z.infer<
+  typeof participatedHuntQuerySchema
+>

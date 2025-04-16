@@ -66,6 +66,10 @@ export {
   type HuntMineListQuerySchema,
   huntIdSchema,
   type HuntIdSchema,
+  huntParticipationStatusQuery,
+  type HuntParticipationStatusQuery,
+  participatedHuntQuerySchema,
+  type ParticipatedHuntQuerySchema,
 } from "./hunts"
 
 export { cities, type City, OTHER_CITY_OPTION } from "./hunts/utils/cities"

@@ -3,6 +3,7 @@ import { Hono } from "hono"
 
 import { listArtifactsRoute } from "./artifacts/list"
 import { uploadArtifactRoute } from "./artifacts/upload"
+import { viewerRoute } from "./artifacts/viewer"
 import { emailValidationRoute } from "./auth/emailValidation"
 import { loginRoute } from "./auth/login"
 import { passwordResetRoute } from "./auth/passwordReset"
@@ -46,6 +47,7 @@ const huntsRoutes = new Hono()
   .route(DEFAULT_PATH, requestParticipationRoute)
 
 const artifactsRoutes = new Hono()
+  .route(DEFAULT_PATH, viewerRoute)
   .use(auth)
   .route(DEFAULT_PATH, uploadArtifactRoute)
   .route(DEFAULT_PATH, listArtifactsRoute)

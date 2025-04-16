@@ -40,6 +40,21 @@ export const waitBeforeDigging = {
   key: "waitBeforeDigging",
 } as const
 
+export const chestIssueReportToAdmin = {
+  result: "There was a problem with the chest. Please report to admin.",
+  key: "chestIssueReportToAdmin",
+} as const
+
+export const chestAlreadyDigged = {
+  result: "You have already dug this chest.",
+  key: "chestAlreadyDigged",
+} as const
+
+export const supiciousMovement = {
+  result: "Suspicious movement detected.",
+  key: "supiciousMovement",
+} as const
+
 // SUCCESS MESSAGES
 
 export const huntCreatedSuccess = {

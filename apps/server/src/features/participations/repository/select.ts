@@ -1,11 +1,15 @@
-import { participationRequestStatus } from "@lootopia/common"
+import {
+  participationRequestStatus,
+  type HuntParticipationStatusQuery,
+} from "@lootopia/common"
 import {
   huntParticipationRequests,
   huntParticipations,
+  hunts,
   users,
 } from "@lootopia/drizzle"
 import { db } from "@server/utils/clients/postgres"
-import { and, asc, count, eq, ilike, inArray } from "drizzle-orm"
+import { and, asc, count, eq, gte, ilike, inArray, lt } from "drizzle-orm"
 import { alias } from "drizzle-orm/pg-core"
 
 export const selectParticipantsByHuntId = async (huntId: string) => {
@@ -144,4 +148,68 @@ export const selectParticipationRequestsByHuntIds = async (
         inArray(huntParticipationRequests.huntId, huntIds)
       )
     )
+}
+
+export const selectHuntsWhereUserParticipates = async (
+  userId: string,
+  limit: number,
+  page: number,
+  search?: string,
+  status?: HuntParticipationStatusQuery
+) => {
+  const now = new Date()
+
+  return db
+    .select()
+    .from(hunts)
+    .innerJoin(huntParticipations, eq(hunts.id, huntParticipations.huntId))
+    .where(
+      and(
+        eq(huntParticipations.userId, userId),
+        search ? ilike(hunts.name, `%${search}%`) : undefined,
+        status === "started"
+          ? lt(hunts.startDate, now)
+          : status === "upcoming"
+            ? gte(hunts.startDate, now)
+            : undefined
+      )
+    )
+    .limit(limit)
+    .offset(limit * page)
+}
+export const selectHuntsWhereUserParticipatesCount = async (
+  userId: string,
+  search?: string,
+  status?: HuntParticipationStatusQuery
+) => {
+  const now = new Date()
+
+  return db
+    .select({ count: count() })
+    .from(hunts)
+    .innerJoin(huntParticipations, eq(hunts.id, huntParticipations.huntId))
+    .where(
+      and(
+        eq(huntParticipations.userId, userId),
+        search ? ilike(hunts.name, `%${search}%`) : undefined,
+        status === "started"
+          ? lt(hunts.startDate, now)
+          : status === "upcoming"
+            ? gte(hunts.startDate, now)
+            : undefined
+      )
+    )
+}
+
+export const selectParticipantByHuntIdAndUserId = async (
+  huntId: string,
+  userId: string
+) => {
+  return db.query.huntParticipations.findFirst({
+    where: (huntParticipations, { eq, and }) =>
+      and(
+        eq(huntParticipations.userId, userId),
+        eq(huntParticipations.huntId, huntId)
+      ),
+  })
 }

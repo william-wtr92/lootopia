@@ -39,3 +39,27 @@ export const updateCrownsShop = async (userId: string, amount: number) => {
     })
     .where(eq(crowns.userId, userId))
 }
+
+export const updateDiggedCrownsTransaction = async (
+  type: typeof transactionTypes.huntDigging,
+  huntId: string,
+  userId: string,
+  amount: number
+) => {
+  return db.transaction(async (tx) => {
+    await tx
+      .update(crowns)
+      .set({
+        amount: sql`${crowns.amount} + ${amount}`,
+        updatedAt: sql`NOW()`,
+      })
+      .where(eq(crowns.userId, userId))
+
+    await tx.insert(transactions).values({
+      type,
+      amount,
+      huntId,
+      userId,
+    })
+  })
+}

@@ -1,5 +1,5 @@
 import type { HuntSchema } from "@lootopia/common"
-import { chests, hunts } from "@lootopia/drizzle"
+import { chestOpenings, chests, hunts } from "@lootopia/drizzle"
 import type { Hunt } from "@server/features/hunts/types"
 import { db } from "@server/utils/clients/postgres"
 import { getUpdateValue } from "@server/utils/helpers/getUpdatedValue"
@@ -53,14 +53,23 @@ export const updateHunt = async (hunt: Hunt, updatedHunt: HuntSchema) => {
 
 export const updateHuntChestDigged = async (
   huntId: string,
+  userId: string,
   chestId: string,
   maxUsers: number
 ) => {
-  return db
-    .update(chests)
-    .set({
-      maxUsers: maxUsers - 1,
-      updatedAt: sql`NOW()`,
+  return db.transaction(async (tx) => {
+    await tx
+      .update(chests)
+      .set({
+        maxUsers: maxUsers - 1,
+        updatedAt: sql`NOW()`,
+      })
+      .where(and(eq(chests.huntId, huntId), eq(chests.id, chestId)))
+
+    await tx.insert(chestOpenings).values({
+      userId,
+      chestId,
+      huntId,
     })
-    .where(and(eq(chests.huntId, huntId), eq(chests.id, chestId)))
+  })
 }

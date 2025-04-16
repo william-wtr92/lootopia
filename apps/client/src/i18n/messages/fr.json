@@ -364,6 +364,15 @@
           "home": "Retour à l'accueil"
         }
       }
+    },
+    "Artifacts": {
+      "Viewer": {
+        "title": "Vue d'artefacts",
+        "description": "Découvrez les détails de l'artefact que vous avez gagné.",
+        "cta": {
+          "home": "Retour à l'accueil"
+        }
+      }
     }
   },
   "Components": {

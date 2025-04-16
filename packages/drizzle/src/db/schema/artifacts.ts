@@ -9,6 +9,7 @@ import {
 import { users } from "./users"
 
 import type { ArtifactRarity } from "@lootopia/common"
+import { chests } from "./hunts"
 
 export const artifacts = pgTable(
   "artifacts",
@@ -29,3 +30,15 @@ export const artifacts = pgTable(
     }
   }
 )
+
+export const userArtifacts = pgTable("user_artifacts", {
+  id: uuid().defaultRandom().primaryKey().notNull(),
+  userId: uuid()
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  artifactId: uuid()
+    .notNull()
+    .references(() => artifacts.id, { onDelete: "cascade" }),
+  obtainedFromChestId: uuid().references(() => chests.id),
+  obtainedAt: timestamp("obtained_at").notNull().defaultNow(),
+})

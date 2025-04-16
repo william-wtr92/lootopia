@@ -364,6 +364,15 @@
           "home": "Back to home"
         }
       }
+    },
+    "Artifacts": {
+      "Viewer": {
+        "title": "Artifact Viewer",
+        "description": "Discover the details of the artifact you have earned.",
+        "cta": {
+          "home": "Back to home"
+        }
+      }
     }
   },
   "Components": {
