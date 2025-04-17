@@ -280,6 +280,7 @@
         "progress": {
           "title": "Progression",
           "currentLevel": "Niveau actuel",
+          "experience": "{xp} / {xpToNextLevel} XP",
           "nextTrophy": "Prochain trophée"
         },
         "editModal": {

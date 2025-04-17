@@ -1,5 +1,10 @@
-import { DEFAULT_CROWN_AMOUNT, type InsertUser } from "@lootopia/common"
-import { crowns, users } from "@lootopia/drizzle"
+import {
+  DEFAULT_CROWN_AMOUNT,
+  defaultLevel,
+  defaultXP,
+  type InsertUser,
+} from "@lootopia/common"
+import { crowns, userLevels, users } from "@lootopia/drizzle"
 import { db } from "@server/utils/clients/postgres"
 
 export const insertUser = async (
@@ -27,6 +32,12 @@ export const insertUser = async (
     await tx.insert(crowns).values({
       amount: DEFAULT_CROWN_AMOUNT,
       userId: userInserted.userId,
+    })
+
+    await tx.insert(userLevels).values({
+      userId: userInserted.userId,
+      experience: defaultXP,
+      level: defaultLevel,
     })
   })
 }

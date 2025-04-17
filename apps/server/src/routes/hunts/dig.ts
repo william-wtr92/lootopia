@@ -6,6 +6,7 @@ import {
   positionSchema,
   SC,
   transactionTypes,
+  XP_REWARDS,
 } from "@lootopia/common"
 import { insertDiggedUserArtifact } from "@server/features/artifacts"
 import {
@@ -33,6 +34,7 @@ import {
   selectParticipantByHuntIdAndUserId,
   userIsNotParticipant,
 } from "@server/features/participations"
+import { updateExperience } from "@server/features/progressions"
 import { selectUserByEmail, userNotFound } from "@server/features/users"
 import { redis } from "@server/utils/clients/redis"
 import { isMovementSuspicious } from "@server/utils/helpers/anticheat"
@@ -139,6 +141,8 @@ export const digRoute = app
           selectedChest.artifactId!,
           selectedChest.id
         )
+
+        await updateExperience(user.id, XP_REWARDS.digSuccess)
       } else if (selectedChest.rewardType === CHEST_REWARD_TYPES.crown) {
         await updateDiggedCrownsTransaction(
           transactionTypes.huntDigging,
@@ -146,6 +150,8 @@ export const digRoute = app
           user.id,
           parseInt(selectedChest.reward!, 10)
         )
+
+        await updateExperience(user.id, XP_REWARDS.digSuccess)
       }
 
       await updateHuntChestDigged(

@@ -155,3 +155,11 @@ export {
   participationRequestIds,
   type ParticipationRequestIds,
 } from "./participations"
+
+// Progressions types
+export {
+  defaultLevel,
+  defaultXP,
+  XP_REWARDS,
+  xpRequired,
+} from "./progressions/levels"

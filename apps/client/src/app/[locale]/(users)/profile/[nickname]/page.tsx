@@ -99,7 +99,7 @@ const UserProfilePage = () => {
                 {userProfile.nickname}
                 <Badge className="bg-accent text-primary">
                   {t("level", {
-                    level: 23, // TD: replace with actual level
+                    level: userProfile?.progression?.level,
                   })}
                 </Badge>
               </h1>
@@ -128,7 +128,7 @@ const UserProfilePage = () => {
 
             <div className="grid grid-cols-3 gap-4">
               {[
-                { label: "Level", value: 22 },
+                { label: "Level", value: userProfile?.progression?.level },
                 { label: "Hunts", value: 30 },
                 { label: "Artifacts", value: 40 },
               ].map(({ label, value }) => (

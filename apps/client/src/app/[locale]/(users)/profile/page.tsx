@@ -1,5 +1,6 @@
 "use client"
 
+import { defaultXP } from "@lootopia/common"
 import {
   Button,
   Card,
@@ -28,6 +29,11 @@ import { logout } from "@client/web/services/auth/logout"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import { useAuthStore } from "@client/web/store/useAuthStore"
 import anim from "@client/web/utils/anim"
+import {
+  nextLevelXP,
+  previousLevelXP,
+  xpProgress,
+} from "@client/web/utils/helpers/levels"
 
 const ProfilePage = () => {
   const t = useTranslations("Pages.Users.Profile")
@@ -58,25 +64,19 @@ const ProfilePage = () => {
     router.push(routes.auth.login)
   }
 
-  const handleEditProfile = () => {
-    setIsEditProfileOpen((prev) => !prev)
-  }
+  const handleEditProfile = () => setIsEditProfileOpen((prev) => !prev)
+  const handleReports = () => setIsReportsOpen((prev) => !prev)
+  const handlePayments = () => setIsPaymentsOpen((prev) => !prev)
+  const handleActivateMfa = () => setIsMfaActivateOpen((prev) => !prev)
+  const handleDeactivateMfa = () => setIsMfaDisableOpen((prev) => !prev)
 
-  const handleReports = () => {
-    setIsReportsOpen((prev) => !prev)
-  }
-
-  const handlePayments = () => {
-    setIsPaymentsOpen((prev) => !prev)
-  }
-
-  const handleActivateMfa = () => {
-    setIsMfaActivateOpen((prev) => !prev)
-  }
-
-  const handleDeactivateMfa = () => {
-    setIsMfaDisableOpen((prev) => !prev)
-  }
+  const progressValue = user?.progression
+    ? xpProgress(
+        user.progression.experience,
+        previousLevelXP(user.progression.level),
+        nextLevelXP(user.progression.level)
+      )
+    : defaultXP
 
   return (
     <main className="relative z-10 flex w-full flex-1 flex-col gap-8 px-4 py-8">
@@ -169,7 +169,9 @@ const ProfilePage = () => {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-primary">{t("statistics.xp")}</span>
-                  <span className="text-primary font-bold">1337</span>
+                  <span className="text-primary font-bold">
+                    {user?.progression?.experience}
+                  </span>
                 </div>
               </div>
             </CardContent>
@@ -191,9 +193,20 @@ const ProfilePage = () => {
                     <span className="text-primary">
                       {t("progress.currentLevel")}
                     </span>
-                    <span className="text-primary font-bold">7</span>
+                    <span className="text-primary font-bold">
+                      {user?.progression?.level}
+                    </span>
                   </div>
-                  <Progress value={70} className="bg-secondaryBg h-2" />
+                  <Progress
+                    value={progressValue}
+                    className="bg-secondaryBg h-2"
+                  />
+                  <div className="text-muted-foreground text-primary text-right text-xs font-semibold">
+                    {t("progress.experience", {
+                      xp: user?.progression?.experience ?? defaultXP,
+                      xpToNextLevel: nextLevelXP(user?.progression?.level),
+                    })}
+                  </div>
                 </div>
 
                 <div className="space-y-1">

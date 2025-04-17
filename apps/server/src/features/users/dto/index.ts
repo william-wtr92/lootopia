@@ -25,6 +25,14 @@ export const sanitizeUser = <T extends keyof AdditionalUserFields>(
     phone: user.phone,
     birthdate: user.birthdate,
     ...(user.crowns !== undefined ? { crowns: user.crowns } : {}),
+    ...(user.progression !== undefined
+      ? {
+          progression: {
+            level: user.progression.level,
+            experience: user.progression.experience,
+          },
+        }
+      : {}),
     ...additionalData,
   }
 }

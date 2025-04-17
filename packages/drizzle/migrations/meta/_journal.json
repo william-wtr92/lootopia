@@ -29,6 +29,13 @@
       "when": 1744737110721,
       "tag": "0003_unknown_speedball",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1744883735139,
+      "tag": "0004_clear_karen_page",
+      "breakpoints": true
     }
   ]
 }
