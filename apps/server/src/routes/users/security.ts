@@ -1,5 +1,5 @@
 import { zValidator } from "@hono/zod-validator"
-import { mfaSchema, SC } from "@lootopia/common"
+import { MFA_ISSUER, mfaSchema, SC } from "@lootopia/common"
 import {
   mfaAlreadyDisabled,
   mfaAlreadyEnabled,
@@ -37,7 +37,7 @@ export const securityRoute = app
 
     await updateMFASecret(email, secret)
 
-    const otpauthUrl = authenticator.keyuri(email, "Lootopia", secret)
+    const otpauthUrl = authenticator.keyuri(email, MFA_ISSUER, secret)
 
     return c.json({ result: otpauthUrl }, SC.success.OK)
   })
