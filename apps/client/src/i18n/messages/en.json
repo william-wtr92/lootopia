@@ -661,7 +661,8 @@
               "mfaNotEnabled": "Two-factor authentication is not enabled",
               "mfaInvalidToken": "Invalid token. Please check your authenticator app and try again"
             },
-            "success": "Two-factor authentication has been activated successfully!"
+            "success": "Two-factor authentication has been activated successfully!",
+            "logout": "Logout"
           }
         }
       }

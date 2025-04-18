@@ -1,4 +1,8 @@
-import type { ChestSchema, PositionSchema } from "@lootopia/common"
+import {
+  defaultParticipationRequestCount,
+  type ChestSchema,
+  type PositionSchema,
+} from "@lootopia/common"
 import { chests, huntParticipations, hunts, users } from "@lootopia/drizzle"
 import type { HuntWithChests } from "@server/features/hunts/types"
 import { db } from "@server/utils/clients/postgres"
@@ -85,7 +89,7 @@ export const selectHunts = async ({
           }
         }),
         organizer,
-        participantCount: participantCount || 0,
+        participantCount: participantCount || defaultParticipationRequestCount,
       })
 
       return acc

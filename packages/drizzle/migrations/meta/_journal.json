@@ -5,36 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1744408969771,
-      "tag": "0000_fixed_squadron_sinister",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1744450165612,
-      "tag": "0001_motionless_madripoor",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1744547617149,
-      "tag": "0002_certain_lockjaw",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1744737110721,
-      "tag": "0003_unknown_speedball",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1744883735139,
-      "tag": "0004_clear_karen_page",
+      "when": 1745007314233,
+      "tag": "0000_eminent_bruce_banner",
       "breakpoints": true
     }
   ]

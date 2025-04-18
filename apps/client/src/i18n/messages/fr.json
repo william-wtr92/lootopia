@@ -661,7 +661,8 @@
               "mfaNotEnabled": "L'authentification à deux facteurs n'est pas activée",
               "mfaInvalidToken": "Code invalide. Veuillez vérifier votre application d'authentification et réessayer"
             },
-            "success": "L'authentification à deux facteurs a été activée avec succès !"
+            "success": "L'authentification à deux facteurs a été activée avec succès !",
+            "logout": "Déconnexion"
           }
         }
       }

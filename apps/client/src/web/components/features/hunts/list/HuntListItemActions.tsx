@@ -1,4 +1,7 @@
-import { participationRequestStatus } from "@lootopia/common"
+import {
+  defaultParticipationRequestCount,
+  participationRequestStatus,
+} from "@lootopia/common"
 import {
   Button,
   TooltipProvider,
@@ -31,11 +34,12 @@ const HuntListItemActions = ({
 }: Props) => {
   const t = useTranslations("Components.Hunts.List.ListItemActions")
 
-  const { data: participationRequestCount = 0 } = useQuery({
-    queryKey: ["participationRequestCount", hunt.id],
-    queryFn: () => getParticipationRequestCount({ huntId: hunt.id }),
-    enabled: isOrganizer && !hunt.public,
-  })
+  const { data: participationRequestCount = defaultParticipationRequestCount } =
+    useQuery({
+      queryKey: ["participationRequestCount", hunt.id],
+      queryFn: () => getParticipationRequestCount({ huntId: hunt.id }),
+      enabled: isOrganizer && !hunt.public,
+    })
 
   const [showParticipatePopup, setShowParticipatePopup] = useState(false)
   const [showLeavePopup, setShowLeavePopup] = useState(false)

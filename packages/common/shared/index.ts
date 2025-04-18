@@ -48,6 +48,7 @@ export {
 } from "./users/auth/passwordReset"
 
 export {
+  MFA_ISSUER,
   mfaSchema,
   type MfaSchema,
   mfaLoginSchema,
@@ -148,6 +149,7 @@ export { calculateDiscountedPrice } from "./shop/utils/calculateDiscountedPrice"
 
 // Participations types
 export {
+  defaultParticipationRequestCount,
   participationRequestStatus,
   type ParticipationRequestStatus,
   participationRequestsParamsSchema,
