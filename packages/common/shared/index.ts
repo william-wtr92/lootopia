@@ -47,6 +47,14 @@ export {
   type PasswordResetSchema,
 } from "./users/auth/passwordReset"
 
+export {
+  MFA_ISSUER,
+  mfaSchema,
+  type MfaSchema,
+  mfaLoginSchema,
+  type MfaLoginSchema,
+} from "./users/auth/mfa"
+
 // Hunts types
 export {
   huntSchema,

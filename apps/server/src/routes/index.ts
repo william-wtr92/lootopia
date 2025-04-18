@@ -18,6 +18,7 @@ import { paymentsRoute } from "./shop/payments"
 import { webhookRoute } from "./shop/webhook"
 import { userListRoute } from "./users/list"
 import { profileRoute } from "./users/profile"
+import { securityRoute } from "./users/security"
 
 const DEFAULT_PATH = "/" as const
 
@@ -31,6 +32,7 @@ const usersRoutes = new Hono()
   .use(auth)
   .route(DEFAULT_PATH, userListRoute)
   .route(DEFAULT_PATH, profileRoute)
+  .route(DEFAULT_PATH, securityRoute)
 
 const huntsRoutes = new Hono()
   .use(auth)

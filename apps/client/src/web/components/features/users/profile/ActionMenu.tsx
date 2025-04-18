@@ -7,7 +7,15 @@ import {
   DropdownMenuTrigger,
   Button,
 } from "@lootopia/ui"
-import { Banknote, Edit, Flag, LogOut, MoreHorizontal } from "lucide-react"
+import {
+  Banknote,
+  Edit,
+  Flag,
+  LogOut,
+  MoreHorizontal,
+  ShieldCheck,
+  ShieldX,
+} from "lucide-react"
 import { useTranslations } from "next-intl"
 
 type Props = {
@@ -15,6 +23,9 @@ type Props = {
   onEditProfile: () => void
   onListReports: () => void
   onListPayments: () => void
+  mfaEnabled: boolean
+  onActivateMFA: () => void
+  onDeactivateMFA: () => void
 }
 
 const ActionMenu = ({
@@ -22,6 +33,9 @@ const ActionMenu = ({
   onEditProfile,
   onListReports,
   onListPayments,
+  mfaEnabled,
+  onActivateMFA,
+  onDeactivateMFA,
 }: Props) => {
   const t = useTranslations("Components.Users.Profile.ActionMenu")
 
@@ -59,6 +73,22 @@ const ActionMenu = ({
           >
             <Banknote className="mr-2 size-4" />
             <span>{t("actions.myPayments")}</span>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            className="text-primary focus:bg-primary/10 cursor-pointer"
+            onClick={() => (mfaEnabled ? onDeactivateMFA() : onActivateMFA())}
+          >
+            {mfaEnabled ? (
+              <ShieldX className="mr-2 size-4" />
+            ) : (
+              <ShieldCheck className="mr-2 size-4" />
+            )}
+            <span>
+              {mfaEnabled
+                ? t("actions.deactivateMfa")
+                : t("actions.activateMfa")}
+            </span>
           </DropdownMenuItem>
           <DropdownMenuSeparator className="bg-primary/20" />
           <DropdownMenuItem

@@ -20,6 +20,8 @@ import ReportListDialog from "@client/web/components/features/reports/list/Repor
 import PaymentListDialog from "@client/web/components/features/shop/list/PaymentListDialog"
 import ActionMenu from "@client/web/components/features/users/profile/ActionMenu"
 import EditProfileForm from "@client/web/components/features/users/profile/EditProfileForm"
+import MfaActivationDialog from "@client/web/components/features/users/profile/mfa/MfaActivationDialog"
+import MfaDeactivationDialog from "@client/web/components/features/users/profile/mfa/MfaDeactivationDialog"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
 import { routes } from "@client/web/routes"
 import { logout } from "@client/web/services/auth/logout"
@@ -41,6 +43,8 @@ const ProfilePage = () => {
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false)
   const [isReportsOpen, setIsReportsOpen] = useState(false)
   const [isPaymentsOpen, setIsPaymentsOpen] = useState(false)
+  const [isMfaActivateOpen, setIsMfaActivateOpen] = useState(false)
+  const [isMfaDisableOpen, setIsMfaDisableOpen] = useState(false)
 
   const user = data ? data : undefined
 
@@ -64,6 +68,14 @@ const ProfilePage = () => {
 
   const handlePayments = () => {
     setIsPaymentsOpen((prev) => !prev)
+  }
+
+  const handleActivateMfa = () => {
+    setIsMfaActivateOpen((prev) => !prev)
+  }
+
+  const handleDeactivateMfa = () => {
+    setIsMfaDisableOpen((prev) => !prev)
   }
 
   return (
@@ -100,6 +112,9 @@ const ProfilePage = () => {
               onLogout={logoutUser}
               onListReports={handleReports}
               onListPayments={handlePayments}
+              mfaEnabled={user?.mfaEnabled ?? false}
+              onActivateMFA={handleActivateMfa}
+              onDeactivateMFA={handleDeactivateMfa}
             />
 
             {user && (
@@ -111,9 +126,19 @@ const ProfilePage = () => {
             )}
 
             <ReportListDialog open={isReportsOpen} setIsOpen={handleReports} />
+
             <PaymentListDialog
               open={isPaymentsOpen}
               setIsOpen={handlePayments}
+            />
+
+            <MfaActivationDialog
+              open={isMfaActivateOpen}
+              setIsOpen={handleActivateMfa}
+            />
+            <MfaDeactivationDialog
+              open={isMfaDisableOpen}
+              setIsOpen={handleDeactivateMfa}
             />
           </div>
         </Card>
