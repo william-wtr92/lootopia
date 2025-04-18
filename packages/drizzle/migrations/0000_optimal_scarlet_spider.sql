@@ -103,6 +103,8 @@ CREATE TABLE "users" (
 	"gdpr_validated" boolean DEFAULT false NOT NULL,
 	"active" boolean DEFAULT true NOT NULL,
 	"role" text DEFAULT 'user' NOT NULL,
+	"mfa_enabled" boolean DEFAULT false NOT NULL,
+	"mfa_secret" text,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "users_nickname_unique" UNIQUE("nickname"),

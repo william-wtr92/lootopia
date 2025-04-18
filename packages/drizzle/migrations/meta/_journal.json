@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1744408969771,
-      "tag": "0000_fixed_squadron_sinister",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1744450165612,
-      "tag": "0001_motionless_madripoor",
+      "when": 1744999471055,
+      "tag": "0000_optimal_scarlet_spider",
       "breakpoints": true
     }
   ]
