@@ -2,7 +2,7 @@ import { paymentStatus } from "@lootopia/common"
 import { Badge } from "@lootopia/ui"
 import { motion } from "framer-motion"
 import { Calendar, Copy, Crown, Receipt } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 
 import { useCopyToClipboard } from "@client/web/hooks/useCopyToClipboard"
 import type { PaymentResponse } from "@client/web/services/shop/getUserPaymentList"
@@ -10,19 +10,18 @@ import { getPaymentStatusColor } from "@client/web/utils/def/colors"
 import { formatDate } from "@client/web/utils/helpers/formatDate"
 
 type Props = {
-  inputValue: string
   filteredPayments: PaymentResponse[]
   listContainerRef: React.RefObject<HTMLDivElement | null>
   listRef: React.RefObject<HTMLDivElement | null>
 }
 
 const PaymentList = ({
-  inputValue,
   filteredPayments,
   listContainerRef,
   listRef,
 }: Props) => {
   const t = useTranslations("Components.Shop.List.PaymentList")
+  const locale = useLocale()
 
   const { copiedText, copy } = useCopyToClipboard()
 
@@ -42,11 +41,7 @@ const PaymentList = ({
       {filteredPayments.length === 0 ? (
         <div className="flex h-64 flex-col items-center justify-center p-6 text-center">
           <Receipt className="text-primary mb-4 size-12 opacity-30" />
-          <p className="text-secondary font-medium">
-            {t("empty.title", {
-              term: inputValue,
-            })}
-          </p>
+          <p className="text-secondary font-medium">{t("empty.title")}</p>
           <p className="text-primary mt-2 text-sm">{t("empty.description")}</p>
         </div>
       ) : (
@@ -96,7 +91,7 @@ const PaymentList = ({
                           <span>•</span>
                           <span className="flex items-center">
                             <Calendar className="mr-1 size-3" />
-                            {formatDate(transaction.date)}
+                            {formatDate(transaction.date, locale)}
                           </span>
                         </span>
                       </div>

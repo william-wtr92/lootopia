@@ -9,7 +9,8 @@ import { passwordResetRoute } from "./auth/passwordReset"
 import { registerRoute } from "./auth/register"
 import { createHuntRoute } from "./hunts/create"
 import { listHuntRoute } from "./hunts/list"
-import { partipateHuntRoute } from "./hunts/participate"
+import { partipateHuntRoute } from "./hunts/participations/participate"
+import { requestParticipationRoute } from "./hunts/participations/request"
 import { updateHuntRoute } from "./hunts/update"
 import { reportListRoute } from "./reports/list"
 import { reportUploadRoute } from "./reports/upload"
@@ -38,8 +39,9 @@ const huntsRoutes = new Hono()
   .use(auth)
   .route(DEFAULT_PATH, createHuntRoute)
   .route(DEFAULT_PATH, listHuntRoute)
-  .route(DEFAULT_PATH, partipateHuntRoute)
   .route(DEFAULT_PATH, updateHuntRoute)
+  .route(DEFAULT_PATH, partipateHuntRoute)
+  .route(DEFAULT_PATH, requestParticipationRoute)
 
 const artifactsRoutes = new Hono()
   .use(auth)

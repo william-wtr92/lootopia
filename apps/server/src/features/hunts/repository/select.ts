@@ -1,5 +1,8 @@
-import type { ChestSchema } from "@lootopia/common"
-import { chests, hunts, users } from "@lootopia/drizzle"
+import {
+  defaultParticipationRequestCount,
+  type ChestSchema,
+} from "@lootopia/common"
+import { chests, huntParticipations, hunts, users } from "@lootopia/drizzle"
 import type { HuntWithChests } from "@server/features/hunts/types"
 import { db } from "@server/utils/clients/postgres"
 import { and, count, eq, ilike, or, sql } from "drizzle-orm"
@@ -48,16 +51,17 @@ export const selectHunts = async ({
       organizer: {
         id: users.id,
         nickname: users.nickname,
-        email: users.email,
-        phone: users.phone,
-        birthdate: users.birthdate,
         avatar: users.avatar,
-        role: users.role,
       },
+      participantCount:
+        sql<number>`COUNT(DISTINCT ${huntParticipations.id})`.as(
+          "participantCount"
+        ),
     })
     .from(hunts)
     .leftJoin(chests, eq(hunts.id, chests.huntId))
     .leftJoin(users, eq(hunts.organizerId, users.id))
+    .leftJoin(huntParticipations, eq(hunts.id, huntParticipations.huntId))
     .groupBy(hunts.id, users.id)
     .limit(limit)
     .offset(page * limit)
@@ -70,23 +74,27 @@ export const selectHunts = async ({
 
   // Using the json_agg function in the query returns the chest's position in Point coordinates format
   // So we need to map it to XY coordinates
-  const processedResult = result.reduce((acc, { hunt, chests, organizer }) => {
-    acc.push({
-      ...hunt,
-      chests: (chests as ChestSchema[]).map((chest: any) => {
-        return {
-          ...chest,
-          position: {
-            x: chest.position.coordinates[0],
-            y: chest.position.coordinates[1],
-          },
-        }
-      }),
-      organizer,
-    })
+  const processedResult = result.reduce(
+    (acc, { hunt, chests, organizer, participantCount }) => {
+      acc.push({
+        ...hunt,
+        chests: (chests as ChestSchema[]).map((chest: any) => {
+          return {
+            ...chest,
+            position: {
+              x: chest.position.coordinates[0],
+              y: chest.position.coordinates[1],
+            },
+          }
+        }),
+        organizer,
+        participantCount: participantCount || defaultParticipationRequestCount,
+      })
 
-    return acc
-  }, [] as HuntWithChests[])
+      return acc
+    },
+    [] as HuntWithChests[]
+  )
 
   return processedResult
 }

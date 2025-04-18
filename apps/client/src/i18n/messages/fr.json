@@ -814,17 +814,133 @@
           "cta": {
             "close": "Fermer"
           }
-        }
-      },
-      "ListItem": {
-        "title": "Modifier la chasse",
-        "errors": {
-          "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
-          "huntNotFound": "Chasse introuvable",
-          "huntEndDateEarlierThanStartDate": "La date de fin doit être postérieure à la date de début",
-          "notHuntOrganizer": "Vous n'êtes pas l'organisateur de cette chasse"
         },
-        "success": "La chasse a été mise à jour avec succès !"
+        "ListItem": {
+          "title": "Modifier la chasse",
+          "errors": {
+            "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+            "huntNotFound": "Chasse introuvable",
+            "huntEndDateEarlierThanStartDate": "La date de fin doit être postérieure à la date de début",
+            "notHuntOrganizer": "Vous n'êtes pas l'organisateur de cette chasse"
+          },
+          "success": "La chasse a été mise à jour avec succès !"
+        },
+        "ListItemActions": {
+          "tooltip": {
+            "requests": {
+              "title": "Gérer les demandes de participation",
+              "max": "+99"
+            },
+            "modify": {
+              "title": "Modifier votre chasse"
+            }
+          },
+          "cta": {
+            "leave": "Quitter",
+            "pending": "En attente",
+            "join": "Rejoindre",
+            "request": "Demander"
+          }
+        },
+        "ListItemBadges": {
+          "tooltip": {
+            "private": {
+              "title": "Privée",
+              "description": "Cette chasse est privée, vous devez envoyer une demande pour y participer."
+            },
+            "public": {
+              "title": "Publique",
+              "description": "Cette chasse est publique, vous pouvez y participer directement."
+            }
+          },
+          "badges": {
+            "toCome": "À venir",
+            "ongoing": "En cours",
+            "organizer": "Organisateur"
+          }
+        },
+        "Participations": {
+          "ParticipationRequestListDialog": {
+            "title": "Gérez les demandes de participation à votre chasse au trésor \"{huntName}\"",
+            "searchPlaceholder": "Rechercher par pseudo d'utilisateur...",
+            "pendingRequests": "demandes en attente"
+          },
+          "ParticipationRequestList": {
+            "empty": "Aucune demande en attente",
+            "info": {
+              "received": "Reçue : {date}"
+            },
+            "actions": {
+              "accept": {
+                "success": "La demande de l'utilisateur a été acceptée !",
+                "errors": {
+                  "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+                  "huntNotFound": "Chasse introuvable",
+                  "userIsNotOrganizerOfHunt": "Vous n'êtes pas l'organisateur de cette chasse",
+                  "participationRequestNotFound": "La demande de participation n'existe pas",
+                  "userRequestingNotHaveEnoughCrowns": "L'utilisateur n'a pas assez de couronnes pour rejoindre la chasse",
+                  "huntIsFull": "La chasse est complète, vous ne pouvez pas accepter cette demande"
+                }
+              },
+              "reject": {
+                "success": "La demande de l'utilisateur a été rejetée !",
+                "errors": {
+                  "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+                  "huntNotFound": "Chasse introuvable",
+                  "userIsNotOrganizerOfHunt": "Vous n'êtes pas l'organisateur de cette chasse",
+                  "participationRequestNotFound": "La demande de participation n'existe pas"
+                }
+              }
+            }
+          },
+          "ParticipationRequestDialog": {
+            "title": "Demander à participer",
+            "description": "Souhaitez-vous rejoindre cette chasse au trésor privée ? <br></br> Votre demande sera examinée par le créateur de la chasse. Si elle est rejetée, veuillez attendre 24 heures avant de soumettre une nouvelle demande.",
+            "cta": {
+              "cancel": "Annuler",
+              "submit": "Demander à rejoindre"
+            },
+            "success": "Vous avez envoyé une demande pour rejoindre la chasse avec succès !",
+            "errors": {
+              "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+              "huntNotFound": "Chasse introuvable",
+              "organizerCannotBeParticipant": "Vous ne pouvez pas rejoindre votre propre chasse",
+              "cannotRequestOnPublicHunt": "Vous ne pouvez pas envoyer une demande pour rejoindre une chasse publique",
+              "cannotResendRequestYet": "Vous ne pouvez pas encore envoyer une nouvelle demande. Veuillez attendre 24 heures avant d'envoyer une autre demande.",
+              "participationAlreadyExists": "Vous êtes déjà participant à cette chasse",
+              "huntIsFull": "La chasse est complète, vous ne pouvez pas envoyer de demande"
+            }
+          },
+          "ParticipateDialog": {
+            "title": "Rejoindre la chasse",
+            "description": "Souhaitez-vous rejoindre cette chasse au trésor ? <space></space> Vous pourrez voir tous les détails et participer à l'aventure.",
+            "cta": {
+              "cancel": "Annuler",
+              "submit": "Rejoindre"
+            },
+            "success": "Vous avez rejoint la chasse avec succès !",
+            "errors": {
+              "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+              "huntNotFound": "Chasse introuvable",
+              "organizerCannotBeParticipant": "Vous ne pouvez pas rejoindre votre propre chasse",
+              "cannotJoinPrivateHuntDirectly": "Vous ne pouvez pas rejoindre une chasse privée directement. Veuillez envoyer une demande à l'organisateur.",
+              "huntIsFull": "La chasse est complète, vous ne pouvez pas la rejoindre"
+            }
+          },
+          "DeleteParticipationDialog": {
+            "title": "Quitter la chasse",
+            "description": "Souhaitez-vous retirer votre participation à cette chasse au trésor ? <space></space> Vous ne pourrez plus voir les détails de la chasse et ne participerez plus à l'aventure. <br></br> <strong>Vous perdrez également les 50 couronnes dépensées pour participer.</strong>",
+            "cta": {
+              "cancel": "Annuler",
+              "submit": "Retirer ma participation"
+            },
+            "success": "Vous avez retiré votre participation à la chasse avec succès !",
+            "errors": {
+              "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+              "huntNotFound": "Chasse introuvable"
+            }
+          }
+        }
       }
     },
     "Artifacts": {

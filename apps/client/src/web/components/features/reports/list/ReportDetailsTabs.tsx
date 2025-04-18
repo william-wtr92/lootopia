@@ -17,7 +17,7 @@ import {
   User,
 } from "lucide-react"
 import Image from "next/image"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 
 import { config } from "@client/env"
 import { Link } from "@client/i18n/routing"
@@ -32,6 +32,7 @@ type Props = {
 
 const ReportDetailsTabs = ({ selectedReport }: Props) => {
   const t = useTranslations("Components.Users.Reports.List.ReportDetailsTabs")
+  const locale = useLocale()
 
   const handleOpenAttachement = (attachment: string) => {
     window.open(config.blobUrl + attachment, "_blank")
@@ -106,7 +107,7 @@ const ReportDetailsTabs = ({ selectedReport }: Props) => {
                 </span>
               </div>
               <p className="text-primary pl-6">
-                {formatDate(selectedReport.report.createdAt)}
+                {formatDate(selectedReport.report.createdAt, locale)}
               </p>
             </div>
 
@@ -118,7 +119,7 @@ const ReportDetailsTabs = ({ selectedReport }: Props) => {
                 </span>
               </div>
               <p className="text-primary pl-6">
-                {formatDate(selectedReport.report.updatedAt)}
+                {formatDate(selectedReport.report.updatedAt, locale)}
               </p>
             </div>
 

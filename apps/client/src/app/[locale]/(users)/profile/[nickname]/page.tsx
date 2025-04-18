@@ -26,7 +26,7 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 import { useParams } from "next/navigation"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useState } from "react"
 
 import { getArtifacts, getRecentHunts } from "./mock-data"
@@ -39,6 +39,8 @@ import { formatDate } from "@client/web/utils/helpers/formatDate"
 
 const UserProfilePage = () => {
   const t = useTranslations("Pages.Users.UserProfile")
+  const locale = useLocale()
+
   const { nickname } = useParams<{ nickname: string }>()
 
   const [activeTab, setActiveTab] = useState("hunts")
@@ -118,7 +120,7 @@ const UserProfilePage = () => {
                 <Calendar className="h-4 w-4" />
                 <span>
                   {t("joined", {
-                    date: formatDate(userProfile.createdAt),
+                    date: formatDate(userProfile.createdAt, locale),
                   })}
                 </span>
               </div>
@@ -189,7 +191,7 @@ const UserProfilePage = () => {
                       </div>
                       <div className="flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
-                        <span>{formatDate(hunt.date)}</span>
+                        <span>{formatDate(hunt.date, locale)}</span>
                       </div>
                       <div className="flex items-center gap-1">
                         <Clock className="h-3 w-3" />
@@ -241,7 +243,7 @@ const UserProfilePage = () => {
                       <div className="text-primary mb-1 flex items-center gap-1 text-xs">
                         <Award className="size-3" />
                         <span>
-                          Found on {formatDate(artifact.acquiredDate)}
+                          Found on {formatDate(artifact.acquiredDate, locale)}
                         </span>
                       </div>
                       <p className="text-primary text-sm">

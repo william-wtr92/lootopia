@@ -18,3 +18,6 @@ export const oneDayTTL = 60 * 60 * 24
 export const twoDaysTTL = 60 * 60 * 24 * 2
 export const sevenDaysTTL = oneDayTTL * 7
 export const thirtyDaysTTL = oneDayTTL * 30
+
+/* Times in ms */
+export const oneDayInMs = oneDayTTL * 1000

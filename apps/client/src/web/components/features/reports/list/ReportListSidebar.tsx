@@ -63,11 +63,7 @@ const ReportListSidebar = ({
             className="flex min-h-[370px] flex-col items-center justify-center p-6 text-center"
           >
             <Flag className="text-primary mb-4 size-12 opacity-30" />
-            <p className="text-primary">
-              {t("empty", {
-                term: inputValue,
-              })}
-            </p>
+            <p className="text-primary">{t("empty")}</p>
           </div>
         ) : (
           reports?.map((reportDetails, i) => (

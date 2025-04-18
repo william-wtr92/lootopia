@@ -127,7 +127,6 @@ const PaymentListDialog = ({ open, setIsOpen }: Props) => {
           </div>
 
           <PaymentList
-            inputValue={inputValue}
             filteredPayments={filteredPayments}
             listContainerRef={listContainerRef}
             listRef={listRef}
