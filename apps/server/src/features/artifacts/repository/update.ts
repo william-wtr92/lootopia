@@ -1,6 +1,6 @@
 import { getRarityFromAvailability } from "@lootopia/common"
 import { artifacts, chests } from "@lootopia/drizzle"
-import { db } from "@server/db/client"
+import { db } from "@server/utils/clients/postgres"
 import { eq, sql } from "drizzle-orm"
 
 export const updateArtifactRarity = async (artifactId: string) => {

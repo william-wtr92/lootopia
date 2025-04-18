@@ -23,6 +23,19 @@ CREATE TABLE "chests" (
 	"artifactId" uuid
 );
 --> statement-breakpoint
+CREATE TABLE "crown_packages" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"name" text NOT NULL,
+	"crowns" integer NOT NULL,
+	"price" numeric(10, 2) NOT NULL,
+	"discount" integer,
+	"bonus" integer,
+	"popular" boolean DEFAULT false,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "crown_packages_name_unique" UNIQUE("name")
+);
+--> statement-breakpoint
 CREATE TABLE "crowns" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"amount" integer DEFAULT 0 NOT NULL,
@@ -44,6 +57,28 @@ CREATE TABLE "hunts" (
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	"organizerId" uuid NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "payments" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"userId" uuid NOT NULL,
+	"crownPackageId" uuid NOT NULL,
+	"amount" numeric(10, 2) NOT NULL,
+	"providerPaymentId" text NOT NULL,
+	"status" text NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "reports" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"reason" text NOT NULL,
+	"description" text NOT NULL,
+	"attachment" text,
+	"status" text NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"reporterId" uuid NOT NULL,
+	"reportedId" uuid NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "transactions" (
@@ -80,6 +115,10 @@ ALTER TABLE "chests" ADD CONSTRAINT "chests_huntId_hunts_id_fk" FOREIGN KEY ("hu
 ALTER TABLE "chests" ADD CONSTRAINT "chests_artifactId_artifacts_id_fk" FOREIGN KEY ("artifactId") REFERENCES "public"."artifacts"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "crowns" ADD CONSTRAINT "crowns_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "hunts" ADD CONSTRAINT "hunts_organizerId_users_id_fk" FOREIGN KEY ("organizerId") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "payments" ADD CONSTRAINT "payments_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "payments" ADD CONSTRAINT "payments_crownPackageId_crown_packages_id_fk" FOREIGN KEY ("crownPackageId") REFERENCES "public"."crown_packages"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "reports" ADD CONSTRAINT "reports_reporterId_users_id_fk" FOREIGN KEY ("reporterId") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "reports" ADD CONSTRAINT "reports_reportedId_users_id_fk" FOREIGN KEY ("reportedId") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "transactions" ADD CONSTRAINT "transactions_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "transactions" ADD CONSTRAINT "transactions_huntId_hunts_id_fk" FOREIGN KEY ("huntId") REFERENCES "public"."hunts"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 CREATE UNIQUE INDEX "sha_key_idx" ON "artifacts" USING btree ("shaKey");--> statement-breakpoint

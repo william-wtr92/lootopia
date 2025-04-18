@@ -158,7 +158,7 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
                   <SelectValue placeholder={t("rewardType.placeholder")} />
                 </SelectTrigger>
                 <SelectContent className="bg-primaryBg text-primary">
-                  {CHEST_REWARD_TYPES.map((type) => (
+                  {Object.values(CHEST_REWARD_TYPES).map((type) => (
                     <SelectItem
                       key={type}
                       value={type}

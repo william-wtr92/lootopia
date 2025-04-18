@@ -7,16 +7,22 @@ import {
   DropdownMenuTrigger,
   Button,
 } from "@lootopia/ui"
-import { Edit, Flag, LogOut, MoreHorizontal } from "lucide-react"
+import { Banknote, Edit, Flag, LogOut, MoreHorizontal } from "lucide-react"
 import { useTranslations } from "next-intl"
 
 type Props = {
   onLogout: () => void
   onEditProfile: () => void
   onListReports: () => void
+  onListPayments: () => void
 }
 
-const ActionMenu = ({ onLogout, onEditProfile, onListReports }: Props) => {
+const ActionMenu = ({
+  onLogout,
+  onEditProfile,
+  onListReports,
+  onListPayments,
+}: Props) => {
   const t = useTranslations("Components.Users.Profile.ActionMenu")
 
   return (
@@ -46,6 +52,13 @@ const ActionMenu = ({ onLogout, onEditProfile, onListReports }: Props) => {
           >
             <Flag className="mr-2 size-4" />
             <span>{t("actions.myReports")}</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="text-primary focus:bg-primary/10 cursor-pointer"
+            onClick={onListPayments}
+          >
+            <Banknote className="mr-2 size-4" />
+            <span>{t("actions.myPayments")}</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator className="bg-primary/20" />
           <DropdownMenuItem

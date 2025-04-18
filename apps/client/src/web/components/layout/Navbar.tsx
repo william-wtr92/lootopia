@@ -9,6 +9,7 @@ import { useState } from "react"
 
 import Logo from "./Logo"
 import { Link } from "@client/i18n/routing"
+import ShopPopup from "@client/web/components/features/shop/ShopPopup"
 import UsersSearchCommand from "@client/web/components/features/users/list/UsersSearchCommand"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
 import SelectLocale from "@client/web/components/utils/SelectLocale"
@@ -16,7 +17,7 @@ import { routes } from "@client/web/routes"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import { useAuthStore } from "@client/web/store/useAuthStore"
 import anim from "@client/web/utils/anim"
-import { formatCrowns } from "@client/web/utils/formatCrowns"
+import { formatCrowns } from "@client/web/utils/helpers/formatCrowns"
 
 const Navbar = () => {
   const t = useTranslations("Components.NavBar")
@@ -29,9 +30,15 @@ const Navbar = () => {
     queryFn: () => getUserLoggedIn(),
     enabled: !!token,
   })
+
   const user = data ? data : undefined
 
+  const [isShopOpen, setIsShopOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+
+  const handleShopOpen = () => {
+    setIsShopOpen((prev) => !prev)
+  }
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const MIN_SCROLL = 90
@@ -103,7 +110,10 @@ const Navbar = () => {
                     </span>
                     <Crown size={20} />
                   </div>
-                  <Button className="bg-primary text-accent hover:bg-secondary z-20 size-8 cursor-pointer rounded-r-md p-1">
+                  <Button
+                    className="bg-primary text-accent hover:bg-secondary z-20 size-8 cursor-pointer rounded-r-md p-1"
+                    onClick={handleShopOpen}
+                  >
                     <Plus size={10} />
                   </Button>
                 </div>
@@ -112,6 +122,12 @@ const Navbar = () => {
           </div>
         </MotionComponent>
       </nav>
+
+      <ShopPopup
+        isOpen={isShopOpen}
+        onClose={handleShopOpen}
+        currentCrowns={user?.crowns ?? undefined}
+      />
     </motion.header>
   )
 }

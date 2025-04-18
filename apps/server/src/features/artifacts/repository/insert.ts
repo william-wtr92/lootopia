@@ -1,6 +1,6 @@
 import type { ArtifactSchema } from "@lootopia/common"
 import { artifacts } from "@lootopia/drizzle"
-import { db } from "@server/db/client"
+import { db } from "@server/utils/clients/postgres"
 
 export const insertArtifact = async (
   artifact: ArtifactSchema,

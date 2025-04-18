@@ -1,6 +1,6 @@
 import { DEFAULT_CROWN_AMOUNT, type InsertUser } from "@lootopia/common"
 import { crowns, users } from "@lootopia/drizzle"
-import { db } from "@server/db/client"
+import { db } from "@server/utils/clients/postgres"
 
 export const insertUser = async (
   data: InsertUser,

@@ -7,6 +7,7 @@ import {
 } from "drizzle-orm/pg-core"
 
 import { users } from "./users"
+
 import type { ArtifactRarity } from "@lootopia/common"
 
 export const artifacts = pgTable(

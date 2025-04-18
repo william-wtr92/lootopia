@@ -355,6 +355,15 @@
           }
         }
       }
+    },
+    "Shop": {
+      "Return": {
+        "title": "Merci pour votre achat !",
+        "description": "Vos couronnes ont été ajoutées à votre compte. Vous pouvez maintenant continuer votre aventure !",
+        "cta": {
+          "home": "Retour à l'accueil"
+        }
+      }
     }
   },
   "Components": {
@@ -539,6 +548,7 @@
           "actions": {
             "editProfile": "Editer mon profil",
             "myReports": "Mes signalements",
+            "myPayments": "Mes paiements",
             "logout": "Déconnexion"
           }
         }
@@ -727,6 +737,121 @@
             "error": "Fichier invalide"
           },
           "submit": "Ajouter"
+        }
+      }
+    },
+    "Shop": {
+      "Popup": {
+        "title": "Boutique de Couronnes",
+        "description": "Boostez votre aventure avec plus de couronnes !",
+        "specialOffers": {
+          "title": "Offres Spéciales",
+          "first": {
+            "title": "Bonus Premier Achat",
+            "description": "Obtenez 50% de couronnes en plus lors de votre premier achat !"
+          },
+          "flash": {
+            "title": "Vente Flash du Week-end",
+            "description": "Offre limitée : 25% de réduction sur tous les packs de couronnes ce week-end !"
+          }
+        },
+        "about": {
+          "title": "À propos des Couronnes",
+          "description": "Les couronnes sont la monnaie virtuelle de Lootopia. Elles permettent d'acheter des indices, de débloquer des chasses au trésor exclusives et d'accéder à des fonctionnalités premium."
+        },
+        "tos": {
+          "disclaimer": "Les couronnes sont utilisées pour les fonctionnalités premium et les chasses exclusives. Tous les achats sont définitifs. Consultez nos",
+          "link": "Conditions d'Utilisation",
+          "more": "pour plus de détails."
+        },
+        "errors": {
+          "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+          "crownPackageNotFound": "Le pack de couronnes n'existe pas",
+          "crownPackageStripeError": "Une erreur s'est produite lors de la création de l'intention de paiement. Veuillez réessayer."
+        }
+      },
+      "Card": {
+        "popular": "POPULAIRE",
+        "discount": "-{discount}%",
+        "discountedPrice": "{price}€",
+        "price": "{price}€",
+        "bonus": "{bonus} couronnes bonus",
+        "instantDelivery": "Livraison instantanée",
+        "singlePurchase": "Achat unique",
+        "names": {
+          "starter_pack": "Pack de Démarrage",
+          "explorer_pack": "Pack de l'Explorateur",
+          "adventurer_pack": "Pack de l'Aventurier",
+          "treasure_hunter_pack": "Pack du Chasseur de Trésors",
+          "legendary_pack": "Pack Légendaire"
+        },
+        "cta": {
+          "buy": "Acheter"
+        }
+      },
+      "StripeElements": {
+        "title": "Paiement Lootopia",
+        "info": "Paiement sécurisé par Stripe. Vos informations de paiement sont protégées."
+      },
+      "ThankYou": {
+        "title": "Achat réussi !",
+        "subtitle": "Merci pour votre achat !",
+        "description": "Votre {packageName} a été ajouté à votre compte.",
+        "bonus": "+{bonus} couronnes bonus !",
+        "names": {
+          "starter_pack": "Pack de Démarrage",
+          "explorer_pack": "Pack de l'Explorateur",
+          "adventurer_pack": "Pack de l'Aventurier",
+          "treasure_hunter_pack": "Pack du Chasseur de Trésors",
+          "legendary_pack": "Pack Légendaire"
+        },
+        "cta": {
+          "continue": "Continuer l'aventure"
+        }
+      },
+      "List": {
+        "PaymentListDialog": {
+          "title": "Historique des transactions",
+          "search": "Rechercher des transactions..."
+        },
+        "PaymentList": {
+          "empty": {
+            "title": "Aucune de transactions trouvées pour {term}",
+            "description": "Essayez de modifier vos critères de recherche"
+          },
+          "package": {
+            "starter_pack": "Pack de Démarrage",
+            "explorer_pack": "Pack de l'Explorateur",
+            "adventurer_pack": "Pack de l'Aventurier",
+            "treasure_hunter_pack": "Pack du Chasseur de Trésors",
+            "legendary_pack": "Pack Légendaire"
+          },
+          "tooltip": {
+            "copied": "Copié !",
+            "cta": {
+              "copy": "Cliquer pour copier"
+            }
+          },
+          "status": {
+            "amount": {
+              "min": "-{amount} €",
+              "plus": "+{amount} €"
+            },
+            "options": {
+              "paid": "Terminée",
+              "unpaid": "En attente",
+              "no_payment_required": "Aucun paiement requis"
+            }
+          }
+        },
+        "PaymentListExporter": {
+          "transactions": "transactions trouvées",
+            "errors": {
+            "waitBeforeExportPayments": "L'exportation des paiements est limitée à une fois toutes les 24 heures."
+          },
+          "cta": {
+            "export": "Exporter les transactions"
+          }
         }
       }
     }

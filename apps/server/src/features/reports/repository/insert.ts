@@ -1,7 +1,7 @@
 import { reportStatus } from "@lootopia/common"
 import { reports } from "@lootopia/drizzle"
-import { db } from "@server/db/client"
 import type { InsertReport } from "@server/features/reports/types"
+import { db } from "@server/utils/clients/postgres"
 
 export const insertReport = async (
   reporterId: string,

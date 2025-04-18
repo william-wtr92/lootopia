@@ -10,7 +10,7 @@ import {
   getReportReasonColor,
   getReportStatusColor,
 } from "@client/web/utils/def/colors"
-import { formatDate } from "@client/web/utils/formatDate"
+import { formatDate } from "@client/web/utils/helpers/formatDate"
 
 type Props = {
   reportDetails: ReportResponse

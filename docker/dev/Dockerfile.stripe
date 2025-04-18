@@ -1,0 +1,9 @@
+FROM alpine:latest
+
+RUN apk add --no-cache curl tar
+
+RUN curl -L https://github.com/stripe/stripe-cli/releases/download/v1.26.1/stripe_1.26.1_linux_x86_64.tar.gz -o stripe.tar.gz \
+    && tar -xvzf stripe.tar.gz \
+    && mv stripe /usr/local/bin/stripe \
+    && chmod +x /usr/local/bin/stripe \
+    && rm stripe.tar.gz

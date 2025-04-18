@@ -5,7 +5,7 @@ import * as THREE from "three"
 
 import { AdjustCamera } from "@client/web/components/features/artifacts/three/AdjustCamera"
 import CustomThreeCanvas from "@client/web/components/features/artifacts/three/CustomThreeCanvas"
-import { loadObject } from "@client/web/utils/loadObject"
+import { loadObject } from "@client/web/utils/helpers/loadObject"
 
 export type Props = {
   fileUrl: string

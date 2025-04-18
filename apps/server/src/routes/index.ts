@@ -13,6 +13,9 @@ import { partipateHuntRoute } from "./hunts/participate"
 import { updateHuntRoute } from "./hunts/update"
 import { reportListRoute } from "./reports/list"
 import { reportUploadRoute } from "./reports/upload"
+import { crownPackagesRoute } from "./shop/crownPackages"
+import { paymentsRoute } from "./shop/payments"
+import { webhookRoute } from "./shop/webhook"
 import { userListRoute } from "./users/list"
 import { profileRoute } from "./users/profile"
 
@@ -46,10 +49,17 @@ const reportsRoutes = new Hono()
   .route(DEFAULT_PATH, reportUploadRoute)
   .route(DEFAULT_PATH, reportListRoute)
 
+const shopRoutes = new Hono()
+  .route(DEFAULT_PATH, webhookRoute)
+  .use(auth)
+  .route(DEFAULT_PATH, crownPackagesRoute)
+  .route(DEFAULT_PATH, paymentsRoute)
+
 export const routes = {
   auth: authRoutes,
   hunts: huntsRoutes,
   users: usersRoutes,
   artifacts: artifactsRoutes,
   reports: reportsRoutes,
+  shop: shopRoutes,
 }

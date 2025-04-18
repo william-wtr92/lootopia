@@ -1,6 +1,6 @@
 import { defaultPage } from "@lootopia/common"
 import { Button, Dialog, DialogContent, DialogTitle } from "@lootopia/ui"
-import { useInfiniteQuery } from "@tanstack/react-query"
+import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query"
 import { Flag, X } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
@@ -46,6 +46,7 @@ const ReportListDialog = ({ open, setIsOpen }: Props) => {
       },
       enabled: open,
       initialPageParam: defaultPage,
+      placeholderData: keepPreviousData,
     })
 
   const {
@@ -90,14 +91,14 @@ const ReportListDialog = ({ open, setIsOpen }: Props) => {
       <DialogContent className="border-primary bg-primaryBg h-[60vh] max-w-4xl overflow-hidden p-0">
         <div className="flex h-full flex-col">
           <div className="border-primary from-primary to-secondary flex items-center justify-between border-b bg-gradient-to-r p-6">
-            <DialogTitle className="text-accent flex items-center">
-              <Flag className="mr-2 size-5" />
+            <DialogTitle className="flex items-center text-white">
+              <Flag className="text-accent mr-2 size-5" />
               {t("title")}
             </DialogTitle>
             <Button
               variant="ghost"
               size="icon"
-              className="text-accent rounded-full hover:bg-white/10 focus-visible:ring-0"
+              className="rounded-full text-white hover:bg-white/10 focus-visible:ring-0"
               onClick={handleClosePopup}
             >
               <X className="size-5" />

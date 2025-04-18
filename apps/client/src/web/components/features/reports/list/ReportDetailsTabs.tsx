@@ -24,7 +24,7 @@ import { Link } from "@client/i18n/routing"
 import { routes } from "@client/web/routes"
 import type { ReportResponse } from "@client/web/services/reports/getUserReportList"
 import { getReportReasonColor } from "@client/web/utils/def/colors"
-import { formatDate } from "@client/web/utils/formatDate"
+import { formatDate } from "@client/web/utils/helpers/formatDate"
 
 type Props = {
   selectedReport: ReportResponse

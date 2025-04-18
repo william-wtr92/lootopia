@@ -35,7 +35,7 @@ const DialogContent = React.forwardRef<
     size?: "sm" | "md" | "lg" | "xl" | "fit"
     hideClose?: boolean
   }
->(({ className, children, size = "md", hideClose, ...props }, ref) => {
+>(({ className, children, size = "md", hideClose = true, ...props }, ref) => {
   const sizeClasses = {
     sm: "max-w-sm",
     md: "max-w-md",

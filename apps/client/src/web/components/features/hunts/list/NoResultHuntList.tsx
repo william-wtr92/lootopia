@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@lootopia/ui"
-import { CirclePlus, DeleteIcon, Map, RefreshCcw } from "lucide-react"
+import { CirclePlus, Delete, Map, RefreshCcw } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 
@@ -98,7 +98,7 @@ const NoResultHuntList = (props: Props) => {
           </Button>
         ) : (
           <Button variant={"default"} onClick={deleteSearch}>
-            <DeleteIcon /> {t("cta.delete-search-value")}
+            <Delete /> {t("cta.delete-search-value")}
           </Button>
         )}
 

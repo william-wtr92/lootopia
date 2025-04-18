@@ -12,11 +12,11 @@ import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { AnimatePresence } from "framer-motion"
 import {
   Award,
-  ChevronRightIcon,
+  ChevronRight,
   Clock,
   MapPin,
-  PencilRulerIcon,
-  UsersIcon,
+  PencilRuler,
+  Users,
 } from "lucide-react"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
@@ -31,9 +31,9 @@ import type { HuntResponse } from "@client/web/services/hunts/getHunts"
 import { updateHunt } from "@client/web/services/hunts/updateHunt"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import anim from "@client/web/utils/anim"
-import { capitalizeFirstLetter } from "@client/web/utils/capitalizeFirstLetter"
 import type { HuntFilterType } from "@client/web/utils/def/huntFilter"
-import { formatDate } from "@client/web/utils/formatDate"
+import { capitalizeFirstLetter } from "@client/web/utils/helpers/capitalizeFirstLetter"
+import { formatDate } from "@client/web/utils/helpers/formatDate"
 import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 type Props = {
@@ -96,35 +96,6 @@ const HuntListItem = (props: Props) => {
     qc.invalidateQueries({ queryKey: ["hunts", huntFilterType] })
   }
 
-  const mapVariant = {
-    initial: { opacity: 0, height: 0 },
-    enter: {
-      opacity: 1,
-      height: mapHeight,
-      transition: {
-        duration: 0.3,
-      },
-    },
-    exit: { opacity: 0, height: 0 },
-  }
-
-  const hiddenRewardsListVariant = {
-    initial: {},
-    enter: {
-      transition: {
-        when: "beforeChildren",
-        staggerChildren: 0.3,
-      },
-    },
-    exit: {
-      transition: {
-        when: "afterChildren",
-        staggerChildren: 0.3,
-        staggerDirection: -1,
-      },
-    },
-  }
-
   return (
     <>
       <div className="bg-primaryBg flex w-full flex-col overflow-hidden rounded-[12px]">
@@ -163,7 +134,7 @@ const HuntListItem = (props: Props) => {
               </span>
 
               <span>
-                <UsersIcon size={24} className="text-accent inline-block" />{" "}
+                <Users size={24} className="text-accent inline-block" />{" "}
                 {hunt.maxParticipants ? hunt.maxParticipants : "∞"}
               </span>
 
@@ -189,7 +160,7 @@ const HuntListItem = (props: Props) => {
           </div>
 
           {isOrganizer && (
-            <PencilRulerIcon
+            <PencilRuler
               size={26}
               className="text-accent hover:text-primary duration-300"
               onClick={(e) => {
@@ -199,9 +170,9 @@ const HuntListItem = (props: Props) => {
             />
           )}
 
-          <ChevronRightIcon
-            className={`text-primary cursor-pointer duration-300 ${isDeployed ? "rotate-90" : ""} `}
+          <ChevronRight
             size={32}
+            className={`text-primary cursor-pointer duration-300 ${isDeployed ? "rotate-90" : ""} `}
             onClick={(e) => {
               handleIsDeployed()
               e.stopPropagation()
@@ -244,3 +215,32 @@ const HuntListItem = (props: Props) => {
 }
 
 export default HuntListItem
+
+const mapVariant = {
+  initial: { opacity: 0, height: 0 },
+  enter: {
+    opacity: 1,
+    height: mapHeight,
+    transition: {
+      duration: 0.3,
+    },
+  },
+  exit: { opacity: 0, height: 0 },
+}
+
+const hiddenRewardsListVariant = {
+  initial: {},
+  enter: {
+    transition: {
+      when: "beforeChildren",
+      staggerChildren: 0.3,
+    },
+  },
+  exit: {
+    transition: {
+      when: "afterChildren",
+      staggerChildren: 0.3,
+      staggerDirection: -1,
+    },
+  },
+}

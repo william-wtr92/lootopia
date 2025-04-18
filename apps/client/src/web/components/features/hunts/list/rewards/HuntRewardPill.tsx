@@ -1,4 +1,4 @@
-import { CHEST_REWARD_TYPES, type ArtifactRarity } from "@lootopia/common"
+import { CHEST_REWARD_TYPES } from "@lootopia/common"
 import {
   Button,
   Dialog,
@@ -7,9 +7,9 @@ import {
   DialogTrigger,
 } from "@lootopia/ui"
 import { useQuery } from "@tanstack/react-query"
-import { CrownIcon, ShovelIcon, XIcon } from "lucide-react"
+import { Crown, Shovel, X } from "lucide-react"
 import { useTranslations } from "next-intl"
-import React, { useState } from "react"
+import { useState } from "react"
 
 import { config } from "@client/env"
 import { ThreeDViewer } from "@client/web/components/features/artifacts/three/ThreeDViewer"
@@ -18,6 +18,7 @@ import { MotionComponent } from "@client/web/components/utils/MotionComponent"
 import { getArtifactById } from "@client/web/services/artifacts/getArtifactById"
 import type { HuntResponse } from "@client/web/services/hunts/getHunts"
 import anim from "@client/web/utils/anim"
+import { getRewardPillRarityColor } from "@client/web/utils/def/colors"
 
 type Props = {
   chest: HuntResponse["chests"][0]
@@ -41,28 +42,6 @@ const HuntRewardPill = (props: Props) => {
   const handleOpen = (bool: boolean) => {
     setOpen(bool)
     refetch()
-  }
-
-  const getRarityColor = (rarity: ArtifactRarity) => {
-    switch (rarity) {
-      case "common":
-        return "bg-white text-black"
-
-      case "uncommon":
-        return "bg-[#39c30a] text-white"
-
-      case "rare":
-        return "bg-[#2f78ff] text-white"
-
-      case "epic":
-        return "bg-[#a346f0] text-white"
-
-      case "legendary":
-        return "bg-[#FFAA00] text-white"
-
-      default:
-        return "bg-white text-black"
-    }
   }
 
   const artifactName = data?.name
@@ -94,22 +73,25 @@ const HuntRewardPill = (props: Props) => {
           size="fit"
           onOpenAutoFocus={(e) => e.preventDefault()}
         >
-          <DialogTitle className="text-accent bg-primary flex items-center justify-between p-4">
+          <DialogTitle className="from-primary to-secondary flex items-center justify-between bg-gradient-to-r p-4 text-white">
             <div className="flex items-center gap-2">
               {chest.rewardType === CHEST_REWARD_TYPES.artifact ? (
-                <ShovelIcon size={24} />
+                <Shovel className="text-accent size-7" />
               ) : (
-                <CrownIcon size={24} />
+                <Crown className="text-accent size-7" />
               )}
               <span className="text-2xl font-medium">
                 {t(chest.rewardType)}
               </span>
             </div>
-            <XIcon
-              size={24}
-              className="cursor-pointer"
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full text-white hover:bg-white/10 focus-visible:ring-0"
               onClick={() => handleOpen(false)}
-            />
+            >
+              <X className="size-5" />
+            </Button>
           </DialogTitle>
 
           <MotionComponent className="flex min-h-[400px] w-[500px] flex-col items-center gap-3 rounded-md p-8">
@@ -125,7 +107,7 @@ const HuntRewardPill = (props: Props) => {
                   </div>
                 ) : (
                   <MotionComponent {...anim(rewardItemVariant)}>
-                    <CrownIcon size={160} className="text-primary" />
+                    <Crown size={160} className="text-primary" />
                   </MotionComponent>
                 )}
 
@@ -139,7 +121,7 @@ const HuntRewardPill = (props: Props) => {
 
                 <MotionComponent
                   type="span"
-                  className={`${getRarityColor(data?.rarity)} rounded-full px-4 py-1`}
+                  className={`${getRewardPillRarityColor(data?.rarity)} rounded-full px-4 py-1`}
                   {...anim(rarityPillVariant)}
                 >
                   {t(`rarities.${data?.rarity ?? "common"}`)}
@@ -176,6 +158,8 @@ const HuntRewardPill = (props: Props) => {
     </MotionComponent>
   )
 }
+
+export default HuntRewardPill
 
 const rewardItemVariant = {
   initial: { opacity: 0, scale: 0 },
@@ -257,5 +241,3 @@ const closeBtnVariant = {
     },
   },
 }
-
-export default HuntRewardPill

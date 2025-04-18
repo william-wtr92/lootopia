@@ -1,5 +1,5 @@
 import { reports, users } from "@lootopia/drizzle"
-import { db } from "@server/db/client"
+import { db } from "@server/utils/clients/postgres"
 import { and, count, desc, eq, ilike, or } from "drizzle-orm"
 import { alias } from "drizzle-orm/pg-core"
 

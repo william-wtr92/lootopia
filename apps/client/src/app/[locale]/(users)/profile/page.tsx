@@ -17,6 +17,7 @@ import { useState } from "react"
 
 import { config } from "@client/env"
 import ReportListDialog from "@client/web/components/features/reports/list/ReportListDialog"
+import PaymentListDialog from "@client/web/components/features/shop/list/PaymentListDialog"
 import ActionMenu from "@client/web/components/features/users/profile/ActionMenu"
 import EditProfileForm from "@client/web/components/features/users/profile/EditProfileForm"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
@@ -39,6 +40,7 @@ const ProfilePage = () => {
 
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false)
   const [isReportsOpen, setIsReportsOpen] = useState(false)
+  const [isPaymentsOpen, setIsPaymentsOpen] = useState(false)
 
   const user = data ? data : undefined
 
@@ -60,6 +62,10 @@ const ProfilePage = () => {
     setIsReportsOpen((prev) => !prev)
   }
 
+  const handlePayments = () => {
+    setIsPaymentsOpen((prev) => !prev)
+  }
+
   return (
     <main className="relative z-10 flex w-full flex-1 flex-col gap-8 px-4 py-8">
       <MotionComponent {...anim(profileHeaderVariant)}>
@@ -74,14 +80,16 @@ const ProfilePage = () => {
               alt="Avatar"
               width={100}
               height={100}
-              className="aspect-square rounded-full"
+              className="aspect-square rounded-full object-contain"
             />
             <div>
               <h1 className="text-primary text-3xl font-bold">
                 {user?.nickname}
               </h1>
               {user?.role && (
-                <p className="text-secondary">{t(`info.role.${user.role}`)}</p>
+                <p className="text-secondary font-medium italic">
+                  {t(`info.role.${user.role}`)}
+                </p>
               )}
             </div>
           </CardContent>
@@ -91,6 +99,7 @@ const ProfilePage = () => {
               onEditProfile={handleEditProfile}
               onLogout={logoutUser}
               onListReports={handleReports}
+              onListPayments={handlePayments}
             />
 
             {user && (
@@ -102,6 +111,10 @@ const ProfilePage = () => {
             )}
 
             <ReportListDialog open={isReportsOpen} setIsOpen={handleReports} />
+            <PaymentListDialog
+              open={isPaymentsOpen}
+              setIsOpen={handlePayments}
+            />
           </div>
         </Card>
       </MotionComponent>
