@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "id": "ebfb8b7d-8d92-4dc6-9cb2-895941af39ce",
+=======
+  "id": "86d849bb-fae3-4a15-9b67-357456c84a05",
+>>>>>>> main
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -826,6 +830,19 @@
           "primaryKey": false,
           "notNull": true,
           "default": "'user'"
+        },
+        "mfa_enabled": {
+          "name": "mfa_enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "mfa_secret": {
+          "name": "mfa_secret",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",

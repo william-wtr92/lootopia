@@ -1,5 +1,5 @@
 import { zValidator } from "@hono/zod-validator"
-import { mfaSchema, SC } from "@lootopia/common"
+import { MFA_ISSUER, mfaSchema, SC } from "@lootopia/common"
 import {
   mfaAlreadyDisabled,
   mfaAlreadyEnabled,
@@ -7,7 +7,7 @@ import {
   mfaInvalidToken,
   mfaNotEnabled,
   mfaVerifySuccess,
-  selectUserWithCrowns,
+  selectUserByEmail,
   updateMFADisable,
   updateMFAEnable,
   updateMFASecret,
@@ -23,7 +23,7 @@ export const securityRoute = app
   .get("/security/mfa/enable", async (c) => {
     const email = c.get(contextKeys.loggedUserEmail)
 
-    const user = await selectUserWithCrowns(email)
+    const user = await selectUserByEmail(email)
 
     if (!user) {
       return c.json(userNotFound, SC.errors.NOT_FOUND)
@@ -37,7 +37,7 @@ export const securityRoute = app
 
     await updateMFASecret(email, secret)
 
-    const otpauthUrl = authenticator.keyuri(email, "Lootopia", secret)
+    const otpauthUrl = authenticator.keyuri(email, MFA_ISSUER, secret)
 
     return c.json({ result: otpauthUrl }, SC.success.OK)
   })
@@ -45,7 +45,7 @@ export const securityRoute = app
     const email = c.get(contextKeys.loggedUserEmail)
     const { token } = await c.req.json()
 
-    const user = await selectUserWithCrowns(email)
+    const user = await selectUserByEmail(email)
 
     if (!user) {
       return c.json(userNotFound, SC.errors.NOT_FOUND)
@@ -72,7 +72,7 @@ export const securityRoute = app
     const email = c.get(contextKeys.loggedUserEmail)
     const { token } = await c.req.json()
 
-    const user = await selectUserWithCrowns(email)
+    const user = await selectUserByEmail(email)
 
     if (!user) {
       return c.json(userNotFound, SC.errors.NOT_FOUND)

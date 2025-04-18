@@ -1,5 +1,7 @@
 import { z } from "zod"
 
+export const MFA_ISSUER = "Lootopia" as const
+
 export const mfaSchema = z.object({
   token: z.string().length(6),
 })

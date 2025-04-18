@@ -48,6 +48,7 @@ export {
 } from "./users/auth/passwordReset"
 
 export {
+  MFA_ISSUER,
   mfaSchema,
   type MfaSchema,
   mfaLoginSchema,
