@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "id": "ebfb8b7d-8d92-4dc6-9cb2-895941af39ce",
-=======
-  "id": "86d849bb-fae3-4a15-9b67-357456c84a05",
->>>>>>> main
+  "id": "27f1ea7a-81c5-4b83-8ec5-6901d45b5aee",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -386,6 +382,195 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.hunt_participation_requests": {
+      "name": "hunt_participation_requests",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "userId": {
+          "name": "userId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "huntId": {
+          "name": "huntId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending'"
+        },
+        "requested_at": {
+          "name": "requested_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "responded_at": {
+          "name": "responded_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "unique_hunt_participation_request": {
+          "name": "unique_hunt_participation_request",
+          "columns": [
+            {
+              "expression": "userId",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "huntId",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "hunt_participation_requests_userId_users_id_fk": {
+          "name": "hunt_participation_requests_userId_users_id_fk",
+          "tableFrom": "hunt_participation_requests",
+          "tableTo": "users",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "hunt_participation_requests_huntId_hunts_id_fk": {
+          "name": "hunt_participation_requests_huntId_hunts_id_fk",
+          "tableFrom": "hunt_participation_requests",
+          "tableTo": "hunts",
+          "columnsFrom": [
+            "huntId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.hunt_participations": {
+      "name": "hunt_participations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "userId": {
+          "name": "userId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "huntId": {
+          "name": "huntId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "joined_at": {
+          "name": "joined_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "unique_hunt_participation": {
+          "name": "unique_hunt_participation",
+          "columns": [
+            {
+              "expression": "userId",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "huntId",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "hunt_participations_userId_users_id_fk": {
+          "name": "hunt_participations_userId_users_id_fk",
+          "tableFrom": "hunt_participations",
+          "tableTo": "users",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "hunt_participations_huntId_hunts_id_fk": {
+          "name": "hunt_participations_huntId_hunts_id_fk",
+          "tableFrom": "hunt_participations",
+          "tableTo": "hunts",
+          "columnsFrom": [
+            "huntId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.hunts": {
       "name": "hunts",
       "schema": "",
@@ -427,8 +612,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "mode": {
-          "name": "mode",
+        "public": {
+          "name": "public",
           "type": "boolean",
           "primaryKey": false,
           "notNull": true,
