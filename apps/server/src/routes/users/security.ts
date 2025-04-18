@@ -7,7 +7,7 @@ import {
   mfaInvalidToken,
   mfaNotEnabled,
   mfaVerifySuccess,
-  selectUserWithCrowns,
+  selectUserByEmail,
   updateMFADisable,
   updateMFAEnable,
   updateMFASecret,
@@ -23,7 +23,7 @@ export const securityRoute = app
   .get("/security/mfa/enable", async (c) => {
     const email = c.get(contextKeys.loggedUserEmail)
 
-    const user = await selectUserWithCrowns(email)
+    const user = await selectUserByEmail(email)
 
     if (!user) {
       return c.json(userNotFound, SC.errors.NOT_FOUND)
@@ -45,7 +45,7 @@ export const securityRoute = app
     const email = c.get(contextKeys.loggedUserEmail)
     const { token } = await c.req.json()
 
-    const user = await selectUserWithCrowns(email)
+    const user = await selectUserByEmail(email)
 
     if (!user) {
       return c.json(userNotFound, SC.errors.NOT_FOUND)
@@ -72,7 +72,7 @@ export const securityRoute = app
     const email = c.get(contextKeys.loggedUserEmail)
     const { token } = await c.req.json()
 
-    const user = await selectUserWithCrowns(email)
+    const user = await selectUserByEmail(email)
 
     if (!user) {
       return c.json(userNotFound, SC.errors.NOT_FOUND)
