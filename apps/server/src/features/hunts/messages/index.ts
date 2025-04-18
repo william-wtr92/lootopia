@@ -50,9 +50,9 @@ export const chestAlreadyDigged = {
   key: "chestAlreadyDigged",
 } as const
 
-export const supiciousMovement = {
+export const suspiciousMovement = {
   result: "Suspicious movement detected.",
-  key: "supiciousMovement",
+  key: "suspiciousMovement",
 } as const
 
 // SUCCESS MESSAGES

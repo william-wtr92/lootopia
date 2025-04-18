@@ -25,7 +25,7 @@ import {
   selectChestInAreaByHuntId,
   selectClosestChestByHuntId,
   selectHuntById,
-  supiciousMovement,
+  suspiciousMovement,
   updateHuntChestDigged,
   waitBeforeDigging,
   waitBeforeRequestingHint,
@@ -89,7 +89,7 @@ export const digRoute = app
         )
 
         if (suspicious) {
-          return c.json(supiciousMovement, SC.errors.FORBIDDEN)
+          return c.json(suspiciousMovement, SC.errors.FORBIDDEN)
         }
       }
 
