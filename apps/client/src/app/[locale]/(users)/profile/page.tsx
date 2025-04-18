@@ -139,7 +139,7 @@ const ProfilePage = () => {
 
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
         <MotionComponent {...anim(statsCardVariant)}>
-          <Card>
+          <Card className="h-full">
             <CardHeader>
               <CardTitle className="text-primary">
                 {t("statistics.title")}
