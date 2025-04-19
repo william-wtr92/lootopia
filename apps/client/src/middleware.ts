@@ -1,3 +1,5 @@
+/* eslint-disable max-depth */
+import { SC } from "@lootopia/common"
 import { NextResponse, type NextRequest } from "next/server"
 import createMiddleware from "next-intl/middleware"
 
@@ -45,7 +47,18 @@ export default async function middleware(request: NextRequest) {
       )
 
       if (!authResponse.ok) {
-        return NextResponse.redirect(new URL(routes.home, request.url))
+        const redirectResponse = NextResponse.redirect(
+          new URL(routes.home, request.url)
+        )
+
+        if (
+          authResponse.status === SC.serverErrors.INTERNAL_SERVER_ERROR &&
+          authToken
+        ) {
+          redirectResponse.cookies.delete(authTokenName)
+        }
+
+        return redirectResponse
       }
 
       return response

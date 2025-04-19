@@ -74,7 +74,6 @@ const ActionMenu = ({
             <Banknote className="mr-2 size-4" />
             <span>{t("actions.myPayments")}</span>
           </DropdownMenuItem>
-
           <DropdownMenuItem
             className="text-primary focus:bg-primary/10 cursor-pointer"
             onClick={() => (mfaEnabled ? onDeactivateMFA() : onActivateMFA())}

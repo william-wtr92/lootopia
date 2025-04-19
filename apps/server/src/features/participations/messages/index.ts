@@ -40,6 +40,11 @@ export const cannotResendRequestYet = {
   key: "cannotResendRequestYet",
 } as const
 
+export const userIsNotParticipant = {
+  result: "You are not a participant.",
+  key: "userIsNotParticipant",
+} as const
+
 // SUCCESS MESSAGES
 
 export const participationSuccess = {

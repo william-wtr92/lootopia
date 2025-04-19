@@ -4,8 +4,10 @@ import {
   defaultPage,
   huntListQuerySchema,
   huntMineListQuerySchema,
+  participatedHuntQuerySchema,
   participationRequestStatus,
   SC,
+  type HuntParticipationStatusQuery,
 } from "@lootopia/common"
 import {
   selectHunts,
@@ -14,6 +16,8 @@ import {
   type HuntWithChestsAndStatus,
 } from "@server/features/hunts"
 import {
+  selectHuntsWhereUserParticipates,
+  selectHuntsWhereUserParticipatesCount,
   selectParticipationRequestsByHuntIds,
   selectParticipationsByHuntIds,
 } from "@server/features/participations"
@@ -106,3 +110,43 @@ export const listHuntRoute = app
 
     return c.json({ result: hunts, lastPage })
   })
+  .get(
+    "/participations",
+    zValidator("query", participatedHuntQuerySchema),
+    async (c) => {
+      const email = c.get(contextKeys.loggedUserEmail)
+      const {
+        search,
+        limit: limitString,
+        page: offsetString,
+        status,
+      } = c.req.query()
+
+      const user = await selectUserByEmail(email)
+
+      if (!user) {
+        return c.json(userNotFound, SC.errors.NOT_FOUND)
+      }
+
+      const limit = parseInt(limitString, 10) || defaultLimit
+      const page = parseInt(offsetString, 10) || defaultPage
+
+      const hunts = await selectHuntsWhereUserParticipates(
+        user.id,
+        limit,
+        page,
+        search,
+        status as HuntParticipationStatusQuery
+      )
+
+      const [{ count }] = await selectHuntsWhereUserParticipatesCount(
+        user.id,
+        search,
+        status as HuntParticipationStatusQuery
+      )
+
+      const lastPage = Math.ceil(count / limit) - 1
+
+      return c.json({ result: hunts, lastPage })
+    }
+  )

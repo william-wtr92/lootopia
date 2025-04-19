@@ -280,6 +280,7 @@
         "progress": {
           "title": "Progress",
           "currentLevel": "Current level",
+          "experience": "{xp} / {xpToNextLevel} XP",
           "nextTrophy": "Next trophy"
         },
         "editModal": {
@@ -360,6 +361,15 @@
       "Return": {
         "title": "Tanks for your purchase!",
         "description": "Your crowns have been added to your account. You can now continue your adventure!",
+        "cta": {
+          "home": "Back to home"
+        }
+      }
+    },
+    "Artifacts": {
+      "Viewer": {
+        "title": "Artifact Viewer",
+        "description": "Discover the details of the artifact you have earned.",
         "cta": {
           "home": "Back to home"
         }

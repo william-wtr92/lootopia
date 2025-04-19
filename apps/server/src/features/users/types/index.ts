@@ -11,4 +11,8 @@ export type DecodedToken = {
 
 export type User = typeof users.$inferSelect & {
   crowns?: number | null
+  progression?: {
+    level?: number
+    experience?: number
+  }
 }

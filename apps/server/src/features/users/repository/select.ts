@@ -1,4 +1,5 @@
-import { crowns, users } from "@lootopia/drizzle"
+import { defaultLevel, defaultXP } from "@common/index"
+import { crowns, userLevels, users } from "@lootopia/drizzle"
 import type { User } from "@server/features/users/types"
 import { db } from "@server/utils/clients/postgres"
 import { eq, ilike, count } from "drizzle-orm"
@@ -10,9 +11,23 @@ export const selectUserByEmail = async (email: string) => {
 }
 
 export const selectUserByNickname = async (nickname: string) => {
-  return db.query.users.findFirst({
-    where: (users, { eq }) => eq(users.nickname, nickname),
-  })
+  const [row] = await db
+    .select({
+      user: users,
+      progression: {
+        level: userLevels.level,
+      },
+    })
+    .from(users)
+    .where(eq(users.nickname, nickname))
+    .leftJoin(userLevels, eq(users.id, userLevels.userId))
+
+  return {
+    ...row.user,
+    progression: {
+      level: row.progression?.level ?? defaultLevel,
+    },
+  }
 }
 
 export const selectUserByPhone = async (phone: string) => {
@@ -21,19 +36,28 @@ export const selectUserByPhone = async (phone: string) => {
   })
 }
 
-export const selectUserWithCrowns = async (email: string) => {
+export const selectUserWithCrownsAndProgression = async (email: string) => {
   const [row] = await db
     .select({
       user: users,
       crowns: crowns.amount,
+      progression: {
+        level: userLevels.level,
+        experience: userLevels.experience,
+      },
     })
     .from(users)
     .where(eq(users.email, email))
     .leftJoin(crowns, eq(users.id, crowns.userId))
+    .leftJoin(userLevels, eq(users.id, userLevels.userId))
 
   return {
     ...row.user,
     crowns: row.crowns ?? null,
+    progression: {
+      level: row.progression?.level ?? defaultLevel,
+      experience: row.progression?.experience ?? defaultXP,
+    },
   } satisfies User
 }
 

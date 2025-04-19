@@ -14,8 +14,8 @@ import {
   selectUserByEmail,
   selectUserByNickname,
   selectUserByPhone,
-  selectUserWithCrowns,
   updateUser,
+  selectUserWithCrownsAndProgression,
 } from "@server/features/users"
 import { azureDirectory, uploadImage } from "@server/utils/actions/azureActions"
 import { redis } from "@server/utils/clients/redis"
@@ -39,7 +39,7 @@ export const profileRoute = app
   .get("/me", async (c) => {
     const email = c.get(contextKeys.loggedUserEmail)
 
-    const user = await selectUserWithCrowns(email)
+    const user = await selectUserWithCrownsAndProgression(email)
 
     if (!user) {
       return c.json(userNotFound, SC.errors.NOT_FOUND)

@@ -1,7 +1,8 @@
 export const transactionTypes = {
   huntParticipation: "hunt_participation",
   huntCreation: "hunt_creation",
-  artifactPurchase: "artifact_purchase",
+  huntDigging: "hunt_digging",
+  hintPurchase: "hint_purchase",
 } as const
 
 export type TransactionType =
@@ -10,8 +11,11 @@ type TransactionKey = keyof typeof transactionTypes
 
 export const DEFAULT_CROWN_AMOUNT = 50 as const
 
-export const crownCosts: Record<TransactionKey, number> = {
+export const crownCosts: Record<
+  Exclude<TransactionKey, "huntDigging">,
+  number
+> = {
   huntParticipation: 20,
   huntCreation: 50,
-  artifactPurchase: 100,
+  hintPurchase: 5,
 }

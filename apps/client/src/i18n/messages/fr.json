@@ -280,6 +280,7 @@
         "progress": {
           "title": "Progression",
           "currentLevel": "Niveau actuel",
+          "experience": "{xp} / {xpToNextLevel} XP",
           "nextTrophy": "Prochain trophée"
         },
         "editModal": {
@@ -360,6 +361,15 @@
       "Return": {
         "title": "Merci pour votre achat !",
         "description": "Vos couronnes ont été ajoutées à votre compte. Vous pouvez maintenant continuer votre aventure !",
+        "cta": {
+          "home": "Retour à l'accueil"
+        }
+      }
+    },
+    "Artifacts": {
+      "Viewer": {
+        "title": "Vue d'artefacts",
+        "description": "Découvrez les détails de l'artefact que vous avez gagné.",
         "cta": {
           "home": "Retour à l'accueil"
         }

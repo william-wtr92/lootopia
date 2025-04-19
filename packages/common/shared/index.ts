@@ -67,6 +67,10 @@ export {
   type HuntMineListQuerySchema,
   huntIdSchema,
   type HuntIdSchema,
+  huntParticipationStatusQuery,
+  type HuntParticipationStatusQuery,
+  participatedHuntQuerySchema,
+  type ParticipatedHuntQuerySchema,
 } from "./hunts"
 
 export { cities, type City, OTHER_CITY_OPTION } from "./hunts/utils/cities"
@@ -153,3 +157,11 @@ export {
   participationRequestIds,
   type ParticipationRequestIds,
 } from "./participations"
+
+// Progressions types
+export {
+  defaultLevel,
+  defaultXP,
+  XP_REWARDS,
+  xpRequired,
+} from "./progressions/levels"

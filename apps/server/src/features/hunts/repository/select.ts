@@ -1,11 +1,12 @@
 import {
   defaultParticipationRequestCount,
   type ChestSchema,
+  type PositionSchema,
 } from "@lootopia/common"
 import { chests, huntParticipations, hunts, users } from "@lootopia/drizzle"
 import type { HuntWithChests } from "@server/features/hunts/types"
 import { db } from "@server/utils/clients/postgres"
-import { and, count, eq, ilike, or, sql } from "drizzle-orm"
+import { and, count, eq, gt, ilike, or, sql } from "drizzle-orm"
 
 export const selectHunts = async ({
   limit,
@@ -127,4 +128,51 @@ export const selectOrganizerHuntsCount = async (organizerId: string) => {
     .select({ count: count() })
     .from(hunts)
     .where(eq(hunts.organizerId, organizerId))
+}
+
+export const selectChestInAreaByHuntId = async (
+  huntId: string,
+  position: PositionSchema
+) => {
+  const tenMetersAround = 10
+
+  return db
+    .select()
+    .from(chests)
+    .where(
+      and(
+        eq(chests.huntId, huntId),
+        gt(chests.maxUsers, 0),
+        sql`ST_DWithin(
+        ${chests.position}::geography, 
+        ST_SetSRID(ST_MakePoint(${position.lng}, ${position.lat}), 4326)::geography, 
+        ${tenMetersAround} 
+      )`
+      )
+    )
+}
+
+export const selectClosestChestByHuntId = async (
+  huntId: string,
+  position: PositionSchema
+) => {
+  return db
+    .select({
+      chest: chests,
+      distance: sql<number>`ST_Distance(
+      ${chests.position}::geography,
+      ST_SetSRID(ST_MakePoint(${position.lng}, ${position.lat}), 4326)::geography
+    )`.as("distance"),
+    })
+    .from(chests)
+    .where(and(eq(chests.huntId, huntId), gt(chests.maxUsers, 0)))
+    .orderBy(sql`distance ASC`)
+    .limit(1)
+}
+
+export const selectChestIfDigged = async (userId: string, chestId: string) => {
+  return db.query.chestOpenings.findFirst({
+    where: (table, { eq, and }) =>
+      and(eq(table.userId, userId), eq(table.chestId, chestId)),
+  })
 }
