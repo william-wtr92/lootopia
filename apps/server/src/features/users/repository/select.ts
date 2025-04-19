@@ -22,6 +22,10 @@ export const selectUserByNickname = async (nickname: string) => {
     .where(eq(users.nickname, nickname))
     .leftJoin(userLevels, eq(users.id, userLevels.userId))
 
+  if (!row) {
+    return null
+  }
+
   return {
     ...row.user,
     progression: {
