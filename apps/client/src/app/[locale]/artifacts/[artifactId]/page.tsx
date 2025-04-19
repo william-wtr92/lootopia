@@ -30,7 +30,7 @@ const ArtifactViewerPage = () => {
   }
 
   return (
-    <main className="relative z-10 mx-auto flex min-h-screen flex-1 flex-col items-center justify-center">
+    <main className="relative z-10 mx-auto flex flex-1 flex-col items-center justify-center">
       <div className="mx-auto max-w-2xl text-center">
         <h1 className="text-primary mb-6 text-4xl font-bold">{t("title")}</h1>
 

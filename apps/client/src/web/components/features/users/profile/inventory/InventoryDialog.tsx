@@ -1,7 +1,11 @@
 "use client"
 
-import type { ArtifactRarity } from "@common/artifacts"
-import { artifactRarity, defaultLimit, defaultPage } from "@common/index"
+import {
+  artifactRarity,
+  defaultLimit,
+  defaultPage,
+  type ArtifactRarity,
+} from "@lootopia/common"
 import {
   Dialog,
   DialogContent,

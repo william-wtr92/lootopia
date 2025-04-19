@@ -1,5 +1,4 @@
-import type { ArtifactRarity } from "@common/artifacts"
-import { defaultPage } from "@common/index"
+import { defaultPage, type ArtifactRarity } from "@lootopia/common"
 import { Button } from "@lootopia/ui"
 import { ChevronLeft, ChevronRight, Gem } from "lucide-react"
 import { useLocale, useTranslations } from "next-intl"

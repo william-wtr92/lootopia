@@ -1,6 +1,5 @@
-import { artifactParamSchema } from "@common/artifacts"
-import { SC } from "@common/index"
 import { zValidator } from "@hono/zod-validator"
+import { SC, artifactParamSchema } from "@lootopia/common"
 import {
   artifactNotFound,
   selectArtifactById,

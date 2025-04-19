@@ -157,7 +157,9 @@ const ProfilePage = () => {
                   <span className="text-primary">
                     {t("statistics.treasuresFound")}
                   </span>
-                  <span className="text-primary font-bold">42</span>
+                  <span className="text-primary font-bold">
+                    {data?.stats.artifactsCount}
+                  </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-primary">

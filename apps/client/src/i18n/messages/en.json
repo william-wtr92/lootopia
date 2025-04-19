@@ -343,6 +343,11 @@
         "role": "Treasure hunter",
         "joined": "Joined {date}",
         "level": "Level {level}",
+        "stats": {
+          "level": "Level",
+          "hunts": "Hunts",
+          "artifacts": "Artifacts"
+        },
         "tabs": {
           "recentHunts": {
             "trigger": "Recent hunts",
@@ -352,7 +357,19 @@
           "artifacts": {
             "trigger": "Artifacts",
             "title": " Artifacts Collection",
-            "subtitle": "Discover the artifacts collected by {nickname}, sorted by rarity"
+            "subtitle": "Discover the artifacts collected by {nickname}, sorted by rarity",
+            "obtainedAt": "Obtained at {date}",
+            "hunt": "In hunt \"{huntName}\"",
+            "rarities": {
+              "common": "Common",
+              "uncommon": "Uncommon",
+              "rare": "Rare",
+              "epic": "Epic",
+              "legendary": "Legendary"
+            },
+            "cta": {
+              "view": "View"
+            }
           }
         }
       }

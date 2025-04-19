@@ -1,6 +1,6 @@
 "use client"
 
-import type { ArtifactRarity } from "@common/artifacts"
+import type { ArtifactRarity } from "@lootopia/common"
 import {
   Dialog,
   DialogContent,

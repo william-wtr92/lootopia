@@ -12,25 +12,26 @@ import {
   TabsList,
   TabsTrigger,
   Badge,
+  Button,
 } from "@lootopia/ui"
 import { useQuery } from "@tanstack/react-query"
 import { motion } from "framer-motion"
 import {
   MapPin,
   Calendar,
-  Trophy,
   Award,
-  Clock,
   MapPinned,
-  Amphora,
+  Swords,
+  Gem,
+  View,
 } from "lucide-react"
 import Image from "next/image"
 import { useParams } from "next/navigation"
 import { useLocale, useTranslations } from "next-intl"
 import { useState } from "react"
 
-import { getArtifacts, getRecentHunts } from "./mock-data"
 import { config } from "@client/env"
+import HuntRewardPill from "@client/web/components/features/hunts/list/rewards/HuntRewardPill"
 import ReportForm from "@client/web/components/features/reports/ReportForm"
 import { getUserByNickname } from "@client/web/services/users/getUserByNickname"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
@@ -44,6 +45,8 @@ const UserProfilePage = () => {
   const { nickname } = useParams<{ nickname: string }>()
 
   const [activeTab, setActiveTab] = useState("hunts")
+  const [showArtifact, setShowArtifact] = useState(false)
+  const [artifactId, setArtifactId] = useState<string | null>(null)
 
   const { data: userLoggedIn } = useQuery({
     queryKey: ["user"],
@@ -55,19 +58,18 @@ const UserProfilePage = () => {
     queryFn: () => getUserByNickname({ nickname }),
     enabled: !!nickname,
   })
-  const recentHunts = getRecentHunts()
-  const artifacts = getArtifacts()
+
+  const recentHunts = userProfile?.hunts || []
+  const sortedArtifacts = userProfile?.artifacts || []
 
   const handleTabChange = (value: string) => {
     setActiveTab(value)
   }
 
-  const rarityOrder = { legendary: 1, epic: 2, rare: 3, uncommon: 4, common: 5 }
-  const sortedArtifacts = [...artifacts].sort(
-    (a, b) =>
-      rarityOrder[a.rarity as keyof typeof rarityOrder] -
-      rarityOrder[b.rarity as keyof typeof rarityOrder]
-  )
+  const handleArtifactClick = (id: string) => {
+    setShowArtifact(true)
+    setArtifactId(id)
+  }
 
   if (!userProfile || isLoading) {
     return (
@@ -78,15 +80,15 @@ const UserProfilePage = () => {
   }
 
   return (
-    <main className="container relative z-10 mx-auto px-4 py-8">
+    <main className="container relative z-10 mx-auto flex-1 px-4 py-8">
       <Card className="border-primary mb-8 overflow-hidden">
         <div className="relative">
           <div className="from-primary to-secondary flex h-32 items-center justify-between bg-gradient-to-r px-4 md:px-6">
             <div className="relative top-2 flex gap-4">
               <Image
                 src={
-                  userProfile.avatar
-                    ? config.blobUrl + userProfile.avatar
+                  userProfile.user.avatar
+                    ? config.blobUrl + userProfile.user.avatar
                     : "/avatar-placeholder.png"
                 }
                 alt="Avatar"
@@ -96,7 +98,7 @@ const UserProfilePage = () => {
               />
 
               <h1 className="flex flex-col items-start justify-start gap-2 text-3xl font-bold">
-                {userProfile.nickname}
+                {userProfile.user.nickname}
                 <Badge className="bg-accent text-primary">
                   {t("level", {
                     level: userProfile?.progression?.level,
@@ -105,8 +107,8 @@ const UserProfilePage = () => {
               </h1>
             </div>
 
-            {userLoggedIn?.id !== userProfile.id && (
-              <ReportForm userNickname={userProfile.nickname} />
+            {userLoggedIn?.id !== userProfile.user.id && (
+              <ReportForm userNickname={userProfile.user.nickname} />
             )}
           </div>
         </div>
@@ -120,7 +122,7 @@ const UserProfilePage = () => {
                 <Calendar className="h-4 w-4" />
                 <span>
                   {t("joined", {
-                    date: formatDate(userProfile.createdAt, locale),
+                    date: formatDate(userProfile.user.createdAt, locale),
                   })}
                 </span>
               </div>
@@ -128,9 +130,18 @@ const UserProfilePage = () => {
 
             <div className="grid grid-cols-3 gap-4">
               {[
-                { label: "Level", value: userProfile?.progression?.level },
-                { label: "Hunts", value: 30 },
-                { label: "Artifacts", value: 40 },
+                {
+                  label: t("stats.level"),
+                  value: userProfile?.progression?.level,
+                },
+                {
+                  label: t("stats.hunts"),
+                  value: userProfile.stats.huntsCount,
+                },
+                {
+                  label: t("stats.artifacts"),
+                  value: userProfile.stats.artifactsCount,
+                },
               ].map(({ label, value }) => (
                 <div
                   key={label}
@@ -167,41 +178,55 @@ const UserProfilePage = () => {
               <CardTitle>{t("tabs.recentHunts.title")}</CardTitle>
               <CardDescription>
                 {t("tabs.recentHunts.subtitle", {
-                  nickname: userProfile.nickname,
+                  nickname: userProfile.user.nickname,
                 })}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               {recentHunts.map((hunt) => (
                 <motion.div
-                  key={hunt.id}
-                  className="border-primary flex items-center gap-4 rounded-lg border p-4 hover:bg-white/50"
+                  key={hunt?.id}
+                  className="border-primary flex justify-between gap-4 rounded-lg border bg-white/40 p-4 transition hover:bg-white/60"
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <MapPinned className="text-primary size-10" />
-                  <div className="flex-grow">
-                    <h3 className="text-primary mb-2 font-bold">
-                      {hunt.title}
-                    </h3>
-                    <div className="text-primary grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
-                      <div className="flex items-center gap-1">
-                        <MapPin className="h-3 w-3" />
-                        <span>{hunt.location}</span>
+                  <div className="flex w-full">
+                    <div className="bg-accent/20 flex items-center justify-center rounded-full p-6">
+                      <Swords className="text-primary size-9" />
+                    </div>
+
+                    <div className="flex flex-col">
+                      <h3 className="text-primary mb-1 truncate text-lg font-semibold">
+                        {hunt?.name}
+                      </h3>
+
+                      <div className="text-primary mb-3 flex items-center gap-1 text-sm">
+                        <span className="line-clamp-2">
+                          {hunt?.description}
+                        </span>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-3 w-3" />
-                        <span>{formatDate(hunt.date, locale)}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        <span>{hunt.duration}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Trophy className="h-3 w-3" />
-                        <span>{hunt.reward}</span>
+
+                      <div className="text-secondary flex items-center gap-1 text-sm">
+                        <MapPin className="size-4" />
+                        <span className="truncate">{hunt?.city}</span>
                       </div>
                     </div>
+                  </div>
+
+                  <div className="text-secondary flex w-1/6 flex-col justify-center gap-7 text-sm">
+                    {hunt?.startDate && (
+                      <div className="flex items-center gap-1">
+                        <Calendar className="size-4" />
+                        {formatDate(hunt.startDate, locale)}
+                      </div>
+                    )}
+
+                    {hunt?.endDate && (
+                      <div className="flex items-center gap-1">
+                        <MapPinned className="size-4" />
+                        {formatDate(hunt.endDate, locale)}
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               ))}
@@ -215,7 +240,7 @@ const UserProfilePage = () => {
               <CardTitle>{t("tabs.artifacts.title")}</CardTitle>
               <CardDescription>
                 {t("tabs.artifacts.subtitle", {
-                  nickname: userProfile.nickname,
+                  nickname: userProfile.user.nickname,
                 })}
               </CardDescription>
             </CardHeader>
@@ -227,32 +252,53 @@ const UserProfilePage = () => {
                   whileHover={{ scale: 1.03 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="relative">
-                      <Amphora className="text-primary size-8" />
-                    </div>
-                    <div>
-                      <h3 className="text-primary mb-1 flex items-center gap-2 font-bold">
-                        <span>{artifact.name}</span>
-                        <Badge
-                          className={`text-xs ${getArtifactRarityColor(artifact.rarity as ArtifactRarity)}`}
-                        >
-                          {artifact.rarity}
-                        </Badge>
-                      </h3>
-                      <div className="text-primary mb-1 flex items-center gap-1 text-xs">
-                        <Award className="size-3" />
-                        <span>
-                          Found on {formatDate(artifact.acquiredDate, locale)}
-                        </span>
+                  <div className="flex w-full items-center justify-between gap-14">
+                    <div className="flex items-center gap-8">
+                      <div className="relative">
+                        <Gem className="text-primary size-8" />
                       </div>
-                      <p className="text-primary text-sm">
-                        {artifact.description}
-                      </p>
+                      <div>
+                        <h3 className="text-primary mb-1 flex items-center gap-2 font-bold">
+                          <span>{artifact.name}</span>
+                          <Badge
+                            className={`text-xs ${getArtifactRarityColor(artifact.rarity as ArtifactRarity)}`}
+                          >
+                            {t(
+                              `tabs.artifacts.rarities.${artifact.rarity as ArtifactRarity}`
+                            )}
+                          </Badge>
+                        </h3>
+                        <div className="text-primary mb-1 flex items-center gap-1 text-xs">
+                          <Award className="size-3" />
+                          <span>
+                            {t("tabs.artifacts.obtainedAt", {
+                              date: formatDate(artifact.obtainedAt!, locale),
+                            })}
+                          </span>
+                        </div>
+                        <p className="text-primary text-sm">
+                          {t("tabs.artifacts.hunt", {
+                            huntName: artifact.huntName,
+                          })}
+                        </p>
+                      </div>
                     </div>
+                    <Button
+                      className="mr-6"
+                      onClick={() =>
+                        artifact.id && handleArtifactClick(artifact.id)
+                      }
+                    >
+                      {t("tabs.artifacts.cta.view")}
+                      <View className="size-5" />
+                    </Button>
                   </div>
                 </motion.div>
               ))}
+
+              {showArtifact && artifactId && (
+                <HuntRewardPill key={artifactId} artifactId={artifactId} />
+              )}
             </CardContent>
           </Card>
         </TabsContent>
