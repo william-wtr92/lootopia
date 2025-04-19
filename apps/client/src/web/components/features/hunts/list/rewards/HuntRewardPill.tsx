@@ -83,7 +83,7 @@ const HuntRewardPill = (props: Props) => {
 
         <DialogContent
           hideClose={true}
-          className="bg-secondaryBg text-secondary max-h-[90vh] rounded-md border-none outline-none"
+          className="bg-secondaryBg text-secondary max-h-[90vh] overflow-hidden rounded-md border-none outline-none"
           size="fit"
           onOpenAutoFocus={(e) => e.preventDefault()}
         >

@@ -174,9 +174,8 @@ const HuntListItem = (props: Props) => {
           <ChevronRight
             size={32}
             className={`text-primary cursor-pointer duration-300 ${isDeployed ? "rotate-90" : ""} `}
-            onClick={(e) => {
+            onClick={() => {
               handleIsDeployed()
-              e.stopPropagation()
             }}
           />
         </div>
