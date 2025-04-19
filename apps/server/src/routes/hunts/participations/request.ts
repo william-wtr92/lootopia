@@ -5,7 +5,7 @@ import {
   defaultPage,
   huntIdSchema,
   participationRequestIds,
-  participationRequestsParamsSchema,
+  participationRequestsQuerySchema,
   participationRequestStatus,
   SC,
   transactionTypes,
@@ -243,7 +243,7 @@ export const requestParticipationRoute = app
   .get(
     "/participate/:huntId/requests",
     zValidator("param", huntIdSchema),
-    zValidator("query", participationRequestsParamsSchema),
+    zValidator("query", participationRequestsQuerySchema),
     async (c) => {
       const email = c.get(contextKeys.loggedUserEmail)
       const huntId = c.req.param("huntId")

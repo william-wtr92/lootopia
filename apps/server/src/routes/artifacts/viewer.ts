@@ -10,7 +10,7 @@ import { Hono } from "hono"
 const app = new Hono()
 
 export const viewerRoute = app.get(
-  "/:id",
+  "/viewer/:id",
   zValidator("param", artifactParamSchema),
   async (c) => {
     const id = c.req.param("id")

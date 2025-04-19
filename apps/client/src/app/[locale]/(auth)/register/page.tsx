@@ -56,7 +56,7 @@ const RegisterPage = () => {
 
   const form = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
-    mode: "onBlur",
+    mode: "onTouched",
     defaultValues: {
       avatar: undefined,
       nickname: "",

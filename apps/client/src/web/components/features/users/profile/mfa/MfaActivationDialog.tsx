@@ -32,7 +32,7 @@ const MfaActivationDialog = ({ open, setIsOpen }: Props) => {
   const qc = useQueryClient()
 
   const { data } = useQuery({
-    queryKey: ["mfa-enable"],
+    queryKey: ["mfaEnable"],
     queryFn: () => getUserMfa(),
     enabled: open,
     refetchOnWindowFocus: false,

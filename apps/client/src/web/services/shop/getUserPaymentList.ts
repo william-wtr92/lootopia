@@ -1,4 +1,4 @@
-import { defaultLimit, type PaymentListParamsSchema } from "@lootopia/common"
+import { defaultLimit, type PaymentListQuerySchema } from "@lootopia/common"
 import type { InferResponseType } from "hono"
 
 import { client } from "@client/web/utils/client"
@@ -10,7 +10,7 @@ export type PaymentResponse = Exclude<
   string
 >
 
-export const getUserPaymentList = async (queries: PaymentListParamsSchema) => {
+export const getUserPaymentList = async (queries: PaymentListQuerySchema) => {
   const response = await $get({
     query: {
       search: queries.search,

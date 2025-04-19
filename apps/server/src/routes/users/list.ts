@@ -3,7 +3,7 @@ import {
   defaultLimit,
   defaultPage,
   SC,
-  userSearchParamsSchema,
+  userSearchQuerySchema,
 } from "@lootopia/common"
 import {
   sanitizeUsers,
@@ -19,7 +19,7 @@ const app = new Hono()
 
 export const userListRoute = app.get(
   "/search",
-  zValidator("query", userSearchParamsSchema),
+  zValidator("query", userSearchQuerySchema),
   async (c) => {
     const email = c.get(contextKeys.loggedUserEmail)
     const { limit: limitString, page: offsetString, search } = c.req.query()

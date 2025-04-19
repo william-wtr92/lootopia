@@ -24,6 +24,7 @@ export const routes = {
   },
   artifacts: {
     viewer: "/artifacts",
+    viewerDetail: (artifactId: string) => `/artifacts/${artifactId}`,
   },
   api: {
     users: {

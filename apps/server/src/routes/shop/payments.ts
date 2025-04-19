@@ -5,7 +5,7 @@ import {
   defaultLimit,
   defaultPage,
   packageIdSchema,
-  paymentListParamsSchema,
+  paymentListQuerySchema,
   SC,
   sessionIdSchema,
 } from "@lootopia/common"
@@ -132,7 +132,7 @@ export const paymentsRoute = app
       return c.json({ result: crownPackage }, SC.success.OK)
     }
   )
-  .get("/payments", zValidator("query", paymentListParamsSchema), async (c) => {
+  .get("/payments", zValidator("query", paymentListQuerySchema), async (c) => {
     const email = c.get(contextKeys.loggedUserEmail)
     const { limit: limitString, page: offsetString, search } = c.req.query()
 

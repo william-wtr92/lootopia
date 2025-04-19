@@ -2,7 +2,7 @@ import { zValidator } from "@hono/zod-validator"
 import {
   defaultLimit,
   defaultPage,
-  reportListParamsSchema,
+  reportListQuerySchema,
   SC,
 } from "@lootopia/common"
 import {
@@ -17,7 +17,7 @@ const app = new Hono()
 
 export const reportListRoute = app.get(
   "/",
-  zValidator("query", reportListParamsSchema),
+  zValidator("query", reportListQuerySchema),
   async (c) => {
     const email = c.get(contextKeys.loggedUserEmail)
     const { limit: limitString, page: offsetString, search } = c.req.query()

@@ -1,8 +1,8 @@
-import { defaultLimit, type UserSearchParamsSchema } from "@lootopia/common"
+import { defaultLimit, type UserSearchQuerySchema } from "@lootopia/common"
 
 import { client } from "@client/web/utils/client"
 
-export const getUserList = async (queries: UserSearchParamsSchema) => {
+export const getUserList = async (queries: UserSearchQuerySchema) => {
   const response = await client.users.search.$get({
     query: {
       search: queries.search,

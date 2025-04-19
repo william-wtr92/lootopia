@@ -332,7 +332,7 @@
         "cta": {
           "logout": "Déconnexion",
           "editProfile": "Éditer mon profil",
-          "treasureMap": "Carte des trésors",
+           "inventory": "Inventaire",
           "trophies": "Trophées",
           "leaderboard": "Classement",
           "settings": "Paramètres"
@@ -663,6 +663,80 @@
             },
             "success": "L'authentification à deux facteurs a été activée avec succès !",
             "logout": "Déconnexion"
+          }
+        },
+        "Inventory": {
+          "InventoryDialog": {
+            "title": "Inventaire des artefacts",
+            "description": "Découvrez les artefacts que vous avez collectés lors de vos chasses.",
+            "search": {
+              "placeholder": "Rechercher des artefacts...",
+              "enter": "Entrer"
+            },
+            "filters": {
+              "trigger": "Toutes les raretés",
+              "options": {
+                "all": "Toutes les raretés",
+                "common": "Commun",
+                "uncommon": "Peu commun",
+                "rare": "Rare",
+                "epic": "Épique",
+                "legendary": "Légendaire"
+              }
+            },
+            "tabs": {
+              "triggers": {
+                "artifacts": "Artefacts",
+                "badges": "Badges"
+              }
+            },
+            "cta": {
+              "close": "Fermer"
+            }
+          },
+          "InventoryArtifactList": {
+            "loading": "Chargement des artefacts...",
+            "empty": "Aucun artefact trouvé",
+            "clear": "Effacer la recherche",
+            "artifacts": {
+              "shaKey": "#{shaKey}",
+              "obtainedAt": "Obtenu le {date}"
+            },
+            "pagination": {
+              "previous": "Précédent",
+              "page": "Page {page} sur {total}",
+              "fetching": "Mise à jour...",
+              "next": "Suivant"
+            }
+          },
+          "InventoryArtifactDetails": {
+            "artifact": {
+              "key": "Clé publique de l'artefact",
+              "rarity": "Rareté",
+              "obtainedAt": "Obtenu le",
+              "hunt": "Chasse"
+            },
+            "links": {
+              "view": {
+                "title": "Lien",
+                "description": "Voici le lien unique de votre artefact. Vous pouvez le consulter et le partager avec d'autres utilisateurs.",
+                "cta": "Voir l'artefact"
+              },
+              "share": {
+                "cta": {
+                  "copy": "Copier le lien",
+                  "copied": "Lien copié !"
+                }
+              }
+            },
+            "cta": {
+              "close": "Fermer"
+            }
+          },
+          "InventoryBadgeList": {
+            "obtained": "Obtenu",
+            "toUnlock": "À débloquer",
+            "empty": "Aucun badge trouvé"
           }
         }
       }

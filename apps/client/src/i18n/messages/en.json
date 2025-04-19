@@ -332,7 +332,7 @@
         "cta": {
           "logout": "Logout",
           "editProfile": "Edit my profile",
-          "treasureMap": "Treasure map",
+          "inventory": "Inventory",
           "trophies": "Trophies",
           "leaderboard": "Leaderboard",
           "settings": "Settings"
@@ -663,6 +663,80 @@
             },
             "success": "Two-factor authentication has been activated successfully!",
             "logout": "Logout"
+          }
+        },
+        "Inventory": {
+          "InventoryDialog": {
+            "title": "Artifact Inventory",
+            "description": "Discover the artifacts you have collected during your hunts.",
+            "search": {
+              "placeholder": "Search for artifacts...",
+              "enter": "Enter"
+            },
+            "filters": {
+              "trigger": "All rarities",
+              "options": {
+                "all": "All rarities",
+                "common": "Common",
+                "uncommon": "Uncommon",
+                "rare": "Rare",
+                "epic": "Epic",
+                "legendary": "Legendary"
+              }
+            },
+            "tabs": {
+              "triggers": {
+                "artifacts": "Artifacts",
+                "badges": "Badges"
+              }
+            },
+            "cta": {
+              "close": "Close"
+            }
+          },
+          "InventoryArtifactList": {
+            "loading": "Loading artifacts...",
+            "empty": "No artifacts found",
+            "clear": "Clear research",
+            "artifacts": {
+              "shaKey": "#{shaKey}",
+              "obtainedAt": "Obtained at {date}"
+            },
+            "pagination": {
+              "previous": "Previous",
+              "page": "Page {page} of {total}",
+              "fetching": "Updating...",
+              "next": "Next"
+            }
+          },
+          "InventoryArtifactDetails": {
+            "artifact": {
+              "key": "Artifact Public Key",
+              "rarity": "Rarity",
+              "obtainedAt": "Obtained at",
+              "hunt": "Hunt"
+            },
+            "links": {
+              "view": {
+                "title": "Link",
+                "description": "Here is your unique artifact link. You can view it and share it with other users.",
+                "cta": "View artifact"
+              },
+              "share": {
+                "cta": {
+                  "copy": "Copy link",
+                  "copied": "Link copied!"
+                }
+              }
+            },
+            "cta": {
+              "close": "Close"
+            }
+          },
+          "InventoryBadgeList": {
+            "obtained": "Obtained",
+            "toUnlock": "To unlock",
+            "empty": "No badges found"
           }
         }
       }

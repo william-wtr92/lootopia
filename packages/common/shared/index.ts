@@ -12,8 +12,8 @@ export {
   type UserSchema,
   userNicknameSchema,
   type UserNicknameSchema,
-  userSearchParamsSchema,
-  type UserSearchParamsSchema,
+  userSearchQuerySchema,
+  type UserSearchQuerySchema,
 } from "./users"
 
 // Features types
@@ -97,6 +97,8 @@ export {
   artifactRarity,
   ARTIFACT_RARITY_TIERS,
   type ArtifactRarity,
+  artifactInventoryQuerySchema,
+  type ArtifactInventoryQuerySchema,
 } from "./artifacts"
 
 export { getRarityFromAvailability } from "./artifacts/utils/getRarityFromAvailability"
@@ -118,8 +120,8 @@ export {
   ACCEPTED_ATTATCHMENT_FILE_TYPES,
   reportSchema,
   type ReportSchema,
-  reportListParamsSchema,
-  type ReportListParamsSchema,
+  reportListQuerySchema,
+  type ReportListQuerySchema,
 } from "./reports"
 
 // Shop types
@@ -141,8 +143,8 @@ export {
 export {
   paymentStatus,
   type PaymentStatus,
-  paymentListParamsSchema,
-  type PaymentListParamsSchema,
+  paymentListQuerySchema,
+  type PaymentListQuerySchema,
 } from "./shop/payments"
 
 export { calculateDiscountedPrice } from "./shop/utils/calculateDiscountedPrice"
@@ -152,8 +154,8 @@ export {
   defaultParticipationRequestCount,
   participationRequestStatus,
   type ParticipationRequestStatus,
-  participationRequestsParamsSchema,
-  type ParticipationRequestsParamsSchema,
+  participationRequestsQuerySchema,
+  type ParticipationRequestsQuerySchema,
   participationRequestIds,
   type ParticipationRequestIds,
 } from "./participations"
