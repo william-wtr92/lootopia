@@ -98,17 +98,34 @@ export const selectUsers = async (
   page: number,
   search: string
 ) => {
-  return db.query.users.findMany({
-    where: (users, { ilike }) => {
-      if (search) {
-        return ilike(users.nickname, `%${search}%`)
-      }
+  const rows = await db
+    .select({
+      user: users,
+      level: userLevels.level,
+    })
+    .from(users)
+    .leftJoin(userLevels, eq(users.id, userLevels.userId))
+    .where(search ? ilike(users.nickname, `%${search}%`) : undefined)
+    .limit(limit)
+    .offset(page * limit)
 
-      return undefined
-    },
-    limit,
-    offset: page * limit,
-  })
+  if (rows.length === 0) {
+    return []
+  }
+
+  return rows.map((row) => ({
+    ...sanitizeUser(
+      {
+        ...row.user,
+        progression: {
+          level: row.level ?? defaultLevel,
+          experience: defaultXP,
+        },
+      },
+      ["avatar"],
+      { private: false }
+    ),
+  }))
 }
 
 export const selectUsersCount = async (search: string) => {

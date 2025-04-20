@@ -6,7 +6,6 @@ import {
   userSearchQuerySchema,
 } from "@lootopia/common"
 import {
-  sanitizeUsers,
   selectUserByEmail,
   selectUsers,
   selectUsersCount,
@@ -39,9 +38,6 @@ export const userListRoute = app.get(
 
     const lastPage = Math.ceil(count / limit) - 1
 
-    return c.json(
-      { result: sanitizeUsers(usersRetrieved), lastPage },
-      SC.success.OK
-    )
+    return c.json({ result: usersRetrieved, lastPage }, SC.success.OK)
   }
 )

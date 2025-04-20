@@ -226,7 +226,7 @@ const UsersSearchCommand = () => {
                                         className="text-primary bg-primary/10 ml-2 font-semibold"
                                       >
                                         {t("group.users.level", {
-                                          level: 42, // TD: Replace with user level
+                                          level: user?.progression?.level,
                                         })}
                                       </Badge>
                                     </div>
