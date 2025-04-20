@@ -1086,6 +1086,18 @@
           },
           "submit": "Upload"
         }
+      },
+      "Three": {
+        "CanvasExporter": {
+          "isRecording": "Recording...",
+          "options": {
+            "pngExport": "Export as PNG",
+            "webmExport": "Export as WEBM"
+          }
+        },
+        "RecordLoader": {
+          "isRecording": "Recording..."
+        }
       }
     },
     "Shop": {
