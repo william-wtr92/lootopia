@@ -3,6 +3,7 @@ import {
   combinedHuntSchema,
   crownCosts,
   MAX_CROWN_REWARD,
+  MAX_USERS_PER_CHEST,
   SC,
   transactionTypes,
 } from "@lootopia/common"
@@ -16,6 +17,7 @@ import {
   huntCreatedSuccess,
   insertHuntWithChests,
   maxCrownRewardExceeded,
+  maxUsersPerChestExceeded,
 } from "@server/features/hunts"
 import { userNotFound, selectUserByEmail } from "@server/features/users"
 import { requiredCrowns } from "@server/middlewares/requiredCrowns"
@@ -41,6 +43,10 @@ export const createHuntRoute = app.post(
     const artifactIdsToUpdate = new Set<string>()
 
     for (const chest of body.chests) {
+      if (chest.maxUsers > MAX_USERS_PER_CHEST) {
+        return c.json(maxUsersPerChestExceeded, SC.errors.BAD_REQUEST)
+      }
+
       if (chest.rewardType === "crown") {
         if (
           typeof chest.reward === "number" &&

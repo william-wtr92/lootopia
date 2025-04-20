@@ -1,41 +1,27 @@
 "use client"
 
-import type { ArtifactRarity } from "@lootopia/common"
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
   Badge,
-  Button,
 } from "@lootopia/ui"
 import { useQuery } from "@tanstack/react-query"
-import { motion } from "framer-motion"
-import {
-  MapPin,
-  Calendar,
-  Award,
-  MapPinned,
-  Swords,
-  Gem,
-  View,
-} from "lucide-react"
+import { Calendar } from "lucide-react"
 import Image from "next/image"
 import { useParams } from "next/navigation"
 import { useLocale, useTranslations } from "next-intl"
 import { useState } from "react"
 
 import { config } from "@client/env"
-import HuntRewardPill from "@client/web/components/features/hunts/list/rewards/HuntRewardPill"
 import ReportForm from "@client/web/components/features/reports/ReportForm"
+import ProfileArtifacts from "@client/web/components/features/users/profile/stats/ProfileArtifacts"
+import ProfileHunts from "@client/web/components/features/users/profile/stats/ProfileHunts"
 import { getUserByNickname } from "@client/web/services/users/getUserByNickname"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
-import { getArtifactRarityColor } from "@client/web/utils/def/colors"
 import { formatDate } from "@client/web/utils/helpers/formatDate"
 
 const UserProfilePage = () => {
@@ -45,8 +31,6 @@ const UserProfilePage = () => {
   const { nickname } = useParams<{ nickname: string }>()
 
   const [activeTab, setActiveTab] = useState("hunts")
-  const [showArtifact, setShowArtifact] = useState(false)
-  const [artifactId, setArtifactId] = useState<string | null>(null)
 
   const { data: userLoggedIn } = useQuery({
     queryKey: ["user"],
@@ -64,11 +48,6 @@ const UserProfilePage = () => {
 
   const handleTabChange = (value: string) => {
     setActiveTab(value)
-  }
-
-  const handleArtifactClick = (id: string) => {
-    setShowArtifact(true)
-    setArtifactId(id)
   }
 
   if (!userProfile || isLoading) {
@@ -173,134 +152,17 @@ const UserProfilePage = () => {
         </TabsList>
 
         <TabsContent value="hunts">
-          <Card className="border-primary">
-            <CardHeader className="text-primary">
-              <CardTitle>{t("tabs.recentHunts.title")}</CardTitle>
-              <CardDescription>
-                {t("tabs.recentHunts.subtitle", {
-                  nickname: userProfile.user.nickname,
-                })}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {recentHunts.map((hunt) => (
-                <motion.div
-                  key={hunt?.id}
-                  className="border-primary flex justify-between gap-4 rounded-lg border bg-white/40 p-4 transition hover:bg-white/60"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <div className="flex w-full">
-                    <div className="bg-accent/20 flex items-center justify-center rounded-full p-6">
-                      <Swords className="text-primary size-9" />
-                    </div>
-
-                    <div className="flex flex-col">
-                      <h3 className="text-primary mb-1 truncate text-lg font-semibold">
-                        {hunt?.name}
-                      </h3>
-
-                      <div className="text-primary mb-3 flex items-center gap-1 text-sm">
-                        <span className="line-clamp-2">
-                          {hunt?.description}
-                        </span>
-                      </div>
-
-                      <div className="text-secondary flex items-center gap-1 text-sm">
-                        <MapPin className="size-4" />
-                        <span className="truncate">{hunt?.city}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="text-secondary flex w-1/6 flex-col justify-center gap-7 text-sm">
-                    {hunt?.startDate && (
-                      <div className="flex items-center gap-1">
-                        <Calendar className="size-4" />
-                        {formatDate(hunt.startDate, locale)}
-                      </div>
-                    )}
-
-                    {hunt?.endDate && (
-                      <div className="flex items-center gap-1">
-                        <MapPinned className="size-4" />
-                        {formatDate(hunt.endDate, locale)}
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-            </CardContent>
-          </Card>
+          <ProfileHunts
+            nickname={userProfile.user.nickname}
+            recentHunts={recentHunts}
+          />
         </TabsContent>
 
         <TabsContent value="artifacts">
-          <Card className="border-primary">
-            <CardHeader className="text-primary">
-              <CardTitle>{t("tabs.artifacts.title")}</CardTitle>
-              <CardDescription>
-                {t("tabs.artifacts.subtitle", {
-                  nickname: userProfile.user.nickname,
-                })}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {sortedArtifacts.map((artifact) => (
-                <motion.div
-                  key={artifact.id}
-                  className="border-primary rounded-lg border p-4 hover:shadow-md"
-                  whileHover={{ scale: 1.03 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <div className="flex w-full items-center justify-between gap-14">
-                    <div className="flex items-center gap-8">
-                      <div className="relative">
-                        <Gem className="text-primary size-8" />
-                      </div>
-                      <div>
-                        <h3 className="text-primary mb-1 flex items-center gap-2 font-bold">
-                          <span>{artifact.name}</span>
-                          <Badge
-                            className={`text-xs ${getArtifactRarityColor(artifact.rarity as ArtifactRarity)}`}
-                          >
-                            {t(
-                              `tabs.artifacts.rarities.${artifact.rarity as ArtifactRarity}`
-                            )}
-                          </Badge>
-                        </h3>
-                        <div className="text-primary mb-1 flex items-center gap-1 text-xs">
-                          <Award className="size-3" />
-                          <span>
-                            {t("tabs.artifacts.obtainedAt", {
-                              date: formatDate(artifact.obtainedAt!, locale),
-                            })}
-                          </span>
-                        </div>
-                        <p className="text-primary text-sm">
-                          {t("tabs.artifacts.hunt", {
-                            huntName: artifact.huntName,
-                          })}
-                        </p>
-                      </div>
-                    </div>
-                    <Button
-                      className="mr-6"
-                      onClick={() =>
-                        artifact.id && handleArtifactClick(artifact.id)
-                      }
-                    >
-                      {t("tabs.artifacts.cta.view")}
-                      <View className="size-5" />
-                    </Button>
-                  </div>
-                </motion.div>
-              ))}
-
-              {showArtifact && artifactId && (
-                <HuntRewardPill key={artifactId} artifactId={artifactId} />
-              )}
-            </CardContent>
-          </Card>
+          <ProfileArtifacts
+            nickname={userProfile.user.nickname}
+            recentArtifacts={sortedArtifacts}
+          />
         </TabsContent>
       </Tabs>
     </main>

@@ -228,7 +228,8 @@
         "errors": {
           "userNotFound": "You are not authorized to perform this action",
           "notEnoughCrowns": "You don't have enough crowns to create a hunt, put it in draft or buy some",
-          "maxCrownRewardExceeded": "The maximum crown reward is 100 crowns per chest"
+          "maxCrownRewardExceeded": "The maximum crown reward is 100 crowns per chest",
+          "maxUsersPerChestExceeded": "The maximum number of users per chest is 200"
         }
       },
       "Drafts": {
@@ -350,26 +351,10 @@
         },
         "tabs": {
           "recentHunts": {
-            "trigger": "Recent hunts",
-            "title": "Recent hunts",
-            "subtitle": "Discover the latest treasure hunts completed by {nickname}"
+            "trigger": "Recent hunts"
           },
           "artifacts": {
-            "trigger": "Artifacts",
-            "title": " Artifacts Collection",
-            "subtitle": "Discover the artifacts collected by {nickname}, sorted by rarity",
-            "obtainedAt": "Obtained at {date}",
-            "hunt": "In hunt \"{huntName}\"",
-            "rarities": {
-              "common": "Common",
-              "uncommon": "Uncommon",
-              "rare": "Rare",
-              "epic": "Epic",
-              "legendary": "Legendary"
-            },
-            "cta": {
-              "view": "View"
-            }
+            "trigger": "Artifacts"
           }
         }
       }
@@ -755,6 +740,30 @@
             "toUnlock": "To unlock",
             "empty": "No badges found"
           }
+        },
+        "Stats": {
+          "ProfileHunts": {
+            "title": "Recent hunts",
+            "subtitle": "Discover the latest treasure hunts completed by <strong>{nickname}</strong>",
+            "empty": "No recent hunts found!"
+          },
+          "ProfileArtifacts": {
+            "title": "Artifacts Collection",
+            "subtitle": "Discover the artifacts collected by <strong>{nickname}</strong>, sorted by rarity",
+            "obtainedAt": "Obtained at {date}",
+            "hunt": "In hunt \"{huntName}\"",
+            "empty": "No artifacts found!",
+            "rarities": {
+              "common": "Common",
+              "uncommon": "Uncommon",
+              "rare": "Rare",
+              "epic": "Epic",
+              "legendary": "Legendary"
+            },
+            "cta": {
+              "view": "View"
+            }
+          }
         }
       }
     },
@@ -796,7 +805,8 @@
             "error": "Invalid size"
           },
           "maxUsers": {
-            "label": "Max number of users"
+            "label": "Max number of users",
+            "error": "The maximum number of users is 200"
           },
           "visibility": {
             "label": "Visibility",
@@ -899,21 +909,39 @@
       },
       "List": {
         "Rewards": {
-          "crown": "Crown",
-          "artifact": "Artifact",
-          "loading": "Loading...",
-          "artifactLoading": "Loading artifact...",
-          "fileNotFoundOrNotSupported": "File not found or not supported",
-          "crownsExtension": " crowns",
-          "rarities": {
-            "common": "Common",
-            "uncommon": "Uncommon",
-            "rare": "Rare",
-            "epic": "Epic",
-            "legendary": "Legendary"
+          "Pill": {
+            "crown": "Crown",
+            "artifact": "Artifact",
+            "artifactLoading": "Loading artifact...",
+            "crownsExtension": " crowns",
+            "rarities": {
+              "common": "Common",
+              "uncommon": "Uncommon",
+              "rare": "Rare",
+              "epic": "Epic",
+              "legendary": "Legendary"
+            }
           },
-          "cta": {
-            "close": "Close"
+          "ArtifactContent": {
+            "fileNotFoundOrNotSupported": "File not found or not supported",
+            "rarities": {
+              "common": "Common",
+              "uncommon": "Uncommon",
+              "rare": "Rare",
+              "epic": "Epic",
+              "legendary": "Legendary"
+            },
+            "cta": {
+              "close": "Close"
+            }
+          },
+          "CrownContent": {
+            "rarities": {
+              "common": "Common"
+            },
+            "cta": {
+              "close": "Close"
+            }
           }
         },
         "ListItem": {

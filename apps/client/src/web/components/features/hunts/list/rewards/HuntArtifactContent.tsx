@@ -15,7 +15,7 @@ type Props = {
 }
 
 const HuntArtifactContent = ({ data, description, onClose }: Props) => {
-  const t = useTranslations("Components.Hunts.List.Rewards")
+  const t = useTranslations("Components.Hunts.List.Rewards.ArtifactContent")
 
   const fileUrl = data?.link ? `${config.blobUrl}${data.link}` : ""
 

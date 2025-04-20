@@ -1,16 +1,17 @@
 import { defaultLevel, defaultXP } from "@lootopia/common"
 import {
-  artifacts,
   crowns,
   huntParticipations,
   hunts,
   userArtifacts,
   userLevels,
   users,
+  artifacts,
+  chests,
 } from "@lootopia/drizzle"
 import { sanitizeUser } from "@server/features/users/dto"
 import { db } from "@server/utils/clients/postgres"
-import { eq, ilike, count, countDistinct } from "drizzle-orm"
+import { eq, ilike, count, countDistinct, desc } from "drizzle-orm"
 
 export const selectUserByEmail = async (email: string) => {
   return db.query.users.findFirst({
@@ -130,54 +131,53 @@ export const selectUserWithHuntsAndArtifacts = async (nickname: string) => {
     .leftJoin(users, eq(users.id, huntParticipations.userId))
     .where(eq(users.nickname, nickname))
 
-  const rows = await db
+  const [userRow] = await db
     .select({
       user: users,
       progression: {
         level: userLevels.level,
       },
-      hunts: {
-        id: hunts.id,
-        name: hunts.name,
-        description: hunts.description,
-        startDate: hunts.startDate,
-        endDate: hunts.endDate,
-        city: hunts.city,
-      },
-      artifacts: {
-        id: artifacts.id,
-        name: artifacts.name,
-        rarity: artifacts.rarity,
-        obtainedAt: userArtifacts.obtainedAt,
-        huntName: hunts.name,
-      },
     })
     .from(users)
     .where(eq(users.nickname, nickname))
     .leftJoin(userLevels, eq(users.id, userLevels.userId))
-    .leftJoin(huntParticipations, eq(users.id, huntParticipations.userId))
-    .leftJoin(hunts, eq(huntParticipations.huntId, hunts.id))
-    .leftJoin(userArtifacts, eq(users.id, userArtifacts.userId))
-    .leftJoin(artifacts, eq(userArtifacts.artifactId, artifacts.id))
 
-  if (!rows) {
+  if (!userRow) {
     return null
   }
 
-  const { user, progression } = rows[0]
+  const huntsRaw = await db
+    .select({
+      id: hunts.id,
+      name: hunts.name,
+      description: hunts.description,
+      startDate: hunts.startDate,
+      endDate: hunts.endDate,
+      city: hunts.city,
+    })
+    .from(hunts)
+    .innerJoin(huntParticipations, eq(hunts.id, huntParticipations.huntId))
+    .innerJoin(users, eq(users.id, huntParticipations.userId))
+    .where(eq(users.nickname, nickname))
+    .orderBy(desc(hunts.startDate))
+    .limit(5)
 
-  const huntsMap = new Map<string, (typeof rows)[0]["hunts"]>()
-  const artifactsMap = new Map<string, (typeof rows)[0]["artifacts"]>()
-
-  for (const row of rows) {
-    if (row.hunts?.id && !huntsMap.has(row.hunts.id)) {
-      huntsMap.set(row.hunts.id, row.hunts)
-    }
-
-    if (row.artifacts?.id && !artifactsMap.has(row.artifacts.id)) {
-      artifactsMap.set(row.artifacts.id, row.artifacts)
-    }
-  }
+  const artifactsRaw = await db
+    .select({
+      id: artifacts.id,
+      name: artifacts.name,
+      rarity: artifacts.rarity,
+      obtainedAt: userArtifacts.obtainedAt,
+      huntName: hunts.name,
+    })
+    .from(artifacts)
+    .innerJoin(userArtifacts, eq(artifacts.id, userArtifacts.artifactId))
+    .innerJoin(users, eq(users.id, userArtifacts.userId))
+    .leftJoin(chests, eq(userArtifacts.obtainedFromChestId, chests.id))
+    .leftJoin(hunts, eq(chests.huntId, hunts.id))
+    .where(eq(users.nickname, nickname))
+    .orderBy(desc(userArtifacts.obtainedAt))
+    .limit(20)
 
   const rarityOrder = {
     legendary: 1,
@@ -187,37 +187,22 @@ export const selectUserWithHuntsAndArtifacts = async (nickname: string) => {
     common: 5,
   }
 
+  const artifactsRawSorted = artifactsRaw
+    .sort((a, b) => rarityOrder[a.rarity] - rarityOrder[b.rarity])
+    .slice(0, 9)
+
   return {
-    user: sanitizeUser(user, ["avatar", "createdAt"], { private: false }),
+    user: sanitizeUser(userRow.user, ["avatar", "createdAt"], {
+      private: false,
+    }),
     progression: {
-      level: progression?.level ?? defaultLevel,
+      level: userRow.progression?.level ?? defaultLevel,
     },
     stats: {
       artifactsCount: artifactCountRow?.count ?? 0,
       huntsCount: huntCountRow?.count ?? 0,
     },
-    hunts: Array.from(huntsMap.values())
-      .sort(
-        (a, b) =>
-          new Date(b?.startDate ?? 0).getTime() -
-          new Date(a?.startDate ?? 0).getTime()
-      )
-      .slice(0, 5),
-
-    artifacts: Array.from(artifactsMap.values())
-      .sort((a, b) => {
-        const dateA = new Date(b?.obtainedAt ?? 0).getTime()
-        const dateB = new Date(a?.obtainedAt ?? 0).getTime()
-
-        return dateA - dateB
-      })
-      .slice(0, 20)
-      .sort((a, b) => {
-        const rarityA = rarityOrder[a.rarity ?? "common"]
-        const rarityB = rarityOrder[b.rarity ?? "common"]
-
-        return rarityA - rarityB
-      })
-      .slice(0, 10),
+    hunts: huntsRaw,
+    artifacts: artifactsRawSorted,
   }
 }

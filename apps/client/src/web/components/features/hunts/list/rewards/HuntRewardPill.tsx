@@ -23,7 +23,7 @@ type Props =
   | { chest?: never; artifactId: string }
 
 const HuntRewardPill = (props: Props) => {
-  const t = useTranslations("Components.Hunts.List.Rewards")
+  const t = useTranslations("Components.Hunts.List.Rewards.Pill")
 
   const isStandalone = !!props.artifactId
   const artifactId = isStandalone

@@ -3,6 +3,7 @@ import { z } from "zod"
 const DEFAULT_CHEST_SIZE = 80 as const
 
 export const MAX_CROWN_REWARD = 100 as const
+export const MAX_USERS_PER_CHEST = 200 as const
 
 export const CHEST_REWARD_TYPES = {
   artifact: "artifact",
@@ -30,7 +31,7 @@ export const baseChestSchema = z.object({
     z.number().int().min(1).max(MAX_CROWN_REWARD),
   ]),
   size: z.number().default(DEFAULT_CHEST_SIZE),
-  maxUsers: z.number().int().min(1).default(1),
+  maxUsers: z.number().int().min(1).max(MAX_USERS_PER_CHEST).default(1),
   visibility: z.boolean().default(false),
 })
 

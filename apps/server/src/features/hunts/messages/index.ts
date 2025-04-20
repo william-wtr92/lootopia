@@ -20,6 +20,11 @@ export const maxCrownRewardExceeded = {
   key: "maxCrownRewardExceeded",
 } as const
 
+export const maxUsersPerChestExceeded = {
+  result: "Max users per chest exceeded.",
+  key: "maxUsersPerChestExceeded",
+} as const
+
 export const noHintFound = {
   result: "No hint found.",
   key: "noHintFound",

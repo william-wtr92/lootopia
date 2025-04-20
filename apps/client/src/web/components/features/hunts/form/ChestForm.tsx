@@ -6,6 +6,7 @@ import {
   chestSchema,
   type ChestSchema,
   MAX_CROWN_REWARD,
+  MAX_USERS_PER_CHEST,
 } from "@lootopia/common"
 import {
   Button,
@@ -273,10 +274,17 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
                   {...field}
                   type="number"
                   min={1}
+                  max={MAX_USERS_PER_CHEST}
                   value={field.value}
-                  onChange={(e) => field.onChange(Number(e.target.value) || 1)}
+                  onChange={(e) => {
+                    const value = Number(e.target.value)
+                    form.setValue("maxUsers", value, { shouldValidate: true })
+                  }}
                 />
               </FormControl>
+              <FormMessage>
+                {errors.maxUsers ? t("maxUsers.error") : null}
+              </FormMessage>
             </FormItem>
           )}
         />

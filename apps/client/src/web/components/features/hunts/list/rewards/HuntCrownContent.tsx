@@ -14,7 +14,7 @@ type Props = {
 }
 
 const HuntCrownContent = ({ rewardName, description, onClose }: Props) => {
-  const t = useTranslations("Components.Hunts.List.Rewards")
+  const t = useTranslations("Components.Hunts.List.Rewards.CrownContent")
 
   return (
     <>
