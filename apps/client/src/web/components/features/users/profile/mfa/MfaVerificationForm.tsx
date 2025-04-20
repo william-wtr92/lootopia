@@ -72,7 +72,7 @@ const MfaVerificationForm = ({ sessionId, setShowMfa }: Props) => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
+    <div className="flex min-h-[350px] flex-col items-center justify-center gap-6 pt-6">
       <div className="flex flex-col items-center justify-center gap-2">
         <div className="flex items-center justify-center gap-2">
           <ShieldCheck className="text-secondary size-6" />

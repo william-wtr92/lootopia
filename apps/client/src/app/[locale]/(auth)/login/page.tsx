@@ -103,14 +103,16 @@ const LoginPage = () => {
   return (
     <main className="relative flex flex-1 items-center justify-center">
       <Card className="w-2/5">
-        <CardHeader className="text-center">
-          <CardTitle className="text-primary text-3xl font-bold">
-            {t("title")}
-          </CardTitle>
-          <CardTitle className="text-md text-primary font-normal">
-            {t("description")}
-          </CardTitle>
-        </CardHeader>
+        {!showMfa && (
+          <CardHeader className="text-center">
+            <CardTitle className="text-primary text-3xl font-bold">
+              {t("title")}
+            </CardTitle>
+            <CardTitle className="text-md text-primary font-normal">
+              {t("description")}
+            </CardTitle>
+          </CardHeader>
+        )}
         <CardContent>
           {showMfa ? (
             <MfaVerificationForm
@@ -193,23 +195,25 @@ const LoginPage = () => {
             </Form>
           )}
         </CardContent>
-        <CardFooter className="text-primary flex flex-col items-center space-y-2 text-sm">
-          <div className="flex gap-1">
-            {t("cta.title")}
-            <Link href={routes.auth.register}>
-              <span className="text-secondary">{t("cta.register")}</span>
-            </Link>
-          </div>
+        {!showMfa && (
+          <CardFooter className="text-primary flex flex-col items-center space-y-2 text-sm">
+            <div className="flex gap-1">
+              {t("cta.title")}
+              <Link href={routes.auth.register}>
+                <span className="text-secondary">{t("cta.register")}</span>
+              </Link>
+            </div>
 
-          <div className="flex gap-1">
-            Vous avez oublié votre mot de passe ?
-            <Link href={routes.auth.requestPasswordReset}>
-              <span className="text-secondary">
-                Cliquez ici pour le réinitialiser
-              </span>
-            </Link>
-          </div>
-        </CardFooter>
+            <div className="flex gap-1">
+              Vous avez oublié votre mot de passe ?
+              <Link href={routes.auth.requestPasswordReset}>
+                <span className="text-secondary">
+                  Cliquez ici pour le réinitialiser
+                </span>
+              </Link>
+            </div>
+          </CardFooter>
+        )}
       </Card>
     </main>
   )
