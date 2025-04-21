@@ -31,6 +31,7 @@ export const selectUserArtifact = async (
   return db
     .select({
       artifact: artifacts,
+      userArtifactId: userArtifacts.id,
       huntName: hunts.name,
       obtainedAt: userArtifacts.obtainedAt,
     })
@@ -55,4 +56,17 @@ export const selectUserArtifactCount = async (userId: string) => {
     .select({ count: count() })
     .from(userArtifacts)
     .where(eq(userArtifacts.userId, userId))
+}
+
+export const selectUserArtifactById = async (
+  userId: string,
+  userArtifactId: string
+) => {
+  return db.query.userArtifacts.findFirst({
+    where: (userArtifacts, { eq }) =>
+      and(
+        eq(userArtifacts.userId, userId),
+        eq(userArtifacts.id, userArtifactId)
+      ),
+  })
 }

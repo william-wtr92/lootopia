@@ -1,6 +1,6 @@
 {
-  "id": "7acdf1b1-9586-48c7-8461-6b307e80f7d6",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "02732f2b-894d-45fc-a094-4e802d54216f",
+  "prevId": "7acdf1b1-9586-48c7-8461-6b307e80f7d6",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -75,94 +75,6 @@
         "artifact_offer_favorites_userId_users_id_fk": {
           "name": "artifact_offer_favorites_userId_users_id_fk",
           "tableFrom": "artifact_offer_favorites",
-          "tableTo": "users",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.artifact_offer_likes": {
-      "name": "artifact_offer_likes",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "offerId": {
-          "name": "offerId",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "userId": {
-          "name": "userId",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "liked_at": {
-          "name": "liked_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "unique_like_per_user_offer": {
-          "name": "unique_like_per_user_offer",
-          "columns": [
-            {
-              "expression": "offerId",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "userId",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "artifact_offer_likes_offerId_artifact_offers_id_fk": {
-          "name": "artifact_offer_likes_offerId_artifact_offers_id_fk",
-          "tableFrom": "artifact_offer_likes",
-          "tableTo": "artifact_offers",
-          "columnsFrom": [
-            "offerId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "artifact_offer_likes_userId_users_id_fk": {
-          "name": "artifact_offer_likes_userId_users_id_fk",
-          "tableFrom": "artifact_offer_likes",
           "tableTo": "users",
           "columnsFrom": [
             "userId"

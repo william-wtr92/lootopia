@@ -1085,18 +1085,18 @@
             "error": "Fichier invalide"
           },
           "submit": "Ajouter"
-        },
-        "Three": {
-          "CanvasExporter": {
-            "isRecording": "Enregistrement...",
-            "options": {
-              "pngExport": "Exporter en PNG",
-              "webmExport": "Exporter en WEBM"
-            }
-          },
-          "RecordLoader": {
-            "isRecording": "Enregistrement..."
+        }
+      },
+      "Three": {
+        "CanvasExporter": {
+          "isRecording": "Enregistrement...",
+          "options": {
+            "pngExport": "Exporter en PNG",
+            "webmExport": "Exporter en WEBM"
           }
+        },
+        "RecordLoader": {
+          "isRecording": "Enregistrement..."
         }
       }
     },
@@ -1212,6 +1212,13 @@
           "cta": {
             "export": "Exporter les transactions"
           }
+        }
+      }
+    },
+    "TownHall": {
+      "ArtifactOfferForm": {
+        "errors": {
+          "test": "Test error"
         }
       }
     }

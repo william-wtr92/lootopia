@@ -2,6 +2,7 @@ import { zValidator } from "@hono/zod-validator"
 import {
   CHEST_REWARD_TYPES,
   crownCosts,
+  historyStatus,
   huntIdSchema,
   positionSchema,
   SC,
@@ -35,6 +36,7 @@ import {
   userIsNotParticipant,
 } from "@server/features/participations"
 import { updateExperience } from "@server/features/progressions"
+import { insertArtifactHistory } from "@server/features/town-hall"
 import { selectUserByEmail, userNotFound } from "@server/features/users"
 import { redis } from "@server/utils/clients/redis"
 import { isMovementSuspicious } from "@server/utils/helpers/anticheat"
@@ -136,11 +138,18 @@ export const digRoute = app
       }
 
       if (selectedChest.rewardType === CHEST_REWARD_TYPES.artifact) {
-        await insertDiggedUserArtifact(
+        const userArtifact = await insertDiggedUserArtifact(
           user.id,
           selectedChest.artifactId!,
           selectedChest.id
         )
+
+        await insertArtifactHistory({
+          userArtifactId: userArtifact.userArtifactId,
+          type: historyStatus.discovery,
+          newOwnerId: user.id,
+          huntId: hunt.id,
+        })
 
         await updateExperience(user.id, XP_REWARDS.digSuccess)
       } else if (selectedChest.rewardType === CHEST_REWARD_TYPES.crown) {

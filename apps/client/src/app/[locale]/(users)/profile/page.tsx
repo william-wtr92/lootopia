@@ -10,7 +10,7 @@ import {
   Progress,
 } from "@lootopia/ui"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { Box, Settings, Star, Trophy } from "lucide-react"
+import { Box, Settings, Star, Store } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
@@ -19,6 +19,7 @@ import { useState } from "react"
 import { config } from "@client/env"
 import ReportListDialog from "@client/web/components/features/reports/list/ReportListDialog"
 import PaymentListDialog from "@client/web/components/features/shop/list/PaymentListDialog"
+import TownHallDialog from "@client/web/components/features/town-hall/TownHallDialog"
 import ActionMenu from "@client/web/components/features/users/profile/ActionMenu"
 import EditProfileForm from "@client/web/components/features/users/profile/EditProfileForm"
 import InventoryDialog from "@client/web/components/features/users/profile/inventory/InventoryDialog"
@@ -50,6 +51,7 @@ const ProfilePage = () => {
   const [isMfaDisableOpen, setIsMfaDisableOpen] = useState(false)
 
   const [showInventory, setShowInventory] = useState(false)
+  const [showTownHall, setShowTownHall] = useState(false)
 
   const user = data ? data : undefined
 
@@ -70,6 +72,7 @@ const ProfilePage = () => {
   const handleDeactivateMfa = () => setIsMfaDisableOpen((prev) => !prev)
 
   const handleShowInventory = () => setShowInventory((prev) => !prev)
+  const handleShowTownHall = () => setShowTownHall((prev) => !prev)
 
   const currentLevel = user?.progression?.level ?? defaultLevel
   const currentXP = user?.progression?.experience ?? defaultXP
@@ -231,8 +234,8 @@ const ProfilePage = () => {
         <Button onClick={handleShowInventory}>
           <Box className="mr-2 size-4" /> {t("cta.inventory")}
         </Button>
-        <Button>
-          <Trophy className="mr-2 size-4" /> {t("cta.trophies")}
+        <Button onClick={handleShowTownHall}>
+          <Store className="mr-2 size-4" /> Town Hall
         </Button>
         <Button>
           <Star className="mr-2 size-4" /> {t("cta.leaderboard")}
@@ -243,6 +246,7 @@ const ProfilePage = () => {
       </MotionComponent>
 
       <InventoryDialog open={showInventory} setIsOpen={handleShowInventory} />
+      <TownHallDialog open={showTownHall} setIsOpen={handleShowTownHall} />
     </main>
   )
 }

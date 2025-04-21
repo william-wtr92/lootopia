@@ -168,3 +168,14 @@ export {
   XP_REWARDS,
   xpRequired,
 } from "./progressions/levels"
+
+// Town Hall types
+export {
+  DURATIONS_IN_DAYS,
+  offerStatus,
+  type OfferStatus,
+  artifactOfferSchema,
+  type ArtifactOfferSchema,
+} from "./town-hall/offer"
+
+export { historyStatus, type HistoryStatus } from "./town-hall/history"

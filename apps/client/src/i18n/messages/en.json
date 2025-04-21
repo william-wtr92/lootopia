@@ -1214,6 +1214,13 @@
           }
         }
       }
+    },
+    "TownHall": {
+      "ArtifactOfferForm": {
+        "errors": {
+          "test": "Test error"
+        }
+      }
     }
   }
 }

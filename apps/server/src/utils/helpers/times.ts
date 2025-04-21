@@ -28,3 +28,7 @@ export const oneDayInMs = oneDayTTL * 1000
 export const huntTimeTTL = (endDate: Date) => {
   return Math.floor((new Date(endDate).getTime() - Date.now()) / 1000)
 }
+
+export const offerTime = (days: string) => {
+  return new Date(Date.now() + Number(days) * 24 * 60 * 60 * 1000)
+}

@@ -19,7 +19,7 @@ export const insertDiggedUserArtifact = async (
   artifactId: string,
   chestId: string
 ) => {
-  return db
+  const [userArtifactInserted] = await db
     .insert(userArtifacts)
     .values({
       userId,
@@ -27,4 +27,9 @@ export const insertDiggedUserArtifact = async (
       obtainedFromChestId: chestId,
     })
     .onConflictDoNothing()
+    .returning({
+      userArtifactId: userArtifacts.id,
+    })
+
+  return userArtifactInserted
 }
