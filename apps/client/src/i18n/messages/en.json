@@ -1214,6 +1214,32 @@
           }
         }
       }
+    },
+    "Admin": {
+      "Navbar": {
+        "main-menu-category": {
+          "title": "Main menu",
+          "links": {
+            "dashboard": {
+              "label": "Dashboard"
+            },
+            "users": {
+              "label": "Users"
+            },
+            "hunts": {
+              "label": "Hunts"
+            }
+          }
+        },
+        "website-management-category": {
+          "title": "Website management",
+          "links": {
+            "settings": {
+              "label": "Settings"
+            }
+          }
+        }
+      }
     }
   }
 }

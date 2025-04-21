@@ -1214,6 +1214,32 @@
           }
         }
       }
+    },
+    "Admin": {
+      "Navbar": {
+        "main-menu-category": {
+          "title": "Menu principal",
+          "links": {
+            "dashboard": {
+              "label": "Tableau de bord"
+            },
+            "users": {
+              "label": "Utilisateurs"
+            },
+            "hunts": {
+              "label": "Chasses"
+            }
+          }
+        },
+        "website-management-category": {
+          "title": "Gestion du site",
+          "links": {
+            "settings": {
+              "label": "Paramètres"
+            }
+          }
+        }
+      }
     }
   }
 }
