@@ -37,10 +37,10 @@ export const reportSchema = z.object({
 
 export type ReportSchema = z.infer<typeof reportSchema>
 
-export const reportListParamsSchema = z.object({
+export const reportListQuerySchema = z.object({
   limit: z.string().optional().default(defaultLimit.toString()).optional(),
   page: z.string().optional().default(defaultPage.toString()),
   search: z.string().optional(),
 })
 
-export type ReportListParamsSchema = z.infer<typeof reportListParamsSchema>
+export type ReportListQuerySchema = z.infer<typeof reportListQuerySchema>

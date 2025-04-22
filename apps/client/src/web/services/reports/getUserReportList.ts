@@ -1,4 +1,4 @@
-import { defaultLimit, type ReportListParamsSchema } from "@lootopia/common"
+import { defaultLimit, type ReportListQuerySchema } from "@lootopia/common"
 import type { InferResponseType } from "hono"
 
 import { client } from "@client/web/utils/client"
@@ -10,7 +10,7 @@ export type ReportResponse = Exclude<
   string
 >
 
-export const getUserReportList = async (queries: ReportListParamsSchema) => {
+export const getUserReportList = async (queries: ReportListQuerySchema) => {
   const response = await $get({
     query: {
       search: queries.search,

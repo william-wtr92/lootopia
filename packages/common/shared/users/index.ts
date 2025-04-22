@@ -26,13 +26,13 @@ export const userNicknameSchema = z.object({
 
 export type UserNicknameSchema = z.infer<typeof userNicknameSchema>
 
-export const userSearchParamsSchema = z.object({
+export const userSearchQuerySchema = z.object({
   limit: z.string().optional().default(defaultLimit.toString()).optional(),
   page: z.string().optional().default(defaultPage.toString()),
   search: z.string().optional(),
 })
 
-export type UserSearchParamsSchema = z.infer<typeof userSearchParamsSchema>
+export type UserSearchQuerySchema = z.infer<typeof userSearchQuerySchema>
 
 export const ROLES = {
   admin: "admin",

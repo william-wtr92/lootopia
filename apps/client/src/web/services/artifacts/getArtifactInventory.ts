@@ -1,29 +1,27 @@
 import {
   defaultLimit,
-  type HuntIdSchema,
-  type ParticipationRequestsQuerySchema,
+  type ArtifactInventoryQuerySchema,
 } from "@lootopia/common"
 import type { InferResponseType } from "hono"
 
 import { client } from "@client/web/utils/client"
 
-const $get = client.hunts.participate[":huntId"].requests.$get
-export type RequestListResponse = InferResponseType<typeof $get>
-export type RequestResponse = Exclude<
-  RequestListResponse["result"][number],
+const $get = client.artifacts.inventory.$get
+export type ArtifactInventoryListResponse = InferResponseType<typeof $get>
+export type ArtifactInventoryResponse = Exclude<
+  ArtifactInventoryListResponse["result"][number],
   string
 >
 
-export const getParticipationRequestList = async (
-  huntId: HuntIdSchema,
-  queries: ParticipationRequestsQuerySchema
+export const getArtifactInventory = async (
+  queries: ArtifactInventoryQuerySchema
 ) => {
   const response = await $get({
-    param: huntId,
     query: {
       search: queries.search,
       limit: queries.limit?.toString() || defaultLimit.toString(),
       page: queries.page.toString(),
+      filters: queries.filters,
     },
   })
 

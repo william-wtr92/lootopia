@@ -1,3 +1,4 @@
+import { defaultLimit, defaultPage } from "@common/global/pagination"
 import { z } from "zod"
 
 export const ACCEPTED_FILE_TYPES = {
@@ -22,7 +23,7 @@ export const artifactSchema = z.object({
 export type ArtifactSchema = z.infer<typeof artifactSchema>
 
 export const artifactParamSchema = z.object({
-  id: z.string(),
+  id: z.string().uuid(),
 })
 
 export type ArtifactParamSchema = z.infer<typeof artifactParamSchema>
@@ -44,3 +45,22 @@ export const ARTIFACT_RARITY_TIERS = {
 } as const
 
 export type ArtifactRarity = keyof typeof ARTIFACT_RARITY_TIERS
+
+export const artifactInventoryQuerySchema = z.object({
+  limit: z.string().optional().default(defaultLimit.toString()).optional(),
+  page: z.string().optional().default(defaultPage.toString()),
+  search: z.string().optional(),
+  filters: z
+    .enum([
+      artifactRarity.legendary,
+      artifactRarity.epic,
+      artifactRarity.rare,
+      artifactRarity.uncommon,
+      artifactRarity.common,
+    ])
+    .optional(),
+})
+
+export type ArtifactInventoryQuerySchema = z.infer<
+  typeof artifactInventoryQuerySchema
+>

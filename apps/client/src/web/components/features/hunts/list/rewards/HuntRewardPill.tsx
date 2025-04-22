@@ -11,21 +11,19 @@ import { Crown, Shovel, X } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
-import { config } from "@client/env"
-import { ThreeDViewer } from "@client/web/components/features/artifacts/three/ThreeDViewer"
+import HuntArtifactContent from "./HuntArtifactContent"
+import HuntCrownContent from "./HuntCrownContent"
 import Loader from "@client/web/components/utils/Loader"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
 import { getArtifactById } from "@client/web/services/artifacts/getArtifactById"
 import type { HuntResponse } from "@client/web/services/hunts/getHunts"
-import anim from "@client/web/utils/anim"
-import { getRewardPillRarityColor } from "@client/web/utils/def/colors"
 
 type Props =
   | { chest: HuntResponse["chests"][0]; artifactId?: never }
   | { chest?: never; artifactId: string }
 
 const HuntRewardPill = (props: Props) => {
-  const t = useTranslations("Components.Hunts.List.Rewards")
+  const t = useTranslations("Components.Hunts.List.Rewards.Pill")
 
   const isStandalone = !!props.artifactId
   const artifactId = isStandalone
@@ -38,9 +36,15 @@ const HuntRewardPill = (props: Props) => {
 
   const [open, setOpen] = useState(isStandalone)
 
-  const { data, refetch } = useQuery({
+  const { data, isFetching, refetch } = useQuery({
     queryKey: ["artifact", artifactId],
-    queryFn: () => getArtifactById(artifactId),
+    queryFn: () => {
+      if (!artifactId) {
+        return null
+      }
+
+      return getArtifactById(artifactId)
+    },
     enabled: !!artifactId && open && rewardType === CHEST_REWARD_TYPES.artifact,
   })
 
@@ -53,7 +57,6 @@ const HuntRewardPill = (props: Props) => {
   }
 
   const artifactName = data?.name
-  const fileUrl = data?.link ? `${config.blobUrl}${data.link}` : ""
   const rewardDescription = isStandalone ? "" : (props.chest?.description ?? "")
   const crownsReward = !isStandalone ? props.chest?.reward : null
 
@@ -105,60 +108,22 @@ const HuntRewardPill = (props: Props) => {
             </DialogTitle>
 
             <MotionComponent className="flex min-h-[100px] w-[350px] flex-col items-center gap-3 rounded-md p-8 md:min-h-[400px] md:w-[500px]">
-              {data ? (
-                <>
-                  {rewardType === CHEST_REWARD_TYPES.artifact ? (
-                    <div className="mb-4 h-[300px] w-full cursor-grab rounded-md">
-                      {fileUrl ? (
-                        <ThreeDViewer fileUrl={fileUrl} />
-                      ) : (
-                        <p>{t("fileNotFoundOrNotSupported")}</p>
-                      )}
-                    </div>
-                  ) : (
-                    <MotionComponent {...anim(rewardItemVariant)}>
-                      <Crown size={160} className="text-primary" />
-                    </MotionComponent>
-                  )}
-
-                  <MotionComponent
-                    type="span"
-                    className="text-primary text-2xl font-medium"
-                    {...anim(rewardNameVariant)}
-                  >
-                    {rewardName}
-                  </MotionComponent>
-
-                  <MotionComponent
-                    type="span"
-                    className={`${getRewardPillRarityColor(data?.rarity)} rounded-full px-4 py-1`}
-                    {...anim(rarityPillVariant)}
-                  >
-                    {t(`rarities.${data?.rarity ?? "common"}`)}
-                  </MotionComponent>
-
-                  <MotionComponent
-                    type="span"
-                    className="text-primary mb-2 text-center text-lg font-normal"
-                    {...anim(descriptionVariant)}
-                  >
-                    {rewardDescription}
-                  </MotionComponent>
-
-                  <MotionComponent {...anim(closeBtnVariant)}>
-                    <Button
-                      variant={"secondary"}
-                      size={"lg"}
-                      onClick={() => handleOpen(false)}
-                    >
-                      {t("cta.close")}
-                    </Button>
-                  </MotionComponent>
-                </>
-              ) : (
+              {data && rewardType === CHEST_REWARD_TYPES.artifact ? (
+                <HuntArtifactContent
+                  data={data}
+                  description={rewardDescription}
+                  onClose={() => handleOpen(false)}
+                />
+              ) : isFetching ? (
                 <div className="flex size-full items-center justify-center">
                   <Loader label={t("artifactLoading")} />
                 </div>
+              ) : (
+                <HuntCrownContent
+                  rewardName={rewardName ?? ""}
+                  description={rewardDescription}
+                  onClose={() => handleOpen(false)}
+                />
               )}
             </MotionComponent>
 
@@ -183,72 +148,5 @@ const rewardItemVariant = {
     opacity: 0,
     scale: 0,
     transition: {},
-  },
-}
-
-const rewardNameVariant = {
-  initial: {
-    opacity: 0,
-    scale: 0.8,
-  },
-  enter: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      delay: 0.3,
-    },
-  },
-}
-
-const rarityPillVariant = {
-  initial: {
-    opacity: 0,
-    scale: 0.8,
-  },
-  enter: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      delay: 0.4,
-      type: "spring",
-      damping: 25,
-      stiffness: 300,
-    },
-  },
-}
-
-const descriptionVariant = {
-  initial: {
-    opacity: 0,
-    scale: 0.8,
-  },
-  enter: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      delay: 0.5,
-      type: "spring",
-      damping: 25,
-      stiffness: 300,
-    },
-  },
-}
-
-const closeBtnVariant = {
-  initial: {
-    opacity: 0,
-    scale: 0.8,
-    y: 20,
-  },
-  enter: {
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    transition: {
-      delay: 0.7,
-      type: "spring",
-      damping: 25,
-      stiffness: 300,
-    },
   },
 }

@@ -12,14 +12,14 @@ export const participationRequestStatus = {
 export type ParticipationRequestStatus =
   (typeof participationRequestStatus)[keyof typeof participationRequestStatus]
 
-export const participationRequestsParamsSchema = z.object({
+export const participationRequestsQuerySchema = z.object({
   limit: z.string().optional().default(defaultLimit.toString()).optional(),
   page: z.string().optional().default(defaultPage.toString()),
   search: z.string().optional(),
 })
 
-export type ParticipationRequestsParamsSchema = z.infer<
-  typeof participationRequestsParamsSchema
+export type ParticipationRequestsQuerySchema = z.infer<
+  typeof participationRequestsQuerySchema
 >
 
 export const participationRequestIds = z.object({

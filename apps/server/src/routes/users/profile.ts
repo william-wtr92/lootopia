@@ -6,7 +6,6 @@ import {
   invalidImage,
   nicknameAlreadyExists,
   phoneAlreadyExists,
-  sanitizeUser,
   updateSuccess,
   updateSuccessWithEmailChange,
   userNotFound,
@@ -16,6 +15,7 @@ import {
   selectUserByPhone,
   updateUser,
   selectUserWithCrownsAndProgression,
+  selectUserWithHuntsAndArtifacts,
 } from "@server/features/users"
 import { azureDirectory, uploadImage } from "@server/utils/actions/azureActions"
 import { redis } from "@server/utils/clients/redis"
@@ -46,7 +46,9 @@ export const profileRoute = app
     }
 
     return c.json(
-      { result: sanitizeUser(user, ["role", "avatar", "mfaEnabled"]) },
+      {
+        result: user,
+      },
       SC.success.OK
     )
   })
@@ -188,7 +190,7 @@ export const profileRoute = app
         return c.json(userNotFound, SC.errors.NOT_FOUND)
       }
 
-      const userProfile = await selectUserByNickname(nickname)
+      const userProfile = await selectUserWithHuntsAndArtifacts(nickname)
 
       if (!userProfile) {
         return c.json(userNotFound, SC.errors.NOT_FOUND)
@@ -196,7 +198,7 @@ export const profileRoute = app
 
       return c.json(
         {
-          result: sanitizeUser(userProfile, ["avatar", "createdAt"]),
+          result: userProfile,
         },
         SC.success.OK
       )

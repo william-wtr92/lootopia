@@ -3,10 +3,9 @@ import {
   defaultLimit,
   defaultPage,
   SC,
-  userSearchParamsSchema,
+  userSearchQuerySchema,
 } from "@lootopia/common"
 import {
-  sanitizeUsers,
   selectUserByEmail,
   selectUsers,
   selectUsersCount,
@@ -19,7 +18,7 @@ const app = new Hono()
 
 export const userListRoute = app.get(
   "/search",
-  zValidator("query", userSearchParamsSchema),
+  zValidator("query", userSearchQuerySchema),
   async (c) => {
     const email = c.get(contextKeys.loggedUserEmail)
     const { limit: limitString, page: offsetString, search } = c.req.query()
@@ -39,9 +38,6 @@ export const userListRoute = app.get(
 
     const lastPage = Math.ceil(count / limit) - 1
 
-    return c.json(
-      { result: sanitizeUsers(usersRetrieved), lastPage },
-      SC.success.OK
-    )
+    return c.json({ result: usersRetrieved, lastPage }, SC.success.OK)
   }
 )

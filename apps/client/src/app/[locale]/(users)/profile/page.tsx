@@ -10,7 +10,7 @@ import {
   Progress,
 } from "@lootopia/ui"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { MapPin, Settings, Star, Trophy } from "lucide-react"
+import { Box, Settings, Star, Trophy } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
@@ -21,6 +21,7 @@ import ReportListDialog from "@client/web/components/features/reports/list/Repor
 import PaymentListDialog from "@client/web/components/features/shop/list/PaymentListDialog"
 import ActionMenu from "@client/web/components/features/users/profile/ActionMenu"
 import EditProfileForm from "@client/web/components/features/users/profile/EditProfileForm"
+import InventoryDialog from "@client/web/components/features/users/profile/inventory/InventoryDialog"
 import MfaActivationDialog from "@client/web/components/features/users/profile/mfa/MfaActivationDialog"
 import MfaDeactivationDialog from "@client/web/components/features/users/profile/mfa/MfaDeactivationDialog"
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
@@ -48,6 +49,8 @@ const ProfilePage = () => {
   const [isMfaActivateOpen, setIsMfaActivateOpen] = useState(false)
   const [isMfaDisableOpen, setIsMfaDisableOpen] = useState(false)
 
+  const [showInventory, setShowInventory] = useState(false)
+
   const user = data ? data : undefined
 
   const logoutUser = async () => {
@@ -65,6 +68,8 @@ const ProfilePage = () => {
   const handlePayments = () => setIsPaymentsOpen((prev) => !prev)
   const handleActivateMfa = () => setIsMfaActivateOpen((prev) => !prev)
   const handleDeactivateMfa = () => setIsMfaDisableOpen((prev) => !prev)
+
+  const handleShowInventory = () => setShowInventory((prev) => !prev)
 
   const currentLevel = user?.progression?.level ?? defaultLevel
   const currentXP = user?.progression?.experience ?? defaultXP
@@ -152,7 +157,9 @@ const ProfilePage = () => {
                   <span className="text-primary">
                     {t("statistics.treasuresFound")}
                   </span>
-                  <span className="text-primary font-bold">42</span>
+                  <span className="text-primary font-bold">
+                    {data?.stats.artifactsCount}
+                  </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-primary">
@@ -221,8 +228,8 @@ const ProfilePage = () => {
         className="grid grid-cols-2 gap-4 sm:grid-cols-4"
         {...anim(bottomButtonsVariant)}
       >
-        <Button>
-          <MapPin className="mr-2 size-4" /> {t("cta.treasureMap")}
+        <Button onClick={handleShowInventory}>
+          <Box className="mr-2 size-4" /> {t("cta.inventory")}
         </Button>
         <Button>
           <Trophy className="mr-2 size-4" /> {t("cta.trophies")}
@@ -234,6 +241,8 @@ const ProfilePage = () => {
           <Settings className="mr-2 size-4" /> {t("cta.settings")}
         </Button>
       </MotionComponent>
+
+      <InventoryDialog open={showInventory} setIsOpen={handleShowInventory} />
     </main>
   )
 }

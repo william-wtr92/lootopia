@@ -1,6 +1,5 @@
-import { artifactParamSchema } from "@common/artifacts"
-import { SC } from "@common/index"
 import { zValidator } from "@hono/zod-validator"
+import { SC, artifactParamSchema } from "@lootopia/common"
 import {
   artifactNotFound,
   selectArtifactById,
@@ -10,7 +9,7 @@ import { Hono } from "hono"
 const app = new Hono()
 
 export const viewerRoute = app.get(
-  "/:id",
+  "/viewer/:id",
   zValidator("param", artifactParamSchema),
   async (c) => {
     const id = c.req.param("id")

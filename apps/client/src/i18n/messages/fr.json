@@ -228,7 +228,8 @@
         "errors": {
           "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action.",
           "notEnoughCrowns": "Vous n'avez pas assez de couronnes pour créer une chasse, mettez la en brouillon ou achetez en.",
-          "maxCrownRewardExceeded": "Le montant de la récompense maximale est de 100 couronnes par coffre."
+          "maxCrownRewardExceeded": "Le montant de la récompense maximale est de 100 couronnes par coffre.",
+          "maxUsersPerChestExceeded": "Le nombre maximum d'utilisateurs par coffre est de 200."
         }
       },
       "Drafts": {
@@ -332,7 +333,7 @@
         "cta": {
           "logout": "Déconnexion",
           "editProfile": "Éditer mon profil",
-          "treasureMap": "Carte des trésors",
+          "inventory": "Inventaire",
           "trophies": "Trophées",
           "leaderboard": "Classement",
           "settings": "Paramètres"
@@ -343,16 +344,17 @@
         "role": "Chasseur de trésors",
         "joined": "Inscrit depuis le {date}",
         "level": "Niveau {level}",
+        "stats": {
+          "level": "Niveau",
+          "hunts": "Chasses",
+          "artifacts": "Artefacts"
+        },
         "tabs": {
           "recentHunts": {
-            "trigger": "Chasses récentes",
-            "title": "Chasses récentes",
-            "subtitle": "Découvrez les dernières chasses au trésor complétées par {nickname}"
+            "trigger": "Chasses récentes"
           },
           "artifacts": {
-            "trigger": "Artefacts",
-            "title": "Collection d'artefacts",
-            "subtitle": "Découvrez les artefacts collectés par {nickname}, classés par rareté"
+            "trigger": "Artefacts"
           }
         }
       }
@@ -664,6 +666,104 @@
             "success": "L'authentification à deux facteurs a été activée avec succès !",
             "logout": "Déconnexion"
           }
+        },
+        "Inventory": {
+          "InventoryDialog": {
+            "title": "Inventaire des artefacts",
+            "description": "Découvrez les artefacts que vous avez collectés lors de vos chasses.",
+            "search": {
+              "placeholder": "Rechercher des artefacts...",
+              "enter": "Entrer"
+            },
+            "filters": {
+              "trigger": "Toutes les raretés",
+              "options": {
+                "all": "Toutes les raretés",
+                "common": "Commun",
+                "uncommon": "Peu commun",
+                "rare": "Rare",
+                "epic": "Épique",
+                "legendary": "Légendaire"
+              }
+            },
+            "tabs": {
+              "triggers": {
+                "artifacts": "Artefacts",
+                "badges": "Badges"
+              }
+            },
+            "cta": {
+              "close": "Fermer"
+            }
+          },
+          "InventoryArtifactList": {
+            "loading": "Chargement des artefacts...",
+            "empty": "Aucun artefact trouvé",
+            "clear": "Effacer la recherche",
+            "artifacts": {
+              "shaKey": "#{shaKey}",
+              "obtainedAt": "Obtenu le {date}"
+            },
+            "pagination": {
+              "previous": "Précédent",
+              "page": "Page {page} sur {total}",
+              "fetching": "Mise à jour...",
+              "next": "Suivant"
+            }
+          },
+          "InventoryArtifactDetails": {
+            "artifact": {
+              "key": "Clé publique de l'artefact",
+              "rarity": "Rareté",
+              "obtainedAt": "Obtenu le",
+              "hunt": "Chasse"
+            },
+            "links": {
+              "view": {
+                "title": "Lien",
+                "description": "Voici le lien unique de votre artefact. Vous pouvez le consulter et le partager avec d'autres utilisateurs.",
+                "cta": "Voir l'artefact"
+              },
+              "share": {
+                "cta": {
+                  "copy": "Copier le lien",
+                  "copied": "Lien copié !"
+                }
+              }
+            },
+            "cta": {
+              "close": "Fermer"
+            }
+          },
+          "InventoryBadgeList": {
+            "obtained": "Obtenu",
+            "toUnlock": "À débloquer",
+            "empty": "Aucun badge trouvé"
+          }
+        },
+        "Stats": {
+          "ProfileHunts": {
+            "title": "Chasses récentes",
+            "subtitle": "Découvrez les dernières chasses au trésor complétées par <strong>{nickname}</strong>",
+            "empty": "Nous avons trouvé aucune chasse récentes !"
+          },
+          "ProfileArtifacts": {
+            "title": "Collection d'artefacts",
+            "subtitle": "Découvrez les artefacts collectés par <strong>{nickname}</strong>, classés par rareté",
+            "obtainedAt": "Obtenu le {date}",
+            "hunt": "Dans la chasse \"{huntName}\"",
+            "empty": "Aucun artefact trouvé !",
+            "rarities": {
+              "common": "Commun",
+              "uncommon": "Peu commun",
+              "rare": "Rare",
+              "epic": "Épique",
+              "legendary": "Légendaire"
+            },
+            "cta": {
+              "view": "Voir"
+            }
+          }
         }
       }
     },
@@ -705,7 +805,8 @@
             "error": "Taille invalide"
           },
           "maxUsers": {
-            "label": "Nombre maximum d'utilisateurs"
+            "label": "Nombre maximum d'utilisateurs",
+            "error": "Nombre d'utilisateurs invalide, maximum 200"
           },
           "visibility": {
             "label": "Visibilité",
@@ -808,21 +909,39 @@
       },
       "List": {
         "Rewards": {
-          "crown": "Couronne",
-          "artifact": "Artéfact",
-          "loading": "Chargement...",
-          "artifactLoading": "Chargement de l'artéfact...",
-          "fileNotFoundOrNotSupported": "Fichier non trouvé ou non supporté",
-          "crownsExtension": " couronnes",
-          "rarities": {
-            "common": "Commun",
-            "uncommon": "Peu commun",
-            "rare": "Rare",
-            "epic": "Épique",
-            "legendary": "Légendaire"
+          "Pill": {
+            "crown": "Couronne",
+            "artifact": "Artéfact",
+            "artifactLoading": "Chargement de l'artéfact...",
+            "crownsExtension": " couronnes",
+            "rarities": {
+              "common": "Commun",
+              "uncommon": "Peu commun",
+              "rare": "Rare",
+              "epic": "Épique",
+              "legendary": "Légendaire"
+            }
           },
-          "cta": {
-            "close": "Fermer"
+          "ArtifactContent": {
+            "fileNotFoundOrNotSupported": "Fichier non trouvé ou non supporté",
+            "rarities": {
+              "common": "Commun",
+              "uncommon": "Peu commun",
+              "rare": "Rare",
+              "epic": "Épique",
+              "legendary": "Légendaire"
+            },
+            "cta": {
+              "close": "Fermer"
+            }
+          },
+          "CrownContent": {
+            "rarities": {
+              "common": "Commun"
+            },
+            "cta": {
+              "close": "Fermer"
+            }
           }
         },
         "ListItem": {
@@ -966,6 +1085,18 @@
             "error": "Fichier invalide"
           },
           "submit": "Ajouter"
+        }
+      },
+      "Three": {
+        "CanvasExporter": {
+          "isRecording": "Enregistrement...",
+          "options": {
+            "pngExport": "Exporter en PNG",
+            "webmExport": "Exporter en WEBM"
+          }
+        },
+        "RecordLoader": {
+          "isRecording": "Enregistrement..."
         }
       }
     },
