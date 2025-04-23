@@ -4,4 +4,5 @@ export const router = {
   users: "/users",
   artifacts: "/artifacts",
   reports: "/reports",
+  admins: "/admins",
 } as const

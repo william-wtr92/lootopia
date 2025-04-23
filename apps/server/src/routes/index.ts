@@ -15,6 +15,7 @@ import { reportListRoute } from "./reports/list"
 import { reportUploadRoute } from "./reports/upload"
 import { userListRoute } from "./users/list"
 import { profileRoute } from "./users/profile"
+import { adminListRoute } from "./admin/list"
 
 const DEFAULT_PATH = "/" as const
 
@@ -46,10 +47,15 @@ const reportsRoutes = new Hono()
   .route(DEFAULT_PATH, reportUploadRoute)
   .route(DEFAULT_PATH, reportListRoute)
 
+const adminsRoutes = new Hono()
+  .use(auth)
+  .route(DEFAULT_PATH, adminListRoute)
+
 export const routes = {
   auth: authRoutes,
   hunts: huntsRoutes,
   users: usersRoutes,
   artifacts: artifactsRoutes,
   reports: reportsRoutes,
+  admins: adminsRoutes,
 }

@@ -45,7 +45,9 @@ const appRouter = app
   .route(router.users, routes.users)
   .route(router.artifacts, routes.artifacts)
   .route(router.reports, routes.reports)
-
+  .route(router.admins, routes.admins)
+  
+  
 serve({
   fetch: app.fetch,
   port: appConfig.port,
