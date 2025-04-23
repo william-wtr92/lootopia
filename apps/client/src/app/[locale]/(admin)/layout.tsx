@@ -6,7 +6,7 @@ import "@client/app/globals.css"
 import { fredoka } from "@client/app/layout"
 import { IntlClientProvider } from "@client/providers/NextIntlClientProvider"
 import TanStackProvider from "@client/providers/TanstackProvider"
-import AdminNavbar from "@client/web/components/layout/admin/AdminNavbar"
+import AdminNavbar from "@client/web/components/layout/admin/navbar/AdminNavbar"
 import TreasureMapBackground from "@client/web/components/layout/TreasureMapBackground"
 
 type Props = {

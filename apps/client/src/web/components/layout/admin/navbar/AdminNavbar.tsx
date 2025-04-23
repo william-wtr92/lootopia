@@ -5,9 +5,9 @@ import { Map, Settings, TrendingUp, UsersRound } from "lucide-react"
 import { useTranslations } from "next-intl"
 import React from "react"
 
-import Logo from "../Logo"
 import AdminNavbarCategories from "./AdminNavbarCategories"
 import AdminNavbarUser from "./AdminNavbarUser"
+import Logo from "../../Logo"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import { useAuthStore } from "@client/web/store/useAuthStore"
 
