@@ -1,1 +1,0 @@
-DROP TABLE "artifact_offer_likes" CASCADE;

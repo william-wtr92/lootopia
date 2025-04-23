@@ -4,6 +4,7 @@ import {
   text,
   timestamp,
   uniqueIndex,
+  integer,
 } from "drizzle-orm/pg-core"
 import { users } from "./users"
 import { userArtifacts } from "./artifacts"
@@ -22,7 +23,7 @@ export const artifactOffers = pgTable("artifact_offers", {
   userArtifactId: uuid()
     .notNull()
     .references(() => userArtifacts.id, { onDelete: "cascade" }),
-  price: text().notNull(),
+  price: integer("price").notNull(),
   description: text(),
   status: text("status").$type<OfferStatus>().notNull().default("active"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
@@ -83,6 +84,8 @@ export const artifactOwnershipHistory = pgTable("artifact_ownership_history", {
   huntId: uuid().references(() => hunts.id, {
     onDelete: "cascade",
   }),
-  //TD: Probably should changed to CreatedAt
-  transferredAt: timestamp("transferred_at").notNull().defaultNow(),
+  offerId: uuid().references(() => artifactOffers.id, {
+    onDelete: "cascade",
+  }),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
 })

@@ -158,7 +158,7 @@ const ProfilePage = () => {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-primary">
-                    {t("statistics.treasuresFound")}
+                    {t("statistics.artifacts")}
                   </span>
                   <span className="text-primary font-bold">
                     {data?.stats.artifactsCount}

@@ -2,7 +2,7 @@ import type { ArtifactOfferSchema } from "@lootopia/common"
 
 import { client } from "@client/web/utils/client"
 
-export const artifactOffer = async (body: ArtifactOfferSchema) => {
+export const publishOffer = async (body: ArtifactOfferSchema) => {
   const response = await client["town-hall"].offers.$post({
     json: body,
   })

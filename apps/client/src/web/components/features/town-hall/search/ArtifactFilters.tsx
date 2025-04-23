@@ -1,4 +1,9 @@
 import {
+  offerFilters,
+  type OfferFilters,
+  type ArtifactRarity,
+} from "@lootopia/common"
+import {
   Input,
   Button,
   Select,
@@ -9,24 +14,30 @@ import {
   Collapsible,
   CollapsibleContent,
 } from "@lootopia/ui"
-import { ArrowUpDown, Filter, Search, X } from "lucide-react"
+import { ArrowRight, ArrowUpDown, Filter, Search, X } from "lucide-react"
+
+import SelectArtifactRarity from "@client/web/components/features/artifacts/utils/SelectArtifactRarity"
 
 type Props = {
-  searchTerm: string
-  setSearchTerm: (term: string) => void
+  inputValue: string
+  setInputValue: (term: string) => void
+  onSubmitInputValue: (term: string) => void
   filtersOpen: boolean
   setFiltersOpen: (open: boolean) => void
-  selectedRarity: string
-  setSelectedRarity: (rarity: string) => void
+  selectedRarity: ArtifactRarity | "all"
+  setSelectedRarity: (rarity: ArtifactRarity | "all") => void
   priceRange: { min: string; max: string }
   setPriceRange: (range: { min: string; max: string }) => void
-  sortBy: string
-  setSortBy: (sortBy: string) => void
+  sortBy: OfferFilters
+  setSortBy: (sortBy: OfferFilters) => void
+  onApplyFilters: () => void
+  onClearFilters: () => void
 }
 
 const ArtifactFilters = ({
-  searchTerm,
-  setSearchTerm,
+  inputValue,
+  setInputValue,
+  onSubmitInputValue,
   filtersOpen,
   setFiltersOpen,
   selectedRarity,
@@ -35,12 +46,13 @@ const ArtifactFilters = ({
   setPriceRange,
   sortBy,
   setSortBy,
+  onApplyFilters,
+  onClearFilters,
 }: Props) => {
-  const handleClearFilters = () => {
-    setSearchTerm("")
-    setSelectedRarity("all")
-    setPriceRange({ min: "", max: "" })
-    setSortBy("recent")
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      onSubmitInputValue(inputValue)
+    }
   }
 
   return (
@@ -49,11 +61,25 @@ const ArtifactFilters = ({
         <div className="relative flex-1">
           <Search className="text-primary/50 absolute left-2 top-2.5 size-4" />
           <Input
-            placeholder="Rechercher un artefact, un vendeur..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="border-primary/30 text-primary focus:border-secondary focus:ring-secondary bg-white/50 pl-8"
+            placeholder="Rechercher un artefact"
+            className="border-primary/30 text-primary placeholder-primary/40 focus:border-secondary focus:ring-secondary bg-white/50 pl-8 pr-10"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
+          {inputValue.length > 0 && (
+            <div className="absolute right-2 top-2 flex items-center space-x-1">
+              <div
+                className="text-primary/70 rounded px-1 py-0.5 text-xs"
+                title="Appuyez sur Entrée pour rechercher"
+              >
+                <span className="flex items-center">
+                  <span>Entrer</span>
+                  <ArrowRight className="ml-1 size-3" />
+                </span>
+              </div>
+            </div>
+          )}
         </div>
         <Button
           variant="outline"
@@ -65,16 +91,18 @@ const ArtifactFilters = ({
         </Button>
         <Select value={sortBy} onValueChange={setSortBy}>
           <SelectTrigger className="border-primary/30 text-primary w-[180px] bg-white/50">
-            <div className="flex items-center">
-              <ArrowUpDown className="mr-2 size-4" />
-              <span>Trier par</span>
-            </div>
+            <ArrowUpDown className="mr-2 size-4" />
+            <SelectValue placeholder="Trier par" />
           </SelectTrigger>
           <SelectContent className="bg-primaryBg text-primary">
-            <SelectItem value="recent">Plus récents</SelectItem>
-            <SelectItem value="price-low">Prix croissant</SelectItem>
-            <SelectItem value="price-high">Prix décroissant</SelectItem>
-            <SelectItem value="rarity">Rareté</SelectItem>
+            <SelectItem value={offerFilters.latest}>Plus récents</SelectItem>
+            <SelectItem value={offerFilters.priceAsc}>
+              Prix croissant
+            </SelectItem>
+            <SelectItem value={offerFilters.priceDesc}>
+              Prix décroissant
+            </SelectItem>
+            <SelectItem value={offerFilters.rarity}>Rareté</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -86,20 +114,11 @@ const ArtifactFilters = ({
               <label className="text-primary mb-1 block text-sm font-medium">
                 Rareté
               </label>
-              {/* TD: mutualize with inventory select */}
-              <Select value={selectedRarity} onValueChange={setSelectedRarity}>
-                <SelectTrigger className="border-primary/30 text-primary w-full">
-                  <SelectValue placeholder="Toutes raretés" />
-                </SelectTrigger>
-                <SelectContent className="bg-primaryBg text-primary">
-                  <SelectItem value="all">Toutes raretés</SelectItem>
-                  <SelectItem value="common">Commun</SelectItem>
-                  <SelectItem value="uncommon">Peu commun</SelectItem>
-                  <SelectItem value="rare">Rare</SelectItem>
-                  <SelectItem value="epic">Épique</SelectItem>
-                  <SelectItem value="legendary">Légendaire</SelectItem>
-                </SelectContent>
-              </Select>
+
+              <SelectArtifactRarity
+                selectedRarity={selectedRarity}
+                setSelectedRarity={setSelectedRarity}
+              />
             </div>
 
             <div className="min-w-[200px] flex-1">
@@ -113,7 +132,7 @@ const ArtifactFilters = ({
                 onChange={(e) =>
                   setPriceRange({ ...priceRange, min: e.target.value })
                 }
-                className="border-primary/30"
+                className="border-primary/30 text-primary"
               />
             </div>
 
@@ -128,20 +147,23 @@ const ArtifactFilters = ({
                 onChange={(e) =>
                   setPriceRange({ ...priceRange, max: e.target.value })
                 }
-                className="border-primary/30"
+                className="border-primary/30 text-primary"
               />
             </div>
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-3">
             <Button
               variant="outline"
               size="sm"
-              onClick={handleClearFilters}
+              onClick={onClearFilters}
               className="border-primary text-primary"
             >
-              <X className="mr-2 size-4" />
+              <X className="mr-2 size-2" />
               Effacer les filtres
+            </Button>
+            <Button size="sm" onClick={onApplyFilters}>
+              Appliquer les filtres
             </Button>
           </div>
         </CollapsibleContent>

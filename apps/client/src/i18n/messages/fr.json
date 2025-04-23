@@ -274,7 +274,7 @@
         },
         "statistics": {
           "title": "Statistiques",
-          "treasuresFound": "Trésors trouvés",
+          "artifacts": "Artefacts",
           "challengesCompleted": "Défis complétés",
           "xp": "Points d'expérience"
         },
@@ -674,17 +674,6 @@
             "search": {
               "placeholder": "Rechercher des artefacts...",
               "enter": "Entrer"
-            },
-            "filters": {
-              "trigger": "Toutes les raretés",
-              "options": {
-                "all": "Toutes les raretés",
-                "common": "Commun",
-                "uncommon": "Peu commun",
-                "rare": "Rare",
-                "epic": "Épique",
-                "legendary": "Légendaire"
-              }
             },
             "tabs": {
               "triggers": {
@@ -1097,6 +1086,19 @@
         },
         "RecordLoader": {
           "isRecording": "Enregistrement..."
+        }
+      },
+      "Utils": {
+        "SelectArtifactRarity": {
+          "trigger": "Toutes les raretés",
+          "options": {
+            "all": "Toutes les raretés",
+            "common": "Commun",
+            "uncommon": "Peu commun",
+            "rare": "Rare",
+            "epic": "Épique",
+            "legendary": "Légendaire"
+          }
         }
       }
     },

@@ -1,9 +1,10 @@
 import { auth } from "@server/middlewares/auth"
 import { Hono } from "hono"
 
+import { artifactHistoryRoute } from "./artifacts/history"
 import { listArtifactsRoute } from "./artifacts/list"
 import { uploadArtifactRoute } from "./artifacts/upload"
-import { viewerRoute } from "./artifacts/viewer"
+import { artifactViewerRoute } from "./artifacts/viewer"
 import { emailValidationRoute } from "./auth/emailValidation"
 import { loginRoute } from "./auth/login"
 import { passwordResetRoute } from "./auth/passwordReset"
@@ -19,7 +20,9 @@ import { reportUploadRoute } from "./reports/upload"
 import { crownPackagesRoute } from "./shop/crownPackages"
 import { paymentsRoute } from "./shop/payments"
 import { webhookRoute } from "./shop/webhook"
+import { favoritesRoute } from "./town-hall/favorites"
 import { offersRoute } from "./town-hall/offers"
+import { viewsRoute } from "./town-hall/views"
 import { userListRoute } from "./users/list"
 import { profileRoute } from "./users/profile"
 import { securityRoute } from "./users/security"
@@ -48,7 +51,8 @@ const huntsRoutes = new Hono()
   .route(DEFAULT_PATH, requestParticipationRoute)
 
 const artifactsRoutes = new Hono()
-  .route(DEFAULT_PATH, viewerRoute)
+  .route(DEFAULT_PATH, artifactViewerRoute)
+  .route(DEFAULT_PATH, artifactHistoryRoute)
   .use(auth)
   .route(DEFAULT_PATH, uploadArtifactRoute)
   .route(DEFAULT_PATH, listArtifactsRoute)
@@ -64,7 +68,11 @@ const shopRoutes = new Hono()
   .route(DEFAULT_PATH, crownPackagesRoute)
   .route(DEFAULT_PATH, paymentsRoute)
 
-const townHallRoutes = new Hono().use(auth).route(DEFAULT_PATH, offersRoute)
+const townHallRoutes = new Hono()
+  .use(auth)
+  .route(DEFAULT_PATH, offersRoute)
+  .route(DEFAULT_PATH, viewsRoute)
+  .route(DEFAULT_PATH, favoritesRoute)
 
 export const routes = {
   auth: authRoutes,

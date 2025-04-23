@@ -102,6 +102,15 @@ export {
   type ArtifactInventoryQuerySchema,
 } from "./artifacts"
 
+export {
+  historyStatus,
+  type HistoryStatus,
+  artifactHistoryQuerySchema,
+  type ArtifactHistoryQuerySchema,
+  userArtifactParamSchema,
+  type UserArtifactParamSchema,
+} from "./artifacts/history"
+
 export { getRarityFromAvailability } from "./artifacts/utils/getRarityFromAvailability"
 
 // Crowns types
@@ -110,6 +119,7 @@ export {
   type TransactionType,
   DEFAULT_CROWN_AMOUNT,
   crownCosts,
+  offerPaymentFee,
 } from "./crowns"
 
 // Reports types
@@ -170,12 +180,23 @@ export {
 } from "./progressions/levels"
 
 // Town Hall types
+export { artifactOfferIdParam, type ArtifactOfferIdParam } from "./town-hall"
+
 export {
   DURATIONS_IN_DAYS,
   offerStatus,
   type OfferStatus,
+  offerFilters,
+  type OfferFilters,
   artifactOfferSchema,
   type ArtifactOfferSchema,
-} from "./town-hall/offer"
+  artifactOfferAvailabilityQuerySchema,
+  type ArtifactOfferAvailabilityQuerySchema,
+  artifactOffersQuerySchema,
+  type ArtifactOffersQuerySchema,
+} from "./town-hall/offers"
 
-export { historyStatus, type HistoryStatus } from "./town-hall/history"
+export {
+  artifactOfferFavoritesSchema,
+  type ArtifactOfferFavoritesSchema,
+} from "./town-hall/favorites"

@@ -19,8 +19,16 @@ import { getArtifactById } from "@client/web/services/artifacts/getArtifactById"
 import type { HuntResponse } from "@client/web/services/hunts/getHunts"
 
 type Props =
-  | { chest: HuntResponse["chests"][0]; artifactId?: never }
-  | { chest?: never; artifactId: string }
+  | {
+      chest: HuntResponse["chests"][0]
+      artifactId?: never
+      onOpenChange?: (open: boolean) => void
+    }
+  | {
+      chest?: never
+      artifactId: string
+      onOpenChange?: (open: boolean) => void
+    }
 
 const HuntRewardPill = (props: Props) => {
   const t = useTranslations("Components.Hunts.List.Rewards.Pill")
@@ -54,6 +62,8 @@ const HuntRewardPill = (props: Props) => {
     if (bool) {
       refetch()
     }
+
+    props.onOpenChange?.(bool)
   }
 
   const artifactName = data?.name

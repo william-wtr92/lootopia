@@ -1,4 +1,4 @@
-import type { ArtifactRarity } from "@lootopia/common"
+import { artifactRarity, type ArtifactRarity } from "@lootopia/common"
 import {
   Dialog,
   DialogContent,
@@ -10,16 +10,19 @@ import {
   TabsTrigger,
   Badge,
 } from "@lootopia/ui"
-import { Gem, History, Eye } from "lucide-react"
+import { Gem, History, Eye, Hourglass } from "lucide-react"
+import { useLocale } from "next-intl"
 import { useState } from "react"
 
 import ArtifactDetails from "./ArtifactDetails"
-import { type ArtifactMocked } from "../mock-data"
-import ArtifactHistory from "./ArtifactHistory"
+import ArtifactHistory from "./history/ArtifactHistory"
+import { useViewTracking } from "@client/web/hooks/useViewTracking"
+import type { ArtifactOffersResponse } from "@client/web/services/town-hall/getOffers"
 import { getArtifactRarityGradient } from "@client/web/utils/def/colors"
+import { formatDateDiff } from "@client/web/utils/helpers/formatDate"
 
 type Props = {
-  selectedArtifact: ArtifactMocked | null
+  selectedArtifact: ArtifactOffersResponse
   open: boolean
   setIsOpen: (open: boolean) => void
   setIsPurchaseModalOpen: (open: boolean) => void
@@ -31,20 +34,26 @@ const ArtifactOverview = ({
   setIsOpen,
   setIsPurchaseModalOpen,
 }: Props) => {
+  const locale = useLocale()
   const [activeTab, setActiveTab] = useState("details")
 
-  if (!selectedArtifact) {
+  useViewTracking({
+    offerId: selectedArtifact.offer.id,
+  })
+
+  if (!selectedArtifact || !selectedArtifact.artifact) {
     return null
   }
 
-  const isLegendary = selectedArtifact.rarity === "legendary"
+  const isLegendary =
+    selectedArtifact.artifact.rarity === artifactRarity.legendary
 
   return (
     <Dialog open={open} onOpenChange={setIsOpen}>
       <DialogContent className="border-primary bg-primaryBg max-h-[85vh] overflow-hidden p-0 sm:max-w-[800px]">
         <div className="flex h-full max-h-[85vh] flex-col">
           <DialogHeader
-            className={`p-4 ${getArtifactRarityGradient(selectedArtifact.rarity as ArtifactRarity)} text-primary relative top-0 z-20 overflow-hidden`}
+            className={`p-4 ${getArtifactRarityGradient(selectedArtifact.artifact.rarity as ArtifactRarity)} text-primary relative top-0 z-20 overflow-hidden`}
           >
             {isLegendary && (
               <div className="absolute inset-0 overflow-hidden">
@@ -58,9 +67,12 @@ const ArtifactOverview = ({
               <Gem
                 className={`mr-2 h-6 w-6 ${isLegendary ? "text-amber-600" : ""}`}
               />
-              <span className="flex-1 text-white">{selectedArtifact.name}</span>
+              <span className="flex-1 text-white">
+                {selectedArtifact.artifact.name}
+              </span>
               <Badge variant="outline" className="ml-2 bg-white/70 text-xs">
-                {selectedArtifact.id}
+                <Hourglass className="mr-1 size-3" />
+                {formatDateDiff(selectedArtifact.offer.expiresAt, locale)}
               </Badge>
             </DialogTitle>
           </DialogHeader>

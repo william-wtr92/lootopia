@@ -4,10 +4,10 @@ import { Button } from "@lootopia/ui"
 import { motion, AnimatePresence } from "framer-motion"
 import { Crown, CheckCircle, X, Gift, Sparkles } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { useEffect, useState, useRef } from "react"
+import { useState } from "react"
 
+import { useConfetti } from "@client/web/hooks/useConfetti"
 import type { CrownPackage } from "@client/web/services/shop/getCrownPackages"
-import { buildCanvas, launchConfetti } from "@client/web/utils/helpers/confetti"
 
 type Props = {
   isOpen: boolean
@@ -19,26 +19,14 @@ const ThankYouPopup = ({ isOpen, onClose, crownPackage }: Props) => {
   const t = useTranslations("Components.Shop.ThankYou")
 
   const [showCoins, setShowCoins] = useState(false)
-  const confettiRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    if (isOpen && confettiRef.current) {
-      const canvas = document.createElement("canvas")
-      buildCanvas(canvas)
-      document.body.appendChild(canvas)
-
-      launchConfetti(canvas)
-
-      const CONFETTI_DELAY = 300
-      setTimeout(() => {
-        setShowCoins(true)
-      }, CONFETTI_DELAY)
-
-      return () => {
-        document.body.removeChild(canvas)
-      }
-    }
-  }, [isOpen])
+  useConfetti({
+    enabled: isOpen,
+    delay: 300,
+    onLaunch: () => {
+      setShowCoins(true)
+    },
+  })
 
   return (
     <AnimatePresence>
@@ -51,11 +39,6 @@ const ThankYouPopup = ({ isOpen, onClose, crownPackage }: Props) => {
           exit="exit"
           onClick={onClose}
         >
-          <div
-            ref={confettiRef}
-            className="pointer-events-none absolute inset-0"
-          ></div>
-
           <motion.div
             className="bg-primaryBg relative w-full max-w-md overflow-hidden rounded-xl shadow-xl"
             variants={modalVariant}

@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1745251458734,
-      "tag": "0000_dapper_ultragirl",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1745254430177,
-      "tag": "0001_watery_lilandra",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1745265065734,
-      "tag": "0002_parallel_kree",
+      "when": 1745409045154,
+      "tag": "0000_panoramic_mantis",
       "breakpoints": true
     }
   ]

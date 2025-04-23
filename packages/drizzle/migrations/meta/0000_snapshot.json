@@ -1,5 +1,5 @@
 {
-  "id": "7acdf1b1-9586-48c7-8461-6b307e80f7d6",
+  "id": "baf75a26-df08-4351-9bf8-33cb817e0caf",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -75,94 +75,6 @@
         "artifact_offer_favorites_userId_users_id_fk": {
           "name": "artifact_offer_favorites_userId_users_id_fk",
           "tableFrom": "artifact_offer_favorites",
-          "tableTo": "users",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.artifact_offer_likes": {
-      "name": "artifact_offer_likes",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "offerId": {
-          "name": "offerId",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "userId": {
-          "name": "userId",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "liked_at": {
-          "name": "liked_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        }
-      },
-      "indexes": {
-        "unique_like_per_user_offer": {
-          "name": "unique_like_per_user_offer",
-          "columns": [
-            {
-              "expression": "offerId",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "userId",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "artifact_offer_likes_offerId_artifact_offers_id_fk": {
-          "name": "artifact_offer_likes_offerId_artifact_offers_id_fk",
-          "tableFrom": "artifact_offer_likes",
-          "tableTo": "artifact_offers",
-          "columnsFrom": [
-            "offerId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "artifact_offer_likes_userId_users_id_fk": {
-          "name": "artifact_offer_likes_userId_users_id_fk",
-          "tableFrom": "artifact_offer_likes",
           "tableTo": "users",
           "columnsFrom": [
             "userId"
@@ -293,7 +205,7 @@
         },
         "price": {
           "name": "price",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -387,13 +299,13 @@
           "name": "previousOwnerId",
           "type": "uuid",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "newOwnerId": {
           "name": "newOwnerId",
           "type": "uuid",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "huntId": {
           "name": "huntId",
@@ -401,8 +313,14 @@
           "primaryKey": false,
           "notNull": false
         },
-        "transferred_at": {
-          "name": "transferred_at",
+        "offerId": {
+          "name": "offerId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
@@ -456,6 +374,19 @@
           "tableTo": "hunts",
           "columnsFrom": [
             "huntId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "artifact_ownership_history_offerId_artifact_offers_id_fk": {
+          "name": "artifact_ownership_history_offerId_artifact_offers_id_fk",
+          "tableFrom": "artifact_ownership_history",
+          "tableTo": "artifact_offers",
+          "columnsFrom": [
+            "offerId"
           ],
           "columnsTo": [
             "id"
@@ -1443,6 +1374,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "artifactOfferId": {
+          "name": "artifactOfferId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -1472,6 +1409,19 @@
           "tableTo": "hunts",
           "columnsFrom": [
             "huntId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "transactions_artifactOfferId_artifact_offers_id_fk": {
+          "name": "transactions_artifactOfferId_artifact_offers_id_fk",
+          "tableFrom": "transactions",
+          "tableTo": "artifact_offers",
+          "columnsFrom": [
+            "artifactOfferId"
           ],
           "columnsTo": [
             "id"

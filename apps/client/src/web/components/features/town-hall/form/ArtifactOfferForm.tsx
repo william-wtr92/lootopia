@@ -29,17 +29,20 @@ import {
   FormLabel,
   FormMessage,
 } from "@lootopia/ui"
-import { useInfiniteQuery } from "@tanstack/react-query"
+import {
+  keepPreviousData,
+  useInfiniteQuery,
+  useQueryClient,
+} from "@tanstack/react-query"
 import { Clock, AlertCircle, CheckCircle2, Crown } from "lucide-react"
 import { useLocale, useTranslations } from "next-intl"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 
-import { mockInventory } from "../mock-data"
 import { useFormMutation } from "@client/web/hooks/useFormMutation"
 import { usePaginationObserver } from "@client/web/hooks/usePaginationObserver"
-import { getArtifactInventory } from "@client/web/services/artifacts/getArtifactInventory"
-import { artifactOffer } from "@client/web/services/town-hall/artifactOffer"
+import { getAvailableArtifacts } from "@client/web/services/town-hall/getAvailableArtifacts"
+import { publishOffer } from "@client/web/services/town-hall/publishOffer"
 import { getArtifactRarityColor } from "@client/web/utils/def/colors"
 import { formatDate } from "@client/web/utils/helpers/formatDate"
 import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
@@ -47,18 +50,19 @@ import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 const ArtifactOfferForm = () => {
   const t = useTranslations("Components.TownHall.ArtifactOfferForm")
   const locale = useLocale()
+  const qc = useQueryClient()
 
   const [inputValue, setInputValue] = useState("")
+  const [showSuccess, setShowSuccess] = useState(false)
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: ["selectableArtifacts", inputValue],
+      queryKey: ["availableArtifacts", inputValue],
       queryFn: () =>
-        getArtifactInventory({
+        getAvailableArtifacts({
           page: defaultPage.toString(),
           limit: defaultLimit.toString(),
           search: inputValue,
-          filters: undefined,
         }),
 
       getNextPageParam: (lastPage, allPages) => {
@@ -71,6 +75,7 @@ const ArtifactOfferForm = () => {
           : undefined
       },
       initialPageParam: defaultPage,
+      placeholderData: keepPreviousData,
     })
 
   const allArtifacts = data?.pages.flatMap((page) => page?.result) ?? []
@@ -82,33 +87,44 @@ const ArtifactOfferForm = () => {
     resolver: zodResolver(artifactOfferSchema),
     defaultValues: {
       userArtifactId: "",
-      price: "",
+      price: 1,
       duration: "7",
       description: "",
     },
   })
 
-  //TD : delete mockInventory
-  const artifact = mockInventory.find(
-    (item) => item.id === form.watch("userArtifactId")
+  const artifactOffer = allArtifacts.find(
+    (artifact) => artifact?.userArtifactId === form.watch("userArtifactId")
   )
 
-  const { mutateAsync: submitOffer, isSuccess } = useFormMutation(
-    artifactOffer,
+  const { mutateAsync: submitOffer } = useFormMutation(
+    publishOffer,
     {
       success: () => "Votre artefact est maintenant en vente.",
       error: (key) => translateDynamicKey(t, `errors.${key}`),
+    },
+    {
+      onSuccess: () => {
+        form.reset()
+
+        qc.invalidateQueries({ queryKey: ["artifactOffers"] })
+        qc.invalidateQueries({
+          queryKey: ["availableArtifacts", inputValue],
+        })
+
+        setShowSuccess(true)
+        setTimeout(() => setShowSuccess(false), 2000)
+      },
     }
   )
 
   const onSubmit = async (data: ArtifactOfferSchema) => {
     await submitOffer(data)
-    form.reset()
   }
 
   return (
-    <div className="mx-auto max-w-2xl pb-6">
-      {isSuccess ? (
+    <div className="mx-auto flex h-full max-w-2xl items-center pb-6">
+      {showSuccess ? (
         <Card className="border-success/50 bg-success/10">
           <CardHeader>
             <CardTitle className="text-success flex items-center">
@@ -131,7 +147,7 @@ const ArtifactOfferForm = () => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="max-h-[55vh] space-y-6 overflow-y-auto"
+            className="max-h-[55vh] w-full space-y-6 overflow-y-auto"
           >
             <Card className="border-primary/20 text-primary">
               <CardHeader>
@@ -208,22 +224,26 @@ const ArtifactOfferForm = () => {
                   )}
                 />
 
-                {artifact && (
+                {artifactOffer && (
                   <Card
                     className={`${getArtifactRarityColor(
-                      artifact.rarity as ArtifactRarity
+                      artifactOffer?.artifact?.rarity as ArtifactRarity
                     )} border-none`}
                   >
                     <CardHeader className="pb-2">
-                      <CardTitle className="text-lg">{artifact.name}</CardTitle>
+                      <CardTitle className="text-lg">
+                        {artifactOffer?.artifact?.name}
+                      </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-sm">{artifact.description}</p>
+                      <p className="text-sm">
+                        Obtenu dans la chasse "{artifactOffer?.huntName}"
+                      </p>
                       <div className="mt-2 flex items-center text-xs">
                         <Clock className="mr-1 size-3" />
                         <span>
                           Obtenu le{" "}
-                          {formatDate(artifact.obtainedAt.toString(), locale)}
+                          {formatDate(artifactOffer?.obtainedAt, locale)}
                         </span>
                       </div>
                     </CardContent>
@@ -245,14 +265,20 @@ const ArtifactOfferForm = () => {
                             placeholder="Entrez le prix"
                             className="border-primary/30 pl-8"
                             {...field}
+                            onChange={(e) => {
+                              const value = e.target.value
+                              field.onChange(value === "" ? "" : Number(value))
+                            }}
                           />
                         </div>
                       </FormControl>
                       <FormMessage />
-                      {artifact && (
+                      {artifactOffer && (
                         <p className="text-primary/70 text-xs">
                           Prix suggéré :{" "}
-                          {getSuggestedPrice(artifact.rarity as ArtifactRarity)}
+                          {getSuggestedPrice(
+                            artifactOffer?.artifact?.rarity as ArtifactRarity
+                          )}
                         </p>
                       )}
                     </FormItem>

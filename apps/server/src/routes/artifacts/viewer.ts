@@ -8,7 +8,7 @@ import { Hono } from "hono"
 
 const app = new Hono()
 
-export const viewerRoute = app.get(
+export const artifactViewerRoute = app.get(
   "/viewer/:id",
   zValidator("param", artifactParamSchema),
   async (c) => {

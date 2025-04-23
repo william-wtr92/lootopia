@@ -13,9 +13,9 @@ import { Search, TrendingUp, PlusCircle, Store } from "lucide-react"
 import { useState } from "react"
 
 import ArtifactSellForm from "./form/ArtifactOfferForm"
-import type { ArtifactMocked } from "./mock-data"
 import ArtifacList from "./search/ArtifactList"
-import PurchaseConfirmation from "./utils/PurchaseConfirmation"
+import PurchaseDialog from "./utils/PurchaseDialog"
+import type { ArtifactOffersResponse } from "@client/web/services/town-hall/getOffers"
 
 type Props = {
   open: boolean
@@ -26,13 +26,24 @@ const TownHallDialog = ({ open, setIsOpen }: Props) => {
   const [activeTab, setActiveTab] = useState("browse")
 
   const [selectedArtifact, setSelectedArtifact] =
-    useState<ArtifactMocked | null>(null)
+    useState<ArtifactOffersResponse | null>(null)
   const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false)
+
+  const handleSetArtifact = (artifact: ArtifactOffersResponse | null) => {
+    setSelectedArtifact(artifact)
+  }
+
+  const handleShowModal = (isOpen: boolean) => {
+    setIsPurchaseModalOpen(isOpen)
+  }
 
   return (
     <>
       <Dialog open={open} onOpenChange={setIsOpen}>
-        <DialogContent className="border-primary bg-primaryBg max-h-[75vh] overflow-hidden rounded-xl p-0 sm:max-w-[900px]">
+        <DialogContent
+          className="border-primary bg-primaryBg h-[75vh] overflow-hidden rounded-xl p-0 sm:max-w-[900px]"
+          hideClose={false}
+        >
           <div className="flex h-full flex-col">
             <DialogHeader className="border-primary/20 bg-primaryBg sticky top-0 z-10 border-b px-6 pb-4 pt-6">
               <DialogTitle className="text-primary flex items-center text-xl font-bold">
@@ -80,8 +91,8 @@ const TownHallDialog = ({ open, setIsOpen }: Props) => {
                 >
                   <ArtifacList
                     selectedArtifact={selectedArtifact}
-                    setSelectedArtifact={setSelectedArtifact}
-                    setIsPurchaseModalOpen={setIsPurchaseModalOpen}
+                    setSelectedArtifact={handleSetArtifact}
+                    setIsPurchaseModalOpen={handleShowModal}
                   />
                 </TabsContent>
 
@@ -105,8 +116,8 @@ const TownHallDialog = ({ open, setIsOpen }: Props) => {
       </Dialog>
 
       {selectedArtifact && (
-        <PurchaseConfirmation
-          artifact={selectedArtifact}
+        <PurchaseDialog
+          artifactOffer={selectedArtifact}
           open={isPurchaseModalOpen}
           setIsOpen={setIsPurchaseModalOpen}
         />

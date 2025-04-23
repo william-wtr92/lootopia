@@ -274,7 +274,7 @@
         },
         "statistics": {
           "title": "Statistics",
-          "treasuresFound": "Treasures found",
+          "artifacts": "Artifacts",
           "challengesCompleted": "Challenges completed",
           "xp": "Xp points"
         },
@@ -674,17 +674,6 @@
             "search": {
               "placeholder": "Search for artifacts...",
               "enter": "Enter"
-            },
-            "filters": {
-              "trigger": "All rarities",
-              "options": {
-                "all": "All rarities",
-                "common": "Common",
-                "uncommon": "Uncommon",
-                "rare": "Rare",
-                "epic": "Epic",
-                "legendary": "Legendary"
-              }
             },
             "tabs": {
               "triggers": {
@@ -1097,6 +1086,19 @@
         },
         "RecordLoader": {
           "isRecording": "Recording..."
+        }
+      },
+      "Utils": {
+        "SelectArtifactRarity": {
+          "trigger": "All rarities",
+          "options": {
+            "all": "All rarities",
+            "common": "Common",
+            "uncommon": "Uncommon",
+            "rare": "Rare",
+            "epic": "Epic",
+            "legendary": "Legendary"
+          }
         }
       }
     },

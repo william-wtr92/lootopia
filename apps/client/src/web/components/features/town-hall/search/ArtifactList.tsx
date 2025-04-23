@@ -1,13 +1,26 @@
+import {
+  defaultLimit,
+  defaultPage,
+  offerFilters,
+  type ArtifactRarity,
+  type OfferFilters,
+} from "@lootopia/common"
+import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query"
+import { Gem } from "lucide-react"
 import { useState } from "react"
 
 import ArtifactFilters from "./ArtifactFilters"
 import ArtifactListItem from "./ArtifactListItem"
-import { mockArtifacts, type ArtifactMocked } from "../mock-data"
 import ArtifactOverview from "@client/web/components/features/town-hall/details/ArtifactOverview"
+import { usePaginationObserver } from "@client/web/hooks/usePaginationObserver"
+import {
+  getOffers,
+  type ArtifactOffersResponse,
+} from "@client/web/services/town-hall/getOffers"
 
 type Props = {
-  selectedArtifact: ArtifactMocked | null
-  setSelectedArtifact: (artifact: ArtifactMocked) => void
+  selectedArtifact: ArtifactOffersResponse | null
+  setSelectedArtifact: (artifact: ArtifactOffersResponse) => void
   setIsPurchaseModalOpen: (isOpen: boolean) => void
 }
 
@@ -16,93 +29,151 @@ const ArtifacList = ({
   setSelectedArtifact,
   setIsPurchaseModalOpen,
 }: Props) => {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [selectedRarity, setSelectedRarity] = useState("all")
+  const [inputValue, setInputValue] = useState("")
+  const [submittedValue, setSubmittedValue] = useState("")
+  const [tempSelectedRarity, setTempSelectedRarity] = useState<
+    ArtifactRarity | "all"
+  >("all")
+  const [tempPriceRange, setTempPriceRange] = useState({ min: "", max: "" })
+  const [selectedRarity, setSelectedRarity] = useState<ArtifactRarity | "all">(
+    "all"
+  )
   const [priceRange, setPriceRange] = useState({ min: "", max: "" })
-  const [sortBy, setSortBy] = useState("recent")
-  const [filtersOpen, setFiltersOpen] = useState(false)
+  const [sortBy, setSortBy] = useState<OfferFilters>(offerFilters.latest)
 
+  const [filtersOpen, setFiltersOpen] = useState(false)
   const [isHistoryOpen, setIsHistoryOpen] = useState(false)
 
-  // Filter artifacts based on search criteria
-  const filteredArtifacts = mockArtifacts.filter((artifact) => {
-    const matchesSearch =
-      artifact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      artifact.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      artifact.seller.toLowerCase().includes(searchTerm.toLowerCase())
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: [
+        "artifactOffers",
+        submittedValue,
+        selectedRarity,
+        priceRange,
+        sortBy,
+      ],
+      queryFn: () =>
+        getOffers({
+          page: defaultPage.toString(),
+          limit: defaultLimit.toString(),
+          search: submittedValue,
+          filters: selectedRarity === "all" ? undefined : selectedRarity,
+          minPrice: priceRange.min,
+          maxPrice: priceRange.max,
+          sortBy,
+        }),
 
-    const matchesRarity =
-      selectedRarity === "all" || artifact.rarity === selectedRarity
-
-    const matchesMinPrice =
-      priceRange.min === "" || artifact.price >= Number.parseInt(priceRange.min)
-    const matchesMaxPrice =
-      priceRange.max === "" || artifact.price <= Number.parseInt(priceRange.max)
-
-    return matchesSearch && matchesRarity && matchesMinPrice && matchesMaxPrice
-  })
-
-  // Sort artifacts
-  const sortedArtifacts = [...filteredArtifacts].sort((a, b) => {
-    switch (sortBy) {
-      case "recent":
-        return b.listedDate.getTime() - a.listedDate.getTime()
-
-      case "price-low":
-        return a.price - b.price
-
-      case "price-high":
-        return b.price - a.price
-
-      case "rarity":
-        const rarityOrder = {
-          legendary: 0,
-          epic: 1,
-          rare: 2,
-          uncommon: 3,
-          common: 4,
+      getNextPageParam: (lastPage, allPages) => {
+        if (!lastPage) {
+          return undefined
         }
 
-        return (
-          rarityOrder[a.rarity as keyof typeof rarityOrder] -
-          rarityOrder[b.rarity as keyof typeof rarityOrder]
-        )
+        return allPages.length - 1 < lastPage.lastPage
+          ? allPages.length
+          : undefined
+      },
+      initialPageParam: defaultPage,
+      placeholderData: keepPreviousData,
+    })
 
-      default:
-        return 0
-    }
-  })
+  const {
+    containerRef: listContainerRef,
+    sentinelRef: listRef,
+    checkIfShouldFetchNextPage,
+  } = usePaginationObserver({ fetchNextPage, hasNextPage, isFetchingNextPage })
+
+  const countResult = data?.pages[0]?.countResult ?? 0
+  const artifactOffers = (data?.pages.flatMap((page) => page?.result) ??
+    []) as ArtifactOffersResponse[]
+
+  const handleSetInputValue = (query: string) => {
+    setInputValue(query)
+  }
+
+  const handleSubmitInputValue = (query: string) => {
+    setSubmittedValue(query)
+
+    checkIfShouldFetchNextPage()
+  }
+
+  const handleSelectTempRarity = (rarity: ArtifactRarity | "all") => {
+    setTempSelectedRarity(rarity)
+  }
+
+  const handleSelectTempPriceRange = (range: { min: string; max: string }) => {
+    setTempPriceRange(range)
+  }
+
+  const handleSelectSortBy = (sort: OfferFilters) => {
+    setSortBy(sort)
+  }
+
+  const handleApplyFilters = () => {
+    setSelectedRarity(tempSelectedRarity)
+    setPriceRange(tempPriceRange)
+
+    checkIfShouldFetchNextPage()
+  }
+
+  const handleClearFilters = () => {
+    setTempSelectedRarity("all")
+    setTempPriceRange({ min: "", max: "" })
+    setSelectedRarity("all")
+    setPriceRange({ min: "", max: "" })
+    setSortBy(offerFilters.latest)
+
+    checkIfShouldFetchNextPage()
+  }
 
   return (
     <div className="flex h-full flex-col space-y-4">
       <ArtifactFilters
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        selectedRarity={selectedRarity}
-        setSelectedRarity={setSelectedRarity}
-        priceRange={priceRange}
-        setPriceRange={setPriceRange}
+        inputValue={inputValue}
+        setInputValue={handleSetInputValue}
+        onSubmitInputValue={handleSubmitInputValue}
+        selectedRarity={tempSelectedRarity}
+        setSelectedRarity={handleSelectTempRarity}
+        priceRange={tempPriceRange}
+        setPriceRange={handleSelectTempPriceRange}
         sortBy={sortBy}
-        setSortBy={setSortBy}
+        setSortBy={handleSelectSortBy}
         filtersOpen={filtersOpen}
         setFiltersOpen={setFiltersOpen}
+        onApplyFilters={handleApplyFilters}
+        onClearFilters={handleClearFilters}
       />
 
       <div className="text-primary/70 text-sm">
-        {filteredArtifacts.length} artefacts trouvés
+        {countResult} artefact{countResult > 1 ? "s" : ""} trouvé
+        {countResult > 1 ? "s" : ""}
       </div>
 
-      <div className="max-h-[47vh] flex-1 overflow-y-auto pb-4">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {sortedArtifacts.map((artifact) => (
-            <ArtifactListItem
-              key={artifact.id}
-              artifact={artifact}
-              setSelectedArtifact={setSelectedArtifact}
-              setIsPurchaseModalOpen={setIsPurchaseModalOpen}
-              setIsHistoryOpen={setIsHistoryOpen}
-            />
-          ))}
+      <div
+        className="max-h-[47vh] flex-1 overflow-y-auto pb-4"
+        ref={listContainerRef}
+      >
+        <div className="h-full">
+          {artifactOffers && artifactOffers.length > 0 ? (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {artifactOffers.map((artifactOffer, i) => (
+                <ArtifactListItem
+                  key={i}
+                  artifactOffer={artifactOffer}
+                  setSelectedArtifact={setSelectedArtifact}
+                  setIsPurchaseModalOpen={setIsPurchaseModalOpen}
+                  setIsHistoryOpen={setIsHistoryOpen}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-primary/70 border-primary/10 flex h-full flex-col items-center justify-center gap-4 rounded-lg border bg-white/30">
+              <Gem className="mr-2 size-12 opacity-20" />
+              <span className="text-md">{countResult} artefacts trouvés</span>
+            </div>
+          )}
+
+          <div id="sentinel" ref={listRef} className="h-1" />
         </div>
       </div>
 

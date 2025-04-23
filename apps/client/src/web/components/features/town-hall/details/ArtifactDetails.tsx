@@ -1,4 +1,5 @@
-import { Button } from "@lootopia/ui"
+import { Button, useToast } from "@lootopia/ui"
+import { useQuery } from "@tanstack/react-query"
 import {
   Calendar,
   Crown,
@@ -6,40 +7,96 @@ import {
   Eye,
   Gem,
   Heart,
+  HeartOff,
   MapPin,
   Share2,
   User,
   View,
 } from "lucide-react"
 import { useLocale } from "next-intl"
+import { useState } from "react"
 
-import type { ArtifactMocked } from "../mock-data"
+import HuntRewardPill from "@client/web/components/features/hunts/list/rewards/HuntRewardPill"
+import { addToFavorites } from "@client/web/services/town-hall/addToFavorites"
+import { getFavorite } from "@client/web/services/town-hall/getFavorite"
+import type { ArtifactOffersResponse } from "@client/web/services/town-hall/getOffers"
 import { formatCrowns } from "@client/web/utils/helpers/formatCrowns"
 import { formatDate } from "@client/web/utils/helpers/formatDate"
 
 type Props = {
-  selectedArtifact: ArtifactMocked
+  selectedArtifact: ArtifactOffersResponse
   setIsOpen: (isOpen: boolean) => void
   setIsPurchaseModalOpen: (isOpen: boolean) => void
 }
 
 const ArtifactDetails = ({
   selectedArtifact,
-  //setIsOpen,
+  setIsOpen,
   setIsPurchaseModalOpen,
 }: Props) => {
   const locale = useLocale()
+  const { toast } = useToast()
 
-  const handleVisualize = () => {
-    // eslint-disable-next-line no-console
-    console.log("Visualiser l'artéfact", selectedArtifact)
+  const [showArtifact, setShowArtifact] = useState(false)
 
-    // CALL set state to HuntRewardPill
+  const { data: isFavorite, refetch } = useQuery({
+    queryKey: ["artifactIsFavorite", selectedArtifact.offer.id],
+    queryFn: () => getFavorite({ offerId: selectedArtifact.offer.id }),
+    enabled: !!selectedArtifact.offer.id,
+  })
+
+  const isFavoriteStatus = isFavorite ? isFavorite : false
+
+  const handleAddToFavorites = async () => {
+    const [status, key] = await addToFavorites(
+      {
+        offerId: selectedArtifact.offer.id,
+      },
+      {
+        favorite: !isFavoriteStatus,
+      }
+    )
+
+    if (!status) {
+      toast({
+        variant: "destructive",
+        description: key,
+      })
+
+      return
+    }
+
+    toast({
+      variant: "default",
+      description: isFavoriteStatus
+        ? "L’artéfact a été retiré de vos favoris"
+        : "L’artéfact a été ajouté à vos favoris",
+    })
+
+    refetch()
+  }
+
+  const handleVisualize = (isOpen: boolean) => {
+    if (!isOpen) {
+      setShowArtifact(false)
+
+      return
+    }
+
+    setShowArtifact(true)
   }
 
   const handleBuy = () => {
     setIsPurchaseModalOpen(true)
-    //setIsOpen(false)
+    setIsOpen(false)
+  }
+
+  if (!selectedArtifact || !selectedArtifact.artifact) {
+    return (
+      <div className="text-primary/50 py-8 text-center">
+        Aucune offre trouvée
+      </div>
+    )
   }
 
   return (
@@ -50,12 +107,12 @@ const ArtifactDetails = ({
             <div className="mb-2 flex items-center">
               <Gem className="text-secondary mr-2 size-5" />
               <span className="text-primary font-medium">
-                {selectedArtifact.rarity}
+                {selectedArtifact.artifact.rarity}
               </span>
             </div>
             <div className="text-primary flex items-center gap-4 text-2xl font-bold">
               <Crown className="text-primary size-7" />
-              {formatCrowns(selectedArtifact.price)}
+              {formatCrowns(selectedArtifact.offer.price)}
             </div>
           </div>
 
@@ -64,16 +121,27 @@ const ArtifactDetails = ({
               size="sm"
               variant="outline"
               className="border-primary text-primary hover:bg-primary hover:text-white"
-              onClick={handleVisualize}
+              onClick={() => handleVisualize(true)}
             >
               <View className="mr-1 size-4" /> Visualiser
             </Button>
             <Button
               size="sm"
               variant="outline"
-              className="border-primary text-primary"
+              className={`border-primary text-primary hover:bg-primary hover:text-white ${
+                isFavoriteStatus ? "bg-primary text-white" : ""
+              }`}
+              onClick={handleAddToFavorites}
             >
-              <Heart className="mr-1 size-4" /> Favoris
+              {isFavoriteStatus ? (
+                <>
+                  <HeartOff className="mr-1 size-4" /> Retirer des favoris
+                </>
+              ) : (
+                <>
+                  <Heart className="mr-1 size-4" /> Ajoute au favoris
+                </>
+              )}
             </Button>
             <Button
               size="sm"
@@ -85,9 +153,11 @@ const ArtifactDetails = ({
           </div>
         </div>
 
-        <div className="border-primary/20 rounded-lg border bg-white/50 p-4">
+        <div className="border-primary/20 w-full rounded-lg border bg-white/50 p-4">
           <h3 className="text-primary mb-2 font-medium">Description</h3>
-          <p className="text-primary/80">{selectedArtifact.description}</p>
+          <p className="text-primary/80 line-clamp-5 break-words break-all">
+            {selectedArtifact.offer.description}
+          </p>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -96,7 +166,7 @@ const ArtifactDetails = ({
               <User className="text-secondary mr-2 size-4" />
               <h3 className="text-primary font-medium">Vendeur</h3>
             </div>
-            <p className="text-primary/80">{selectedArtifact.seller}</p>
+            <p className="text-primary/80">{selectedArtifact.sellerNickname}</p>
           </div>
 
           <div className="border-primary/20 rounded-lg border bg-white/50 p-4">
@@ -104,7 +174,7 @@ const ArtifactDetails = ({
               <MapPin className="text-secondary mr-2 size-4" />
               <h3 className="text-primary font-medium">Origine</h3>
             </div>
-            <p className="text-primary/80">{selectedArtifact.foundLocation}</p>
+            <p className="text-primary/80">{selectedArtifact.huntCity}</p>
           </div>
 
           <div className="border-primary/20 rounded-lg border bg-white/50 p-4">
@@ -115,7 +185,7 @@ const ArtifactDetails = ({
               </h3>
             </div>
             <p className="text-primary/80">
-              {formatDate(selectedArtifact.listedDate.toString(), locale)}
+              {formatDate(selectedArtifact.offer.createdAt, locale)}
             </p>
           </div>
 
@@ -137,6 +207,13 @@ const ArtifactDetails = ({
           <DollarSign className="mr-2 size-4" /> Acheter maintenant
         </Button>
       </div>
+
+      {showArtifact && (
+        <HuntRewardPill
+          artifactId={selectedArtifact.artifact.id}
+          onOpenChange={(isOpen) => handleVisualize(isOpen)}
+        />
+      )}
     </>
   )
 }

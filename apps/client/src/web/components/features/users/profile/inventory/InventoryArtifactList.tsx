@@ -54,7 +54,7 @@ const InventoryArtifactList = ({
         {isLoading ? (
           <div className="text-primary py-8 text-center">{t("loading")}</div>
         ) : items.length === 0 || isError ? (
-          <div className="border-primary/10 text-primary/50 rounded-lg border bg-white/30 py-8 text-center">
+          <div className="border-primary/10 text-primary/50 flex h-80 flex-col items-center justify-center rounded-lg border bg-white/30">
             <Gem className="mx-auto mb-2 size-12 opacity-20" />
             <p>{t("empty")}</p>
             {inputValue && (

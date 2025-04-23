@@ -1,7 +1,6 @@
 "use client"
 
 import {
-  artifactRarity,
   defaultLimit,
   defaultPage,
   type ArtifactRarity,
@@ -19,11 +18,6 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
 } from "@lootopia/ui"
 import { keepPreviousData, useQuery } from "@tanstack/react-query"
 import { Trophy, Search, Gem, ArrowRight } from "lucide-react"
@@ -32,6 +26,7 @@ import { useRef, useState } from "react"
 
 import InventoryArtifactList from "./InventoryArtifactList"
 import InventoryBadgeList from "./InventoryBadgeList"
+import SelectArtifactRarity from "@client/web/components/features/artifacts/utils/SelectArtifactRarity"
 import { usePrefetchNextPage } from "@client/web/hooks/usePrefetchNextPage"
 import { getArtifactInventory } from "@client/web/services/artifacts/getArtifactInventory"
 
@@ -167,31 +162,11 @@ const InventoryDialog = ({ open, setIsOpen }: Props) => {
             </div>
             {activeTab === "artifacts" && (
               <div className="flex items-center space-x-1">
-                <Select onValueChange={handleSetRarity} value={selectedRarity}>
-                  <SelectTrigger className="bg-primary text-accent primary border-l-primary h-full w-[170px] select-none border-l-2 px-3 font-medium outline-0 ring-0 focus:ring-0">
-                    <SelectValue placeholder={t("filters.trigger")} />
-                  </SelectTrigger>
-                  <SelectContent className="text-primary bg-primaryBg h-full text-center font-medium outline-0">
-                    <SelectItem value="all">
-                      {t("filters.options.all")}
-                    </SelectItem>
-                    <SelectItem value={artifactRarity.common}>
-                      {t("filters.options.common")}
-                    </SelectItem>
-                    <SelectItem value={artifactRarity.uncommon}>
-                      {t("filters.options.uncommon")}
-                    </SelectItem>
-                    <SelectItem value={artifactRarity.rare}>
-                      {t("filters.options.rare")}
-                    </SelectItem>
-                    <SelectItem value={artifactRarity.epic}>
-                      {t("filters.options.epic")}
-                    </SelectItem>
-                    <SelectItem value={artifactRarity.legendary}>
-                      {t("filters.options.legendary")}
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
+                <SelectArtifactRarity
+                  selectedRarity={selectedRarity}
+                  setSelectedRarity={handleSetRarity}
+                  className="bg-primary text-accent w-[170px]"
+                />
               </div>
             )}
           </div>
