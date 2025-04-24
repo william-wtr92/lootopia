@@ -1,9 +1,9 @@
 import { Button } from "@lootopia/ui"
 import { motion } from "framer-motion"
-import { ArrowRight, Check, User } from "lucide-react"
+import { ArrowRight, Check, Crown, User } from "lucide-react"
 
 import type { ArtifactOffersResponse } from "@client/web/services/town-hall/getOffers"
-import { formatCrowns } from "@client/web/utils/helpers/formatCrowns"
+import { formatOfferCrowns } from "@client/web/utils/helpers/formatCrowns"
 
 type Props = {
   artifactOffer: ArtifactOffersResponse
@@ -41,10 +41,13 @@ const PurchaseSuccessView = ({ artifactOffer, onClose }: Props) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="text-primary/70"
+          className="text-primary/70 flex items-center gap-2"
         >
           Vous avez acquis {artifactOffer?.artifact?.name} pour{" "}
-          {formatCrowns(artifactOffer.offer.price)}
+          <span className="font-semibold">
+            {formatOfferCrowns(artifactOffer.offer.price)}
+          </span>
+          <Crown className="size-5" />
         </motion.p>
       </div>
 

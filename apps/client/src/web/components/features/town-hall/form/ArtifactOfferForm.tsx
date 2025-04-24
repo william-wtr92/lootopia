@@ -5,6 +5,7 @@ import {
   type ArtifactRarity,
   defaultLimit,
   defaultPage,
+  MINIMUM_OFFER_PRICE,
 } from "@lootopia/common"
 import {
   Select,
@@ -87,7 +88,7 @@ const ArtifactOfferForm = () => {
     resolver: zodResolver(artifactOfferSchema),
     defaultValues: {
       userArtifactId: "",
-      price: 1,
+      price: MINIMUM_OFFER_PRICE,
       duration: "7",
       description: "",
     },
@@ -261,10 +262,11 @@ const ArtifactOfferForm = () => {
                           <Crown className="text-primary/50 absolute left-2 top-2.5 size-4" />
                           <Input
                             type="number"
-                            min={0}
+                            min={MINIMUM_OFFER_PRICE}
                             placeholder="Entrez le prix"
                             className="border-primary/30 pl-8"
                             {...field}
+                            value={field.value ?? ""}
                             onChange={(e) => {
                               const value = e.target.value
                               field.onChange(value === "" ? "" : Number(value))

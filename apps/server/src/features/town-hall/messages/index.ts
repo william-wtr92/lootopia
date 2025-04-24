@@ -15,6 +15,11 @@ export const sellerCantBeBuyer = {
   key: "sellerCantBeBuyer",
 } as const
 
+export const artifactOfferPriceTooLow = {
+  result: "Price must be at least 50",
+  key: "artifactOfferPriceTooLow",
+} as const
+
 // SUCCESS MESSAGES
 
 export const artifactOfferCreated = {

@@ -2,13 +2,15 @@ import { artifactRarity } from "@common/artifacts"
 import { defaultLimit, defaultPage } from "@common/global/pagination"
 import { z } from "zod"
 
+export const MINIMUM_OFFER_PRICE = 50 as const
+
 export const DURATIONS_IN_DAYS = ["3", "7", "14", "30"] as const
 
 export const offerStatus = {
   active: "active",
   sold: "sold",
   expired: "expired",
-  canceled: "cancelled",
+  cancelled: "cancelled",
 } as const
 
 export type OfferStatus = (typeof offerStatus)[keyof typeof offerStatus]
@@ -18,6 +20,7 @@ export const offerFilters = {
   priceAsc: "price-asc",
   priceDesc: "price-desc",
   rarity: "rarity",
+  favorites: "favorites",
 } as const
 
 export type OfferFilters = (typeof offerFilters)[keyof typeof offerFilters]
@@ -74,6 +77,7 @@ export const artifactOffersQuerySchema = z.object({
       offerFilters.priceAsc,
       offerFilters.priceDesc,
       offerFilters.rarity,
+      offerFilters.favorites,
     ])
     .optional()
     .default(offerFilters.latest),

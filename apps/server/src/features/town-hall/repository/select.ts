@@ -4,6 +4,7 @@ import {
   type ArtifactOffersQuerySchema,
 } from "@lootopia/common"
 import {
+  artifactOfferFavorites,
   artifactOffers,
   artifactOfferViews,
   artifacts,
@@ -26,6 +27,7 @@ import {
   asc,
   lte,
   type SQL,
+  or,
 } from "drizzle-orm"
 
 export const selectUserArtifactAvailableForOffer = async (
@@ -88,6 +90,7 @@ export const selectUserArtifactAvailableForOffer = async (
 export const selectArtifactOffers = async (
   limit: number,
   page: number,
+  userId: string,
   {
     search,
     filters,
@@ -145,7 +148,14 @@ export const selectArtifactOffers = async (
         views: sql<number>`count(${artifactOfferViews.id})`.as("views"),
       })
       .from(artifactOffers)
-      .where(conditions)
+      .where(
+        and(
+          conditions,
+          sortBy === offerFilters.favorites
+            ? eq(artifactOfferFavorites.userId, userId)
+            : undefined
+        )
+      )
       .leftJoin(
         artifactOfferViews,
         eq(artifactOfferViews.offerId, artifactOffers.id)
@@ -158,20 +168,47 @@ export const selectArtifactOffers = async (
       .leftJoin(chests, eq(userArtifacts.obtainedFromChestId, chests.id))
       .leftJoin(hunts, eq(chests.huntId, hunts.id))
       .leftJoin(users, eq(artifactOffers.sellerId, users.id))
-      .groupBy(artifactOffers.id, artifacts.id, users.nickname, hunts.city)
-      .orderBy(orderBy)
+      .leftJoin(
+        artifactOfferFavorites,
+        eq(artifactOfferFavorites.offerId, artifactOffers.id)
+      )
+      .groupBy(
+        artifactOffers.id,
+        artifacts.id,
+        users.nickname,
+        hunts.city,
+        ...(sortBy === offerFilters.favorites
+          ? [artifactOfferFavorites.favoritedAt]
+          : [])
+      )
+      .orderBy(
+        sortBy === offerFilters.favorites
+          ? desc(artifactOfferFavorites.favoritedAt)
+          : orderBy
+      )
       .limit(limit)
       .offset(page * limit),
 
     db
       .select({ count: count() })
       .from(artifactOffers)
-      .where(conditions)
+      .where(
+        and(
+          conditions,
+          sortBy === offerFilters.favorites
+            ? eq(artifactOfferFavorites.userId, userId)
+            : undefined
+        )
+      )
       .leftJoin(
         userArtifacts,
         eq(artifactOffers.userArtifactId, userArtifacts.id)
       )
-      .leftJoin(artifacts, eq(userArtifacts.artifactId, artifacts.id)),
+      .leftJoin(artifacts, eq(userArtifacts.artifactId, artifacts.id))
+      .leftJoin(
+        artifactOfferFavorites,
+        eq(artifactOfferFavorites.offerId, artifactOffers.id)
+      ),
   ])
 
   return [offers, countResult[0].count] as const
@@ -208,4 +245,20 @@ export const selectFavoriteByUserIdAndOfferId = async (
         eq(artifactOfferFavorites.offerId, offerId)
       ),
   })
+}
+
+export const selectOffersExpiredOrSolded = async () => {
+  return db
+    .select({ id: artifactOffers.id })
+    .from(artifactOffers)
+    .where(
+      and(
+        or(
+          eq(artifactOffers.status, offerStatus.sold),
+          eq(artifactOffers.status, offerStatus.expired),
+          eq(artifactOffers.status, offerStatus.cancelled)
+        ),
+        lte(artifactOffers.expiresAt, sql`NOW()`)
+      )
+    )
 }

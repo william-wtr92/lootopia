@@ -7,8 +7,10 @@ import {
   defaultLimit,
   defaultPage,
   historyStatus,
+  MINIMUM_OFFER_PRICE,
   SC,
   transactionTypes,
+  XP_REWARDS,
   type ArtifactRarity,
   type OfferFilters,
 } from "@lootopia/common"
@@ -21,6 +23,7 @@ import {
   updateOfferPurchaseTransaction,
   updateOfferSellerTransaction,
 } from "@server/features/crowns"
+import { updateExperience } from "@server/features/progressions"
 import {
   insertArtifactHistory,
   insertArtifactOffer,
@@ -34,6 +37,7 @@ import {
   updateUserArtifactOwnership,
   artifactOfferPurchased,
   sellerCantBeBuyer,
+  artifactOfferPriceTooLow,
 } from "@server/features/town-hall"
 import {
   selectUserByEmail,
@@ -54,6 +58,10 @@ export const offersRoute = app
 
     if (!user) {
       return c.json(userNotFound, SC.errors.NOT_FOUND)
+    }
+
+    if (body.price < MINIMUM_OFFER_PRICE) {
+      return c.json(artifactOfferPriceTooLow, SC.errors.BAD_REQUEST)
     }
 
     const userArtifact = await selectUserArtifactByIdAndUserId(
@@ -135,13 +143,18 @@ export const offersRoute = app
     const limit = parseInt(limitString, 10) || defaultLimit
     const page = parseInt(offsetString, 10) || defaultPage
 
-    const [offers, countResult] = await selectArtifactOffers(limit, page, {
-      search,
-      filters: filters as ArtifactRarity,
-      minPrice,
-      maxPrice,
-      sortBy: sortBy as OfferFilters,
-    })
+    const [offers, countResult] = await selectArtifactOffers(
+      limit,
+      page,
+      user.id,
+      {
+        search,
+        filters: filters as ArtifactRarity,
+        minPrice,
+        maxPrice,
+        sortBy: sortBy as OfferFilters,
+      }
+    )
 
     const lastPage = Math.ceil(countResult / limit) - 1
 
@@ -193,6 +206,12 @@ export const offersRoute = app
         artifactOffer.sellerId,
         offerId,
         artifactOffer.price
+      )
+
+      await updateExperience(user.id, XP_REWARDS.artifactOfferPurchase)
+      await updateExperience(
+        artifactOffer.sellerId,
+        XP_REWARDS.artifactOfferSold
       )
 
       return c.json(artifactOfferPurchased, SC.success.OK)

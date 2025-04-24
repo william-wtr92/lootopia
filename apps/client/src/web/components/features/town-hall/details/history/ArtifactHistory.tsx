@@ -44,7 +44,12 @@ const ArtifactHistory = ({ selectedArtifact }: Props) => {
     })
 
   const { containerRef: listContainerRef, sentinelRef: listRef } =
-    usePaginationObserver({ fetchNextPage, hasNextPage, isFetchingNextPage })
+    usePaginationObserver({
+      fetchNextPage,
+      hasNextPage,
+      isFetchingNextPage,
+      threshold: 1,
+    })
 
   const history = (data?.pages.flatMap((page) => page?.result) ??
     []) as ArtifactHistoryResponse[]

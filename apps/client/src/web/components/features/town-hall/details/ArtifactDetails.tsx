@@ -1,5 +1,5 @@
 import { Button, useToast } from "@lootopia/ui"
-import { useQuery } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 import {
   Calendar,
   Crown,
@@ -20,7 +20,7 @@ import HuntRewardPill from "@client/web/components/features/hunts/list/rewards/H
 import { addToFavorites } from "@client/web/services/town-hall/addToFavorites"
 import { getFavorite } from "@client/web/services/town-hall/getFavorite"
 import type { ArtifactOffersResponse } from "@client/web/services/town-hall/getOffers"
-import { formatCrowns } from "@client/web/utils/helpers/formatCrowns"
+import { formatOfferCrowns } from "@client/web/utils/helpers/formatCrowns"
 import { formatDate } from "@client/web/utils/helpers/formatDate"
 
 type Props = {
@@ -36,10 +36,11 @@ const ArtifactDetails = ({
 }: Props) => {
   const locale = useLocale()
   const { toast } = useToast()
+  const qc = useQueryClient()
 
   const [showArtifact, setShowArtifact] = useState(false)
 
-  const { data: isFavorite, refetch } = useQuery({
+  const { data: isFavorite } = useQuery({
     queryKey: ["artifactIsFavorite", selectedArtifact.offer.id],
     queryFn: () => getFavorite({ offerId: selectedArtifact.offer.id }),
     enabled: !!selectedArtifact.offer.id,
@@ -73,7 +74,13 @@ const ArtifactDetails = ({
         : "L’artéfact a été ajouté à vos favoris",
     })
 
-    refetch()
+    qc.invalidateQueries({
+      queryKey: ["artifactIsFavorite", selectedArtifact.offer.id],
+    })
+    qc.invalidateQueries({
+      queryKey: ["artifactOffers"],
+      exact: false,
+    })
   }
 
   const handleVisualize = (isOpen: boolean) => {
@@ -112,7 +119,7 @@ const ArtifactDetails = ({
             </div>
             <div className="text-primary flex items-center gap-4 text-2xl font-bold">
               <Crown className="text-primary size-7" />
-              {formatCrowns(selectedArtifact.offer.price)}
+              {formatOfferCrowns(selectedArtifact.offer.price)}
             </div>
           </div>
 

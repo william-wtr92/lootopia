@@ -5,7 +5,7 @@ import { useLocale } from "next-intl"
 
 import type { ArtifactOffersResponse } from "@client/web/services/town-hall/getOffers"
 import { getArtifactRarityGradient } from "@client/web/utils/def/colors"
-import { formatCrowns } from "@client/web/utils/helpers/formatCrowns"
+import { formatOfferCrowns } from "@client/web/utils/helpers/formatCrowns"
 import {
   formatDate,
   formatDateDiff,
@@ -54,7 +54,9 @@ const ArtifactListItem = ({
           </h3>
           <Badge variant="outline" className="text-primary/80 bg-white/70">
             <Hourglass className="mr-1 size-3" />
-            {formatDateDiff(artifactOffer.offer.expiresAt, locale)}
+            <span className="max-w-20 truncate">
+              {formatDateDiff(artifactOffer.offer.expiresAt, locale)}
+            </span>
           </Badge>
         </div>
       </div>
@@ -68,7 +70,7 @@ const ArtifactListItem = ({
             </span>
           </div>
           <div className="text-primary flex items-center text-xl font-semibold">
-            <span>{formatCrowns(artifactOffer.offer.price)}</span>
+            <span>{formatOfferCrowns(artifactOffer.offer.price)}</span>
             <Crown className="ml-1 size-5" />
           </div>
         </div>
@@ -92,9 +94,11 @@ const ArtifactListItem = ({
         </div>
 
         <div className="border-primary/10 flex items-end justify-between border-t">
-          <div className="text-primary text-sm">
+          <div className="text-primary flex items-center gap-2 text-sm">
             Vendeur:{" "}
-            <span className="font-medium">{artifactOffer.sellerNickname}</span>
+            <span className="max-w-20 truncate font-medium">
+              {artifactOffer.sellerNickname}azddzadzadzad
+            </span>
           </div>
           <Button
             size="sm"

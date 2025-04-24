@@ -183,6 +183,7 @@ export {
 export { artifactOfferIdParam, type ArtifactOfferIdParam } from "./town-hall"
 
 export {
+  MINIMUM_OFFER_PRICE,
   DURATIONS_IN_DAYS,
   offerStatus,
   type OfferStatus,

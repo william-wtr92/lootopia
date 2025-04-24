@@ -103,6 +103,7 @@ const ArtifactFilters = ({
               Prix décroissant
             </SelectItem>
             <SelectItem value={offerFilters.rarity}>Rareté</SelectItem>
+            <SelectItem value={offerFilters.favorites}>Favoris</SelectItem>
           </SelectContent>
         </Select>
       </div>

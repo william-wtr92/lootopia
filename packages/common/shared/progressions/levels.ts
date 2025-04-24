@@ -10,4 +10,6 @@ export const xpRequired = (level: number) => {
 
 export const XP_REWARDS = {
   digSuccess: 100,
+  artifactOfferPurchase: 50,
+  artifactOfferSold: 70,
 } as const

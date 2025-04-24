@@ -1,11 +1,11 @@
 import type { ArtifactRarity } from "@lootopia/common"
 import { Badge, Button } from "@lootopia/ui"
 import { motion } from "framer-motion"
-import { Gem, User } from "lucide-react"
+import { Crown, Gem, User } from "lucide-react"
 
 import type { ArtifactOffersResponse } from "@client/web/services/town-hall/getOffers"
 import { getArtifactRarityColor } from "@client/web/utils/def/colors"
-import { formatCrowns } from "@client/web/utils/helpers/formatCrowns"
+import { formatOfferCrowns } from "@client/web/utils/helpers/formatCrowns"
 
 type Props = {
   artifactOffer: ArtifactOffersResponse
@@ -58,8 +58,9 @@ const PurchaseConfirmationView = ({
       <div className="border-primary/20 rounded-lg border bg-white/50 p-4">
         <div className="flex items-center justify-between">
           <span className="text-primary/70">Prix:</span>
-          <span className="text-primary text-xl font-bold">
-            {formatCrowns(artifactOffer.offer.price)}
+          <span className="text-primary flex items-center gap-2 text-xl font-bold">
+            {formatOfferCrowns(artifactOffer.offer.price)}
+            <Crown className="size-5" />
           </span>
         </div>
         <div className="mt-2 flex items-center justify-between">

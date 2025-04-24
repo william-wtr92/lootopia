@@ -58,9 +58,10 @@ const EventTimeline = ({
           <motion.div
             key={index}
             className="relative flex items-center justify-center"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.1 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.1, delay: index * 0.025 }}
             onClick={() => onSelect(event)}
           >
             <div
