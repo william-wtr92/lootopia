@@ -1,11 +1,5 @@
 import type { Metadata } from "next"
-import { Fredoka } from "next/font/google"
 import type { ReactNode } from "react"
-
-export const fredoka = Fredoka({
-  variable: "--font-fredoka",
-  subsets: ["latin"],
-})
 
 export const metadata: Metadata = {
   title: {

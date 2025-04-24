@@ -3,7 +3,7 @@ import { NuqsAdapter } from "nuqs/adapters/next/app"
 import React, { type ReactNode } from "react"
 import "@client/app/globals.css"
 
-import { fredoka } from "@client/app/layout"
+import { fredoka } from "../(public)/layout"
 import { IntlClientProvider } from "@client/providers/NextIntlClientProvider"
 import TanStackProvider from "@client/providers/TanstackProvider"
 import AdminNavbar from "@client/web/components/layout/admin/navbar/AdminNavbar"

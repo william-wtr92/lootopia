@@ -46,6 +46,7 @@ const appRouter = app
   .route(router.artifacts, routes.artifacts)
   .route(router.reports, routes.reports)
   .route(router.shop, routes.shop)
+  .route(router.stats, routes.stats)
 
 serve({
   fetch: app.fetch,

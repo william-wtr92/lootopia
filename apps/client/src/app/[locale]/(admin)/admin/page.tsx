@@ -1,8 +1,13 @@
+"use client"
+
+import { useQuery } from "@tanstack/react-query"
 import { Map, Shovel, User } from "lucide-react"
 import React from "react"
 
 import CurrentStatsBlock from "@client/web/components/layout/admin/stats/CurrentStatsBlock"
 import StatsChart from "@client/web/components/layout/admin/stats/StatsChart"
+import Loader from "@client/web/components/utils/Loader"
+import { getOverviewTopStats } from "@client/web/services/admin/stats/getOverviewTopStats"
 import { chartType } from "@client/web/utils/def/stats"
 
 const chartData = [
@@ -15,6 +20,26 @@ const chartData = [
 ]
 
 const AdminPage = () => {
+  const { data, isFetching, error } = useQuery({
+    queryKey: ["top-stats-overview"],
+    queryFn: () => getOverviewTopStats(),
+  })
+
+  const statistics = !isFetching && !error && data?.result
+
+  if (!statistics) {
+    return (
+      <div className="flex h-screen flex-1 items-center justify-center">
+        <Loader label="Chargement des statistiques..." />
+      </div>
+    )
+  }
+
+  const usersStats = statistics.usersStats
+  const huntsStats = statistics.huntsStats
+  const chestsStats = statistics.chestsStats
+  const revenuesStats = statistics.revenuesStats
+
   return (
     <main className="flex h-screen flex-1 flex-col gap-8 overflow-scroll p-4">
       <h1 className="text-primary text-4xl font-semibold">
@@ -24,27 +49,28 @@ const AdminPage = () => {
       <div className="flex w-full flex-nowrap gap-4">
         <CurrentStatsBlock
           Icon={User}
-          label="Utilisateurs actifs"
-          value="1,234"
-          valueSinceLastMonth="123"
+          label="Utilisateurs totaux"
+          value={usersStats.value}
+          valueSinceLastMonth={usersStats.percentage}
         />
         <CurrentStatsBlock
           Icon={Map}
           label="Chasses actives"
-          value="1,234"
-          valueSinceLastMonth="123"
+          value={huntsStats.value}
+          valueSinceLastMonth={huntsStats.percentage}
         />
         <CurrentStatsBlock
           Icon={Shovel}
           label="Nombre de coffres ouverts"
-          value="1,234"
-          valueSinceLastMonth="123"
+          value={chestsStats.value}
+          valueSinceLastMonth={chestsStats.percentage}
         />
         <CurrentStatsBlock
           Icon={User}
-          label="Revenus totaux"
-          value="1,234"
-          valueSinceLastMonth="123"
+          label="Revenus du mois"
+          value={revenuesStats.value}
+          valueSinceLastMonth={revenuesStats.percentage}
+          displayCurrency={true}
         />
       </div>
 
@@ -52,13 +78,13 @@ const AdminPage = () => {
         <StatsChart
           type={chartType.bar}
           title="Activité des utilisateurs"
-          description="Pourcentage des chasses complétées, en cours et abandonnées"
+          description="Statistiques comparant la quantité d'utilisateurs et le nombre de participations sur les 6 derniers mois"
           data={chartData}
         />
         <StatsChart
           type={chartType.line}
-          title="Revenus hebdomadaires"
-          description="Pourcentage des chasses complétées, en cours et abandonnées"
+          title="Revenus des 6 derniers mois"
+          description="Statistiques pour voir l'évolution des revenus sur les 6 derniers mois"
           data={chartData}
         />
       </div>

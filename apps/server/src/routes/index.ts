@@ -19,6 +19,7 @@ import { reportUploadRoute } from "./reports/upload"
 import { crownPackagesRoute } from "./shop/crownPackages"
 import { paymentsRoute } from "./shop/payments"
 import { webhookRoute } from "./shop/webhook"
+import { overviewRoute } from "./stats/overview"
 import { userListRoute } from "./users/list"
 import { profileRoute } from "./users/profile"
 import { securityRoute } from "./users/security"
@@ -63,6 +64,8 @@ const shopRoutes = new Hono()
   .route(DEFAULT_PATH, crownPackagesRoute)
   .route(DEFAULT_PATH, paymentsRoute)
 
+const statsRoutes = new Hono().use(auth).route(DEFAULT_PATH, overviewRoute)
+
 export const routes = {
   auth: authRoutes,
   hunts: huntsRoutes,
@@ -70,4 +73,5 @@ export const routes = {
   artifacts: artifactsRoutes,
   reports: reportsRoutes,
   shop: shopRoutes,
+  stats: statsRoutes,
 }
