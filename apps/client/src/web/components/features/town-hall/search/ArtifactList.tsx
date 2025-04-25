@@ -7,6 +7,7 @@ import {
 } from "@lootopia/common"
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query"
 import { Gem } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useState } from "react"
 
 import ArtifactFilters from "./ArtifactFilters"
@@ -16,19 +17,21 @@ import { usePaginationObserver } from "@client/web/hooks/usePaginationObserver"
 import {
   getOffers,
   type ArtifactOffersResponse,
-} from "@client/web/services/town-hall/getOffers"
+} from "@client/web/services/town-hall/offers/getOffers"
 
 type Props = {
-  selectedArtifact: ArtifactOffersResponse | null
+  artifactOffer: ArtifactOffersResponse | null
   setSelectedArtifact: (artifact: ArtifactOffersResponse) => void
   setIsPurchaseModalOpen: (isOpen: boolean) => void
 }
 
 const ArtifacList = ({
-  selectedArtifact,
+  artifactOffer,
   setSelectedArtifact,
   setIsPurchaseModalOpen,
 }: Props) => {
+  const t = useTranslations("Components.TownHall.Search.ArtifacList")
+
   const [inputValue, setInputValue] = useState("")
   const [submittedValue, setSubmittedValue] = useState("")
   const [tempSelectedRarity, setTempSelectedRarity] = useState<
@@ -145,8 +148,7 @@ const ArtifacList = ({
       />
 
       <div className="text-primary/70 text-sm">
-        {countResult} artefact{countResult > 1 ? "s" : ""} trouvé
-        {countResult > 1 ? "s" : ""}
+        {t("count", { count: countResult })}
       </div>
 
       <div
@@ -169,7 +171,11 @@ const ArtifacList = ({
           ) : (
             <div className="text-primary/70 border-primary/10 flex h-full flex-col items-center justify-center gap-4 rounded-lg border bg-white/30">
               <Gem className="mr-2 size-12 opacity-20" />
-              <span className="text-md">{countResult} artefacts trouvés</span>
+              <span className="text-md">
+                {t("empty", {
+                  count: countResult,
+                })}
+              </span>
             </div>
           )}
 
@@ -177,9 +183,9 @@ const ArtifacList = ({
         </div>
       </div>
 
-      {selectedArtifact && (
+      {artifactOffer && (
         <ArtifactOverview
-          selectedArtifact={selectedArtifact}
+          artifactOffer={artifactOffer}
           open={isHistoryOpen}
           setIsOpen={setIsHistoryOpen}
           setIsPurchaseModalOpen={setIsPurchaseModalOpen}

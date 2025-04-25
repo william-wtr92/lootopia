@@ -10,23 +10,22 @@ import {
   getUserArtifactHistory,
   type ArtifactHistoryResponse,
 } from "@client/web/services/artifacts/getUserArtifactHistory"
-import type { ArtifactOffersResponse } from "@client/web/services/town-hall/getOffers"
+import type { ArtifactOffersResponse } from "@client/web/services/town-hall/offers/getOffers"
 
 type Props = {
-  selectedArtifact: ArtifactOffersResponse
+  artifactOffer: ArtifactOffersResponse
 }
 
-const ArtifactHistory = ({ selectedArtifact }: Props) => {
+const ArtifactHistory = ({ artifactOffer }: Props) => {
   const [selectedEvent, setSelectedEvent] =
     useState<ArtifactHistoryResponse | null>(null)
-  const [, setShowVisualization] = useState(false)
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: ["artifactHistory", selectedArtifact.offer.userArtifactId],
+      queryKey: ["artifactHistory", artifactOffer.offer.userArtifactId],
       queryFn: ({ pageParam = defaultPage }) =>
         getUserArtifactHistory(
-          { userArtifactId: selectedArtifact.offer.userArtifactId },
+          { userArtifactId: artifactOffer.offer.userArtifactId },
           { page: pageParam.toString(), limit: defaultLimit.toString() }
         ),
       getNextPageParam: (lastPage, allPages) => {
@@ -40,7 +39,7 @@ const ArtifactHistory = ({ selectedArtifact }: Props) => {
       },
       initialPageParam: defaultPage,
       placeholderData: keepPreviousData,
-      enabled: !!selectedArtifact?.offer?.userArtifactId,
+      enabled: !!artifactOffer?.offer?.userArtifactId,
     })
 
   const { containerRef: listContainerRef, sentinelRef: listRef } =
@@ -54,16 +53,12 @@ const ArtifactHistory = ({ selectedArtifact }: Props) => {
   const history = (data?.pages.flatMap((page) => page?.result) ??
     []) as ArtifactHistoryResponse[]
 
-  const handleVisualize = () => {
-    setShowVisualization(true)
-  }
-
   const handleEventClick = (event: ArtifactHistoryResponse) => {
     setSelectedEvent(event)
   }
 
   return (
-    <div className="flex h-full flex-col md:flex-row">
+    <div className="flex h-[52vh] flex-col md:flex-row">
       <EventTimeline
         history={history}
         containerRef={listContainerRef}
@@ -72,10 +67,7 @@ const ArtifactHistory = ({ selectedArtifact }: Props) => {
         onSelect={handleEventClick}
       />
 
-      <EventDetails
-        selectedEvent={selectedEvent}
-        onVisualize={handleVisualize}
-      />
+      <EventDetails selectedEvent={selectedEvent} />
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query"
 import { useEffect } from "react"
 
-import { viewOffer } from "@client/web/services/town-hall/viewOffer"
+import { viewOffer } from "@client/web/services/town-hall/views/viewOffer"
 
 type UseViewTrackingProps = {
   offerId: string

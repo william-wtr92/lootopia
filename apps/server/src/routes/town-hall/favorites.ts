@@ -18,7 +18,7 @@ import { Hono } from "hono"
 
 const app = new Hono()
 
-export const favoritesRoute = app
+export const offerFavoritesRoute = app
   .post(
     "/offers/favorites/:offerId",
     zValidator("param", artifactOfferIdParam),

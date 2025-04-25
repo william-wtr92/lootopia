@@ -13,27 +13,29 @@ import {
   User,
   View,
 } from "lucide-react"
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useState } from "react"
 
 import HuntRewardPill from "@client/web/components/features/hunts/list/rewards/HuntRewardPill"
-import { addToFavorites } from "@client/web/services/town-hall/addToFavorites"
-import { getFavorite } from "@client/web/services/town-hall/getFavorite"
-import type { ArtifactOffersResponse } from "@client/web/services/town-hall/getOffers"
+import { addToFavorites } from "@client/web/services/town-hall/favorites/addToFavorites"
+import { getFavorite } from "@client/web/services/town-hall/favorites/getFavorite"
+import type { ArtifactOffersResponse } from "@client/web/services/town-hall/offers/getOffers"
 import { formatOfferCrowns } from "@client/web/utils/helpers/formatCrowns"
 import { formatDate } from "@client/web/utils/helpers/formatDate"
+import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 type Props = {
-  selectedArtifact: ArtifactOffersResponse
+  artifactOffer: ArtifactOffersResponse
   setIsOpen: (isOpen: boolean) => void
   setIsPurchaseModalOpen: (isOpen: boolean) => void
 }
 
 const ArtifactDetails = ({
-  selectedArtifact,
+  artifactOffer,
   setIsOpen,
   setIsPurchaseModalOpen,
 }: Props) => {
+  const t = useTranslations("Components.TownHall.Details.ArtifactDetails")
   const locale = useLocale()
   const { toast } = useToast()
   const qc = useQueryClient()
@@ -41,9 +43,9 @@ const ArtifactDetails = ({
   const [showArtifact, setShowArtifact] = useState(false)
 
   const { data: isFavorite } = useQuery({
-    queryKey: ["artifactIsFavorite", selectedArtifact.offer.id],
-    queryFn: () => getFavorite({ offerId: selectedArtifact.offer.id }),
-    enabled: !!selectedArtifact.offer.id,
+    queryKey: ["artifactIsFavorite", artifactOffer.offer.id],
+    queryFn: () => getFavorite({ offerId: artifactOffer.offer.id }),
+    enabled: !!artifactOffer.offer.id,
   })
 
   const isFavoriteStatus = isFavorite ? isFavorite : false
@@ -51,7 +53,7 @@ const ArtifactDetails = ({
   const handleAddToFavorites = async () => {
     const [status, key] = await addToFavorites(
       {
-        offerId: selectedArtifact.offer.id,
+        offerId: artifactOffer.offer.id,
       },
       {
         favorite: !isFavoriteStatus,
@@ -61,7 +63,7 @@ const ArtifactDetails = ({
     if (!status) {
       toast({
         variant: "destructive",
-        description: key,
+        description: translateDynamicKey(t, `errors.${key}`),
       })
 
       return
@@ -70,12 +72,12 @@ const ArtifactDetails = ({
     toast({
       variant: "default",
       description: isFavoriteStatus
-        ? "L’artéfact a été retiré de vos favoris"
-        : "L’artéfact a été ajouté à vos favoris",
+        ? t("favorites.success.remove")
+        : t("favorites.success.add"),
     })
 
     qc.invalidateQueries({
-      queryKey: ["artifactIsFavorite", selectedArtifact.offer.id],
+      queryKey: ["artifactIsFavorite", artifactOffer.offer.id],
     })
     qc.invalidateQueries({
       queryKey: ["artifactOffers"],
@@ -98,28 +100,24 @@ const ArtifactDetails = ({
     setIsOpen(false)
   }
 
-  if (!selectedArtifact || !selectedArtifact.artifact) {
-    return (
-      <div className="text-primary/50 py-8 text-center">
-        Aucune offre trouvée
-      </div>
-    )
+  if (!artifactOffer || !artifactOffer.artifact) {
+    return <div className="text-primary/50 py-8 text-center">{t("empty")}</div>
   }
 
   return (
     <>
-      <div className="space-y-6">
+      <div className="flex h-full flex-col justify-between space-y-6">
         <div className="flex items-start justify-between">
           <div>
             <div className="mb-2 flex items-center">
               <Gem className="text-secondary mr-2 size-5" />
               <span className="text-primary font-medium">
-                {selectedArtifact.artifact.rarity}
+                {t(`rarities.${artifactOffer.artifact.rarity}`)}
               </span>
             </div>
             <div className="text-primary flex items-center gap-4 text-2xl font-bold">
               <Crown className="text-primary size-7" />
-              {formatOfferCrowns(selectedArtifact.offer.price)}
+              {formatOfferCrowns(artifactOffer.offer.price)}
             </div>
           </div>
 
@@ -130,7 +128,8 @@ const ArtifactDetails = ({
               className="border-primary text-primary hover:bg-primary hover:text-white"
               onClick={() => handleVisualize(true)}
             >
-              <View className="mr-1 size-4" /> Visualiser
+              <View className="mr-1 size-4" />
+              {t("cta.visualize")}
             </Button>
             <Button
               size="sm"
@@ -141,13 +140,15 @@ const ArtifactDetails = ({
               onClick={handleAddToFavorites}
             >
               {isFavoriteStatus ? (
-                <>
-                  <HeartOff className="mr-1 size-4" /> Retirer des favoris
-                </>
+                <span>
+                  <HeartOff className="mr-1 size-4" />
+                  {t("cta.removeFromFavorites")}
+                </span>
               ) : (
-                <>
-                  <Heart className="mr-1 size-4" /> Ajoute au favoris
-                </>
+                <span>
+                  <Heart className="mr-1 size-4" />
+                  {t("cta.addToFavorites")}
+                </span>
               )}
             </Button>
             <Button
@@ -155,15 +156,18 @@ const ArtifactDetails = ({
               variant="outline"
               className="border-primary text-primary"
             >
-              <Share2 className="mr-1 size-4" /> Partager
+              <Share2 className="mr-1 size-4" />
+              {t("cta.share")}
             </Button>
           </div>
         </div>
 
         <div className="border-primary/20 w-full rounded-lg border bg-white/50 p-4">
-          <h3 className="text-primary mb-2 font-medium">Description</h3>
+          <h3 className="text-primary mb-2 font-medium">
+            {t("details.description")}
+          </h3>
           <p className="text-primary/80 line-clamp-5 break-words break-all">
-            {selectedArtifact.offer.description}
+            {artifactOffer.offer.description}
           </p>
         </div>
 
@@ -171,53 +175,59 @@ const ArtifactDetails = ({
           <div className="border-primary/20 rounded-lg border bg-white/50 p-4">
             <div className="mb-2 flex items-center">
               <User className="text-secondary mr-2 size-4" />
-              <h3 className="text-primary font-medium">Vendeur</h3>
+              <h3 className="text-primary font-medium">
+                {t("details.seller")}
+              </h3>
             </div>
-            <p className="text-primary/80">{selectedArtifact.sellerNickname}</p>
+            <p className="text-primary/80">{artifactOffer.sellerNickname}</p>
           </div>
 
           <div className="border-primary/20 rounded-lg border bg-white/50 p-4">
             <div className="mb-2 flex items-center">
               <MapPin className="text-secondary mr-2 size-4" />
-              <h3 className="text-primary font-medium">Origine</h3>
+              <h3 className="text-primary font-medium">
+                {t("details.origin")}
+              </h3>
             </div>
-            <p className="text-primary/80">{selectedArtifact.huntCity}</p>
+            <p className="text-primary/80">{artifactOffer.huntCity}</p>
           </div>
 
           <div className="border-primary/20 rounded-lg border bg-white/50 p-4">
             <div className="mb-2 flex items-center">
               <Calendar className="text-secondary mr-2 size-4" />
               <h3 className="text-primary font-medium">
-                Date de mise en vente
+                {t("details.dateOfSale")}
               </h3>
             </div>
             <p className="text-primary/80">
-              {formatDate(selectedArtifact.offer.createdAt, locale)}
+              {formatDate(artifactOffer.offer.createdAt, locale)}
             </p>
           </div>
 
           <div className="border-primary/20 rounded-lg border bg-white/50 p-4">
             <div className="mb-2 flex items-center">
               <Eye className="text-secondary mr-2 size-4" />
-              <h3 className="text-primary font-medium">Vues</h3>
+              <h3 className="text-primary font-medium">
+                {t("details.views.label")}
+              </h3>
             </div>
             <p className="text-primary/80">
-              {selectedArtifact.views} visiteurs
+              {t("details.views.count", {
+                count: artifactOffer.views,
+              })}
             </p>
           </div>
         </div>
 
-        <Button
-          className="bg-primary hover:bg-secondary text-accent w-full"
-          onClick={handleBuy}
-        >
-          <DollarSign className="mr-2 size-4" /> Acheter maintenant
+        <Button className="w-full" onClick={handleBuy}>
+          <DollarSign className="mr-2 size-4" />
+          {t("cta.buy")}
         </Button>
       </div>
 
       {showArtifact && (
         <HuntRewardPill
-          artifactId={selectedArtifact.artifact.id}
+          artifactId={artifactOffer.artifact.id}
           onOpenChange={(isOpen) => handleVisualize(isOpen)}
         />
       )}

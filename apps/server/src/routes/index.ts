@@ -20,9 +20,10 @@ import { reportUploadRoute } from "./reports/upload"
 import { crownPackagesRoute } from "./shop/crownPackages"
 import { paymentsRoute } from "./shop/payments"
 import { webhookRoute } from "./shop/webhook"
-import { favoritesRoute } from "./town-hall/favorites"
+import { offerFavoritesRoute } from "./town-hall/favorites"
 import { offersRoute } from "./town-hall/offers"
-import { viewsRoute } from "./town-hall/views"
+import { offerStatsRoute } from "./town-hall/stats"
+import { offerViewsRoute } from "./town-hall/views"
 import { userListRoute } from "./users/list"
 import { profileRoute } from "./users/profile"
 import { securityRoute } from "./users/security"
@@ -71,8 +72,9 @@ const shopRoutes = new Hono()
 const townHallRoutes = new Hono()
   .use(auth)
   .route(DEFAULT_PATH, offersRoute)
-  .route(DEFAULT_PATH, viewsRoute)
-  .route(DEFAULT_PATH, favoritesRoute)
+  .route(DEFAULT_PATH, offerViewsRoute)
+  .route(DEFAULT_PATH, offerFavoritesRoute)
+  .route(DEFAULT_PATH, offerStatsRoute)
 
 export const routes = {
   auth: authRoutes,

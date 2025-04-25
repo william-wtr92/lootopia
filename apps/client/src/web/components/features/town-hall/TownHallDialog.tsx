@@ -10,12 +10,14 @@ import {
   TabsTrigger,
 } from "@lootopia/ui"
 import { Search, TrendingUp, PlusCircle, Store } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useState } from "react"
 
 import ArtifactSellForm from "./form/ArtifactOfferForm"
+import PurchaseDialog from "./purchase/PurchaseDialog"
 import ArtifacList from "./search/ArtifactList"
-import PurchaseDialog from "./utils/PurchaseDialog"
-import type { ArtifactOffersResponse } from "@client/web/services/town-hall/getOffers"
+import TownHallStats from "./stats/TownHallStats"
+import type { ArtifactOffersResponse } from "@client/web/services/town-hall/offers/getOffers"
 
 type Props = {
   open: boolean
@@ -23,14 +25,16 @@ type Props = {
 }
 
 const TownHallDialog = ({ open, setIsOpen }: Props) => {
+  const t = useTranslations("Components.TownHall.TownHallDialog")
+
   const [activeTab, setActiveTab] = useState("browse")
 
-  const [selectedArtifact, setSelectedArtifact] =
+  const [selectedArtifactOffer, setSelectedArtifactOffer] =
     useState<ArtifactOffersResponse | null>(null)
   const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false)
 
-  const handleSetArtifact = (artifact: ArtifactOffersResponse | null) => {
-    setSelectedArtifact(artifact)
+  const handleSetArtifact = (artifactOffer: ArtifactOffersResponse | null) => {
+    setSelectedArtifactOffer(artifactOffer)
   }
 
   const handleShowModal = (isOpen: boolean) => {
@@ -47,11 +51,11 @@ const TownHallDialog = ({ open, setIsOpen }: Props) => {
           <div className="flex h-full flex-col">
             <DialogHeader className="border-primary/20 bg-primaryBg sticky top-0 z-10 border-b px-6 pb-4 pt-6">
               <DialogTitle className="text-primary flex items-center text-xl font-bold">
-                <Store className="text-secondary mr-2 size-6" /> Town Hall
+                <Store className="text-secondary mr-2 size-6" />
+                {t("title")}
               </DialogTitle>
               <DialogDescription className="text-primary/70">
-                Achetez, vendez et suivez les artefacts les plus précieux de
-                Lootopia
+                {t("description")}
               </DialogDescription>
             </DialogHeader>
 
@@ -67,19 +71,22 @@ const TownHallDialog = ({ open, setIsOpen }: Props) => {
                     value="browse"
                     className="text-primary data-[state=active]:bg-primary data-[state=active]:text-accent flex items-center"
                   >
-                    <Search className="mr-2 size-4" /> Parcourir
+                    <Search className="mr-2 size-4" />
+                    {t("tabs.browse")}
                   </TabsTrigger>
                   <TabsTrigger
                     value="stats"
                     className="text-primary data-[state=active]:bg-primary data-[state=active]:text-accent flex items-center"
                   >
-                    <TrendingUp className="mr-2 size-4" /> Statistiques
+                    <TrendingUp className="mr-2 size-4" />
+                    {t("tabs.statistics")}
                   </TabsTrigger>
                   <TabsTrigger
                     value="sell"
                     className="text-primary data-[state=active]:bg-primary data-[state=active]:text-accent flex items-center"
                   >
-                    <PlusCircle className="mr-2 size-4" /> Vendre
+                    <PlusCircle className="mr-2 size-4" />
+                    {t("tabs.sell")}
                   </TabsTrigger>
                 </TabsList>
               </div>
@@ -90,7 +97,7 @@ const TownHallDialog = ({ open, setIsOpen }: Props) => {
                   className="mt-0 h-full data-[state=active]:block"
                 >
                   <ArtifacList
-                    selectedArtifact={selectedArtifact}
+                    artifactOffer={selectedArtifactOffer}
                     setSelectedArtifact={handleSetArtifact}
                     setIsPurchaseModalOpen={handleShowModal}
                   />
@@ -100,7 +107,7 @@ const TownHallDialog = ({ open, setIsOpen }: Props) => {
                   value="stats"
                   className="mt-0 h-full data-[state=active]:block"
                 >
-                  {/* <MarketStats /> */}
+                  <TownHallStats />
                 </TabsContent>
 
                 <TabsContent
@@ -115,9 +122,9 @@ const TownHallDialog = ({ open, setIsOpen }: Props) => {
         </DialogContent>
       </Dialog>
 
-      {selectedArtifact && (
+      {selectedArtifactOffer && (
         <PurchaseDialog
-          artifactOffer={selectedArtifact}
+          artifactOffer={selectedArtifactOffer}
           open={isPurchaseModalOpen}
           setIsOpen={setIsPurchaseModalOpen}
         />

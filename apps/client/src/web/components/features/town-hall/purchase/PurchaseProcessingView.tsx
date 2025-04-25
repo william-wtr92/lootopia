@@ -1,7 +1,9 @@
 import type { ArtifactRarity } from "@lootopia/common"
 import { motion } from "framer-motion"
 import { Crown, Gem } from "lucide-react"
+import { useTranslations } from "next-intl"
 
+import anim from "@client/web/utils/anim"
 import { getArtifactRarityColor } from "@client/web/utils/def/colors"
 
 type Props = {
@@ -9,13 +11,14 @@ type Props = {
 }
 
 const PurchaseProcessingView = ({ artifactRarity }: Props) => {
+  const t = useTranslations(
+    "Components.TownHall.Purchase.PurchaseProcessingView"
+  )
+
   return (
     <motion.div
       key="processing"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
+      {...anim(containerVariants)}
       className="flex flex-col items-center justify-center space-y-6 py-12"
     >
       <div className="relative">
@@ -83,12 +86,8 @@ const PurchaseProcessingView = ({ artifactRarity }: Props) => {
       </div>
 
       <div className="mt-6 text-center">
-        <h3 className="text-primary mb-2 text-lg font-bold">
-          Transaction en cours
-        </h3>
-        <p className="text-primary/70">
-          Veuillez patienter pendant que nous traitons votre achat...
-        </p>
+        <h3 className="text-primary mb-2 text-lg font-bold">{t("title")}</h3>
+        <p className="text-primary/70">{t("description")}</p>
       </div>
 
       <motion.div className="bg-primary/20 mt-4 h-2 w-48 overflow-hidden rounded-full">
@@ -104,3 +103,9 @@ const PurchaseProcessingView = ({ artifactRarity }: Props) => {
 }
 
 export default PurchaseProcessingView
+
+const containerVariants = {
+  initial: { opacity: 0 },
+  enter: { opacity: 1, transition: { duration: 0.3 } },
+  exit: { opacity: 0 },
+}

@@ -2,9 +2,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import {
   type ArtifactOfferSchema,
   artifactOfferSchema,
+  artifactRarity,
   type ArtifactRarity,
   defaultLimit,
   defaultPage,
+  DURATIONS_IN_DAYS,
   MINIMUM_OFFER_PRICE,
 } from "@lootopia/common"
 import {
@@ -42,14 +44,14 @@ import { useForm } from "react-hook-form"
 
 import { useFormMutation } from "@client/web/hooks/useFormMutation"
 import { usePaginationObserver } from "@client/web/hooks/usePaginationObserver"
-import { getAvailableArtifacts } from "@client/web/services/town-hall/getAvailableArtifacts"
-import { publishOffer } from "@client/web/services/town-hall/publishOffer"
+import { getAvailableArtifacts } from "@client/web/services/town-hall/offers/getAvailableArtifacts"
+import { publishOffer } from "@client/web/services/town-hall/offers/publishOffer"
 import { getArtifactRarityColor } from "@client/web/utils/def/colors"
 import { formatDate } from "@client/web/utils/helpers/formatDate"
 import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 const ArtifactOfferForm = () => {
-  const t = useTranslations("Components.TownHall.ArtifactOfferForm")
+  const t = useTranslations("Components.TownHall.Form.ArtifactOfferForm")
   const locale = useLocale()
   const qc = useQueryClient()
 
@@ -89,10 +91,14 @@ const ArtifactOfferForm = () => {
     defaultValues: {
       userArtifactId: "",
       price: MINIMUM_OFFER_PRICE,
-      duration: "7",
+      duration: DURATIONS_IN_DAYS[1],
       description: "",
     },
   })
+
+  const {
+    formState: { errors },
+  } = form
 
   const artifactOffer = allArtifacts.find(
     (artifact) => artifact?.userArtifactId === form.watch("userArtifactId")
@@ -101,7 +107,7 @@ const ArtifactOfferForm = () => {
   const { mutateAsync: submitOffer } = useFormMutation(
     publishOffer,
     {
-      success: () => "Votre artefact est maintenant en vente.",
+      success: () => t("success"),
       error: (key) => translateDynamicKey(t, `errors.${key}`),
     },
     {
@@ -111,6 +117,9 @@ const ArtifactOfferForm = () => {
         qc.invalidateQueries({ queryKey: ["artifactOffers"] })
         qc.invalidateQueries({
           queryKey: ["availableArtifacts", inputValue],
+        })
+        qc.invalidateQueries({
+          queryKey: ["userOfferStats"],
         })
 
         setShowSuccess(true)
@@ -123,6 +132,10 @@ const ArtifactOfferForm = () => {
     await submitOffer(data)
   }
 
+  const handleSetValue = (value: string) => {
+    setInputValue(value)
+  }
+
   return (
     <div className="mx-auto flex h-full max-w-2xl items-center pb-6">
       {showSuccess ? (
@@ -130,18 +143,14 @@ const ArtifactOfferForm = () => {
           <CardHeader>
             <CardTitle className="text-success flex items-center">
               <CheckCircle2 className="mr-2 size-5" />
-              Annonce publiée avec succès
+              {t("card.title")}
             </CardTitle>
             <CardDescription className="text-success/80">
-              Votre artefact a été mis en vente et est maintenant visible dans
-              le Town Hall
+              {t("card.subtitle")}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-success/80">
-              Vous recevrez une notification lorsqu’un acheteur fera une offre
-              ou achètera votre artefact.
-            </p>
+            <p className="text-success/80">{t("card.description")}</p>
           </CardContent>
         </Card>
       ) : (
@@ -153,11 +162,9 @@ const ArtifactOfferForm = () => {
             <Card className="border-primary/20 text-primary">
               <CardHeader>
                 <CardTitle className="text-primary">
-                  Vendre un artefact
+                  {t("form.title")}
                 </CardTitle>
-                <CardDescription>
-                  Mettez un artefact de votre collection en vente
-                </CardDescription>
+                <CardDescription>{t("form.description")}</CardDescription>
               </CardHeader>
 
               <CardContent className="space-y-6">
@@ -166,14 +173,18 @@ const ArtifactOfferForm = () => {
                   name="userArtifactId"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Choisir un artefact</FormLabel>
+                      <FormLabel>{t("form.fields.artifacts.label")}</FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         value={field.value}
                       >
                         <FormControl>
                           <SelectTrigger className="border-primary/30">
-                            <SelectValue placeholder="Choisir un artefact" />
+                            <SelectValue
+                              placeholder={t(
+                                "form.fields.artifacts.placeholder"
+                              )}
+                            />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent
@@ -183,9 +194,9 @@ const ArtifactOfferForm = () => {
                         >
                           <div className="p-2">
                             <Input
-                              placeholder="Rechercher un artefact"
+                              placeholder={t("form.fields.artifacts.search")}
                               value={inputValue}
-                              onChange={(e) => setInputValue(e.target.value)}
+                              onChange={(e) => handleSetValue(e.target.value)}
                               className="border-primary/30 mb-2 w-full"
                             />
                           </div>
@@ -200,7 +211,9 @@ const ArtifactOfferForm = () => {
                                 <Badge
                                   className={`ml-2 ${getArtifactRarityColor(item?.artifact?.rarity as ArtifactRarity)}`}
                                 >
-                                  {item?.artifact?.rarity}
+                                  {t(
+                                    `form.fields.artifacts.rarities.${item?.artifact?.rarity ?? artifactRarity.common}`
+                                  )}
                                 </Badge>
                               </div>
                             </SelectItem>
@@ -208,19 +221,23 @@ const ArtifactOfferForm = () => {
 
                           {isFetchingNextPage && (
                             <div className="text-muted py-2 text-center text-sm">
-                              Chargement...
+                              {t("form.fields.artifacts.loading")}
                             </div>
                           )}
 
                           {!allArtifacts.length && !isFetchingNextPage && (
                             <div className="text-muted py-4 text-center text-sm">
-                              Aucun artefact trouvé
+                              {t("form.fields.artifacts.empty")}
                             </div>
                           )}
                           <div ref={sentinelRef} className="h-1" />
                         </SelectContent>
                       </Select>
-                      <FormMessage />
+                      <FormMessage>
+                        {errors.userArtifactId
+                          ? t("form.fields.artifacts.error")
+                          : null}
+                      </FormMessage>
                     </FormItem>
                   )}
                 />
@@ -238,13 +255,16 @@ const ArtifactOfferForm = () => {
                     </CardHeader>
                     <CardContent>
                       <p className="text-sm">
-                        Obtenu dans la chasse "{artifactOffer?.huntName}"
+                        {t("form.fields.artifacts.card.obtainedInHunt", {
+                          huntName: artifactOffer?.huntName,
+                        })}
                       </p>
                       <div className="mt-2 flex items-center text-xs">
                         <Clock className="mr-1 size-3" />
                         <span>
-                          Obtenu le{" "}
-                          {formatDate(artifactOffer?.obtainedAt, locale)}
+                          {t("form.fields.artifacts.card.obtainedAt", {
+                            date: formatDate(artifactOffer?.obtainedAt, locale),
+                          })}
                         </span>
                       </div>
                     </CardContent>
@@ -256,14 +276,14 @@ const ArtifactOfferForm = () => {
                   name="price"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Prix</FormLabel>
+                      <FormLabel>{t("form.fields.price.label")}</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Crown className="text-primary/50 absolute left-2 top-2.5 size-4" />
                           <Input
                             type="number"
                             min={MINIMUM_OFFER_PRICE}
-                            placeholder="Entrez le prix"
+                            placeholder={t("form.fields.price.placeholder")}
                             className="border-primary/30 pl-8"
                             {...field}
                             value={field.value ?? ""}
@@ -274,13 +294,22 @@ const ArtifactOfferForm = () => {
                           />
                         </div>
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage>
+                        {errors.price ? t("form.fields.price.error") : null}
+                      </FormMessage>
                       {artifactOffer && (
-                        <p className="text-primary/70 text-xs">
-                          Prix suggéré :{" "}
-                          {getSuggestedPrice(
-                            artifactOffer?.artifact?.rarity as ArtifactRarity
-                          )}
+                        <p className="text-primary/70 flex items-center gap-1 text-xs">
+                          <span>
+                            {t("form.fields.price.suggestedPrice.label", {
+                              price: t(
+                                `form.fields.price.suggestedPrice.values.${
+                                  artifactOffer?.artifact?.rarity ??
+                                  artifactRarity.common
+                                }`
+                              ),
+                            })}
+                          </span>
+                          <Crown className="size-3" />
                         </p>
                       )}
                     </FormItem>
@@ -292,24 +321,40 @@ const ArtifactOfferForm = () => {
                   name="duration"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Durée de l’annonce</FormLabel>
+                      <FormLabel>{t("form.fields.duration.label")}</FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         value={field.value}
                       >
                         <FormControl>
                           <SelectTrigger className="border-primary/30">
-                            <SelectValue placeholder="Choisir une durée" />
+                            <SelectValue
+                              placeholder={t(
+                                "form.fields.duration.placeholder"
+                              )}
+                            />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent className="bg-primaryBg text-primary">
-                          <SelectItem value="3">3 jours</SelectItem>
-                          <SelectItem value="7">7 jours</SelectItem>
-                          <SelectItem value="14">14 jours</SelectItem>
-                          <SelectItem value="30">30 jours</SelectItem>
+                          <SelectItem value={DURATIONS_IN_DAYS[0]}>
+                            {t("form.fields.duration.options.3days")}
+                          </SelectItem>
+                          <SelectItem value={DURATIONS_IN_DAYS[1]}>
+                            {t("form.fields.duration.options.7days")}
+                          </SelectItem>
+                          <SelectItem value={DURATIONS_IN_DAYS[2]}>
+                            {t("form.fields.duration.options.14days")}
+                          </SelectItem>
+                          <SelectItem value={DURATIONS_IN_DAYS[3]}>
+                            {t("form.fields.duration.options.30days")}
+                          </SelectItem>
                         </SelectContent>
                       </Select>
-                      <FormMessage />
+                      <FormMessage>
+                        {errors.duration
+                          ? t("form.fields.duration.error")
+                          : null}
+                      </FormMessage>
                     </FormItem>
                   )}
                 />
@@ -319,15 +364,21 @@ const ArtifactOfferForm = () => {
                   name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Description (optionnel)</FormLabel>
+                      <FormLabel>
+                        {t("form.fields.description.label")}
+                      </FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Ajoutez des détails..."
+                          placeholder={t("form.fields.description.placeholder")}
                           className="border-primary/30 min-h-[100px]"
                           {...field}
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage>
+                        {errors.description
+                          ? t("form.fields.description.error")
+                          : null}
+                      </FormMessage>
                     </FormItem>
                   )}
                 />
@@ -337,17 +388,12 @@ const ArtifactOfferForm = () => {
                     <AlertCircle className="text-primary mr-2 mt-0.5 size-5 flex-shrink-0" />
                     <div className="text-primary/80 text-sm">
                       <p className="mb-1 font-medium">
-                        Informations importantes
+                        {t("form.terms.title")}
                       </p>
                       <ul className="list-disc space-y-1 pl-5">
-                        <li>Des frais de 5% seront prélevés sur la vente</li>
-                        <li>
-                          Vous pouvez annuler l’annonce avant qu’elle soit
-                          conclue
-                        </li>
-                        <li>
-                          Les artefacts vendus ne peuvent pas être récupérés
-                        </li>
+                        <li>{t("form.terms.fees")}</li>
+                        <li>{t("form.terms.cancelation")}</li>
+                        <li>{t("form.terms.responsibility")}</li>
                       </ul>
                     </div>
                   </div>
@@ -360,8 +406,8 @@ const ArtifactOfferForm = () => {
                   disabled={!form.formState.isValid}
                 >
                   {form.formState.isSubmitting
-                    ? "Publication en cours..."
-                    : "Publier l’annonce"}
+                    ? t("form.submit.publishing")
+                    : t("form.submit.publish")}
                 </Button>
               </CardFooter>
             </Card>
@@ -373,26 +419,3 @@ const ArtifactOfferForm = () => {
 }
 
 export default ArtifactOfferForm
-
-// Remplacer la fonction getSuggestedPrice par celle-ci pour utiliser des couronnes
-const getSuggestedPrice = (rarity: ArtifactRarity) => {
-  switch (rarity) {
-    case "common":
-      return "100 - 300 👑"
-
-    case "uncommon":
-      return "300 - 1 000 👑"
-
-    case "rare":
-      return "1 000 - 5 000 👑"
-
-    case "epic":
-      return "5 000 - 20 000 👑"
-
-    case "legendary":
-      return "20 000+ 👑"
-
-    default:
-      return "N/A"
-  }
-}

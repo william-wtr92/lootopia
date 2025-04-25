@@ -1,9 +1,9 @@
 import type { ArtifactRarity } from "@lootopia/common"
 import { Card, Button, Badge } from "@lootopia/ui"
 import { Clock, Crown, Eye, Gem, Hourglass } from "lucide-react"
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 
-import type { ArtifactOffersResponse } from "@client/web/services/town-hall/getOffers"
+import type { ArtifactOffersResponse } from "@client/web/services/town-hall/offers/getOffers"
 import { getArtifactRarityGradient } from "@client/web/utils/def/colors"
 import { formatOfferCrowns } from "@client/web/utils/helpers/formatCrowns"
 import {
@@ -24,6 +24,7 @@ const ArtifactListItem = ({
   setIsPurchaseModalOpen,
   setIsHistoryOpen,
 }: Props) => {
+  const t = useTranslations("Components.TownHall.Search.ArtifactListItem")
   const locale = useLocale()
 
   const handleArtifactClick = (artifactOffer: Props["artifactOffer"]) => {
@@ -32,11 +33,7 @@ const ArtifactListItem = ({
   }
 
   if (!artifactOffer || !artifactOffer.artifact || !artifactOffer.offer) {
-    return (
-      <div className="text-primary/50 py-8 text-center">
-        Aucune offre trouvée
-      </div>
-    )
+    return <div className="text-primary/50 py-8 text-center">{t("empty")}</div>
   }
 
   return (
@@ -66,7 +63,7 @@ const ArtifactListItem = ({
           <div className="flex items-center">
             <Gem className="text-secondary mr-2 size-5" />
             <span className="text-primary font-medium">
-              {artifactOffer.artifact.rarity}
+              {t(`rarities.${artifactOffer.artifact.rarity}`)}
             </span>
           </div>
           <div className="text-primary flex items-center text-xl font-semibold">
@@ -83,22 +80,31 @@ const ArtifactListItem = ({
           <div className="flex items-center">
             <Clock className="mr-1 size-3" />
             <span>
-              Mis en vente le{" "}
-              {formatDate(artifactOffer.offer.createdAt, locale)}
+              {t("forSale", {
+                date: formatDate(artifactOffer.offer.createdAt, locale),
+              })}
             </span>
           </div>
           <div className="flex items-center">
             <Eye className="mr-1 size-3" />
-            <span>{artifactOffer.views} vues</span>
+            <span>
+              {t("views", {
+                views: artifactOffer.views,
+              })}
+            </span>
           </div>
         </div>
 
         <div className="border-primary/10 flex items-end justify-between border-t">
           <div className="text-primary flex items-center gap-2 text-sm">
-            Vendeur:{" "}
-            <span className="max-w-20 truncate font-medium">
-              {artifactOffer.sellerNickname}azddzadzadzad
-            </span>
+            {t.rich("seller", {
+              sellerNickname: artifactOffer.sellerNickname,
+              truncate: (children) => (
+                <span className="max-w-20 truncate font-medium">
+                  {children}
+                </span>
+              ),
+            })}
           </div>
           <Button
             size="sm"
@@ -109,7 +115,7 @@ const ArtifactListItem = ({
               setIsPurchaseModalOpen(true)
             }}
           >
-            Acheter
+            {t("cta.buy")}
           </Button>
         </div>
       </div>

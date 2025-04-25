@@ -235,7 +235,7 @@ const ProfilePage = () => {
           <Box className="mr-2 size-4" /> {t("cta.inventory")}
         </Button>
         <Button onClick={handleShowTownHall}>
-          <Store className="mr-2 size-4" /> Town Hall
+          <Store className="mr-2 size-4" /> {t("cta.townHall")}
         </Button>
         <Button>
           <Star className="mr-2 size-4" /> {t("cta.leaderboard")}

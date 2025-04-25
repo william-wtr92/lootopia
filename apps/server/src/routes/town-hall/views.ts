@@ -12,7 +12,7 @@ import { Hono } from "hono"
 
 const app = new Hono()
 
-export const viewsRoute = app.post(
+export const offerViewsRoute = app.post(
   "/offers/views/:offerId",
   zValidator("param", artifactOfferIdParam),
   async (c) => {

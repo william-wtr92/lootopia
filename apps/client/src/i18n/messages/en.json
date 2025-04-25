@@ -334,7 +334,7 @@
           "logout": "Logout",
           "editProfile": "Edit my profile",
           "inventory": "Inventory",
-          "trophies": "Trophies",
+          "townHall": "Town hall",
           "leaderboard": "Leaderboard",
           "settings": "Settings"
         }
@@ -1218,9 +1218,328 @@
       }
     },
     "TownHall": {
-      "ArtifactOfferForm": {
-        "errors": {
-          "test": "Test error"
+      "TownHallDialog": {
+        "title": "Town Hall",
+        "description": "Buy, sell, and track the most valuable artifacts in Lootopia",
+        "tabs": {
+          "browse": "Browse",
+          "statistics": "Statistics",
+          "sell": "Sell"
+        }
+      },
+      "Purchase": {
+        "PurchaseDialog": {
+          "title": "Purchase artifact",
+          "errors": {
+            "userNotFound": "You are not authorized to perform this action",
+            "artifactOfferNotFound": "The artifact offer does not exist",
+            "sellerCantBeBuyer": "You cannot buy your own artifact",
+            "notEnoughCrowns": "You do not have enough crowns to buy this artifact"
+          },
+          "success": "The artifact has been purchased successfully!"
+        },
+        "PurchaseConfirmationView": {
+          "title": "Purchase confirmation",
+          "description": "You are about to purchase this artifact from {sellerNickname}",
+          "rarities": {
+            "common": "Common",
+            "uncommon": "Uncommon",
+            "rare": "Rare",
+            "epic": "Epic",
+            "legendary": "Legendary"
+          },
+          "price": "Price:",
+          "seller": "Seller:",
+          "cta": {
+            "confirm": "Confirm purchase",
+            "cancel": "Cancel"
+          }
+        },
+        "PurchaseProcessingView": {
+          "title": "Processing purchase",
+          "description": "Please wait while we process your purchase..."
+        },
+        "PurchaseSuccessView": {
+          "title": "Purchase successful!",
+          "description": "You have acquired {artifactName} for <strong>{price}</strong>",
+          "you": "you",
+          "cta": {
+            "close": "Close"
+          }
+        }
+      },
+      "Form": {
+        "ArtifactOfferForm": {
+          "card": {
+            "title": "Listing published successfully!",
+            "subtitle": "Your artifact has been listed for sale and is now visible in the Town Hall.",
+            "description": "You will receive a notification when a buyer makes an offer or purchases your artifact."
+          },
+          "form": {
+            "title": "Sell your artifact",
+            "description": "Put an artifact from your collection up for sale",
+            "fields": {
+              "artifacts": {
+                "label": "Choose an artifact",
+                "placeholder": "Select an artifact",
+                "search": "Search for an artifact",
+                "error": "No artifact found",
+                "rarities": {
+                  "common": "Common",
+                  "uncommon": "Uncommon",
+                  "rare": "Rare",
+                  "epic": "Epic",
+                  "legendary": "Legendary"
+                },
+                "loading": "Loading artifacts...",
+                "empty": "No artifacts found",
+                "card": {
+                  "obtainedInHunt": "Obtained in hunt \"{huntName}\"",
+                  "obtainedAt": "Obtained at {date}"
+                }
+              },
+              "price": {
+                "label": "Price",
+                "placeholder": "Enter the price in crowns",
+                "suggestedPrice": {
+                  "label": "Suggested price: {price}",
+                  "values": {
+                    "common": "100 - 300",
+                    "uncommon": "300 - 500",
+                    "rare": "1 000 - 5 000",
+                    "epic": "5 000 - 20 000",
+                    "legendary": "20 000+"
+                  }
+                },
+                "error": "Invalid price"
+              },
+              "duration": {
+                "label": "Duration of the offer",
+                "placeholder": "Select the duration of the offer",
+                "options": {
+                  "3days": "3 days",
+                  "7days": "7 days",
+                  "14days": "14 days",
+                  "30days": "30 days"
+                },
+                "error": "Invalid duration"
+              },
+              "description": {
+                "label": "Description (optional)",
+                "placeholder": "Add details about your artifact...",
+                "error": "Invalid description"
+              }
+            },
+            "terms": {
+              "title": "Important information",
+              "fees": "A 5% fee will be deducted from the sale",
+              "cancelation": "You can cancel the listing before it is concluded",
+              "responsibility": "Sold artifacts cannot be retrieved"
+            },
+            "submit": {
+              "publishing": "Publishing...",
+              "publish": "Publish offer"
+            }
+          },
+          "success": "Your artifact has been listed for sale successfully!",
+          "errors": {
+            "userNotFound": "You are not authorized to perform this action",
+            "artifactOfferPriceTooLow": "The price is too low, the minimum price is 50 crowns",
+            "userArtifactNotFound": "The artifact does not exist in your inventory",
+            "artifactOfferAlreadyExists": "The artifact is already listed for sale"
+          }
+        }
+      },
+      "Search": {
+        "ArtifacList": {
+          "count": "{count} artifacts found{count, plural, one {} other {s}}",
+          "empty": "{count} artifacts found"
+        },
+        "ArtifactListItem": {
+          "empty": "No artifacts found",
+          "rarities": {
+            "common": "Common",
+            "uncommon": "Uncommon",
+            "rare": "Rare",
+            "epic": "Epic",
+            "legendary": "Legendary"
+          },
+          "forSale": "For sale on {date}",
+          "views": "{views} view{views, plural, one {} other {s}}",
+          "seller": "Seller: <truncate>{sellerNickname}</truncate>",
+          "cta": {
+            "buy": "Buy"
+          }
+        },
+        "ArtifactFilters": {
+          "search": {
+            "placeholder": "Search for artifacts",
+            "press": "Press \"Enter\" to search",
+            "label": "Enter"
+          },
+          "filters": {
+            "label": "Filters",
+            "options": {
+              "latest": "Latest",
+              "priceAsc": "Rising price",
+              "priceDesc": "Falling price",
+              "rarity": "Rarity",
+              "favorites": "Favorites"
+            }
+          },
+          "advancedFilters": {
+            "rarity": {
+              "label": "Rarity"
+            },
+            "price": {
+              "min": {
+                "label": "Min price",
+                "placeholder": "Min"
+              },
+              "max": {
+                "label": "Max price",
+                "placeholder": "Max"
+              }
+            }
+          },
+          "cta": {
+            "clear": "Clear filters",
+            "apply": "Apply filters"
+          }
+        }
+      },
+      "Details": {
+        "ArtifactOverview": {
+          "tabs": {
+            "details": "Details",
+            "history": "History"
+          }
+        },
+        "ArtifactDetails": {
+          "empty": "Artifact offer not found",
+          "rarities": {
+            "common": "Common",
+            "uncommon": "Uncommon",
+            "rare": "Rare",
+            "epic": "Epic",
+            "legendary": "Legendary"
+          },
+          "details": {
+            "description": "Description",
+            "seller": "Seller",
+            "origin": "Origin",
+            "dateOfSale": "Date of sale",
+            "views": {
+              "label": "Views",
+              "count": "{count} view{count, plural, one {} other {s}}"
+            }
+          },
+          "favorites": {
+            "success": {
+              "remove": "Artifact offer removed from favorites",
+              "add": "Artifact offer added to favorites"
+            },
+            "errors": {
+              "userNotFound": "You are not authorized to perform this action",
+              "artifactOfferNotFound": "The artifact offer does not exist"
+            }
+          },
+          "cta": {
+            "visualize": "Visualize",
+            "removeFromFavorites": "Remove favorite",
+            "addToFavorites": "Add to favorites",
+            "share": "Share",
+            "buy": "Buy now"
+          }
+        },
+        "History": {
+          "EventDetails": {
+            "eventTypes": {
+              "listing": "Listing",
+              "transfer": "Transfer",
+              "discovery": "Discovery"
+            },
+            "date": "Date",
+            "noEventSelected": "Select an event",
+            "discovery": {
+              "discoverer": "Discoverer",
+              "origin": "Origin",
+              "details": "Details of the discovery"
+            },
+            "transfer": {
+              "seller": "Seller",
+              "buyer": "Buyer",
+              "price": "Price"
+            },
+            "listing": {
+              "seller": "Seller",
+              "askingPrice": "Asking price"
+            }
+          },
+          "EventTimeline": {
+            "title": "Artifact history",
+            "eventTypes": {
+              "listing": "Listing",
+              "transfer": "Transfer",
+              "discovery": "Discovery"
+            },
+            "discovered": "Discovered by <strong>{newOwner}</strong> in <strong>{city}</strong>",
+            "transferred": "Transferred from <strong>{oldOwner}</strong> to <strong>{newOwner}</strong>",
+            "listed": "Listed by <strong>{seller}</strong> for <strong>{price}</strong>",
+            "cta": {
+              "viewDetails": "Click to view details"
+            }
+          }
+        }
+      },
+      "Stats": {
+        "OfferRarityStats": {
+          "title": "Sales by Rarity",
+          "variation": "+ {variation}% this month",
+          "salesByRarity": "{count} sales",
+          "sales": "sales",
+          "labels": {
+            "common": "Common",
+            "uncommon": "Uncommon",
+            "rare": "Rare",
+            "epic": "Epic",
+            "legendary": "Legendary"
+          }
+        },
+        "UserOfferStats": {
+          "title": "Vos statistiques de négociant",
+          "transactions": {
+            "label": "Transactions",
+            "variation": "+ {variation}% this month"
+          },
+          "profit": {
+            "label": "Total profit",
+            "variation": "+ {variation}% this month"
+          },
+          "artifactsSell": {
+            "label": "Artifacts sold",
+            "variation": "+ {variation}% this month"
+          },
+          "activeOffers": {
+            "label": "Active offers"
+          }
+        },
+        "WeeklyOfferStats": {
+          "title": "Weekly Sales Overview",
+          "variation": "+ {variation}% crowns this week",
+          "tooltip": {
+            "sales": "Sales",
+            "crowns": "Crowns"
+          },
+          "days": {
+            "mon": "Mon",
+            "tue": "Tue",
+            "wed": "Wed",
+            "thu": "Thu",
+            "fri": "Fri",
+            "sat": "Sat",
+            "sun": "Sun"
+          }
         }
       }
     }

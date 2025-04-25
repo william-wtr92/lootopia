@@ -1,9 +1,11 @@
-import type { ArtifactRarity } from "@lootopia/common"
+import { artifactRarity, type ArtifactRarity } from "@lootopia/common"
 import { Badge, Button } from "@lootopia/ui"
 import { motion } from "framer-motion"
 import { Crown, Gem, User } from "lucide-react"
+import { useTranslations } from "next-intl"
 
-import type { ArtifactOffersResponse } from "@client/web/services/town-hall/getOffers"
+import type { ArtifactOffersResponse } from "@client/web/services/town-hall/offers/getOffers"
+import anim from "@client/web/utils/anim"
 import { getArtifactRarityColor } from "@client/web/utils/def/colors"
 import { formatOfferCrowns } from "@client/web/utils/helpers/formatCrowns"
 
@@ -18,22 +20,22 @@ const PurchaseConfirmationView = ({
   onClose,
   onPurchase,
 }: Props) => {
+  const t = useTranslations(
+    "Components.TownHall.Purchase.PurchaseConfirmationView"
+  )
+
   return (
     <motion.div
       key="confirmation"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.3 }}
+      {...anim(confirmationCardVariants)}
       className="space-y-6 p-6"
     >
       <div className="text-center">
-        <h3 className="text-primary mb-2 text-lg font-bold">
-          Confirmer l'achat
-        </h3>
+        <h3 className="text-primary mb-2 text-lg font-bold">{t("title")}</h3>
         <p className="text-primary/70">
-          Vous êtes sur le point d'acheter cet artefact à{" "}
-          {artifactOffer.sellerNickname}
+          {t("description", {
+            sellerNickname: artifactOffer.sellerNickname,
+          })}
         </p>
       </div>
 
@@ -50,21 +52,23 @@ const PurchaseConfirmationView = ({
           <Badge
             className={`mt-1 ${getArtifactRarityColor(artifactOffer?.artifact?.rarity as ArtifactRarity)}`}
           >
-            {artifactOffer?.artifact?.rarity}
+            {t(
+              `rarities.${artifactOffer?.artifact?.rarity ?? artifactRarity.common}`
+            )}
           </Badge>
         </div>
       </div>
 
       <div className="border-primary/20 rounded-lg border bg-white/50 p-4">
         <div className="flex items-center justify-between">
-          <span className="text-primary/70">Prix:</span>
+          <span className="text-primary/70">{t("price")}</span>
           <span className="text-primary flex items-center gap-2 text-xl font-bold">
             {formatOfferCrowns(artifactOffer.offer.price)}
             <Crown className="size-5" />
           </span>
         </div>
         <div className="mt-2 flex items-center justify-between">
-          <span className="text-primary/70">Vendeur:</span>
+          <span className="text-primary/70">{t("seller")}</span>
           <div className="flex items-center">
             <User className="text-secondary mr-1 size-4" />
             <span className="text-primary font-medium">
@@ -80,13 +84,13 @@ const PurchaseConfirmationView = ({
           onClick={onClose}
           className="border-primary text-primary flex-1"
         >
-          Annuler
+          {t("cta.cancel")}
         </Button>
         <Button
           onClick={onPurchase}
           className="bg-primary hover:bg-secondary text-accent flex-1"
         >
-          Confirmer l'achat
+          {t("cta.confirm")}
         </Button>
       </div>
     </motion.div>
@@ -94,3 +98,13 @@ const PurchaseConfirmationView = ({
 }
 
 export default PurchaseConfirmationView
+
+const confirmationCardVariants = {
+  initial: { opacity: 0, y: 20 },
+  enter: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.3 },
+  },
+  exit: { opacity: 0, y: -20 },
+}

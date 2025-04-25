@@ -9,15 +9,17 @@ import {
 import { useQueryClient } from "@tanstack/react-query"
 import { AnimatePresence } from "framer-motion"
 import { ShoppingBag } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useState } from "react"
 
 import PurchaseConfirmationView from "./PurchaseConfirmationView"
 import PurchaseProcessingView from "./PurchaseProcessingView"
 import PurchaseSuccessView from "./PurchaseSucessView"
 import { useConfetti } from "@client/web/hooks/useConfetti"
-import type { ArtifactOffersResponse } from "@client/web/services/town-hall/getOffers"
-import { purchaseOffer } from "@client/web/services/town-hall/purchaseOffer"
+import type { ArtifactOffersResponse } from "@client/web/services/town-hall/offers/getOffers"
+import { purchaseOffer } from "@client/web/services/town-hall/offers/purchaseOffer"
 import { getArtifactRarityGradient } from "@client/web/utils/def/colors"
+import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 export const purchaseStage = {
   confirmation: "confirmation",
@@ -33,6 +35,7 @@ type Props = {
 }
 
 const PurchaseDialog = ({ artifactOffer, open, setIsOpen }: Props) => {
+  const t = useTranslations("Components.TownHall.Purchase.PurchaseDialog")
   const { toast } = useToast()
   const qc = useQueryClient()
 
@@ -50,9 +53,8 @@ const PurchaseDialog = ({ artifactOffer, open, setIsOpen }: Props) => {
 
     if (!status) {
       toast({
-        title: "Erreur",
-        description: key,
         variant: "destructive",
+        description: translateDynamicKey(t, `errors.${key}`),
       })
 
       return
@@ -62,10 +64,13 @@ const PurchaseDialog = ({ artifactOffer, open, setIsOpen }: Props) => {
     qc.invalidateQueries({ queryKey: ["artifactInventory"] })
     qc.invalidateQueries({ queryKey: ["availableArtifacts"] })
     qc.invalidateQueries({ queryKey: ["user"] })
+    qc.invalidateQueries({
+      queryKey: ["userOfferStats"],
+    })
 
     toast({
       variant: "default",
-      description: "L'offre a été achetée avec succès.",
+      description: t("success"),
     })
 
     handleTriggerSuccessFlow()
@@ -106,7 +111,8 @@ const PurchaseDialog = ({ artifactOffer, open, setIsOpen }: Props) => {
           className={`p-6 ${getArtifactRarityGradient(artifactOffer.artifact.rarity as ArtifactRarity)}`}
         >
           <DialogTitle className="flex items-center text-xl font-bold">
-            <ShoppingBag className="mr-2 size-5" /> Achat d'artefact
+            <ShoppingBag className="mr-2 size-5" />
+            {t("title")}
           </DialogTitle>
         </DialogHeader>
 
