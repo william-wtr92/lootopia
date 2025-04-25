@@ -140,13 +140,13 @@ const ArtifactDetails = ({
               onClick={handleAddToFavorites}
             >
               {isFavoriteStatus ? (
-                <span>
-                  <HeartOff className="mr-1 size-4" />
+                <span className="flex items-center gap-2">
+                  <HeartOff className="size-4" />
                   {t("cta.removeFromFavorites")}
                 </span>
               ) : (
-                <span>
-                  <Heart className="mr-1 size-4" />
+                <span className="flex items-center gap-2">
+                  <Heart className="size-4" />
                   {t("cta.addToFavorites")}
                 </span>
               )}
