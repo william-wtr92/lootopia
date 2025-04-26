@@ -6,6 +6,7 @@ import {
   CardTitle,
   ChartContainer,
   ChartTooltip,
+  ChartTooltipContent,
 } from "@lootopia/ui"
 import { ChartPie } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -47,37 +48,29 @@ const OfferRarityStats = ({ stats }: Props) => {
           <PieChart>
             <ChartTooltip
               cursor={false}
-              content={({ active, payload }) => {
-                if (active && payload && payload.length) {
-                  const entry = payload[0]
-
-                  return (
-                    <div className="bg-primaryBg text-primary rounded-md border p-2 text-sm shadow-md">
+              content={
+                <ChartTooltipContent
+                  formatter={(value, name) => (
+                    <div className="flex flex-col gap-1">
                       <div className="flex items-center gap-2 font-bold">
                         <div
-                          className="h-3 w-3 rounded-sm"
+                          className="size-3 rounded-sm"
                           style={{
                             backgroundColor:
-                              rarityColorMap[
-                                entry.payload.rarity.toLowerCase()
-                              ],
+                              rarityColorMap[(name as string).toLowerCase()],
                           }}
                         />
-
-                        {translateDynamicKey(t, `labels.${entry.name}`)}
+                        {translateDynamicKey(t, `labels.${name}`)}
                       </div>
-                      <div>
+                      <div className="text-sm">
                         {t("salesByRarity", {
-                          count:
-                            typeof entry.value === "number" ? entry.value : 0,
+                          count: typeof value === "number" ? value : 0,
                         })}
                       </div>
                     </div>
-                  )
-                }
-
-                return null
-              }}
+                  )}
+                />
+              }
             />
             <Pie
               data={stats?.rarityStats}

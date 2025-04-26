@@ -6,6 +6,7 @@ import {
   ChartContainer,
   ChartTooltip,
   Badge,
+  ChartTooltipContent,
 } from "@lootopia/ui"
 import { TrendingUp } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -54,31 +55,31 @@ const WeeklyOfferStats = ({ stats }: Props) => {
               <YAxis yAxisId="right" orientation="right" />
               <ChartTooltip
                 cursor={{ fill: "transparent" }}
-                content={({ active, payload }) => {
-                  if (active && payload && payload.length) {
-                    return (
-                      <div className="bg-primaryBg text-primary rounded-md border p-2 text-sm shadow-md">
-                        {payload.map((entry, i) => (
-                          <div key={i} className="flex items-center gap-2">
-                            <div
-                              className="size-3 rounded-sm"
-                              style={{ backgroundColor: entry.color }}
-                            />
-
-                            <span className="text-xs font-medium capitalize">
-                              {entry.dataKey === "sales"
-                                ? t("tooltip.sales")
-                                : t("tooltip.crowns")}
-                            </span>
-                            <span className="ml-auto">{entry.value}</span>
-                          </div>
-                        ))}
+                content={
+                  <ChartTooltipContent
+                    formatter={(value, name) => (
+                      <div className="flex w-full items-center gap-2">
+                        <div
+                          className="size-3 rounded-sm"
+                          style={{
+                            backgroundColor:
+                              name === "sales" ? "rgb(74, 14, 78)" : "#ffd700",
+                          }}
+                        />
+                        <span className="text-xs font-medium capitalize">
+                          {name === "sales"
+                            ? t("tooltip.sales")
+                            : t("tooltip.crowns")}
+                        </span>
+                        <span className="ml-auto font-mono">
+                          {typeof value === "number"
+                            ? value.toLocaleString()
+                            : value}
+                        </span>
                       </div>
-                    )
-                  }
-
-                  return null
-                }}
+                    )}
+                  />
+                }
               />
 
               <Bar
