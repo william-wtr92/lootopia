@@ -1384,7 +1384,8 @@
               "priceAsc": "Rising price",
               "priceDesc": "Falling price",
               "rarity": "Rarity",
-              "favorites": "Favorites"
+              "favorites": "Favorites",
+              "mine": "My offers"
             }
           },
           "advancedFilters": {
@@ -1451,6 +1452,23 @@
             "share": "Share",
             "copied": "Link copied!",
             "buy": "Buy now"
+          }
+        },
+        "Utils": {
+          "ArtifactOfferCancelConfirmation": {
+            "trigger": "Cancel offer",
+            "title": "Cancel artifact offer",
+            "description": "Are you sure you want to cancel this offer? This action cannot be undone.",
+            "cta": {
+              "cancel": "Cancel",
+              "confirm": "Confirm"
+            },
+            "success": "The artifact offer has been canceled successfully!",
+            "errors": {
+              "userNotFound": "You are not authorized to perform this action",
+              "artifactOfferNotFound": "The artifact offer does not exist",
+              "userIsNotSellerOfArtifactOffer": "You are not the seller of this artifact offer"
+            }
           }
         },
         "History": {

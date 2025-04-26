@@ -152,6 +152,9 @@ export const selectArtifactOffers = async (
       orderBy = desc(artifactOffers.createdAt)
   }
 
+  const isFavorites = sortBy === offerFilters.favorites
+  const isMine = sortBy === offerFilters.mine
+
   const [offers, countResult] = await Promise.all([
     db
       .select({
@@ -165,9 +168,8 @@ export const selectArtifactOffers = async (
       .where(
         and(
           conditions,
-          sortBy === offerFilters.favorites
-            ? eq(artifactOfferFavorites.userId, userId)
-            : undefined
+          isFavorites ? eq(artifactOfferFavorites.userId, userId) : undefined,
+          isMine ? eq(artifactOffers.sellerId, userId) : undefined
         )
       )
       .leftJoin(
@@ -191,15 +193,9 @@ export const selectArtifactOffers = async (
         artifacts.id,
         users.nickname,
         hunts.city,
-        ...(sortBy === offerFilters.favorites
-          ? [artifactOfferFavorites.favoritedAt]
-          : [])
+        ...(isFavorites ? [artifactOfferFavorites.favoritedAt] : [])
       )
-      .orderBy(
-        sortBy === offerFilters.favorites
-          ? desc(artifactOfferFavorites.favoritedAt)
-          : orderBy
-      )
+      .orderBy(isFavorites ? desc(artifactOfferFavorites.favoritedAt) : orderBy)
       .limit(limit)
       .offset(page * limit),
 
@@ -209,9 +205,8 @@ export const selectArtifactOffers = async (
       .where(
         and(
           conditions,
-          sortBy === offerFilters.favorites
-            ? eq(artifactOfferFavorites.userId, userId)
-            : undefined
+          isFavorites ? eq(artifactOfferFavorites.userId, userId) : undefined,
+          isMine ? eq(artifactOffers.sellerId, userId) : undefined
         )
       )
       .leftJoin(

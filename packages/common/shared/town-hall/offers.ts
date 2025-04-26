@@ -21,6 +21,7 @@ export const offerFilters = {
   priceDesc: "price-desc",
   rarity: "rarity",
   favorites: "favorites",
+  mine: "mine",
 } as const
 
 export type OfferFilters = (typeof offerFilters)[keyof typeof offerFilters]
@@ -78,6 +79,7 @@ export const artifactOffersQuerySchema = z.object({
       offerFilters.priceDesc,
       offerFilters.rarity,
       offerFilters.favorites,
+      offerFilters.mine,
     ])
     .optional()
     .default(offerFilters.latest),

@@ -17,6 +17,7 @@ import {
 import { useLocale, useTranslations } from "next-intl"
 import { useState } from "react"
 
+import ArtifactOfferCancelConfirmation from "./utils/ArtifactOfferCancelConfirmation"
 import { env } from "@client/env"
 import HuntRewardPill from "@client/web/components/features/hunts/list/rewards/HuntRewardPill"
 import { useCopyToClipboard } from "@client/web/hooks/useCopyToClipboard"
@@ -32,12 +33,14 @@ type Props = {
   artifactOffer: ArtifactOffersResponse
   setIsOpen: (isOpen: boolean) => void
   setIsPurchaseModalOpen: (isOpen: boolean) => void
+  isOwner?: boolean
 }
 
 const ArtifactDetails = ({
   artifactOffer,
   setIsOpen,
   setIsPurchaseModalOpen,
+  isOwner = false,
 }: Props) => {
   const t = useTranslations("Components.TownHall.Details.ArtifactDetails")
   const locale = useLocale()
@@ -185,6 +188,13 @@ const ArtifactDetails = ({
                 </span>
               )}
             </Button>
+
+            {isOwner && (
+              <ArtifactOfferCancelConfirmation
+                artifactOffer={artifactOffer}
+                setIsOpen={setIsOpen}
+              />
+            )}
           </div>
         </div>
 

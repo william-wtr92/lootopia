@@ -39,6 +39,9 @@ import {
   sellerCantBeBuyer,
   artifactOfferPriceTooLow,
   selectCompleteOfferById,
+  updateArtifactOfferState,
+  artifactOfferCanceled,
+  userIsNotSellerOfArtifactOffer,
 } from "@server/features/town-hall"
 import {
   selectUserByEmail,
@@ -238,5 +241,33 @@ export const offersRoute = app
       }
 
       return c.json({ result: artifactOffer }, SC.success.OK)
+    }
+  )
+  .put(
+    "/offers/cancel/:offerId",
+    zValidator("param", artifactOfferIdParam),
+    async (c) => {
+      const email = c.get(contextKeys.loggedUserEmail)
+      const offerId = c.req.param("offerId")
+
+      const user = await selectUserByEmail(email)
+
+      if (!user) {
+        return c.json(userNotFound, SC.errors.NOT_FOUND)
+      }
+
+      const artifactOffer = await selectOfferById(offerId)
+
+      if (!artifactOffer) {
+        return c.json(artifactOfferNotFound, SC.errors.NOT_FOUND)
+      }
+
+      if (artifactOffer.sellerId !== user.id) {
+        return c.json(userIsNotSellerOfArtifactOffer, SC.errors.BAD_REQUEST)
+      }
+
+      await updateArtifactOfferState(offerId)
+
+      return c.json(artifactOfferCanceled, SC.success.OK)
     }
   )

@@ -1,6 +1,8 @@
 import { historyStatus, offerStatus } from "@lootopia/common"
 import {
+  artifactOfferFavorites,
   artifactOffers,
+  artifactOfferViews,
   artifactOwnershipHistory,
   userArtifacts,
 } from "@lootopia/drizzle"
@@ -36,5 +38,24 @@ export const updateUserArtifactOwnership = async (
       newOwnerId: userId,
       offerId,
     })
+  })
+}
+
+export const updateArtifactOfferState = async (offerId: string) => {
+  return db.transaction(async (tx) => {
+    await tx
+      .update(artifactOffers)
+      .set({
+        status: offerStatus.cancelled,
+      })
+      .where(eq(artifactOffers.id, offerId))
+
+    await tx
+      .delete(artifactOfferViews)
+      .where(eq(artifactOfferViews.offerId, offerId))
+
+    await tx
+      .delete(artifactOfferFavorites)
+      .where(eq(artifactOfferFavorites.offerId, offerId))
   })
 }

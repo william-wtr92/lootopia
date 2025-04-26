@@ -113,6 +113,9 @@ const ArtifactFilters = ({
             <SelectItem value={offerFilters.favorites}>
               {t("filters.options.favorites")}
             </SelectItem>
+            <SelectItem value={offerFilters.mine}>
+              {t("filters.options.mine")}
+            </SelectItem>
           </SelectContent>
         </Select>
       </div>

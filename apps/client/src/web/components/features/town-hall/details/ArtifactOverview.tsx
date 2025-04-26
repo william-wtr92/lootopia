@@ -10,6 +10,7 @@ import {
   TabsTrigger,
   Badge,
 } from "@lootopia/ui"
+import { useQuery } from "@tanstack/react-query"
 import { Gem, History, Eye, Hourglass } from "lucide-react"
 import { useLocale, useTranslations } from "next-intl"
 import { useState } from "react"
@@ -18,6 +19,7 @@ import ArtifactDetails from "./ArtifactDetails"
 import ArtifactHistory from "./history/ArtifactHistory"
 import { useViewTracking } from "@client/web/hooks/useViewTracking"
 import type { ArtifactOffersResponse } from "@client/web/services/town-hall/offers/getOffers"
+import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import { getArtifactRarityGradient } from "@client/web/utils/def/colors"
 import { formatDateDiff } from "@client/web/utils/helpers/formatDate"
 
@@ -37,6 +39,11 @@ const ArtifactOverview = ({
   const t = useTranslations("Components.TownHall.Details.ArtifactOverview")
   const locale = useLocale()
 
+  const { data: userLoggedIn } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => getUserLoggedIn(),
+  })
+
   const [activeTab, setActiveTab] = useState("details")
 
   useViewTracking({
@@ -48,6 +55,8 @@ const ArtifactOverview = ({
   }
 
   const isLegendary = artifactOffer.artifact.rarity === artifactRarity.legendary
+
+  const isOwner = userLoggedIn?.id === artifactOffer.offer.sellerId
 
   return (
     <Dialog open={open} onOpenChange={setIsOpen}>
@@ -111,6 +120,7 @@ const ArtifactOverview = ({
                 artifactOffer={artifactOffer}
                 setIsOpen={setIsOpen}
                 setIsPurchaseModalOpen={setIsPurchaseModalOpen}
+                isOwner={isOwner}
               />
             </TabsContent>
 

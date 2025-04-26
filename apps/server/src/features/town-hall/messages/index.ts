@@ -20,6 +20,11 @@ export const artifactOfferPriceTooLow = {
   key: "artifactOfferPriceTooLow",
 } as const
 
+export const userIsNotSellerOfArtifactOffer = {
+  result: "User is not the seller of the artifact offer",
+  key: "userIsNotSellerOfArtifactOffer",
+} as const
+
 // SUCCESS MESSAGES
 
 export const artifactOfferCreated = {
@@ -40,4 +45,9 @@ export const artifactOfferMarkedAsFavorite = {
 export const artifactOfferPurchased = {
   result: "Artifact offer purchased",
   key: "artifactOfferPurchased",
+} as const
+
+export const artifactOfferCanceled = {
+  result: "Artifact offer canceled",
+  key: "artifactOfferCanceled",
 } as const
