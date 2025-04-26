@@ -38,6 +38,7 @@ import {
   artifactOfferPurchased,
   sellerCantBeBuyer,
   artifactOfferPriceTooLow,
+  selectCompleteOfferById,
 } from "@server/features/town-hall"
 import {
   selectUserByEmail,
@@ -215,5 +216,27 @@ export const offersRoute = app
       )
 
       return c.json(artifactOfferPurchased, SC.success.OK)
+    }
+  )
+  .get(
+    "/offers/find/:offerId",
+    zValidator("param", artifactOfferIdParam),
+    async (c) => {
+      const email = c.get(contextKeys.loggedUserEmail)
+      const offerId = c.req.param("offerId")
+
+      const user = await selectUserByEmail(email)
+
+      if (!user) {
+        return c.json(userNotFound, SC.errors.NOT_FOUND)
+      }
+
+      const artifactOffer = await selectCompleteOfferById(offerId)
+
+      if (!artifactOffer) {
+        return c.json(artifactOfferNotFound, SC.errors.NOT_FOUND)
+      }
+
+      return c.json({ result: artifactOffer }, SC.success.OK)
     }
   )

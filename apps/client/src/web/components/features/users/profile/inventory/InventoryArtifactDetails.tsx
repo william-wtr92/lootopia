@@ -156,7 +156,7 @@ const InventoryArtifactDetails = ({ item, open, setIsOpen }: Props) => {
               <Button
                 onClick={handleCopyLink}
                 variant="outline"
-                className={`border-primary ${copiedText === artifactUrl ? "text-success hover:text-success bg-green-100 hover:bg-transparent" : "text-primary"} relative overflow-hidden transition-all`}
+                className={`border-primary ${copiedText === artifactUrl ? "text-success hover:text-success bg-success/10 hover:bg-transparent" : "text-primary"} relative overflow-hidden transition-all`}
               >
                 {copiedText === artifactUrl ? (
                   <>

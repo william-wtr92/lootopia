@@ -541,3 +541,37 @@ export const selectWeeklyOfferStats = async () => {
     total: totalCrownsCurrent,
   }
 }
+
+export const selectCompleteOfferById = async (offerId: string) => {
+  const offer = await db
+    .select({
+      offer: artifactOffers,
+      artifact: artifacts,
+      sellerNickname: users.nickname,
+      huntCity: hunts.city,
+      views: sql<number>`count(${artifactOfferViews.id})`.as("views"),
+    })
+    .from(artifactOffers)
+    .where(
+      and(
+        eq(artifactOffers.id, offerId),
+        eq(artifactOffers.status, offerStatus.active)
+      )
+    )
+    .leftJoin(
+      artifactOfferViews,
+      eq(artifactOfferViews.offerId, artifactOffers.id)
+    )
+    .leftJoin(
+      userArtifacts,
+      eq(artifactOffers.userArtifactId, userArtifacts.id)
+    )
+    .leftJoin(artifacts, eq(userArtifacts.artifactId, artifacts.id))
+    .leftJoin(chests, eq(userArtifacts.obtainedFromChestId, chests.id))
+    .leftJoin(hunts, eq(chests.huntId, hunts.id))
+    .leftJoin(users, eq(artifactOffers.sellerId, users.id))
+    .groupBy(artifactOffers.id, artifacts.id, users.nickname, hunts.city)
+    .limit(1)
+
+  return offer[0] ?? null
+}

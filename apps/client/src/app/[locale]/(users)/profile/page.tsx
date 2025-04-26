@@ -12,13 +12,15 @@ import {
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { Box, Settings, Star, Store } from "lucide-react"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { config } from "@client/env"
 import ReportListDialog from "@client/web/components/features/reports/list/ReportListDialog"
 import PaymentListDialog from "@client/web/components/features/shop/list/PaymentListDialog"
+import ArtifactOverview from "@client/web/components/features/town-hall/details/ArtifactOverview"
+import PurchaseDialog from "@client/web/components/features/town-hall/purchase/PurchaseDialog"
 import TownHallDialog from "@client/web/components/features/town-hall/TownHallDialog"
 import ActionMenu from "@client/web/components/features/users/profile/ActionMenu"
 import EditProfileForm from "@client/web/components/features/users/profile/EditProfileForm"
@@ -28,6 +30,7 @@ import MfaDeactivationDialog from "@client/web/components/features/users/profile
 import { MotionComponent } from "@client/web/components/utils/MotionComponent"
 import { routes } from "@client/web/routes"
 import { logout } from "@client/web/services/auth/logout"
+import { getOfferById } from "@client/web/services/town-hall/offers/getOfferById"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import { useAuthStore } from "@client/web/store/useAuthStore"
 import anim from "@client/web/utils/anim"
@@ -35,13 +38,20 @@ import { nextLevelXP, xpProgress } from "@client/web/utils/helpers/levels"
 
 const ProfilePage = () => {
   const t = useTranslations("Pages.Users.Profile")
+  const searchParams = useSearchParams()
   const router = useRouter()
   const { clearAuthToken } = useAuthStore()
-
   const qc = useQueryClient()
-  const { data } = useQuery({
+
+  const { data: userLoggedIn } = useQuery({
     queryKey: ["user"],
     queryFn: () => getUserLoggedIn(),
+  })
+
+  const { data: artifactOffer } = useQuery({
+    queryKey: ["artifactOffer"],
+    queryFn: () => getOfferById({ offerId: searchParams.get("offerId") || "" }),
+    enabled: !!searchParams.get("offerId"),
   })
 
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false)
@@ -52,8 +62,10 @@ const ProfilePage = () => {
 
   const [showInventory, setShowInventory] = useState(false)
   const [showTownHall, setShowTownHall] = useState(false)
+  const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false)
+  const [isArtifactDetailsOpen, setIsArtifactDetailsOpen] = useState(false)
 
-  const user = data ? data : undefined
+  const user = userLoggedIn ? userLoggedIn : undefined
 
   const logoutUser = async () => {
     await logout()
@@ -73,11 +85,26 @@ const ProfilePage = () => {
 
   const handleShowInventory = () => setShowInventory((prev) => !prev)
   const handleShowTownHall = () => setShowTownHall((prev) => !prev)
+  const handlePurchaseModalOpen = () => setIsPurchaseModalOpen((prev) => !prev)
+  const handleArtifactDetailsOpen = () =>
+    setIsArtifactDetailsOpen((prev) => !prev)
 
   const currentLevel = user?.progression?.level ?? defaultLevel
   const currentXP = user?.progression?.experience ?? defaultXP
   const nextXP = nextLevelXP(currentLevel)
   const progressValue = xpProgress(currentXP, currentLevel)
+
+  useEffect(() => {
+    if (artifactOffer) {
+      setIsArtifactDetailsOpen(true)
+    }
+  }, [artifactOffer])
+
+  useEffect(() => {
+    if (isPurchaseModalOpen) {
+      setIsArtifactDetailsOpen(false)
+    }
+  }, [isPurchaseModalOpen])
 
   return (
     <main className="relative z-10 flex w-full flex-1 flex-col gap-8 px-4 py-8">
@@ -161,7 +188,7 @@ const ProfilePage = () => {
                     {t("statistics.artifacts")}
                   </span>
                   <span className="text-primary font-bold">
-                    {data?.stats.artifactsCount}
+                    {user?.stats.artifactsCount}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
@@ -247,6 +274,23 @@ const ProfilePage = () => {
 
       <InventoryDialog open={showInventory} setIsOpen={handleShowInventory} />
       <TownHallDialog open={showTownHall} setIsOpen={handleShowTownHall} />
+
+      {artifactOffer && (
+        <ArtifactOverview
+          artifactOffer={artifactOffer}
+          open={isArtifactDetailsOpen}
+          setIsOpen={handleArtifactDetailsOpen}
+          setIsPurchaseModalOpen={handlePurchaseModalOpen}
+        />
+      )}
+
+      {artifactOffer && (
+        <PurchaseDialog
+          artifactOffer={artifactOffer}
+          open={isPurchaseModalOpen}
+          setIsOpen={handlePurchaseModalOpen}
+        />
+      )}
     </main>
   )
 }

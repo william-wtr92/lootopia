@@ -1449,6 +1449,7 @@
             "removeFromFavorites": "Remove favorite",
             "addToFavorites": "Add to favorites",
             "share": "Share",
+            "copied": "Link copied!",
             "buy": "Buy now"
           }
         },

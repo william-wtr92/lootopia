@@ -14,6 +14,7 @@ export const routes = {
   },
   users: {
     profile: "/profile",
+    profileTriggerTownHall: (offerId: string) => `/profile?offerId=${offerId}`,
     profileNickname: (nickname: string) => `/profile/${nickname}`,
   },
   hunts: {

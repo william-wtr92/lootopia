@@ -33,7 +33,9 @@ const TownHallDialog = ({ open, setIsOpen }: Props) => {
     useState<ArtifactOffersResponse | null>(null)
   const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false)
 
-  const handleSetArtifact = (artifactOffer: ArtifactOffersResponse | null) => {
+  const handleSelectArtifact = (
+    artifactOffer: ArtifactOffersResponse | null
+  ) => {
     setSelectedArtifactOffer(artifactOffer)
   }
 
@@ -98,7 +100,7 @@ const TownHallDialog = ({ open, setIsOpen }: Props) => {
                 >
                   <ArtifacList
                     artifactOffer={selectedArtifactOffer}
-                    setSelectedArtifact={handleSetArtifact}
+                    setSelectedArtifact={handleSelectArtifact}
                     setIsPurchaseModalOpen={handleShowModal}
                   />
                 </TabsContent>
@@ -126,7 +128,7 @@ const TownHallDialog = ({ open, setIsOpen }: Props) => {
         <PurchaseDialog
           artifactOffer={selectedArtifactOffer}
           open={isPurchaseModalOpen}
-          setIsOpen={setIsPurchaseModalOpen}
+          setIsOpen={handleShowModal}
         />
       )}
     </>

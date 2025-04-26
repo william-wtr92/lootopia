@@ -2,6 +2,7 @@ import { Button, useToast } from "@lootopia/ui"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import {
   Calendar,
+  CheckCircle2,
   Crown,
   DollarSign,
   Eye,
@@ -16,7 +17,10 @@ import {
 import { useLocale, useTranslations } from "next-intl"
 import { useState } from "react"
 
+import { env } from "@client/env"
 import HuntRewardPill from "@client/web/components/features/hunts/list/rewards/HuntRewardPill"
+import { useCopyToClipboard } from "@client/web/hooks/useCopyToClipboard"
+import { routes } from "@client/web/routes"
 import { addToFavorites } from "@client/web/services/town-hall/favorites/addToFavorites"
 import { getFavorite } from "@client/web/services/town-hall/favorites/getFavorite"
 import type { ArtifactOffersResponse } from "@client/web/services/town-hall/offers/getOffers"
@@ -39,6 +43,7 @@ const ArtifactDetails = ({
   const locale = useLocale()
   const { toast } = useToast()
   const qc = useQueryClient()
+  const { copiedText, copy } = useCopyToClipboard()
 
   const [showArtifact, setShowArtifact] = useState(false)
 
@@ -97,12 +102,19 @@ const ArtifactDetails = ({
 
   const handleBuy = () => {
     setIsPurchaseModalOpen(true)
+
     setIsOpen(false)
+  }
+
+  const handleCopyShareLink = () => {
+    copy(artifactOfferUrl)
   }
 
   if (!artifactOffer || !artifactOffer.artifact) {
     return <div className="text-primary/50 py-8 text-center">{t("empty")}</div>
   }
+
+  const artifactOfferUrl = `${env.NEXT_PUBLIC_CLIENT_URL}${routes.users.profileTriggerTownHall(artifactOffer.offer.id)}`
 
   return (
     <>
@@ -154,10 +166,24 @@ const ArtifactDetails = ({
             <Button
               size="sm"
               variant="outline"
-              className="border-primary text-primary"
+              className={
+                copiedText === artifactOfferUrl
+                  ? "border-success hover:bg-success/10 animate-in duration-200"
+                  : ""
+              }
+              onClick={handleCopyShareLink}
             >
-              <Share2 className="mr-1 size-4" />
-              {t("cta.share")}
+              {copiedText === artifactOfferUrl ? (
+                <span className="text-success flex items-center gap-2">
+                  <CheckCircle2 className="text-success size-4 animate-bounce" />
+                  {t("cta.copied")}
+                </span>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <Share2 className="size-4" />
+                  {t("cta.share")}
+                </span>
+              )}
             </Button>
           </div>
         </div>
