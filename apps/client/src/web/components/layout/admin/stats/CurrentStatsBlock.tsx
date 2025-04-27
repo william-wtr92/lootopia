@@ -1,5 +1,12 @@
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@lootopia/ui"
 import { motion } from "framer-motion"
 import type { LucideProps } from "lucide-react"
+import { useTranslations } from "next-intl"
 import React, { type ComponentType } from "react"
 
 import anim from "@client/web/utils/anim"
@@ -9,7 +16,8 @@ type Props = {
   Icon: ComponentType<LucideProps>
   label: string
   value: number
-  valueSinceLastMonth: number
+  progressPercentage: number
+  lastMonthValue?: number | null
   displayCurrency?: boolean
 }
 
@@ -17,55 +25,74 @@ const CurrentStatsBlock = ({
   Icon,
   label,
   value,
-  valueSinceLastMonth,
+  progressPercentage,
+  lastMonthValue = null,
   displayCurrency = false,
 }: Props) => {
-  const itemVariant = {
-    initial: {
-      opacity: 0,
-      scale: 0.8,
-    },
-    enter: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.5,
-        delay: 0.3,
-        type: "spring",
-        damping: 25,
-        stiffness: 300,
-      },
-    },
-  }
+  const t = useTranslations("Pages.Admin.Dashboard.topStats")
 
   return (
-    <motion.div
-      className="bg-primaryBg flex flex-1 flex-col gap-4 rounded-md p-4"
-      {...anim(itemVariant)}
-    >
-      <div className="flex justify-between">
-        <span className="text-primary font-medium">{label}</span>
-        <Icon className="text-accent" />
-      </div>
-      <div className="flex flex-col">
-        <span className="text-primary text-2xl font-bold">
-          {displayCurrency ? formatCurrency(value) : value}
-        </span>
+    <TooltipProvider>
+      <Tooltip delayDuration={0}>
+        <TooltipTrigger asChild>
+          <motion.div
+            className="bg-primaryBg flex flex-1 flex-col gap-4 rounded-md p-4"
+            {...anim(itemVariant)}
+          >
+            <div className="flex justify-between">
+              <span className="text-primary font-medium">{label}</span>
+              <Icon className="text-accent" />
+            </div>
 
-        {valueSinceLastMonth >= 0 ? (
-          <span className="text-secondary text-sm">
-            <span className="text-green-400">+{valueSinceLastMonth}%</span>{" "}
-            depuis le mois dernier
-          </span>
-        ) : (
-          <span className="text-secondary text-sm">
-            <span className="text-red-500">-{valueSinceLastMonth}%</span> depuis
-            le mois dernier
-          </span>
+            <div className="flex flex-col">
+              <span className="text-primary text-2xl font-bold">
+                {displayCurrency ? formatCurrency(value) : value}
+              </span>
+
+              <span className="text-secondary text-sm">
+                {progressPercentage >= 0 ? (
+                  <span className="text-green-400">+{progressPercentage}%</span>
+                ) : (
+                  <span className="text-red-500">{progressPercentage}%</span>
+                )}{" "}
+                {t("sinceLastMonth")}
+              </span>
+            </div>
+          </motion.div>
+        </TooltipTrigger>
+
+        {lastMonthValue && (
+          <TooltipContent>
+            <span className="text-base">
+              {`${t("previousMonth")} : ${
+                displayCurrency
+                  ? formatCurrency(lastMonthValue)
+                  : lastMonthValue
+              }`}
+            </span>
+          </TooltipContent>
         )}
-      </div>
-    </motion.div>
+      </Tooltip>
+    </TooltipProvider>
   )
 }
 
 export default CurrentStatsBlock
+
+const itemVariant = {
+  initial: {
+    opacity: 0,
+    scale: 0.8,
+  },
+  enter: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+      delay: 0.3,
+      type: "spring",
+      damping: 25,
+      stiffness: 300,
+    },
+  },
+}

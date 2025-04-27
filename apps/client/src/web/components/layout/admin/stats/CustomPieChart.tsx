@@ -1,81 +1,70 @@
 import {
   ChartContainer,
+  ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
 } from "@lootopia/ui"
 import React from "react"
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Legend,
-  Tooltip,
-} from "recharts"
+import { Legend, Pie, PieChart } from "recharts"
 
 import { computeConfig, type BaseChartProps } from "./StatsChart"
 
-const CustomBarChart = ({
+const CustomPieChart = ({
   data,
   keysToExclude = ["XAxisLabel"],
 }: BaseChartProps) => {
   const allObjectKeys = Object.keys(data[0])
-
   const valueKeys = allObjectKeys.filter((key) => !keysToExclude.includes(key))
+
+  const nameKey = allObjectKeys[0]
+  const valueKey = allObjectKeys[1]
+
+  const dataWithFill = data.map((item, index) => ({
+    ...item,
+    fill: `var(--chart-${index + 1})`,
+  }))
 
   const chartConfig = computeConfig(valueKeys) satisfies ChartConfig
 
   return (
     <ChartContainer config={chartConfig}>
-      <BarChart accessibilityLayer data={data}>
-        <CartesianGrid />
-        <XAxis
-          dataKey="XAxisLabel"
-          tickMargin={5}
-          tickFormatter={(value) => value.slice(0, 3)}
-        />
-        <YAxis />
-
-        <Tooltip
+      <PieChart>
+        <ChartTooltip
           content={
             <ChartTooltipContent
               className="bg-primary font-inherit border-0"
+              indicator="dashed"
               formatter={(value, _, item) => {
-                const dataKey = String(item.dataKey).split("-").join(" ")
+                const [percentageKey, percentageValue] = Object.entries(
+                  item.payload
+                ).pop() as [string, number]
 
                 return (
                   <div className="flex items-center justify-between gap-4">
                     <div
                       className="size-4 rounded-md"
-                      style={{ backgroundColor: item.color }}
+                      style={{ backgroundColor: item.payload.fill }}
                     ></div>
-
                     <div className="flex flex-col gap-1 text-base">
                       <span className="first:first-letter:uppercase">
-                        {dataKey}: {value}
+                        {valueKey}: {value}
+                      </span>
+                      <span>
+                        {percentageKey} : {percentageValue}%
                       </span>
                     </div>
                   </div>
                 )
               }}
+              hideLabel={false}
             />
           }
         />
-
         <Legend />
-
-        {valueKeys.map((key) => (
-          <Bar
-            key={key}
-            dataKey={key}
-            fill={`var(--color-${key})`}
-            radius={4}
-          />
-        ))}
-      </BarChart>
+        <Pie data={dataWithFill} nameKey={nameKey} dataKey={valueKey} label />
+      </PieChart>
     </ChartContainer>
   )
 }
 
-export default CustomBarChart
+export default CustomPieChart

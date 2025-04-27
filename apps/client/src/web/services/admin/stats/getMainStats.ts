@@ -2,11 +2,10 @@ import type { InferResponseType } from "hono"
 
 import { client } from "@client/web/utils/client"
 
-const $get = client.stats.overview["top-data"].$get
-export type TopStatsResponse = InferResponseType<typeof $get>
-export type TopStat = Exclude<TopStatsResponse["result"], string>
+const $get = client.stats.overview.stats.$get
+export type MainStatsResponse = InferResponseType<typeof $get>
 
-export const getOverviewTopStats = async () => {
+export const getMainStats = async () => {
   const response = await $get()
 
   if (response.ok) {

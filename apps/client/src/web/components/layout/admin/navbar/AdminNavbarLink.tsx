@@ -1,7 +1,8 @@
 "use client"
 
-import Link from "next/link"
 import React, { type ReactNode } from "react"
+
+import { Link } from "@client/i18n/routing"
 
 export type AdminNavbarLinkProps = {
   icon: ReactNode

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ChartContainer,
   ChartTooltip,
@@ -8,24 +7,28 @@ import {
 import React from "react"
 import { XAxis, YAxis, CartesianGrid, Legend, LineChart, Line } from "recharts"
 
-import { computeConfig } from "./StatsChart"
+import { computeConfig, type BaseChartProps } from "./StatsChart"
+import { formatCurrency } from "@client/web/utils/helpers/formatCurrency"
 
-type Props = {
-  data: any[]
-  keysToExclude?: string[]
+type CustomLineChartProps = BaseChartProps & {
+  displayCurrency?: boolean
 }
 
-const CustomLineChart = ({ data, keysToExclude = ["XAxisLabel"] }: Props) => {
-  const keys = [...new Set(Object.keys(data[0]))]
+const CustomLineChart = ({
+  data,
+  keysToExclude = ["XAxisLabel"],
+  displayCurrency = false,
+}: CustomLineChartProps) => {
+  const allObjectKeys = Object.keys(data[0])
 
-  const valueKeys = keys.filter((key) => !keysToExclude.includes(key))
+  const valueKeys = allObjectKeys.filter((key) => !keysToExclude.includes(key))
 
   const chartConfig = computeConfig(valueKeys) satisfies ChartConfig
 
   return (
     <ChartContainer config={chartConfig}>
       <LineChart accessibilityLayer data={data}>
-        <CartesianGrid stroke="#E6D9C0" />
+        <CartesianGrid />
         <XAxis
           dataKey="XAxisLabel"
           tickMargin={5}
@@ -37,29 +40,53 @@ const CustomLineChart = ({ data, keysToExclude = ["XAxisLabel"] }: Props) => {
           content={
             <ChartTooltipContent
               className="bg-primary font-inherit border-0"
-              indicator="dashed"
-              hideLabel
+              formatter={(value, _, item) => {
+                const dataKey = String(item.dataKey).split("-").join(" ")
+
+                return (
+                  <div className="flex items-center justify-between gap-4 py-1">
+                    <div
+                      className="size-4 rounded-md"
+                      style={{ backgroundColor: item.color }}
+                    ></div>
+
+                    <span className="text-base">
+                      {`${dataKey} : ${
+                        displayCurrency
+                          ? formatCurrency(value as number)
+                          : value
+                      }`}
+                    </span>
+                  </div>
+                )
+              }}
             />
           }
         />
 
-        <Legend />
-
-        <Line
-          key={valueKeys[0]}
-          dataKey="desktop"
-          type="monotone"
-          name={valueKeys[0]}
-          stroke={"var(--color-desktop)"}
-          strokeWidth={2}
-          dot={{
-            r: 4,
-            fill: "var(--color-desktop)",
-          }}
-          activeDot={{
-            r: 8,
+        <Legend
+          formatter={(value) => {
+            return value.split("-").join(" ")
           }}
         />
+
+        {valueKeys.map((key) => (
+          <Line
+            key={key}
+            dataKey={key}
+            type="monotone"
+            name={key}
+            stroke={`var(--color-${key})`}
+            strokeWidth={2}
+            dot={{
+              r: 4,
+              fill: `var(--color-${key})`,
+            }}
+            activeDot={{
+              r: 8,
+            }}
+          />
+        ))}
       </LineChart>
     </ChartContainer>
   )

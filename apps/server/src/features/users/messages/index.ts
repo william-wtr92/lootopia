@@ -90,6 +90,11 @@ export const mfaSessionExpired = {
   key: "mfaSessionExpired",
 } as const
 
+export const notAuthorized = {
+  result: "You are not authorized to access this resource",
+  key: "notAuthorized",
+}
+
 // SUCCESS MESSAGES
 
 export const registerSuccess = {

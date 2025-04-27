@@ -5,6 +5,7 @@ import React from "react"
 
 import CustomBarChart from "./CustomBarChart"
 import CustomLineChart from "./CustomLineChart"
+import CustomPieChart from "./CustomPieChart"
 import { chartType, type ChartType } from "@client/web/utils/def/stats"
 
 type Props = {
@@ -12,12 +13,17 @@ type Props = {
   title: string
   description: string
   data: any[]
+  keysToExclude?: string[]
+  displayCurrency?: boolean
+}
+
+export type BaseChartProps = {
+  data: any[]
+  keysToExclude?: string[]
 }
 
 export const getColorByIndex = (index: number) => {
-  const colors = ["var(--secondary)", "var(--accent)"]
-
-  return colors[index % colors.length]
+  return `var(--chart-${index + 1})`
 }
 
 export const computeConfig = <T extends string>(uniqueKeys: T[]) => {
@@ -37,7 +43,8 @@ export const computeConfig = <T extends string>(uniqueKeys: T[]) => {
 }
 
 const StatsChart = (props: Props) => {
-  const { type, title, description, data } = props
+  const { type, title, description, data, keysToExclude, displayCurrency } =
+    props
 
   return (
     <div className="bg-primaryBg flex flex-1 flex-col gap-4 rounded-md p-4">
@@ -46,9 +53,21 @@ const StatsChart = (props: Props) => {
         <span className="text-sm text-gray-400">{description}</span>
       </div>
 
-      {type === chartType.line && <CustomLineChart data={data} />}
+      {type === chartType.line && (
+        <CustomLineChart
+          data={data}
+          keysToExclude={keysToExclude}
+          displayCurrency={displayCurrency}
+        />
+      )}
 
-      {type === chartType.bar && <CustomBarChart data={data} />}
+      {type === chartType.bar && (
+        <CustomBarChart data={data} keysToExclude={keysToExclude} />
+      )}
+
+      {type === chartType.pie && (
+        <CustomPieChart data={data} keysToExclude={keysToExclude} />
+      )}
     </div>
   )
 }

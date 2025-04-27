@@ -5,9 +5,9 @@ import { Map, Settings, TrendingUp, UsersRound } from "lucide-react"
 import { useTranslations } from "next-intl"
 import React from "react"
 
-import AdminNavbarCategories from "./AdminNavbarCategories"
-import AdminNavbarUser from "./AdminNavbarUser"
-import Logo from "../../Logo"
+import AdminNavbarCategories from "@client/web/components/layout/admin/navbar/AdminNavbarCategories"
+import AdminNavbarUser from "@client/web/components/layout/admin/navbar/AdminNavbarUser"
+import Logo from "@client/web/components/layout/Logo"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import { useAuthStore } from "@client/web/store/useAuthStore"
 
@@ -54,7 +54,7 @@ const AdminNavbar = () => {
       <div className="bg-primaryBg border-b-1 border-secondary flex items-center justify-center gap-2 py-4 pr-4">
         <Logo width={50} height={50} />
 
-        <h1 className="text-primary text-xl font-semibold">Lootopia Admin</h1>
+        <h1 className="text-primary text-xl font-semibold">{t("title")}</h1>
       </div>
 
       <AdminNavbarCategories

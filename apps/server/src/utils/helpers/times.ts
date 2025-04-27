@@ -4,6 +4,24 @@ export const sixMonthsDate = new Date(
   new Date().setMonth(new Date().getMonth() + 6)
 )
 
+export const startOfCurrentMonth = new Date(
+  nowDate.getFullYear(),
+  nowDate.getMonth(),
+  1
+)
+
+export const startOfPreviousMonth = new Date(
+  nowDate.getFullYear(),
+  nowDate.getMonth() - 1,
+  1
+)
+
+export const startOfNextMonth = new Date(
+  nowDate.getFullYear(),
+  nowDate.getMonth() + 1,
+  1
+)
+
 /* Current time in seconds + x */
 export const now = Math.floor(Date.now() / 1000)
 export const oneHour = Math.floor(Date.now() / 1000) + 60 * 60

@@ -1,4 +1,5 @@
 import { auth } from "@server/middlewares/auth"
+import { isAdmin } from "@server/middlewares/isAdmin"
 import { Hono } from "hono"
 
 import { listArtifactsRoute } from "./artifacts/list"
@@ -64,7 +65,10 @@ const shopRoutes = new Hono()
   .route(DEFAULT_PATH, crownPackagesRoute)
   .route(DEFAULT_PATH, paymentsRoute)
 
-const statsRoutes = new Hono().use(auth).route(DEFAULT_PATH, overviewRoute)
+const statsRoutes = new Hono()
+  .use(auth)
+  .use(isAdmin)
+  .route(DEFAULT_PATH, overviewRoute)
 
 export const routes = {
   auth: authRoutes,
