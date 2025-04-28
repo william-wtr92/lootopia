@@ -40,7 +40,7 @@ const WeeklyOfferStats = ({ stats }: Props) => {
           </Badge>
         </div>
       </CardHeader>
-      <CardContent className="flex flex-1 p-0">
+      <CardContent className="relative left-3 flex flex-1 p-0">
         <ChartContainer config={chartConfig} className="h-full w-full flex-1">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={stats.weekly || []}>
@@ -57,6 +57,7 @@ const WeeklyOfferStats = ({ stats }: Props) => {
                 cursor={{ fill: "transparent" }}
                 content={
                   <ChartTooltipContent
+                    hideLabel
                     formatter={(value, name) => (
                       <div className="flex w-full items-center gap-2">
                         <div

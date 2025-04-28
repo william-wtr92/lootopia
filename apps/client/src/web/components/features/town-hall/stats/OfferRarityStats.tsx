@@ -50,6 +50,7 @@ const OfferRarityStats = ({ stats }: Props) => {
               cursor={false}
               content={
                 <ChartTooltipContent
+                  hideLabel
                   formatter={(value, name) => (
                     <div className="flex flex-col gap-1">
                       <div className="flex items-center gap-2 font-bold">

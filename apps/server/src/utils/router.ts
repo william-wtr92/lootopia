@@ -6,6 +6,7 @@ export const router = {
   reports: "/reports",
   shop: "/shop",
   townHall: "/town-hall",
+  stats: "/stats",
 } as const
 
 export const clientRoutes = {

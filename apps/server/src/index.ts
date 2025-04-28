@@ -48,6 +48,7 @@ const appRouter = app
   .route(router.reports, routes.reports)
   .route(router.shop, routes.shop)
   .route(router.townHall, routes.townHall)
+  .route(router.stats, routes.stats)
 
 /** Cron Jobs **/
 startOfferCleanupJob()

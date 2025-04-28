@@ -1,4 +1,5 @@
 import { auth } from "@server/middlewares/auth"
+import { isAdmin } from "@server/middlewares/isAdmin"
 import { Hono } from "hono"
 
 import { artifactHistoryRoute } from "./artifacts/history"
@@ -20,6 +21,7 @@ import { reportUploadRoute } from "./reports/upload"
 import { crownPackagesRoute } from "./shop/crownPackages"
 import { paymentsRoute } from "./shop/payments"
 import { webhookRoute } from "./shop/webhook"
+import { overviewRoute } from "./stats/overview"
 import { offerFavoritesRoute } from "./town-hall/favorites"
 import { offersRoute } from "./town-hall/offers"
 import { offerStatsRoute } from "./town-hall/stats"
@@ -76,6 +78,11 @@ const townHallRoutes = new Hono()
   .route(DEFAULT_PATH, offerFavoritesRoute)
   .route(DEFAULT_PATH, offerStatsRoute)
 
+const statsRoutes = new Hono()
+  .use(auth)
+  .use(isAdmin)
+  .route(DEFAULT_PATH, overviewRoute)
+
 export const routes = {
   auth: authRoutes,
   hunts: huntsRoutes,
@@ -84,4 +91,5 @@ export const routes = {
   reports: reportsRoutes,
   shop: shopRoutes,
   townHall: townHallRoutes,
+  stats: statsRoutes,
 }

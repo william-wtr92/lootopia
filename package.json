@@ -32,7 +32,7 @@
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.11"
   },
-  "packageManager": "pnpm@10.9.0",
+  "packageManager": "pnpm@10.10.0",
   "engines": {
     "node": ">=20"
   },

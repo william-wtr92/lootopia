@@ -59,7 +59,7 @@ const UserOfferStats = ({ stats }: Props) => {
             <ArrowUp className="mr-1 size-3" />
             <span>
               {t("profit.variation", {
-                variation: stats?.profit.variation?.toFixed(2) ?? 0,
+                variation: stats?.profit.variation ?? 0,
               })}
             </span>
           </div>

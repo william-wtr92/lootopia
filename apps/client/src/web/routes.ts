@@ -39,3 +39,5 @@ export const protectedRoutes = [
   routes.admin.dashboard,
   routes.users.profile,
 ] as const
+
+export const adminRoutes = [routes.admin.dashboard]

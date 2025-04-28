@@ -17,7 +17,7 @@ import {
   users,
 } from "@lootopia/drizzle"
 import { db } from "@server/utils/clients/postgres"
-import { delta, variation } from "@server/utils/helpers/math"
+import { delta, computeProgressPercentage } from "@server/utils/helpers/math"
 import {
   getStartOfLastWeek,
   getStartOfWeek,
@@ -380,17 +380,23 @@ export const selectUserOfferStats = async (userId: string) => {
   return {
     transactions: {
       current: current.transactions,
-      variation: variation(current.transactions, previous.transactions),
+      variation: computeProgressPercentage(
+        current.transactions,
+        previous.transactions
+      ),
       delta: delta(current.transactions, previous.transactions),
     },
     profit: {
       current: current.profit,
-      variation: variation(current.profit, previous.profit),
+      variation: computeProgressPercentage(current.profit, previous.profit),
       delta: delta(current.profit, previous.profit),
     },
     artifacts: {
       current: current.artifacts,
-      variation: variation(current.artifacts, previous.artifacts),
+      variation: computeProgressPercentage(
+        current.artifacts,
+        previous.artifacts
+      ),
       delta: delta(current.artifacts, previous.artifacts),
     },
     activeOffers: current.activeOffers,
@@ -440,7 +446,7 @@ export const selectOfferRarityStats = async () => {
 
   const totalCurrent = rarityStats.reduce((acc, r) => acc + Number(r.sales), 0)
   const totalPrevious = Number(totalPreviousResult[0]?.sales ?? 0)
-  const salesVariation = variation(totalCurrent, totalPrevious)
+  const salesVariation = computeProgressPercentage(totalCurrent, totalPrevious)
 
   return {
     rarityStats: rarityStats.map((r) => ({
@@ -522,7 +528,10 @@ export const selectWeeklyOfferStats = async () => {
     .filter((r) => r.amount > 0)
     .reduce((sum, r) => sum + r.amount, 0)
 
-  const crownsVariation = variation(totalCrownsCurrent, totalCrownsLastWeek)
+  const crownsVariation = computeProgressPercentage(
+    totalCrownsCurrent,
+    totalCrownsLastWeek
+  )
 
   const orderedDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 

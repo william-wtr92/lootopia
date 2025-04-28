@@ -67,6 +67,12 @@ const PurchaseDialog = ({ artifactOffer, open, setIsOpen }: Props) => {
     qc.invalidateQueries({
       queryKey: ["userOfferStats"],
     })
+    qc.invalidateQueries({
+      queryKey: ["offerRarityStats"],
+    })
+    qc.invalidateQueries({
+      queryKey: ["weeklyOfferStats"],
+    })
 
     toast({
       variant: "default",

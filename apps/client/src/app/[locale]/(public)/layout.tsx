@@ -1,7 +1,7 @@
 import { Toaster } from "@lootopia/ui"
-import { Fredoka } from "next/font/google"
 import "@client/app/globals.css"
 import "leaflet/dist/leaflet.css"
+import { Fredoka } from "next/font/google"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import { type ReactNode } from "react"
 
@@ -17,34 +17,28 @@ export const fredoka = Fredoka({
   subsets: ["latin"],
 })
 
-export default async function LocaleLayout({
+export default function PublicLayout({
   children,
-  params,
 }: Readonly<{
   children: ReactNode
-  params: Promise<{ locale: string }>
 }>) {
-  const { locale } = await params
-
   return (
-    <html lang={locale}>
-      <body
-        className={`${fredoka.className} flex min-h-screen flex-col antialiased`}
-      >
-        <NuqsAdapter>
-          <IntlClientProvider>
-            <TanStackProvider>
-              <Navbar />
-              <TreasureMapBackground />
-              {children}
-              <Toaster />
-              <Footer />
+    <body
+      className={`${fredoka.className} flex min-h-screen flex-col antialiased`}
+    >
+      <NuqsAdapter>
+        <IntlClientProvider>
+          <TanStackProvider>
+            <Navbar />
+            <TreasureMapBackground />
+            {children}
+            <Toaster />
+            <Footer />
 
-              <CookieConsent />
-            </TanStackProvider>
-          </IntlClientProvider>
-        </NuqsAdapter>
-      </body>
-    </html>
+            <CookieConsent />
+          </TanStackProvider>
+        </IntlClientProvider>
+      </NuqsAdapter>
+    </body>
   )
 }
