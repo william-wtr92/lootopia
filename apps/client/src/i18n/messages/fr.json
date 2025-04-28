@@ -376,6 +376,47 @@
           "home": "Retour à l'accueil"
         }
       }
+    },
+    "Admin": {
+      "Dashboard": {
+        "title": "Vue d'ensemble des statistiques",
+        "loading": "Chargement des statistiques...",
+        "dataKeys": {
+          "amount": "Montant",
+          "percentage": "Pourcentage",
+          "totalUsers": "Nombre-de-joueurs", 
+          "huntParticipations": "Nombre-de-participations"
+        },
+        "topStats": {
+          "totalUsers": "Utilisateurs totaux",
+          "activeHunts": "Chasses actives",
+          "chestsOpened": "Coffres ouverts",
+          "monthRevenues": "Revenus du mois",
+          "previousMonth": "Mois dernier",
+          "sinceLastMonth": "depuis le mois dernier"
+        }, 
+        "mainStats": {
+          "usersActivity": {
+            "title": "Activité des utilisateurs",
+            "description": "Statistiques montrant la différence entre le nombre d'utilisateurs total et le nombre de participation aux chasses"
+          },
+          "revenues": {
+            "title": "Revenus des 6 derniers mois",
+            "description": "Statistiques montrant les revenus générés des 6 derniers mois"
+          },
+          "popularPackages": {
+            "title": "Packages les plus populaires",
+            "description": "Statistiques montrant les packages les plus populaires achetés par les utilisateurs"
+          }
+        },
+        "packs": {
+          "starter_pack": "Pack de Démarrage",
+          "explorer_pack": "Pack de l'Explorateur",
+          "adventurer_pack": "Pack de l'Aventurier",
+          "treasure_hunter_pack": "Pack du Chasseur de Trésors",
+          "legendary_pack": "Pack Légendaire"
+        }
+      }
     }
   },
   "Components": {
@@ -1211,6 +1252,33 @@
           },
           "cta": {
             "export": "Exporter les transactions"
+          }
+        }
+      }
+    },
+    "Admin": {
+      "Navbar": {
+        "title": "Lootopia admin",
+        "main-menu-category": {
+          "title": "Menu principal",
+          "links": {
+            "dashboard": {
+              "label": "Tableau de bord"
+            },
+            "users": {
+              "label": "Utilisateurs"
+            },
+            "hunts": {
+              "label": "Chasses"
+            }
+          }
+        },
+        "website-management-category": {
+          "title": "Gestion du site",
+          "links": {
+            "settings": {
+              "label": "Paramètres"
+            }
           }
         }
       }

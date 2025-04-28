@@ -38,7 +38,7 @@ const TreasureMapBackground = () => {
 
   return (
     <>
-      <div className="pointer-events-none fixed inset-0 h-full">
+      <div className="pointer-events-none fixed inset-0 z-[-1] h-full">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <filter id="paper" x="0%" y="0%" width="100%" height="100%">
             <feTurbulence

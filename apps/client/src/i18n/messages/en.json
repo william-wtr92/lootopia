@@ -376,6 +376,47 @@
           "home": "Back to home"
         }
       }
+    },
+    "Admin": {
+      "Dashboard": {
+        "title": "Statistics overview",
+        "loading": "Loading statistics...",
+        "dataKeys": {
+          "amount": "Amount",
+          "percentage": "Percentage",
+          "totalUsers": "Number-of-users", 
+          "huntParticipations": "Number-of-hunt-participations"
+        },
+        "topStats": {
+          "totalUsers": "Total users",
+          "activeHunts": "Active hunts",
+          "chestsOpened": "Chests opened",
+          "monthRevenues": "Month revenues",
+          "previousMonth": "Previous month",
+          "sinceLastMonth": "since last month"
+        }, 
+        "mainStats": {
+          "usersActivity": {
+            "title": "Users activity",
+            "description": "Statistics showing the difference between the total number of users and of hunt participations"
+          },
+          "revenues": {
+            "title": "6 last months revenues",
+            "description": "Statistics showing the progress of revenues over the last 6 months"
+          },
+          "popularPackages": {
+            "title": "Most popular packages",
+            "description": "Statistics showing the most popular packages purchased by users"
+          }
+        },
+        "packs": {
+          "starter_pack": "Starter Pack",
+          "explorer_pack": "Explorer Pack",
+          "adventurer_pack": "Adventurer Pack",
+          "treasure_hunter_pack": "Treasure Hunter Pack",
+          "legendary_pack": "Legendary Pack"
+        }
+      }
     }
   },
   "Components": {
@@ -1211,6 +1252,33 @@
           },
           "cta": {
             "export": "Export transactions"
+          }
+        }
+      }
+    },
+    "Admin": {
+      "Navbar": {
+        "title": "Lootopia admin",
+        "main-menu-category": {
+          "title": "Main menu",
+          "links": {
+            "dashboard": {
+              "label": "Dashboard"
+            },
+            "users": {
+              "label": "Users"
+            },
+            "hunts": {
+              "label": "Hunts"
+            }
+          }
+        },
+        "website-management-category": {
+          "title": "Website management",
+          "links": {
+            "settings": {
+              "label": "Settings"
+            }
           }
         }
       }
