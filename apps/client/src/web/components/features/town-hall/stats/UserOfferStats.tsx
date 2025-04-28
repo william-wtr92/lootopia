@@ -15,10 +15,14 @@ type Props = {
 const UserOfferStats = ({ stats }: Props) => {
   const t = useTranslations("Components.TownHall.Stats.UserOfferStats")
 
+  const transactionsVariation = stats?.transactions.variation ?? 0
+  const profitVariation = stats?.profit.variation ?? 0
+  const artifactsVariation = stats?.artifacts.variation ?? 0
+
   return (
     <Card className="border-primary/20 overflow-hidden p-4 transition-all hover:shadow-md">
       <div className="mb-4 flex items-center">
-        <Zap className="text-secondary mr-2 h-5 w-5" />
+        <Zap className="text-secondary mr-2 size-5" />
         <h3 className="text-primary font-bold">{t("title")}</h3>
       </div>
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
@@ -38,7 +42,8 @@ const UserOfferStats = ({ stats }: Props) => {
             <ArrowUp className="mr-1 size-3" />
             <span>
               {t("transactions.variation", {
-                variation: stats?.transactions.variation ?? 0,
+                sign: transactionsVariation > 0 ? "+" : "",
+                variation: transactionsVariation,
               })}
             </span>
           </div>
@@ -59,7 +64,8 @@ const UserOfferStats = ({ stats }: Props) => {
             <ArrowUp className="mr-1 size-3" />
             <span>
               {t("profit.variation", {
-                variation: stats?.profit.variation ?? 0,
+                sign: profitVariation > 0 ? "+" : "",
+                variation: profitVariation,
               })}
             </span>
           </div>
@@ -81,7 +87,8 @@ const UserOfferStats = ({ stats }: Props) => {
             <ArrowUp className="mr-1 size-3" />
             <span>
               {t("artifactsSell.variation", {
-                variation: stats?.artifacts.variation ?? 0,
+                sign: artifactsVariation > 0 ? "+" : "",
+                variation: artifactsVariation,
               })}
             </span>
           </div>

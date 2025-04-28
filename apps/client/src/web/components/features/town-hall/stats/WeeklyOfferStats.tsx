@@ -23,6 +23,8 @@ type Props = {
 const WeeklyOfferStats = ({ stats }: Props) => {
   const t = useTranslations("Components.TownHall.Stats.WeeklyOfferStats")
 
+  const variation = stats.variation ?? 0
+
   return (
     <Card className="flex flex-col">
       <CardHeader className="pb-8">
@@ -31,10 +33,13 @@ const WeeklyOfferStats = ({ stats }: Props) => {
             <TrendingUp className="text-secondary mr-2 size-4" />
             <span>{t("title")}</span>
           </CardTitle>
-          <Badge className="bg-success rounded-xl text-white">
+          <Badge
+            className={`${variation >= 0 ? "bg-success" : "bg-error"} rounded-xl text-white`}
+          >
             <span>
               {t("variation", {
-                variation: stats.variation ?? 0,
+                sign: variation > 0 ? "+" : "",
+                variation: variation ?? 0,
               })}
             </span>
           </Badge>

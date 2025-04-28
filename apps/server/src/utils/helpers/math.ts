@@ -7,10 +7,6 @@ export const computeProgressPercentage = (curr: number, prev: number) => {
 
   const pct = ((curr - prev) / prev) * 100
 
-  if (pct < 0) {
-    return 0
-  }
-
   return parseFloat(pct.toFixed(2))
 }
 

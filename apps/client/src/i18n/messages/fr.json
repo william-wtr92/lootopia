@@ -1555,7 +1555,7 @@
       "Stats": {
         "OfferRarityStats": {
           "title": "Ventes par rareté",
-          "variation": "+ {variation}% ce mois-ci",
+          "variation": "{sign} {variation}% ce mois-ci",
           "salesByRarity": "{count} ventes",
           "sales": "ventes",
           "labels": {
@@ -1570,15 +1570,15 @@
           "title": "Vos statistiques de négociant",
           "transactions": {
             "label": "Transactions",
-            "variation": "+ {variation}% ce mois-ci"
+            "variation": "{sign} {variation}% ce mois-ci"
           },
           "profit": {
             "label": "Profit total",
-            "variation": "+ {variation}% ce mois-ci"
+            "variation": "{sign} {variation}% ce mois-ci"
           },
           "artifactsSell": {
             "label": "Artefacts vendus",
-            "variation": "+ {variation}% ce mois-ci"
+            "variation": "{sign} {variation}% ce mois-ci"
           },
           "activeOffers": {
             "label": "Offres actives"
@@ -1586,7 +1586,7 @@
         },
         "WeeklyOfferStats": {
           "title": "Aperçu des ventes hebdomadaires",
-          "variation": "+ {variation}% couronnes cette semaine",
+          "variation": "{sign} {variation}% couronnes cette semaine",
           "tooltip": {
             "sales": "Ventes",
             "crowns": "Couronnes"

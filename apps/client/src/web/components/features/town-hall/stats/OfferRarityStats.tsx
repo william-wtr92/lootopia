@@ -23,6 +23,8 @@ type Props = {
 const OfferRarityStats = ({ stats }: Props) => {
   const t = useTranslations("Components.TownHall.Stats.OfferRarityStats")
 
+  const variation = stats.variation ?? 0
+
   return (
     <Card className="flex flex-col">
       <CardHeader className="pb-0">
@@ -31,10 +33,13 @@ const OfferRarityStats = ({ stats }: Props) => {
             <ChartPie className="text-secondary mr-2 size-4" />
             <span>{t("title")}</span>
           </div>
-          <Badge className="text-accent rounded-xl">
+          <Badge
+            className={`${variation >= 0 ? "bg-primary" : "bg-error"} rounded-xl text-white`}
+          >
             <span>
               {t("variation", {
-                variation: stats?.variation ?? 0,
+                sign: variation > 0 ? "+" : "",
+                variation: variation ?? 0,
               })}
             </span>
           </Badge>

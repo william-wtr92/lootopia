@@ -51,9 +51,9 @@ const CurrentStatsBlock = ({
 
               <span className="text-secondary text-sm">
                 {progressPercentage >= 0 ? (
-                  <span className="text-green-400">+{progressPercentage}%</span>
+                  <span className="text-success">+{progressPercentage}%</span>
                 ) : (
-                  <span className="text-red-500">{progressPercentage}%</span>
+                  <span className="text-error">{progressPercentage}%</span>
                 )}{" "}
                 {t("sinceLastMonth")}
               </span>
