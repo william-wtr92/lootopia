@@ -18,6 +18,8 @@
     "jsx": "preserve",
     "incremental": true,
     "types": [
+      "jest",
+      "node",
       "../server/src/hono.d.ts"
     ],
     "plugins": [
