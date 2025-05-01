@@ -8,7 +8,7 @@ import { client } from "@client/web/utils/client"
 export const getAvailableArtifacts = async (
   queries: ArtifactOfferAvailabilityQuerySchema
 ) => {
-  const response = await client["town-hall"].offers.available.artifacts.$get({
+  const response = await client["town-hall"].offers.artifacts.available.$get({
     query: {
       search: queries.search,
       limit: queries.limit?.toString() || defaultLimit.toString(),

@@ -25,12 +25,12 @@ type Props = {
   setIsPurchaseModalOpen: (isOpen: boolean) => void
 }
 
-const ArtifacList = ({
+const ArtifactList = ({
   artifactOffer,
   setSelectedArtifact,
   setIsPurchaseModalOpen,
 }: Props) => {
-  const t = useTranslations("Components.TownHall.Search.ArtifacList")
+  const t = useTranslations("Components.TownHall.Search.ArtifactList")
 
   const [inputValue, setInputValue] = useState("")
   const [submittedValue, setSubmittedValue] = useState("")
@@ -195,4 +195,4 @@ const ArtifacList = ({
   )
 }
 
-export default ArtifacList
+export default ArtifactList

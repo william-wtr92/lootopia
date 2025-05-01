@@ -13,19 +13,19 @@ import {
 import type { ArtifactOffersResponse } from "@client/web/services/town-hall/offers/getOffers"
 
 type Props = {
-  artifactOffer: ArtifactOffersResponse
+  userArtifactId: ArtifactOffersResponse["offer"]["userArtifactId"]
 }
 
-const ArtifactHistory = ({ artifactOffer }: Props) => {
+const ArtifactHistory = ({ userArtifactId }: Props) => {
   const [selectedEvent, setSelectedEvent] =
     useState<ArtifactHistoryResponse | null>(null)
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteQuery({
-      queryKey: ["artifactHistory", artifactOffer.offer.userArtifactId],
+      queryKey: ["artifactHistory", userArtifactId],
       queryFn: ({ pageParam = defaultPage }) =>
         getUserArtifactHistory(
-          { userArtifactId: artifactOffer.offer.userArtifactId },
+          { userArtifactId },
           { page: pageParam.toString(), limit: defaultLimit.toString() }
         ),
       getNextPageParam: (lastPage, allPages) => {
@@ -39,7 +39,7 @@ const ArtifactHistory = ({ artifactOffer }: Props) => {
       },
       initialPageParam: defaultPage,
       placeholderData: keepPreviousData,
-      enabled: !!artifactOffer?.offer?.userArtifactId,
+      enabled: !!userArtifactId,
     })
 
   const { containerRef: listContainerRef, sentinelRef: listRef } =

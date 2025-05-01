@@ -1,4 +1,4 @@
-import { historyStatus, offerStatus } from "@lootopia/common"
+import { historyStatus, offerStatus, type OfferStatus } from "@lootopia/common"
 import {
   artifactOfferFavorites,
   artifactOffers,
@@ -41,12 +41,15 @@ export const updateUserArtifactOwnership = async (
   })
 }
 
-export const updateArtifactOfferState = async (offerId: string) => {
+export const updateArtifactOfferState = async (
+  offerId: string,
+  status: OfferStatus
+) => {
   return db.transaction(async (tx) => {
     await tx
       .update(artifactOffers)
       .set({
-        status: offerStatus.cancelled,
+        status,
       })
       .where(eq(artifactOffers.id, offerId))
 

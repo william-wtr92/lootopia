@@ -8,6 +8,7 @@ import {
   defaultPage,
   historyStatus,
   MINIMUM_OFFER_PRICE,
+  offerStatus,
   SC,
   transactionTypes,
   XP_REWARDS,
@@ -103,7 +104,7 @@ export const offersRoute = app
     return c.json(artifactOfferCreated, SC.success.OK)
   })
   .get(
-    "/offers/available/artifacts",
+    "/offers/artifacts/available",
     zValidator("query", artifactOfferAvailabilityQuerySchema),
     async (c) => {
       const email = c.get(contextKeys.loggedUserEmail)
@@ -266,7 +267,7 @@ export const offersRoute = app
         return c.json(userIsNotSellerOfArtifactOffer, SC.errors.BAD_REQUEST)
       }
 
-      await updateArtifactOfferState(offerId)
+      await updateArtifactOfferState(offerId, offerStatus.cancelled)
 
       return c.json(artifactOfferCanceled, SC.success.OK)
     }

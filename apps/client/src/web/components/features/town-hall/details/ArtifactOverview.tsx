@@ -128,7 +128,9 @@ const ArtifactOverview = ({
               value="history"
               className="mt-0 p-3 data-[state=active]:block"
             >
-              <ArtifactHistory artifactOffer={artifactOffer} />
+              <ArtifactHistory
+                userArtifactId={artifactOffer.offer.userArtifactId}
+              />
             </TabsContent>
           </div>
         </Tabs>

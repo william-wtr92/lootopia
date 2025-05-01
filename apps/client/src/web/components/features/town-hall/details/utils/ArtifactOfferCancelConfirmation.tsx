@@ -18,12 +18,12 @@ import type { ArtifactOffersResponse } from "@client/web/services/town-hall/offe
 import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 type Props = {
-  artifactOffer: ArtifactOffersResponse
+  artifactOfferId: ArtifactOffersResponse["offer"]["id"]
   setIsOpen: (isOpen: boolean) => void
 }
 
 const ArtifactOfferCancelConfirmation = ({
-  artifactOffer,
+  artifactOfferId,
   setIsOpen,
 }: Props) => {
   const t = useTranslations(
@@ -34,7 +34,7 @@ const ArtifactOfferCancelConfirmation = ({
 
   const handleCancelOffer = async () => {
     const [status, key] = await cancelOffer({
-      offerId: artifactOffer.offer.id,
+      offerId: artifactOfferId,
     })
 
     if (!status) {
@@ -55,7 +55,7 @@ const ArtifactOfferCancelConfirmation = ({
 
     qc.invalidateQueries({ queryKey: ["artifactOffers"] })
     qc.invalidateQueries({
-      queryKey: ["artifactOffer", artifactOffer.offer.id],
+      queryKey: ["artifactOffer", artifactOfferId],
     })
     qc.invalidateQueries({ queryKey: ["availableArtifacts"] })
     qc.invalidateQueries({ queryKey: ["userOfferStats"] })

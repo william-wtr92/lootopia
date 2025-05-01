@@ -72,7 +72,7 @@ const ArtifactListItem = ({
           </div>
         </div>
 
-        <p className="text-primary/70 w-52 truncate text-sm">
+        <p className="text-primary/70 min-h-6 w-52 truncate text-sm">
           {artifactOffer.offer.description}
         </p>
 

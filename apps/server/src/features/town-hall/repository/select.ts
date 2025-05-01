@@ -50,13 +50,13 @@ export const selectUserArtifactAvailableForOffer = async (
   page: number,
   search?: string
 ) => {
-  const offerExistsSubquery = (uaId: typeof userArtifacts.id) =>
+  const offerExistsSubquery = (userArtifactId: typeof userArtifacts.id) =>
     db
       .select({ id: artifactOffers.id })
       .from(artifactOffers)
       .where(
         and(
-          eq(artifactOffers.userArtifactId, uaId),
+          eq(artifactOffers.userArtifactId, userArtifactId),
           eq(artifactOffers.status, offerStatus.active)
         )
       )

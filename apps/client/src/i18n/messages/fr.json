@@ -1392,7 +1392,7 @@
         }
       },
       "Search": {
-        "ArtifacList": {
+        "ArtifactList": {
           "count": "{count} artefacts trouvé{count, plural, one {} other {s}}",
           "empty": "{count} artefacts trouvés"
         },

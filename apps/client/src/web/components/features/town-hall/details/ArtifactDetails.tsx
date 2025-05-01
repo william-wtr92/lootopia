@@ -191,7 +191,7 @@ const ArtifactDetails = ({
 
             {isOwner && (
               <ArtifactOfferCancelConfirmation
-                artifactOffer={artifactOffer}
+                artifactOfferId={artifactOffer.offer.id}
                 setIsOpen={setIsOpen}
               />
             )}

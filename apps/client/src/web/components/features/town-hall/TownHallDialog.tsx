@@ -15,7 +15,7 @@ import { useState } from "react"
 
 import ArtifactSellForm from "./form/ArtifactOfferForm"
 import PurchaseDialog from "./purchase/PurchaseDialog"
-import ArtifacList from "./search/ArtifactList"
+import ArtifactList from "./search/ArtifactList"
 import TownHallStats from "./stats/TownHallStats"
 import type { ArtifactOffersResponse } from "@client/web/services/town-hall/offers/getOffers"
 
@@ -98,7 +98,7 @@ const TownHallDialog = ({ open, setIsOpen }: Props) => {
                   value="browse"
                   className="mt-0 h-full data-[state=active]:block"
                 >
-                  <ArtifacList
+                  <ArtifactList
                     artifactOffer={selectedArtifactOffer}
                     setSelectedArtifact={handleSelectArtifact}
                     setIsPurchaseModalOpen={handleShowModal}
