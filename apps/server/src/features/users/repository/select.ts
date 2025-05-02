@@ -96,7 +96,8 @@ export const selectUserById = async (id: string) => {
 export const selectUsers = async (
   limit: number,
   page: number,
-  search: string
+  search: string,
+  privateInfo = false
 ) => {
   const rows = await db
     .select({
@@ -123,7 +124,7 @@ export const selectUsers = async (
         },
       },
       ["avatar"],
-      { private: false }
+      { private: privateInfo }
     ),
   }))
 }
