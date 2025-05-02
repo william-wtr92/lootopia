@@ -3,7 +3,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { Euro, Map, Shovel, User } from "lucide-react"
 import { useLocale, useTranslations } from "next-intl"
-import React from "react"
 
 import CurrentStatsBlock from "@client/web/components/layout/admin/stats/CurrentStatsBlock"
 import StatsChart from "@client/web/components/layout/admin/stats/StatsChart"
@@ -114,7 +113,7 @@ const AdminPage = () => {
             label={item.label}
             value={item.value}
             lastMonthValue={item.lastMonthValue}
-            progressPercentage={item.percentage}
+            progressPercentage={item.percentage ?? 0}
             displayCurrency={item.displayCurrency}
           />
         ))}

@@ -48,15 +48,13 @@ const InventoryArtifactList = ({
     setIsDetailOpen(true)
   }
 
-  if (isLoading) {
-    return <div className="text-primary py-8 text-center">{t("loading")}</div>
-  }
-
   return (
     <>
       <div className="max-h-[350px] min-h-[300px] space-y-3 overflow-y-auto">
-        {items.length === 0 || isError ? (
-          <div className="border-primary/10 text-primary/50 rounded-lg border bg-white/30 py-8 text-center">
+        {isLoading ? (
+          <div className="text-primary py-8 text-center">{t("loading")}</div>
+        ) : items.length === 0 || isError ? (
+          <div className="border-primary/10 text-primary/50 flex h-80 flex-col items-center justify-center rounded-lg border bg-white/30">
             <Gem className="mx-auto mb-2 size-12 opacity-20" />
             <p>{t("empty")}</p>
             {inputValue && (

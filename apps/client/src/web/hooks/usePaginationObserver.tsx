@@ -4,12 +4,14 @@ type UsePaginationObserverProps = {
   fetchNextPage: () => void
   hasNextPage: boolean
   isFetchingNextPage: boolean
+  threshold?: number
 }
 
 export const usePaginationObserver = ({
   fetchNextPage,
   hasNextPage,
   isFetchingNextPage,
+  threshold,
 }: UsePaginationObserverProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const sentinelRef = useRef<HTMLDivElement>(null)
@@ -27,13 +29,13 @@ export const usePaginationObserver = ({
           fetchNextPage()
         }
       },
-      { root: containerRef.current, threshold: 0.5 }
+      { root: containerRef.current, threshold: threshold ?? 0.5 }
     )
 
     observer.observe(sentinelRef.current)
 
     return () => observer.disconnect()
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage])
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage, threshold])
 
   const checkIfShouldFetchNextPage = () => {
     if (!containerRef.current) {

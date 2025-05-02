@@ -6,3 +6,9 @@ export { crownPackages, payments } from "./payments"
 export { reports } from "./reports"
 export { huntParticipationRequests, huntParticipations } from "./participations"
 export { userLevels } from "./progressions"
+export {
+  artifactOffers,
+  artifactOfferViews,
+  artifactOfferFavorites,
+  artifactOwnershipHistory,
+} from "./town-hall"

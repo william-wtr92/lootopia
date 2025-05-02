@@ -1,3 +1,39 @@
+CREATE TABLE "artifact_offer_favorites" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"offerId" uuid NOT NULL,
+	"userId" uuid NOT NULL,
+	"favorited_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "artifact_offer_views" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"offerId" uuid NOT NULL,
+	"viewerId" uuid NOT NULL,
+	"viewed_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "artifact_offers" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"sellerId" uuid NOT NULL,
+	"userArtifactId" uuid NOT NULL,
+	"price" integer NOT NULL,
+	"description" text,
+	"status" text DEFAULT 'active' NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"expires_at" timestamp NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE "artifact_ownership_history" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"userArtifactId" uuid NOT NULL,
+	"type" text DEFAULT 'discovery' NOT NULL,
+	"previousOwnerId" uuid,
+	"newOwnerId" uuid,
+	"huntId" uuid,
+	"offerId" uuid,
+	"created_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE "artifacts" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text NOT NULL,
@@ -111,6 +147,7 @@ CREATE TABLE "transactions" (
 	"amount" integer NOT NULL,
 	"userId" uuid NOT NULL,
 	"huntId" uuid,
+	"artifactOfferId" uuid,
 	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
@@ -151,6 +188,17 @@ CREATE TABLE "users" (
 	CONSTRAINT "users_phone_unique" UNIQUE("phone")
 );
 --> statement-breakpoint
+ALTER TABLE "artifact_offer_favorites" ADD CONSTRAINT "artifact_offer_favorites_offerId_artifact_offers_id_fk" FOREIGN KEY ("offerId") REFERENCES "public"."artifact_offers"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "artifact_offer_favorites" ADD CONSTRAINT "artifact_offer_favorites_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "artifact_offer_views" ADD CONSTRAINT "artifact_offer_views_offerId_artifact_offers_id_fk" FOREIGN KEY ("offerId") REFERENCES "public"."artifact_offers"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "artifact_offer_views" ADD CONSTRAINT "artifact_offer_views_viewerId_users_id_fk" FOREIGN KEY ("viewerId") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "artifact_offers" ADD CONSTRAINT "artifact_offers_sellerId_users_id_fk" FOREIGN KEY ("sellerId") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "artifact_offers" ADD CONSTRAINT "artifact_offers_userArtifactId_user_artifacts_id_fk" FOREIGN KEY ("userArtifactId") REFERENCES "public"."user_artifacts"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "artifact_ownership_history" ADD CONSTRAINT "artifact_ownership_history_userArtifactId_user_artifacts_id_fk" FOREIGN KEY ("userArtifactId") REFERENCES "public"."user_artifacts"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "artifact_ownership_history" ADD CONSTRAINT "artifact_ownership_history_previousOwnerId_users_id_fk" FOREIGN KEY ("previousOwnerId") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "artifact_ownership_history" ADD CONSTRAINT "artifact_ownership_history_newOwnerId_users_id_fk" FOREIGN KEY ("newOwnerId") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "artifact_ownership_history" ADD CONSTRAINT "artifact_ownership_history_huntId_hunts_id_fk" FOREIGN KEY ("huntId") REFERENCES "public"."hunts"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "artifact_ownership_history" ADD CONSTRAINT "artifact_ownership_history_offerId_artifact_offers_id_fk" FOREIGN KEY ("offerId") REFERENCES "public"."artifact_offers"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "artifacts" ADD CONSTRAINT "artifacts_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "chest_openings" ADD CONSTRAINT "chest_openings_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "chest_openings" ADD CONSTRAINT "chest_openings_chestId_chests_id_fk" FOREIGN KEY ("chestId") REFERENCES "public"."chests"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
@@ -169,10 +217,13 @@ ALTER TABLE "reports" ADD CONSTRAINT "reports_reporterId_users_id_fk" FOREIGN KE
 ALTER TABLE "reports" ADD CONSTRAINT "reports_reportedId_users_id_fk" FOREIGN KEY ("reportedId") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "transactions" ADD CONSTRAINT "transactions_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "transactions" ADD CONSTRAINT "transactions_huntId_hunts_id_fk" FOREIGN KEY ("huntId") REFERENCES "public"."hunts"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "transactions" ADD CONSTRAINT "transactions_artifactOfferId_artifact_offers_id_fk" FOREIGN KEY ("artifactOfferId") REFERENCES "public"."artifact_offers"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_artifacts" ADD CONSTRAINT "user_artifacts_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_artifacts" ADD CONSTRAINT "user_artifacts_artifactId_artifacts_id_fk" FOREIGN KEY ("artifactId") REFERENCES "public"."artifacts"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_artifacts" ADD CONSTRAINT "user_artifacts_obtainedFromChestId_chests_id_fk" FOREIGN KEY ("obtainedFromChestId") REFERENCES "public"."chests"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_levels" ADD CONSTRAINT "user_levels_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+CREATE UNIQUE INDEX "unique_favorite_per_user_offer" ON "artifact_offer_favorites" USING btree ("offerId","userId");--> statement-breakpoint
+CREATE UNIQUE INDEX "artifact_offer_views_unique" ON "artifact_offer_views" USING btree ("offerId","viewerId");--> statement-breakpoint
 CREATE UNIQUE INDEX "sha_key_idx" ON "artifacts" USING btree ("shaKey");--> statement-breakpoint
 CREATE INDEX "chests_position_index" ON "chests" USING gist ("position");--> statement-breakpoint
 CREATE UNIQUE INDEX "user_idx" ON "crowns" USING btree ("userId");--> statement-breakpoint

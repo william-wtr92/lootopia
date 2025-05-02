@@ -1,4 +1,5 @@
 import {
+  type HistoryStatus,
   type PaymentStatus,
   type ReportStatus,
   type ReportReason,
@@ -113,4 +114,38 @@ export const getRewardPillRarityColor = (rarity: ArtifactRarity) => {
       rarity: artifactRarity.common,
     },
   })({ rarity })
+}
+
+export const getArtifactRarityGradient = (rarity: ArtifactRarity) => {
+  return cva("bg-gradient-to-r", {
+    variants: {
+      rarity: {
+        [artifactRarity.legendary]: "from-amber-400 to-amber-600",
+        [artifactRarity.epic]: "from-purple-500 to-purple-700",
+        [artifactRarity.rare]: "from-blue-400 to-blue-600",
+        [artifactRarity.uncommon]: "from-green-400 to-green-600",
+        [artifactRarity.common]: "from-gray-400 to-gray-600",
+      },
+    },
+    defaultVariants: {
+      rarity: artifactRarity.common,
+    },
+  })({ rarity })
+}
+
+export const getArtifactHistoryEventColor = (eventType: HistoryStatus) => {
+  return (
+    cva("", {
+      variants: {
+        eventType: {
+          discovery: "border-green-300 bg-green-100",
+          transfer: "border-blue-300 bg-blue-100",
+          listing: "border-amber-300 bg-amber-100",
+        },
+      },
+      defaultVariants: {
+        eventType: null,
+      },
+    })({ eventType }) || "bg-gray-100 border-gray-300"
+  )
 }

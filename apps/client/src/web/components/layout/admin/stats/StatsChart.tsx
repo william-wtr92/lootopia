@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
-import React from "react"
-
 import CustomBarChart from "./CustomBarChart"
 import CustomLineChart from "./CustomLineChart"
 import CustomPieChart from "./CustomPieChart"

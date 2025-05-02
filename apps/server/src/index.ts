@@ -9,6 +9,7 @@ import { prettyJSON } from "hono/pretty-json"
 import { secureHeaders } from "hono/secure-headers"
 
 import { routeNotFound, unspecifiedErrorOccurred } from "./features/global"
+import { startOfferCleanupJob } from "./jobs/cleanupExpiredOfferMetadata"
 import { routes } from "./routes"
 import { router } from "./utils/router"
 
@@ -46,7 +47,11 @@ const appRouter = app
   .route(router.artifacts, routes.artifacts)
   .route(router.reports, routes.reports)
   .route(router.shop, routes.shop)
+  .route(router.townHall, routes.townHall)
   .route(router.stats, routes.stats)
+
+/** Cron Jobs **/
+startOfferCleanupJob()
 
 serve({
   fetch: app.fetch,

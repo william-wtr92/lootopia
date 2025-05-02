@@ -1,4 +1,4 @@
-import { ROLES, SC } from "@common/index"
+import { ROLES, SC } from "@lootopia/common"
 import {
   notAuthorized,
   selectUserByEmail,

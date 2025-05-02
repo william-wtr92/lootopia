@@ -10,6 +10,7 @@ import type { TransactionType } from "@lootopia/common"
 
 import { users } from "./users"
 import { hunts } from "./hunts"
+import { artifactOffers } from "./town-hall"
 
 export const crowns = pgTable(
   "crowns",
@@ -37,6 +38,6 @@ export const transactions = pgTable("transactions", {
     .notNull()
     .references(() => users.id),
   huntId: uuid().references(() => hunts.id),
-  // TODO: Add townhall exchange id reference
+  artifactOfferId: uuid().references(() => artifactOffers.id),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })

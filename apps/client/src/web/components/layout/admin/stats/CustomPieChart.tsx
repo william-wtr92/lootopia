@@ -4,7 +4,6 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@lootopia/ui"
-import React from "react"
 import { Legend, Pie, PieChart } from "recharts"
 
 import { computeConfig, type BaseChartProps } from "./StatsChart"

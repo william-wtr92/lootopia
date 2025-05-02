@@ -1,9 +1,406 @@
 {
-  "id": "1a7f6970-ba32-4b5a-a2cd-1e671fa088f3",
+  "id": "9f3ff1bc-0129-4575-9914-9d93c171385b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.artifact_offer_favorites": {
+      "name": "artifact_offer_favorites",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "offerId": {
+          "name": "offerId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "favorited_at": {
+          "name": "favorited_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "unique_favorite_per_user_offer": {
+          "name": "unique_favorite_per_user_offer",
+          "columns": [
+            {
+              "expression": "offerId",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "userId",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "artifact_offer_favorites_offerId_artifact_offers_id_fk": {
+          "name": "artifact_offer_favorites_offerId_artifact_offers_id_fk",
+          "tableFrom": "artifact_offer_favorites",
+          "tableTo": "artifact_offers",
+          "columnsFrom": [
+            "offerId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "artifact_offer_favorites_userId_users_id_fk": {
+          "name": "artifact_offer_favorites_userId_users_id_fk",
+          "tableFrom": "artifact_offer_favorites",
+          "tableTo": "users",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.artifact_offer_views": {
+      "name": "artifact_offer_views",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "offerId": {
+          "name": "offerId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "viewerId": {
+          "name": "viewerId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "viewed_at": {
+          "name": "viewed_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "artifact_offer_views_unique": {
+          "name": "artifact_offer_views_unique",
+          "columns": [
+            {
+              "expression": "offerId",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "viewerId",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "artifact_offer_views_offerId_artifact_offers_id_fk": {
+          "name": "artifact_offer_views_offerId_artifact_offers_id_fk",
+          "tableFrom": "artifact_offer_views",
+          "tableTo": "artifact_offers",
+          "columnsFrom": [
+            "offerId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "artifact_offer_views_viewerId_users_id_fk": {
+          "name": "artifact_offer_views_viewerId_users_id_fk",
+          "tableFrom": "artifact_offer_views",
+          "tableTo": "users",
+          "columnsFrom": [
+            "viewerId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.artifact_offers": {
+      "name": "artifact_offers",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "sellerId": {
+          "name": "sellerId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "userArtifactId": {
+          "name": "userArtifactId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "price": {
+          "name": "price",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'active'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "artifact_offers_sellerId_users_id_fk": {
+          "name": "artifact_offers_sellerId_users_id_fk",
+          "tableFrom": "artifact_offers",
+          "tableTo": "users",
+          "columnsFrom": [
+            "sellerId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "artifact_offers_userArtifactId_user_artifacts_id_fk": {
+          "name": "artifact_offers_userArtifactId_user_artifacts_id_fk",
+          "tableFrom": "artifact_offers",
+          "tableTo": "user_artifacts",
+          "columnsFrom": [
+            "userArtifactId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.artifact_ownership_history": {
+      "name": "artifact_ownership_history",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "userArtifactId": {
+          "name": "userArtifactId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'discovery'"
+        },
+        "previousOwnerId": {
+          "name": "previousOwnerId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "newOwnerId": {
+          "name": "newOwnerId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "huntId": {
+          "name": "huntId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "offerId": {
+          "name": "offerId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "artifact_ownership_history_userArtifactId_user_artifacts_id_fk": {
+          "name": "artifact_ownership_history_userArtifactId_user_artifacts_id_fk",
+          "tableFrom": "artifact_ownership_history",
+          "tableTo": "user_artifacts",
+          "columnsFrom": [
+            "userArtifactId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "artifact_ownership_history_previousOwnerId_users_id_fk": {
+          "name": "artifact_ownership_history_previousOwnerId_users_id_fk",
+          "tableFrom": "artifact_ownership_history",
+          "tableTo": "users",
+          "columnsFrom": [
+            "previousOwnerId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "artifact_ownership_history_newOwnerId_users_id_fk": {
+          "name": "artifact_ownership_history_newOwnerId_users_id_fk",
+          "tableFrom": "artifact_ownership_history",
+          "tableTo": "users",
+          "columnsFrom": [
+            "newOwnerId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "artifact_ownership_history_huntId_hunts_id_fk": {
+          "name": "artifact_ownership_history_huntId_hunts_id_fk",
+          "tableFrom": "artifact_ownership_history",
+          "tableTo": "hunts",
+          "columnsFrom": [
+            "huntId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "artifact_ownership_history_offerId_artifact_offers_id_fk": {
+          "name": "artifact_ownership_history_offerId_artifact_offers_id_fk",
+          "tableFrom": "artifact_ownership_history",
+          "tableTo": "artifact_offers",
+          "columnsFrom": [
+            "offerId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.artifacts": {
       "name": "artifacts",
       "schema": "",
@@ -977,6 +1374,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "artifactOfferId": {
+          "name": "artifactOfferId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -1006,6 +1409,19 @@
           "tableTo": "hunts",
           "columnsFrom": [
             "huntId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "transactions_artifactOfferId_artifact_offers_id_fk": {
+          "name": "transactions_artifactOfferId_artifact_offers_id_fk",
+          "tableFrom": "transactions",
+          "tableTo": "artifact_offers",
+          "columnsFrom": [
+            "artifactOfferId"
           ],
           "columnsTo": [
             "id"

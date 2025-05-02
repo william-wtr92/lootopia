@@ -41,8 +41,14 @@ const InventoryArtifactDetails = ({ item, open, setIsOpen }: Props) => {
     return null
   }
 
-  const handleShowArtifact = () => {
-    setShowArtifact((prev) => !prev)
+  const handleShowArtifact = (isOpen: boolean) => {
+    if (!isOpen) {
+      setShowArtifact(false)
+
+      return
+    }
+
+    setShowArtifact(true)
   }
 
   const handleCopyShaKey = () => {
@@ -141,7 +147,7 @@ const InventoryArtifactDetails = ({ item, open, setIsOpen }: Props) => {
               <Button
                 variant="outline"
                 className="border-primary text-primary hover:bg-primary hover:text-white"
-                onClick={handleShowArtifact}
+                onClick={() => handleShowArtifact(true)}
               >
                 <View className="mr-2 size-4" />
                 {t("links.view.cta")}
@@ -150,7 +156,7 @@ const InventoryArtifactDetails = ({ item, open, setIsOpen }: Props) => {
               <Button
                 onClick={handleCopyLink}
                 variant="outline"
-                className={`border-primary ${copiedText === artifactUrl ? "text-success hover:text-success bg-green-100 hover:bg-transparent" : "text-primary"} relative overflow-hidden transition-all`}
+                className={`border-primary ${copiedText === artifactUrl ? "text-success hover:text-success bg-success/10 hover:bg-transparent" : "text-primary"} relative overflow-hidden transition-all`}
               >
                 {copiedText === artifactUrl ? (
                   <>
@@ -180,7 +186,10 @@ const InventoryArtifactDetails = ({ item, open, setIsOpen }: Props) => {
       </Dialog>
 
       {showArtifact && item?.artifact?.id && (
-        <HuntRewardPill artifactId={item.artifact.id} />
+        <HuntRewardPill
+          artifactId={item.artifact.id}
+          onOpenChange={(isOpen) => handleShowArtifact(isOpen)}
+        />
       )}
     </>
   )

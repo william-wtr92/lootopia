@@ -19,6 +19,7 @@
     "@lootopia/common": "workspace:*",
     "@lootopia/drizzle": "workspace:*",
     "@sendgrid/mail": "^8.1.4",
+    "cron": "^4.3.0",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.2",
     "hono": "^4.6.14",

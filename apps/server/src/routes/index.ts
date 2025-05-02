@@ -2,9 +2,10 @@ import { auth } from "@server/middlewares/auth"
 import { isAdmin } from "@server/middlewares/isAdmin"
 import { Hono } from "hono"
 
+import { artifactHistoryRoute } from "./artifacts/history"
 import { listArtifactsRoute } from "./artifacts/list"
 import { uploadArtifactRoute } from "./artifacts/upload"
-import { viewerRoute } from "./artifacts/viewer"
+import { artifactViewerRoute } from "./artifacts/viewer"
 import { emailValidationRoute } from "./auth/emailValidation"
 import { loginRoute } from "./auth/login"
 import { passwordResetRoute } from "./auth/passwordReset"
@@ -21,6 +22,10 @@ import { crownPackagesRoute } from "./shop/crownPackages"
 import { paymentsRoute } from "./shop/payments"
 import { webhookRoute } from "./shop/webhook"
 import { overviewRoute } from "./stats/overview"
+import { offerFavoritesRoute } from "./town-hall/favorites"
+import { offersRoute } from "./town-hall/offers"
+import { offerStatsRoute } from "./town-hall/stats"
+import { offerViewsRoute } from "./town-hall/views"
 import { userListRoute } from "./users/list"
 import { profileRoute } from "./users/profile"
 import { securityRoute } from "./users/security"
@@ -49,7 +54,8 @@ const huntsRoutes = new Hono()
   .route(DEFAULT_PATH, requestParticipationRoute)
 
 const artifactsRoutes = new Hono()
-  .route(DEFAULT_PATH, viewerRoute)
+  .route(DEFAULT_PATH, artifactViewerRoute)
+  .route(DEFAULT_PATH, artifactHistoryRoute)
   .use(auth)
   .route(DEFAULT_PATH, uploadArtifactRoute)
   .route(DEFAULT_PATH, listArtifactsRoute)
@@ -65,6 +71,13 @@ const shopRoutes = new Hono()
   .route(DEFAULT_PATH, crownPackagesRoute)
   .route(DEFAULT_PATH, paymentsRoute)
 
+const townHallRoutes = new Hono()
+  .use(auth)
+  .route(DEFAULT_PATH, offersRoute)
+  .route(DEFAULT_PATH, offerViewsRoute)
+  .route(DEFAULT_PATH, offerFavoritesRoute)
+  .route(DEFAULT_PATH, offerStatsRoute)
+
 const statsRoutes = new Hono()
   .use(auth)
   .use(isAdmin)
@@ -77,5 +90,6 @@ export const routes = {
   artifacts: artifactsRoutes,
   reports: reportsRoutes,
   shop: shopRoutes,
+  townHall: townHallRoutes,
   stats: statsRoutes,
 }

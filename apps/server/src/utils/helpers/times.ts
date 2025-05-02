@@ -46,3 +46,33 @@ export const oneDayInMs = oneDayTTL * 1000
 export const huntTimeTTL = (endDate: Date) => {
   return Math.floor((new Date(endDate).getTime() - Date.now()) / 1000)
 }
+
+export const offerTime = (days: string) => {
+  return new Date(Date.now() + Number(days) * 24 * 60 * 60 * 1000)
+}
+
+export const startOfMonth = new Date(
+  nowDate.getFullYear(),
+  nowDate.getMonth(),
+  1
+)
+
+export const startOfLastMonth = new Date(
+  nowDate.getFullYear(),
+  nowDate.getMonth() - 1,
+  1
+)
+
+export const getStartOfWeek = (date: Date = new Date()): Date => {
+  const startOfWeek = new Date(date)
+  startOfWeek.setDate(date.getDate() - date.getDay())
+
+  return startOfWeek
+}
+
+export const getStartOfLastWeek = (date: Date = new Date()): Date => {
+  const startOfLastWeek = getStartOfWeek(date)
+  startOfLastWeek.setDate(startOfLastWeek.getDate() - 7)
+
+  return startOfLastWeek
+}

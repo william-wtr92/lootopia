@@ -7,7 +7,7 @@ import {
   selectTotalHunts,
   selectTotalUsers,
 } from "@server/features/stats/repository/overview"
-import { computeProgressPercentage } from "@server/utils/helpers/getProgressPercentage"
+import { computeProgressPercentage } from "@server/utils/helpers/math"
 import { Hono } from "hono"
 
 import {
