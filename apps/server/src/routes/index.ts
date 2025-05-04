@@ -1,6 +1,7 @@
 import { auth } from "@server/middlewares/auth"
 import { isAdmin } from "@server/middlewares/isAdmin"
 import { adminUsersListRoute } from "@server/routes/admin/users/list"
+import { adminUsersUpdateRoute } from "@server/routes/admin/users/update"
 import { Hono } from "hono"
 
 import { artifactHistoryRoute } from "./artifacts/history"
@@ -84,6 +85,7 @@ const adminRoutes = new Hono()
   .use(isAdmin)
   .route(DEFAULT_PATH, overviewRoute)
   .route(DEFAULT_PATH, adminUsersListRoute)
+  .route(DEFAULT_PATH, adminUsersUpdateRoute)
 
 export const routes = {
   auth: authRoutes,

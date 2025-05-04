@@ -18,6 +18,9 @@ export {
 
 // Features types
 
+// Admin types
+export { usersListQuerySchema } from "./admin/users/index"
+
 // Users types
 export {
   registerSchema,

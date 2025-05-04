@@ -13,6 +13,7 @@ import {
   ChevronRight,
   ChevronsRight,
 } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 type DataTablePaginationProps<TData> = {
   table: Table<TData>
@@ -21,6 +22,8 @@ type DataTablePaginationProps<TData> = {
 const CustomTablePagination = <TData,>({
   table,
 }: DataTablePaginationProps<TData>) => {
+  const t = useTranslations("Components.Admin.CustomTable")
+
   const colors = {
     input: {
       background: "bg-primaryBg",
@@ -49,13 +52,16 @@ const CustomTablePagination = <TData,>({
   return (
     <div className="flex items-center justify-between px-2">
       <div className="text-muted-foreground flex-1 text-sm">
-        {getFilteredSelectedRowModel().rows.length} of{" "}
-        {getFilteredRowModel().rows.length} row(s) selected.
+        {getFilteredSelectedRowModel().rows.length}{" "}
+        {t("pagination.rowsSelected.of")} {getFilteredRowModel().rows.length}{" "}
+        {t("pagination.rowsSelected.endOfLine")}
       </div>
 
       <div className="flex items-center space-x-6 lg:space-x-8">
         <div className="flex items-center gap-2">
-          <p className="text-sm font-medium">Rows per page</p>
+          <p className="text-sm font-medium">
+            {t("pagination.rowsPerPage.label")}
+          </p>
           <Select
             value={`${getState().pagination.pageSize}`}
             onValueChange={(value) => {
@@ -77,7 +83,9 @@ const CustomTablePagination = <TData,>({
         </div>
 
         <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Page {getState().pagination.pageIndex + 1} of {getPageCount()}
+          {t("pagination.currentPage.label")}{" "}
+          {getState().pagination.pageIndex + 1} {t("pagination.currentPage.of")}{" "}
+          {getPageCount()}
         </div>
 
         <div className="flex items-center space-x-2">
@@ -87,7 +95,7 @@ const CustomTablePagination = <TData,>({
             onClick={() => setPageIndex(0)}
             disabled={!getCanPreviousPage()}
           >
-            <span className="sr-only">Go to first page</span>
+            <span className="sr-only">{t("pagination.controls.first")}</span>
             <ChevronsLeft />
           </Button>
 
@@ -97,7 +105,7 @@ const CustomTablePagination = <TData,>({
             onClick={() => previousPage()}
             disabled={!getCanPreviousPage()}
           >
-            <span className="sr-only">Go to previous page</span>
+            <span className="sr-only">{t("pagination.controls.previous")}</span>
             <ChevronLeft />
           </Button>
 
@@ -107,7 +115,7 @@ const CustomTablePagination = <TData,>({
             onClick={() => nextPage()}
             disabled={!getCanNextPage()}
           >
-            <span className="sr-only">Go to next page</span>
+            <span className="sr-only">{t("pagination.controls.next")}</span>
             <ChevronRight />
           </Button>
 
@@ -117,7 +125,7 @@ const CustomTablePagination = <TData,>({
             onClick={() => setPageIndex(getPageCount())}
             disabled={!getCanNextPage()}
           >
-            <span className="sr-only">Go to last page</span>
+            <span className="sr-only">{t("pagination.controls.last")}</span>
             <ChevronsRight />
           </Button>
         </div>

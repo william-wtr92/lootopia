@@ -7,6 +7,7 @@ import {
   TableBody,
   TableCell,
   Table,
+  Input,
 } from "@lootopia/ui"
 import {
   flexRender,
@@ -16,32 +17,40 @@ import {
   type ColumnDef,
   type ColumnFiltersState,
 } from "@tanstack/react-table"
-import { useState } from "react"
+import { useTranslations } from "next-intl"
+import { useState, type ChangeEvent } from "react"
 
-import CustomTablePagination from "@client/web/components/layout/admin/stats/table/CustomTablePagination"
+import CustomTablePagination from "@client/web/components/layout/admin/table/CustomTablePagination"
+import useDebounce from "@client/web/hooks/useDebounce"
+
+type PaginationProps = {
+  totalPages: number
+  pageIndex: number
+  pageSize: number
+}
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
-  totalPages: number
-  pageIndex: number
-  pageSize: number
+  paginationValues: PaginationProps
+  searchValue: string
   onPaginationChange: (pageIndex: number, pageSize: number) => void
-  // sorting: SortingState
-  // onSortingChange: (state: SortingState) => void
+  handleSearchValue: (value: string) => void
 }
 
 const CustomTable = <TData, TValue>({
   columns,
   data,
-  totalPages,
-  pageIndex,
-  pageSize,
+  paginationValues,
+  searchValue,
   onPaginationChange,
-  // sorting: SortingState
+  handleSearchValue,
 }: DataTableProps<TData, TValue>) => {
+  const t = useTranslations("Components.Admin.CustomTable")
+
+  const { totalPages, pageIndex, pageSize } = paginationValues
+
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  // const [searchKey, setSearchKey] = useState<string>("")
 
   const table = useReactTable({
     data,
@@ -54,26 +63,21 @@ const CustomTable = <TData, TValue>({
         pageIndex,
         pageSize,
       },
-      //   sorting,
     },
     getCoreRowModel: getCoreRowModel(),
-    onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onColumnFiltersChange: setColumnFilters,
     onPaginationChange: (updater) => {
       const newPagination =
         typeof updater === "function"
           ? updater({ pageIndex, pageSize })
           : updater
+
       onPaginationChange(newPagination.pageIndex, newPagination.pageSize)
     },
-    // getSortedRowModel: getSortedRowModel(),
   })
 
   const { getHeaderGroups, getRowModel } = table
-
-  // const handleSearchKey = (key: string) => {
-  //   setSearchKey(key)
-  // }
 
   const colors = {
     input: "bg-primaryBg text-primary border-0",
@@ -105,39 +109,24 @@ const CustomTable = <TData, TValue>({
 
   const hasResults = rows.length > 0
 
+  const debounceEvent = useDebounce((value: string) => {
+    handleSearchValue(value)
+  }, 500)
+
+  const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    debounceEvent(event.target.value)
+  }
+
   return (
     <div className="space-y-4">
-      {/* <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4">
         <Input
-          placeholder={`Search by ${searchKey ? searchKey : ""}`}
-          onChange={(event) =>
-            searchKey !== "" &&
-            getColumn(searchKey)?.setFilterValue(event.target.value)
-          }
+          defaultValue={searchValue}
+          onChange={(e) => onInputChange(e)}
+          placeholder={t("inputPlaceholder")}
           className={`max-w-sm ${colors.input}`}
         />
-
-        <Select onValueChange={handleSearchKey}>
-          <SelectTrigger className={`w-fit ${colors.select.trigger}`}>
-            <SelectValue placeholder="Select the field you want to search in" />
-          </SelectTrigger>
-
-          <SelectContent className={`${colors.select.content}`}>
-            <SelectGroup>
-              <SelectLabel>Fields</SelectLabel>
-              {getAllColumns().map((column) => {
-                const key = column.id as string
-
-                return (
-                  <SelectItem key={key} value={key}>
-                    {key}
-                  </SelectItem>
-                )
-              })}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div> */}
+      </div>
 
       <Table
         className={`${colors.tableComponent.borderRadius} overflow-hidden`}
@@ -146,7 +135,7 @@ const CustomTable = <TData, TValue>({
           className={`${colors.header.background} ${colors.header.text}`}
         >
           {headerGroups.map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
+            <TableRow key={headerGroup.id} className="px-0">
               {headerGroup.headers.map((header) => {
                 return (
                   <TableHead key={header.id}>
@@ -184,7 +173,7 @@ const CustomTable = <TData, TValue>({
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+                {t("noResults")}
               </TableCell>
             </TableRow>
           )}

@@ -1,69 +1,111 @@
 "use client"
 
-import { Button } from "@lootopia/ui"
+import { useToast } from "@lootopia/ui"
 import { useQuery } from "@tanstack/react-query"
 import type { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown } from "lucide-react"
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import React, { useState } from "react"
 
-import CustomTable from "@client/web/components/layout/admin/stats/table/CustomTable"
+import UserActions from "@client/web/components/features/admin/users/UserActions"
+import CustomTable from "@client/web/components/layout/admin/table/CustomTable"
+import HeaderCell from "@client/web/components/layout/admin/table/HeaderCell"
 import {
   getUsersList,
   type UserWithPrivateInfo,
+  type SortingType,
+  orderType,
 } from "@client/web/services/admin/users/getUsersList"
+import { updateUserActive } from "@client/web/services/admin/users/updateUserActive"
 import { formatDate } from "@client/web/utils/helpers/formatDate"
-
-// {
-//   "id": "7e71ca8a-8ffd-4d28-b05c-da188edaeb60",
-//   "nickname": "JohnDodzadaddzaddeadddzd",
-//   "email": "johndodazdazdddzadedzdda@example.com",
-//   "phone": "900989991",
-//   "birthdate": "1995-06-15T00:00:00.000Z",
-//   "progression": {
-//     "level": 1,
-//     "experience": 0
-//   },
-//   "avatar": null
-// },
+import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
 
 const StatsUsersPage = () => {
+  const t = useTranslations("Pages.Admin.Users")
   const locale = useLocale()
+  const { toast } = useToast()
 
-  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 1 })
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 })
+  const [sorting, setSorting] = useState<SortingType>({
+    key: "id",
+    type: "asc",
+  })
+  const [searchValue, setSearchValue] = useState<string>("")
 
-  const { data } = useQuery({
-    queryKey: ["adminUsersList", pagination],
+  const { data, refetch } = useQuery({
+    queryKey: ["adminUsersList", pagination, sorting, searchValue],
     queryFn: () =>
       getUsersList({
         limit: pagination.pageSize,
         page: pagination.pageIndex,
-        search: "",
+        search: searchValue,
+        sorting,
       }),
   })
+
+  const handleSorting = (key: keyof UserWithPrivateInfo) => {
+    setSorting((prevState) => {
+      return {
+        key: key,
+        type: prevState.type === orderType.asc ? orderType.desc : orderType.asc,
+      }
+    })
+  }
+
+  const handleSearchValue = (value: string) => {
+    setSearchValue(value)
+  }
+
+  const handleUpdateUserActive = async (email: string) => {
+    const [status, key] = await updateUserActive(email)
+
+    if (!status) {
+      toast({
+        variant: "destructive",
+        description: translateDynamicKey(t, `errors.${key}`),
+      })
+
+      return
+    }
+
+    toast({
+      variant: "default",
+      description: t("success.userActiveUpdate"),
+    })
+
+    refetch()
+  }
 
   const columns: ColumnDef<UserWithPrivateInfo>[] = [
     {
       accessorKey: "id",
-      header: "Id",
+      header: ({ column }) => (
+        <HeaderCell<UserWithPrivateInfo>
+          column={column}
+          handleSorting={handleSorting}
+        />
+      ),
+    },
+    {
+      accessorKey: "progression.level",
+      header: "Level",
     },
     {
       accessorKey: "nickname",
-      header: "Nickname",
+      header: ({ column }) => (
+        <HeaderCell<UserWithPrivateInfo>
+          column={column}
+          handleSorting={handleSorting}
+        />
+      ),
     },
     {
       accessorKey: "email",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Email
-            <ArrowUpDown className="h-4 w-4" />
-          </Button>
-        )
-      },
+      header: ({ column }) => (
+        <HeaderCell<UserWithPrivateInfo>
+          column={column}
+          handleSorting={handleSorting}
+        />
+      ),
     },
     {
       accessorKey: "phone",
@@ -75,60 +117,56 @@ const StatsUsersPage = () => {
       cell: ({ row }) => formatDate(row.original.birthdate, locale),
     },
     {
-      accessorKey: "progression.level",
-      header: "Level",
+      accessorKey: "active",
+      header: "Active",
+      cell: ({ row }) => {
+        const isActive = row.original.active
+
+        return (
+          <span
+            className={`block size-[24px] rounded-full ${isActive ? "bg-green-500" : "bg-red-500"}`}
+          ></span>
+        )
+      },
     },
-    // {
-    //   id: "Actions",
-    //   header: "Actions",
-    //   cell: ({ row }) => {
-    //     const payment = row.original
+    {
+      id: "Actions",
+      header: "Actions",
+      cell: ({ row }) => {
+        const user = row.original
 
-    //     return (
-    //       <DropdownMenu>
-    //         <DropdownMenuTrigger asChild>
-    //           <Button variant="ghost" className="h-8 w-8 p-0">
-    //             <span className="sr-only">Open menu</span>
-    //             <MoreHorizontal className="h-4 w-4" />
-    //           </Button>
-    //         </DropdownMenuTrigger>
-
-    //         <DropdownMenuContent
-    //           align="end"
-    //           className="bg-primary border-primary border text-white"
-    //         >
-    //           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-    //           <DropdownMenuItem
-    //             onClick={() => navigator.clipboard.writeText(payment.id)}
-    //           >
-    //             Copy payment ID
-    //           </DropdownMenuItem>
-    //           <DropdownMenuSeparator />
-    //           <DropdownMenuItem>View customer</DropdownMenuItem>
-    //           <DropdownMenuItem>View payment details</DropdownMenuItem>
-    //         </DropdownMenuContent>
-    //       </DropdownMenu>
-    //     )
-    //   },
-    // },
+        return (
+          <UserActions
+            user={user}
+            handleUpdateUserActive={handleUpdateUserActive}
+          />
+        )
+      },
+    },
   ]
 
   const users = data?.result
   const totalPages = data?.lastPage ?? 0
+  const paginationValues = {
+    pageIndex: pagination.pageIndex,
+    pageSize: pagination.pageSize,
+    totalPages: totalPages,
+  }
 
   return (
-    <div className="tbr w-full p-8">
+    <div className="w-full space-y-8 p-8">
+      <h1 className="text-primary text-4xl font-semibold">{t("title")}</h1>
+
       {users && (
         <CustomTable<UserWithPrivateInfo, string>
           columns={columns}
           data={users}
-          totalPages={totalPages}
-          pageIndex={pagination.pageIndex}
-          pageSize={pagination.pageSize}
-          // onSortingChange={setSorting}
+          paginationValues={paginationValues}
+          searchValue={searchValue}
           onPaginationChange={(pageIndex, pageSize) =>
             setPagination({ pageIndex, pageSize })
           }
+          handleSearchValue={handleSearchValue}
         />
       )}
     </div>

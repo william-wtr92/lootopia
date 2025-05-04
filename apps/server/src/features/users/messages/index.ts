@@ -127,6 +127,11 @@ export const updateSuccessWithEmailChange = {
   key: "updateSuccessWithEmailChange",
 } as const
 
+export const updateActiveSuccess = {
+  result: "User active status updated successfully.",
+  key: "updateActiveSuccess",
+}
+
 export const logoutSuccess = {
   result: "You have successfully logged out.",
   key: "logoutSuccess",

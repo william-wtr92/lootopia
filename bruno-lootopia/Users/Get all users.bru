@@ -5,13 +5,15 @@ meta {
 }
 
 get {
-  url: {{localhost}}/admin/users/list?limit=1&page=1
+  url: {{localhost}}/admin/users/list?limit=10&page=0&sortingKey=id&sortingType=asc
   body: none
   auth: none
 }
 
 query {
-  limit: 1
-  page: 1
+  limit: 10
+  page: 0
   search: 
+  sortingKey: id
+  sortingType: asc
 }

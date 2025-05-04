@@ -416,6 +416,28 @@
           "treasure_hunter_pack": "Treasure Hunter Pack",
           "legendary_pack": "Legendary Pack"
         }
+      },
+      "Users": {
+        "title": "Users management",
+        "actions": {
+          "title": "Actions",
+          "userActiveUpdate": {
+            "triggerActivate": "Reactivate user",
+            "triggerDeactivate": "Deactivate user",
+            "dialog": {
+              "title": "Are you sure deactivating user",
+              "description": "This action can be reverted later, but without any further actions, the account will be deleted after 30 days.",
+              "cancel": "Cancel",
+              "confirm": "Confirm"
+            }
+          }
+        },
+        "success": {
+          "userActiveUpdate": "User active status updated successfully!"
+        },
+        "errors": {
+          "userNotFound": "User not found"
+        }
       }
     }
   },
@@ -1626,6 +1648,29 @@
             "settings": {
               "label": "Settings"
             }
+          }
+        }
+      },
+      "CustomTable": {
+        "noResults": "No results.",
+        "inputPlaceholder": "Search...",
+        "pagination": {
+          "rowsSelected": {
+            "of": "of",
+            "endOfLine": "row(s) selected."
+          },
+          "rowsPerPage": {
+            "label": "Rows per page"
+          },
+          "currentPage": {
+            "label": "Page",
+            "of": "of"
+          },
+          "controls": {
+            "previous": "Go to previous page",
+            "next": "Go to next page",
+            "first": "Go to first page",
+            "last": "Go to last page"
           }
         }
       }

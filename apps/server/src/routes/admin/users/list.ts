@@ -1,20 +1,41 @@
-import { defaultLimit, defaultPage, SC } from "@common/index"
+import {
+  defaultLimit,
+  defaultPage,
+  SC,
+  usersListQuerySchema,
+} from "@common/index"
+import { zValidator } from "@hono/zod-validator"
 import { selectUsers, selectUsersCount } from "@server/features/users"
 import { Hono } from "hono"
 
 const app = new Hono()
 
-export const adminUsersListRoute = app.get("/users/list", async (c) => {
-  const { limit: limitString, page: offsetString, search } = c.req.query()
+export const adminUsersListRoute = app.get(
+  "/users/list",
+  zValidator("query", usersListQuerySchema),
+  async (c) => {
+    const {
+      limit: limitString,
+      page: offsetString,
+      search,
+      sortingKey,
+      sortingType,
+    } = c.req.query()
 
-  const limit = parseInt(limitString, 10) || defaultLimit
-  const page = parseInt(offsetString, 10) || defaultPage
+    const limit = parseInt(limitString, 10) || defaultLimit
+    const page = parseInt(offsetString, 10) || defaultPage
 
-  const usersRetrieved = await selectUsers(limit, page, search, true)
+    const sorting = {
+      key: sortingKey,
+      type: sortingType,
+    }
 
-  const [{ count }] = await selectUsersCount(search ?? "")
+    const users = await selectUsers(limit, page, search, sorting, true)
 
-  const lastPage = Math.ceil(count / limit)
+    const [{ count }] = await selectUsersCount(search ?? "")
 
-  return c.json({ result: usersRetrieved, lastPage }, SC.success.OK)
-})
+    const lastPage = Math.ceil(count / limit)
+
+    return c.json({ result: users, lastPage }, SC.success.OK)
+  }
+)
