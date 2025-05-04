@@ -40,7 +40,7 @@ const CustomBarChart = ({
         <Tooltip
           content={
             <ChartTooltipContent
-              className="bg-primary font-inherit border-0"
+              className="bg-primary font-inherit border-0 text-white"
               formatter={(value, _, item) => {
                 const dataKey = String(item.dataKey).split("-").join(" ")
 

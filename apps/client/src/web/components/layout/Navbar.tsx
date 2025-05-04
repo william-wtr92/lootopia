@@ -2,7 +2,7 @@
 
 import { Button } from "@lootopia/ui"
 import { useQuery } from "@tanstack/react-query"
-import { motion, useMotionValueEvent, useScroll } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
 import { Crown, Plus, Swords, UserCog } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
@@ -23,6 +23,7 @@ const Navbar = () => {
   const t = useTranslations("Components.Utils.Layout.NavBar")
 
   const { scrollY } = useScroll()
+
   const token = useAuthStore((state) => state.token)
 
   const { data } = useQuery({
@@ -34,22 +35,22 @@ const Navbar = () => {
   const user = data ? data : undefined
 
   const [isShopOpen, setIsShopOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
 
   const handleShopOpen = () => {
     setIsShopOpen((prev) => !prev)
   }
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    const MIN_SCROLL = 90
-    setIsScrolled(latest > MIN_SCROLL)
-  })
+  const opacity = useTransform(scrollY, [0, 100], [0, 0.7])
+
+  const backgroundColor = useTransform(
+    opacity,
+    (o) => `rgba(255, 255, 255, ${o})`
+  )
 
   return (
     <motion.header
-      className={`sticky left-0 top-0 z-[11] h-fit w-full transition-colors duration-300 ${
-        isScrolled ? "bg-white/20 shadow-md backdrop-blur" : ""
-      }`}
+      className={`sticky left-0 top-0 z-[11] h-fit w-full transition-colors duration-300`}
+      style={{ backgroundColor }}
     >
       <nav className="flex items-center justify-between px-4 py-6 md:px-16">
         <Link href={routes.home}>
