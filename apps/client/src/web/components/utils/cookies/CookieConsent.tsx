@@ -13,7 +13,7 @@ import {
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 
-import CookieOption from "./CookieOptions"
+import CookieOption from "./CookieOption"
 import { useInitCookieConsent } from "@client/web/hooks/useInitCookieConsent"
 import { useCookieConsentStore } from "@client/web/store/useCookieConsentStore"
 import anim from "@client/web/utils/anim"

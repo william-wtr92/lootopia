@@ -695,7 +695,7 @@
             },
             "verify": {
               "cta": {
-                "back": "back",
+                "back": "Back",
                 "activate": "Activate"
               }
             },
