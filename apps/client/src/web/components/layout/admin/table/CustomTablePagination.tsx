@@ -91,7 +91,7 @@ const CustomTablePagination = <TData,>({
         <div className="flex items-center space-x-2">
           <Button
             variant="default"
-            className="hidden h-8 w-8 p-0 lg:flex"
+            className="hidden size-8 p-0 lg:flex"
             onClick={() => setPageIndex(0)}
             disabled={!getCanPreviousPage()}
           >
@@ -101,7 +101,7 @@ const CustomTablePagination = <TData,>({
 
           <Button
             variant="default"
-            className="h-8 w-8 p-0"
+            className="size-8 p-0"
             onClick={() => previousPage()}
             disabled={!getCanPreviousPage()}
           >
@@ -111,7 +111,7 @@ const CustomTablePagination = <TData,>({
 
           <Button
             variant="default"
-            className="h-8 w-8 p-0"
+            className="size-8 p-0"
             onClick={() => nextPage()}
             disabled={!getCanNextPage()}
           >
@@ -121,7 +121,7 @@ const CustomTablePagination = <TData,>({
 
           <Button
             variant="default"
-            className="hidden h-8 w-8 p-0 lg:flex"
+            className="hidden size-8 p-0 lg:flex"
             onClick={() => setPageIndex(getPageCount())}
             disabled={!getCanNextPage()}
           >

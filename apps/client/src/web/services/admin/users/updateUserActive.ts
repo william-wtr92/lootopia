@@ -1,10 +1,10 @@
+import type { UsersUpdateActiveSchema } from "@lootopia/common"
+
 import { client } from "@client/web/utils/client"
 
-export const updateUserActive = async (email: string) => {
+export const updateUserActive = async (body: UsersUpdateActiveSchema) => {
   const response = await client.admin.users.update.$post({
-    json: {
-      email,
-    },
+    json: body,
   })
 
   if (response.ok) {

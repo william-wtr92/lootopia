@@ -1,6 +1,5 @@
-import { usersUpdateActiveSchema } from "@common/admin/users"
-import { SC } from "@common/index"
 import { zValidator } from "@hono/zod-validator"
+import { SC, usersUpdateActiveSchema } from "@lootopia/common"
 import {
   selectUserByEmail,
   updateActiveSuccess,

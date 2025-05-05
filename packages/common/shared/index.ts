@@ -2,6 +2,7 @@ export * from "./global/status"
 export * from "./global/server"
 export * from "./global/position"
 export * from "./global/pagination"
+export * from "./global/sorting"
 
 // Global types
 
@@ -19,7 +20,12 @@ export {
 // Features types
 
 // Admin types
-export { usersListQuerySchema } from "./admin/users/index"
+export {
+  usersListQuerySchema,
+  usersUpdateActiveSchema,
+  type UsersListQuerySchema,
+  type UsersUpdateActiveSchema,
+} from "./admin/users/index"
 
 // Users types
 export {

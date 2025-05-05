@@ -1,5 +1,11 @@
 "use client"
 
+import {
+  defaultLimit,
+  defaultPage,
+  orderType,
+  type SortingType,
+} from "@lootopia/common"
 import { useToast } from "@lootopia/ui"
 import { useQuery } from "@tanstack/react-query"
 import type { ColumnDef } from "@tanstack/react-table"
@@ -12,8 +18,6 @@ import HeaderCell from "@client/web/components/layout/admin/table/HeaderCell"
 import {
   getUsersList,
   type UserWithPrivateInfo,
-  type SortingType,
-  orderType,
 } from "@client/web/services/admin/users/getUsersList"
 import { updateUserActive } from "@client/web/services/admin/users/updateUserActive"
 import { formatDate } from "@client/web/utils/helpers/formatDate"
@@ -24,7 +28,10 @@ const StatsUsersPage = () => {
   const locale = useLocale()
   const { toast } = useToast()
 
-  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 })
+  const [pagination, setPagination] = useState({
+    pageIndex: defaultPage,
+    pageSize: defaultLimit,
+  })
   const [sorting, setSorting] = useState<SortingType>({
     key: "id",
     type: "asc",
@@ -35,10 +42,11 @@ const StatsUsersPage = () => {
     queryKey: ["adminUsersList", pagination, sorting, searchValue],
     queryFn: () =>
       getUsersList({
-        limit: pagination.pageSize,
-        page: pagination.pageIndex,
+        limit: pagination.pageSize.toString(),
+        page: pagination.pageIndex.toString(),
         search: searchValue,
-        sorting,
+        sortingKey: sorting.key,
+        sortingType: sorting.type,
       }),
   })
 
@@ -56,7 +64,7 @@ const StatsUsersPage = () => {
   }
 
   const handleUpdateUserActive = async (email: string) => {
-    const [status, key] = await updateUserActive(email)
+    const [status, key] = await updateUserActive({ email })
 
     if (!status) {
       toast({
@@ -80,6 +88,7 @@ const StatsUsersPage = () => {
       accessorKey: "id",
       header: ({ column }) => (
         <HeaderCell<UserWithPrivateInfo>
+          name={t("headers.id")}
           column={column}
           handleSorting={handleSorting}
         />
@@ -87,12 +96,13 @@ const StatsUsersPage = () => {
     },
     {
       accessorKey: "progression.level",
-      header: "Level",
+      header: t("headers.level"),
     },
     {
       accessorKey: "nickname",
       header: ({ column }) => (
         <HeaderCell<UserWithPrivateInfo>
+          name={t("headers.nickname")}
           column={column}
           handleSorting={handleSorting}
         />
@@ -102,6 +112,7 @@ const StatsUsersPage = () => {
       accessorKey: "email",
       header: ({ column }) => (
         <HeaderCell<UserWithPrivateInfo>
+          name={t("headers.email")}
           column={column}
           handleSorting={handleSorting}
         />
@@ -109,29 +120,29 @@ const StatsUsersPage = () => {
     },
     {
       accessorKey: "phone",
-      header: "Phone",
+      header: t("headers.phone"),
     },
     {
       accessorKey: "birthdate",
-      header: "Birthdate",
+      header: t("headers.birthdate"),
       cell: ({ row }) => formatDate(row.original.birthdate, locale),
     },
     {
       accessorKey: "active",
-      header: "Active",
+      header: t("headers.active"),
       cell: ({ row }) => {
         const isActive = row.original.active
 
         return (
           <span
-            className={`block size-[24px] rounded-full ${isActive ? "bg-green-500" : "bg-red-500"}`}
+            className={`block size-[24px] rounded-full ${isActive ? "bg-success" : "bg-error"}`}
           ></span>
         )
       },
     },
     {
       id: "Actions",
-      header: "Actions",
+      header: t("headers.actions"),
       cell: ({ row }) => {
         const user = row.original
 

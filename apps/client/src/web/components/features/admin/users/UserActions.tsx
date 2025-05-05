@@ -44,7 +44,7 @@ const UserActions = ({ user, handleUpdateUserActive }: Props) => {
         >
           <DropdownMenuLabel>{t("title")}</DropdownMenuLabel>
           <DropdownMenuItem
-            className={`bg-primary text-white ${user.active ? "hover:bg-red-600" : "hover:bg-green-600"}`}
+            className={`bg-primary text-white ${user.active ? "hover:bg-error" : "hover:bg-success"}`}
           >
             <AlertDialogTrigger className="flex items-center gap-2">
               {user.active ? (

@@ -18,10 +18,10 @@ import {
   type ColumnFiltersState,
 } from "@tanstack/react-table"
 import { useTranslations } from "next-intl"
-import { useState, type ChangeEvent } from "react"
+import { useState } from "react"
+import { useDebouncedCallback } from "use-debounce"
 
 import CustomTablePagination from "@client/web/components/layout/admin/table/CustomTablePagination"
-import useDebounce from "@client/web/hooks/useDebounce"
 
 type PaginationProps = {
   totalPages: number
@@ -109,20 +109,16 @@ const CustomTable = <TData, TValue>({
 
   const hasResults = rows.length > 0
 
-  const debounceEvent = useDebounce((value: string) => {
+  const debouncedCallback = useDebouncedCallback((value: string) => {
     handleSearchValue(value)
-  }, 500)
-
-  const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    debounceEvent(event.target.value)
-  }
+  }, 600)
 
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-4">
         <Input
           defaultValue={searchValue}
-          onChange={(e) => onInputChange(e)}
+          onChange={(e) => debouncedCallback(e.target.value)}
           placeholder={t("inputPlaceholder")}
           className={`max-w-sm ${colors.input}`}
         />

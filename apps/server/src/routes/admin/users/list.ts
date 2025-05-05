@@ -1,10 +1,11 @@
+import { zValidator } from "@hono/zod-validator"
 import {
   defaultLimit,
   defaultPage,
   SC,
   usersListQuerySchema,
-} from "@common/index"
-import { zValidator } from "@hono/zod-validator"
+  type SortingType,
+} from "@lootopia/common"
 import { selectUsers, selectUsersCount } from "@server/features/users"
 import { Hono } from "hono"
 
@@ -28,7 +29,7 @@ export const adminUsersListRoute = app.get(
     const sorting = {
       key: sortingKey,
       type: sortingType,
-    }
+    } as SortingType
 
     const users = await selectUsers(limit, page, search, sorting, true)
 

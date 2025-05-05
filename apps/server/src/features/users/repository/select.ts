@@ -1,4 +1,4 @@
-import { defaultLevel, defaultXP } from "@lootopia/common"
+import { defaultLevel, defaultXP, type SortingType } from "@lootopia/common"
 import {
   crowns,
   huntParticipations,
@@ -97,7 +97,7 @@ export const selectUsers = async (
   limit: number,
   page: number,
   search: string,
-  order: { key: string; type: string } = { key: "id", type: "asc" },
+  order: SortingType = { key: "id", type: "asc" },
   privateInfo = false
 ) => {
   const query = db

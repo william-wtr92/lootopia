@@ -419,6 +419,16 @@
       },
       "Users": {
         "title": "Users management",
+        "headers": {
+          "id": "ID",
+          "level": "Level",
+          "nickname": "Nickname",
+          "email": "Email",
+          "phone": "Phone",
+          "birthdate": "Birthdate",
+          "active": "Active",
+          "actions": "Actions"
+        },
         "actions": {
           "title": "Actions",
           "userActiveUpdate": {

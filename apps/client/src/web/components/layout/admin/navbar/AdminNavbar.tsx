@@ -35,11 +35,6 @@ const AdminNavbar = () => {
       label: t("main-menu-category.links.users.label"),
       href: routes.admin.users,
     },
-    // {
-    //   icon: <Map />,
-    //   label: t("main-menu-category.links.hunts.label"),
-    //   href: "#",
-    // },
   ]
 
   const websiteManagementLinks = [
