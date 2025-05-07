@@ -1,4 +1,4 @@
-import type { ReactivateAccountConfirmSchema } from "@common/index"
+import type { ReactivateAccountConfirmSchema } from "@lootopia/common"
 
 import { client } from "@client/web/utils/client"
 

@@ -153,7 +153,13 @@
         },
         "success": "Your account has been reactivated successfully!",
         "errors": {
-          "tokenNotFound": "Token not found"
+          "tokenNotFound": "Token not found",
+          "tokenNotProvided": "Please request a new validation.",
+          "tokenExpired": "Your validation link has expired. Please request a new one.",
+          "userNotFound": "The validation link is invalid. Please request a new one.",
+          "accountAlreadyActive": "Your account is already active",
+          "tokenInvalidStructure": "The validation link is invalid. Please request a new one.",
+          "tokenSignatureMismatched": "The validation link is invalid. Please request a new one."
         }
       },
       "Login": {
@@ -841,6 +847,10 @@
         "cta": {
           "cancel": "Cancel",
           "confirm": "Confirm"
+        },
+        "errors": {
+          "userNotFound": "You are not authorized to perform this action",
+          "accountDisabled": "Your account is already disabled"
         },
         "success": "Your account has been deactivated and will be deleted in 6 months"
       }

@@ -76,7 +76,7 @@ const ReactivateAccountRequestForm = () => {
           </span>
         </div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="p-6 sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-primary text-center font-bold">
             {t("title")}

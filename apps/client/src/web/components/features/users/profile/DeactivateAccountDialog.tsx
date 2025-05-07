@@ -1,6 +1,5 @@
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -8,28 +7,58 @@ import {
   DialogFooter,
   Button,
   DialogClose,
+  useToast,
 } from "@lootopia/ui"
-import { UserXIcon } from "lucide-react"
+import { useQueryClient } from "@tanstack/react-query"
+import { ShieldX } from "lucide-react"
+import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 
+import { routes } from "@client/web/routes"
+import { deactivateAccount } from "@client/web/services/users/deactivateAccount"
+import { translateDynamicKey } from "@client/web/utils/translateDynamicKey"
+
 type Props = {
-  onConfirm: () => void
+  open: boolean
+  setIsOpen: (open: boolean) => void
 }
 
-const DeactivateAccountDialog = ({ onConfirm }: Props) => {
+const DeactivateAccountDialog = ({ open, setIsOpen }: Props) => {
   const t = useTranslations("Components.Users.DeactivateAccountDialog")
+  const router = useRouter()
+  const { toast } = useToast()
+  const qc = useQueryClient()
+
+  const handleDeactivateAccount = async () => {
+    const [status, key] = await deactivateAccount()
+
+    if (!status) {
+      toast({
+        variant: "destructive",
+        description: translateDynamicKey(t, `errors.${key}`),
+      })
+
+      return
+    }
+
+    toast({
+      variant: "default",
+      description: t("success"),
+    })
+
+    qc.invalidateQueries({ queryKey: ["user"] })
+
+    router.push(routes.auth.login)
+  }
 
   return (
-    <Dialog>
-      <DialogTrigger className="flex items-center gap-1">
-        <Button variant="destructive" className="flex w-full items-center">
-          <UserXIcon />
-          <span>{t("trigger")}</span>
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="text-primary">
+    <Dialog open={open} onOpenChange={setIsOpen}>
+      <DialogContent className="text-primary p-6">
         <DialogHeader>
-          <DialogTitle>{t("title")}</DialogTitle>
+          <DialogTitle className="flex items-center gap-2">
+            <ShieldX className="size-5" />
+            <span>{t("title")}</span>
+          </DialogTitle>
           <DialogDescription>{t("description")}</DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -38,7 +67,7 @@ const DeactivateAccountDialog = ({ onConfirm }: Props) => {
               {t("cta.cancel")}
             </Button>
           </DialogClose>
-          <Button variant="destructive" onClick={onConfirm}>
+          <Button variant="destructive" onClick={handleDeactivateAccount}>
             {t("cta.confirm")}
           </Button>
         </DialogFooter>

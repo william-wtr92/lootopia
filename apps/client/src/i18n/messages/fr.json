@@ -153,7 +153,13 @@
         },
         "success": "Votre compte a été réactivé avec succès !",
         "errors": {
-          "tokenNotFound": "Token introuvable"
+          "tokenNotFound": "Jeton introuvable",
+          "tokenNotProvided": "Veuillez refaire une demande de validation.",
+          "tokenExpired": "Votre lien de validation a expiré. Veuillez refaire une demande.",
+          "userNotFound": "Le lien de validation est invalide. Veuillez refaire une demande.",
+          "accountAlreadyActive": "Votre compte est déjà actif",
+          "tokenInvalidStructure": "Le lien de validation est invalide. Veuillez refaire une demande.",
+          "tokenSignatureMismatched": "Le lien de validation est invalide. Veuillez refaire une demande."
         }
       },
       "Login": {
@@ -841,6 +847,10 @@
         "cta": {
           "cancel": "Annuler",
           "confirm": "Confirmer"
+        },
+        "errors": {
+          "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+          "accountDisabled": "Votre compte est déjà désactivé"
         },
         "success": "Votre compte a été désactivé avec succès. Il sera supprimé dans 6 mois."
       }
