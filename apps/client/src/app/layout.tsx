@@ -14,6 +14,14 @@ export const metadata: Metadata = {
   },
 }
 
-const Layout = ({ children }: { children: ReactNode }) => children
+export default async function RootLayout({
+  children,
+  params,
+}: {
+  children: ReactNode
+  params: Promise<{ locale: string }>
+}) {
+  const { locale } = await params
 
-export default Layout
+  return <html lang={locale}>{children}</html>
+}

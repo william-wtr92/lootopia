@@ -1,6 +1,6 @@
 import type { ArtifactSchema } from "@lootopia/common"
-import { artifacts } from "@lootopia/drizzle"
-import { db } from "@server/db/client"
+import { artifacts, userArtifacts } from "@lootopia/drizzle"
+import { db } from "@server/utils/clients/postgres"
 
 export const insertArtifact = async (
   artifact: ArtifactSchema,
@@ -12,4 +12,24 @@ export const insertArtifact = async (
     link: artifact.link,
     userId,
   })
+}
+
+export const insertDiggedUserArtifact = async (
+  userId: string,
+  artifactId: string,
+  chestId: string
+) => {
+  const [userArtifactInserted] = await db
+    .insert(userArtifacts)
+    .values({
+      userId,
+      artifactId,
+      obtainedFromChestId: chestId,
+    })
+    .onConflictDoNothing()
+    .returning({
+      userArtifactId: userArtifacts.id,
+    })
+
+  return userArtifactInserted
 }

@@ -85,6 +85,36 @@ export const waitBeforeRequestingPasswordReset = {
   key: "waitBeforeRequestingPasswordReset",
 } as const
 
+export const mfaAlreadyEnabled = {
+  result: "MFA already enabled.",
+  key: "mfaAlreadyEnabled",
+} as const
+
+export const mfaAlreadyDisabled = {
+  result: "MFA already disabled.",
+  key: "mfaAlreadyDisabled",
+} as const
+
+export const mfaInvalidToken = {
+  result: "Invalid MFA token.",
+  key: "mfaInvalidToken",
+} as const
+
+export const mfaNotEnabled = {
+  result: "MFA not enabled.",
+  key: "mfaNotEnabled",
+} as const
+
+export const mfaSessionExpired = {
+  result: "MFA session expired.",
+  key: "mfaSessionExpired",
+} as const
+
+export const notAuthorized = {
+  result: "You are not authorized to access this resource",
+  key: "notAuthorized",
+}
+
 // SUCCESS MESSAGES
 
 export const registerSuccess = {
@@ -145,4 +175,19 @@ export const passwordResetRequestSentSuccess = {
 export const passwordResetSuccess = {
   result: "Password reset successfully.",
   key: "passwordResetSuccess",
+} as const
+
+export const mfaDisabledSuccess = {
+  result: "MFA disabled successfully.",
+  key: "mfaDisabledSuccess",
+} as const
+
+export const mfaVerifySuccess = {
+  result: "MFA verified successfully.",
+  key: "mfaVerifySuccess",
+} as const
+
+export const mfaRequired = {
+  result: "MFA required.",
+  key: "mfaRequired",
 } as const

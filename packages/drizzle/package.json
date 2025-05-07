@@ -9,11 +9,12 @@
     "db:generate:custom": "pnpm exec drizzle-kit generate --custom",
     "db:generate": "pnpm exec drizzle-kit generate",
     "db:migrate": "pnpm exec drizzle-kit migrate",
+    "db:seed": "node dist/src/db/seed/index.js",
     "db:drop": "pnpm exec drizzle-kit drop",
     "build": "tsc && tsc-alias",
     "prepare": "pnpm run build"
   },
-   "dependencies": {
+  "dependencies": {
     "@lootopia/common": "workspace:*",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.2",

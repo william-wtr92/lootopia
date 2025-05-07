@@ -2,7 +2,7 @@ import type { ChestSchema } from "@lootopia/common"
 import { useMapEvents } from "react-leaflet"
 import { v4 as uuid } from "uuid"
 
-import { convertPositionToXy } from "@client/web/utils/convertPosition"
+import { convertPositionToXy } from "@client/web/utils/helpers/convertPosition"
 
 type Props = {
   setIsSheetOpen: (isOpen: boolean) => void

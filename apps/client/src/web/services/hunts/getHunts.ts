@@ -1,4 +1,5 @@
-import { defaultLimit } from "@lootopia/common"
+import { defaultLimit, type HuntListQuerySchema } from "@lootopia/common"
+import type { InferResponseType } from "hono"
 
 import { client } from "@client/web/utils/client"
 import {
@@ -6,15 +7,19 @@ import {
   type HuntFilterType,
 } from "@client/web/utils/def/huntFilter"
 
+const $get = client.hunts.$get
+export type HuntListResponse = InferResponseType<typeof $get>
+export type HuntResponse = Exclude<HuntListResponse["result"][number], string>
+
 export const getHunts = async (
   value: string,
-  searchType: HuntFilterType,
-  pageParam: number
+  queries: HuntListQuerySchema,
+  searchType: HuntFilterType
 ) => {
-  const response = await client.hunts.$get({
+  const response = await $get({
     query: {
-      limit: defaultLimit,
-      page: pageParam,
+      limit: queries.limit || defaultLimit.toString(),
+      page: queries.page,
       name: searchType === huntFilterTypeEnum.name ? value : undefined,
       city: searchType === huntFilterTypeEnum.city ? value : undefined,
     },

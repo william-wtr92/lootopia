@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   cities,
@@ -26,32 +25,47 @@ import {
   SelectItem,
 } from "@lootopia/ui"
 import { useTranslations } from "next-intl"
-import { useEffect } from "react"
+import { useCallback, useEffect } from "react"
 import { useForm } from "react-hook-form"
 
 import { useHuntStore } from "@client/web/store/useHuntStore"
+import { capitalizeFirstLetter } from "@client/web/utils/helpers/capitalizeFirstLetter"
 
 type Props = {
   onSubmit: (data: HuntSchema) => void
+  mode?: "draft" | "update"
+  updateHunt?: HuntSchema
 }
 
-const HuntForm = ({ onSubmit }: Props) => {
+const HuntForm = ({ onSubmit, mode = "draft", updateHunt }: Props) => {
   const t = useTranslations("Components.Hunts.Form.HuntForm")
   const { activeHuntId, hunts } = useHuntStore()
 
-  const activeHunt = activeHuntId ? hunts[activeHuntId]?.hunt : null
+  const activeHunt = useCallback(() => {
+    if (activeHuntId && mode === "draft") {
+      return hunts[activeHuntId]?.hunt
+    }
+
+    return {
+      ...updateHunt,
+      city:
+        updateHunt?.city !== OTHER_CITY_OPTION
+          ? capitalizeFirstLetter(updateHunt?.city ?? "")
+          : updateHunt?.city,
+    }
+  }, [activeHuntId, mode, hunts, updateHunt])
 
   const form = useForm<HuntSchema>({
     resolver: zodResolver(huntSchema),
-    mode: "onBlur",
+    mode: "onTouched",
     defaultValues: {
-      name: activeHunt?.name ?? "",
-      description: activeHunt?.description ?? "",
-      city: activeHunt?.city ?? "",
-      startDate: activeHunt?.startDate ?? "",
-      endDate: activeHunt?.endDate ?? "",
-      maxParticipants: activeHunt?.maxParticipants ?? undefined,
-      mode: activeHunt?.mode ?? true,
+      name: activeHunt()?.name ?? "",
+      description: activeHunt()?.description ?? "",
+      city: activeHunt()?.city ?? "",
+      startDate: activeHunt()?.startDate ?? "",
+      endDate: activeHunt()?.endDate ?? "",
+      maxParticipants: activeHunt()?.maxParticipants ?? undefined,
+      public: activeHunt()?.public ?? true,
     },
   })
 
@@ -61,7 +75,7 @@ const HuntForm = ({ onSubmit }: Props) => {
 
   useEffect(() => {
     if (activeHunt) {
-      form.reset(activeHunt)
+      form.reset(activeHunt())
     }
   }, [activeHunt, form])
 
@@ -247,7 +261,7 @@ const HuntForm = ({ onSubmit }: Props) => {
 
         <FormField
           control={form.control}
-          name="mode"
+          name="public"
           render={({ field }) => (
             <FormItem className="border-primary flex w-full items-center justify-between rounded-lg border p-4 shadow-md">
               <FormDescription className="text-md flex gap-1">
@@ -271,7 +285,13 @@ const HuntForm = ({ onSubmit }: Props) => {
           type="submit"
           className="text-primary bg-accent hover:bg-accentHover w-full"
         >
-          <span>{activeHuntId ? t("submit.update") : t("submit.create")}</span>
+          <span>
+            {activeHuntId && mode === "draft"
+              ? t("submit.update")
+              : mode === "update"
+                ? t("submit.update")
+                : t("submit.create")}
+          </span>
         </Button>
       </form>
     </Form>

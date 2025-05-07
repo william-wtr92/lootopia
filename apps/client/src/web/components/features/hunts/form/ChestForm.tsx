@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
   type ArtifactUploadSchema,
@@ -6,6 +5,8 @@ import {
   type ChestRewardType,
   chestSchema,
   type ChestSchema,
+  MAX_CROWN_REWARD,
+  MAX_USERS_PER_CHEST,
 } from "@lootopia/common"
 import {
   Button,
@@ -158,7 +159,7 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
                   <SelectValue placeholder={t("rewardType.placeholder")} />
                 </SelectTrigger>
                 <SelectContent className="bg-primaryBg text-primary">
-                  {CHEST_REWARD_TYPES.map((type) => (
+                  {Object.values(CHEST_REWARD_TYPES).map((type) => (
                     <SelectItem
                       key={type}
                       value={type}
@@ -188,6 +189,7 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
                     {...field}
                     type="number"
                     min={1}
+                    max={MAX_CROWN_REWARD}
                     value={field.value ? field.value.toString() : ""}
                     onChange={(e) => handleRewardChange(e.target.value)}
                   />
@@ -272,10 +274,17 @@ const ChestForm = ({ initialData, onSubmit }: ChestFormProps) => {
                   {...field}
                   type="number"
                   min={1}
+                  max={MAX_USERS_PER_CHEST}
                   value={field.value}
-                  onChange={(e) => field.onChange(Number(e.target.value) || 1)}
+                  onChange={(e) => {
+                    const value = Number(e.target.value)
+                    form.setValue("maxUsers", value, { shouldValidate: true })
+                  }}
                 />
               </FormControl>
+              <FormMessage>
+                {errors.maxUsers ? t("maxUsers.error") : null}
+              </FormMessage>
             </FormItem>
           )}
         />

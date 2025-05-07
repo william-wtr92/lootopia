@@ -5,9 +5,13 @@ type AdditionalUserFields = Omit<
   "nickname" | "email" | "phone" | "birthdate"
 >
 
-export const sanitizeUser = <T extends keyof AdditionalUserFields>(
+export const sanitizeUser = <
+  T extends keyof AdditionalUserFields,
+  WithPrivate extends boolean = true,
+>(
   user: User,
-  additionalFields: T[] = []
+  additionalFields: T[] = [],
+  options?: { private?: WithPrivate }
 ) => {
   const additionalData: Pick<User, T> = additionalFields.reduce(
     (acc, field) => {
@@ -18,12 +22,33 @@ export const sanitizeUser = <T extends keyof AdditionalUserFields>(
     {} as Pick<User, T>
   )
 
+  const isPrivate = options?.private ?? true
+
   return {
+    id: user.id,
     nickname: user.nickname,
-    email: user.email,
-    phone: user.phone,
-    birthdate: user.birthdate,
-    active: user.active,
+    ...(isPrivate && {
+      email: user.email,
+      phone: user.phone,
+      birthdate: user.birthdate,
+    }),
+    ...(user.crowns !== undefined ? { crowns: user.crowns } : {}),
+    ...(user.progression !== undefined
+      ? {
+          progression: {
+            level: user.progression.level,
+            experience: user.progression.experience,
+          },
+        }
+      : {}),
     ...additionalData,
   }
+}
+
+export const sanitizeUsers = (users: User[]) => {
+  return users.map((user) => ({
+    id: user.id,
+    nickname: user.nickname,
+    avatar: user.avatar,
+  }))
 }

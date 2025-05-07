@@ -1,23 +1,22 @@
 import { zValidator } from "@hono/zod-validator"
-import { SC, updateSchema } from "@lootopia/common"
+import { SC, updateSchema, userNicknameSchema } from "@lootopia/common"
 import appConfig from "@server/config"
 import {
   invalidExtension,
   invalidImage,
   nicknameAlreadyExists,
   phoneAlreadyExists,
-  sanitizeUser,
   updateSuccess,
   updateSuccessWithEmailChange,
   userNotFound,
   waitThirtyDaysBeforeUpdatingNickname,
-} from "@server/features/users"
-import {
   selectUserByEmail,
   selectUserByNickname,
   selectUserByPhone,
-} from "@server/features/users/repository/select"
-import { updateUser } from "@server/features/users/repository/update"
+  updateUser,
+  selectUserWithCrownsAndProgression,
+  selectUserWithHuntsAndArtifacts,
+} from "@server/features/users"
 import { azureDirectory, uploadImage } from "@server/utils/actions/azureActions"
 import { redis } from "@server/utils/clients/redis"
 import { allowedMimeTypes, defaultMimeType } from "@server/utils/helpers/files"
@@ -40,13 +39,18 @@ export const profileRoute = app
   .get("/me", async (c) => {
     const email = c.get(contextKeys.loggedUserEmail)
 
-    const user = await selectUserByEmail(email)
+    const user = await selectUserWithCrownsAndProgression(email)
 
     if (!user) {
       return c.json(userNotFound, SC.errors.NOT_FOUND)
     }
 
-    return c.json({ result: sanitizeUser(user) }, SC.success.OK)
+    return c.json(
+      {
+        result: user,
+      },
+      SC.success.OK
+    )
   })
   .put("/me", zValidator("form", updateSchema), async (c) => {
     const body = c.req.valid("form")
@@ -173,3 +177,30 @@ export const profileRoute = app
 
     return c.json(updateSuccessKey, SC.success.OK)
   })
+  .get(
+    "/find/:nickname",
+    zValidator("param", userNicknameSchema),
+    async (c) => {
+      const email = c.get(contextKeys.loggedUserEmail)
+      const nickname = c.req.param("nickname")
+
+      const user = await selectUserByEmail(email)
+
+      if (!user) {
+        return c.json(userNotFound, SC.errors.NOT_FOUND)
+      }
+
+      const userProfile = await selectUserWithHuntsAndArtifacts(nickname)
+
+      if (!userProfile) {
+        return c.json(userNotFound, SC.errors.NOT_FOUND)
+      }
+
+      return c.json(
+        {
+          result: userProfile,
+        },
+        SC.success.OK
+      )
+    }
+  )

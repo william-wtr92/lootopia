@@ -14,12 +14,18 @@ export const routes = {
   },
   users: {
     profile: "/profile",
+    profileTriggerTownHall: (offerId: string) => `/profile?offerId=${offerId}`,
+    profileNickname: (nickname: string) => `/profile/${nickname}`,
   },
   hunts: {
     list: "/hunts/list",
     create: "/hunts/create",
     drafts: "/hunts/drafts",
     id: (huntId: string) => `/hunts/${huntId}`,
+  },
+  artifacts: {
+    viewer: "/artifacts",
+    viewerDetail: (artifactId: string) => `/artifacts/${artifactId}`,
   },
   api: {
     users: {
@@ -33,3 +39,5 @@ export const protectedRoutes = [
   routes.admin.dashboard,
   routes.users.profile,
 ] as const
+
+export const adminRoutes = [routes.admin.dashboard]

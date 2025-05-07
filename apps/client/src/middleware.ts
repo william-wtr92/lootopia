@@ -1,8 +1,10 @@
+/* eslint-disable max-depth */
+import { ROLES, SC } from "@lootopia/common"
 import { NextResponse, type NextRequest } from "next/server"
 import createMiddleware from "next-intl/middleware"
 
 import { env } from "./env"
-import { protectedRoutes, routes } from "./web/routes"
+import { adminRoutes, protectedRoutes, routes } from "./web/routes"
 import { authTokenName } from "./web/utils/def/constants"
 import { locales, routing } from "@client/i18n/routing"
 
@@ -21,6 +23,10 @@ export default async function middleware(request: NextRequest) {
   )
 
   const isProtectedRoute = protectedRoutes.some((route) =>
+    pathnameWithoutLocale.startsWith(route)
+  )
+
+  const isAdminRoute = adminRoutes.some((route) =>
     pathnameWithoutLocale.startsWith(route)
   )
 
@@ -43,9 +49,21 @@ export default async function middleware(request: NextRequest) {
           credentials: "include",
         }
       )
+      const { result: user } = await authResponse.json()
 
-      if (!authResponse.ok) {
-        return NextResponse.redirect(new URL(routes.home, request.url))
+      if (!authResponse.ok || (isAdminRoute && user.role !== ROLES.admin)) {
+        const redirectResponse = NextResponse.redirect(
+          new URL(routes.home, request.url)
+        )
+
+        if (
+          authResponse.status === SC.serverErrors.INTERNAL_SERVER_ERROR &&
+          authToken
+        ) {
+          redirectResponse.cookies.delete(authTokenName)
+        }
+
+        return redirectResponse
       }
 
       return response
@@ -62,5 +80,6 @@ export const config = {
     "/((?!api|_next|_vercel|.*\\..*).*)",
     "/hunts/:path*",
     "/profile/:path*",
+    "/admin/:path*",
   ],
 }

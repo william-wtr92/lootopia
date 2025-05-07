@@ -24,6 +24,8 @@ export const users = pgTable(
     gdprValidated: boolean("gdpr_validated").notNull().default(false),
     active: boolean().notNull().default(true),
     role: text("role").$type<Roles>().notNull().default(ROLES.user),
+    mfaEnabled: boolean("mfa_enabled").notNull().default(false),
+    mfaSecret: text("mfa_secret"),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
     deactivationDate: timestamp("deactivation_date"),

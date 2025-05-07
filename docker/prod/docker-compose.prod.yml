@@ -5,9 +5,11 @@ services:
       dockerfile: docker/prod/Dockerfile.client
       target: production
       args:
+        NEXT_PUBLIC_CLIENT_URL: ${NEXT_PUBLIC_CLIENT_URL}
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL_DOCKER}
         NEXT_PUBLIC_MIDDLEWARE_API_URL: ${NEXT_PUBLIC_MIDDLEWARE_API_URL_DOCKER}
         NEXT_PUBLIC_AZURE_BLOB_URL: ${NEXT_PUBLIC_AZURE_BLOB_URL}
+        NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
     ports:
       - "3000:3000"
     networks:
@@ -47,6 +49,8 @@ services:
       SECURITY_PASSWORD_PEPPER: ${SECURITY_PASSWORD_PEPPER}
       SECURITY_COOKIE_SECRET: ${SECURITY_COOKIE_SECRET}
       CORS_ORIGIN: ${CORS_ORIGIN}
+      STRIPE_SECRET: ${STRIPE_SECRET}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
     ports:
       - "3001:3001"
     networks:
@@ -73,7 +77,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    command: ["pnpm", "run", "db:migrate"]
+    command: ["sh", "-c", "pnpm run db:migrate && pnpm run db:seed"]
     restart: "no"
 
   db:
@@ -115,6 +119,18 @@ services:
       - ./azurite:/workspace
     networks:
       - lootopia_network
+
+  stripe-listener:
+    build:
+      context: ../..
+      dockerfile: docker/prod/Dockerfile.stripe
+    environment:
+      STRIPE_API_KEY: ${STRIPE_SECRET}
+    networks:
+      - lootopia_network
+    depends_on:
+      - server
+    command: ["sh", "-c", "stripe listen --forward-to server:3001/shop/webhook > /dev/null 2>&1"]
 
 networks:
   lootopia_network:

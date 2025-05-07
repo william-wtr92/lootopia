@@ -5,7 +5,11 @@ import {
   timestamp,
   uniqueIndex,
 } from "drizzle-orm/pg-core"
+
 import { users } from "./users"
+
+import type { ArtifactRarity } from "@lootopia/common"
+import { chests } from "./hunts"
 
 export const artifacts = pgTable(
   "artifacts",
@@ -14,6 +18,7 @@ export const artifacts = pgTable(
     name: text().notNull(),
     link: text().notNull(),
     shaKey: text().notNull(),
+    rarity: text("rarity").$type<ArtifactRarity>().notNull().default("common"),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     userId: uuid()
       .notNull()
@@ -25,3 +30,15 @@ export const artifacts = pgTable(
     }
   }
 )
+
+export const userArtifacts = pgTable("user_artifacts", {
+  id: uuid().defaultRandom().primaryKey().notNull(),
+  userId: uuid()
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  artifactId: uuid()
+    .notNull()
+    .references(() => artifacts.id, { onDelete: "cascade" }),
+  obtainedFromChestId: uuid().references(() => chests.id),
+  obtainedAt: timestamp("obtained_at").notNull().defaultNow(),
+})

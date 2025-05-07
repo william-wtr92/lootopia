@@ -21,6 +21,7 @@ import {
   TabsTrigger,
   useToast,
 } from "@lootopia/ui"
+import { useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
@@ -58,6 +59,7 @@ const HuntPage = ({ huntId }: Props) => {
   } = useHuntStore()
   const { toast } = useToast()
   const router = useRouter()
+  const qc = useQueryClient()
 
   const [map, setMap] = useState<L.Map | null>(null)
   const [activeTab, setActiveTab] = useState("hunt")
@@ -130,7 +132,7 @@ const HuntPage = ({ huntId }: Props) => {
   }
 
   const handleDraftSave = () => {
-    router.push(routes.hunts.list)
+    router.push(routes.hunts.drafts)
   }
 
   const handleSubmitAll = async () => {
@@ -171,6 +173,9 @@ const HuntPage = ({ huntId }: Props) => {
       description: t("success"),
     })
 
+    qc.invalidateQueries({ queryKey: ["user"] })
+    qc.invalidateQueries({ queryKey: ["hunts"] })
+
     router.push(routes.hunts.list)
 
     if (activeHuntId) {
@@ -203,7 +208,7 @@ const HuntPage = ({ huntId }: Props) => {
             </CardContent>
             <CardFooter className="text-primary flex justify-center gap-1 text-sm">
               {t("tabs.content.link")}
-              <Link href={routes.hunts.list}>
+              <Link href={routes.hunts.drafts}>
                 <span className="text-secondary font-semibold">
                   {t("tabs.content.here")}
                 </span>

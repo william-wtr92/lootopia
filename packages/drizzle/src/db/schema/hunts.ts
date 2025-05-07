@@ -9,9 +9,10 @@ import {
   uuid,
   varchar,
 } from "drizzle-orm/pg-core"
+import type { ChestRewardType } from "@lootopia/common"
+
 import { users } from "./users"
 import { artifacts } from "./artifacts"
-import type { ChestRewardType } from "@lootopia/common"
 
 export const hunts = pgTable("hunts", {
   id: uuid().defaultRandom().primaryKey().notNull(),
@@ -20,7 +21,7 @@ export const hunts = pgTable("hunts", {
   city: varchar({ length: 255 }).notNull(),
   startDate: timestamp().notNull(),
   endDate: timestamp().notNull(),
-  mode: boolean().notNull().default(true),
+  public: boolean().notNull().default(true),
   maxParticipants: integer().default(0),
   active: boolean().notNull().default(true),
   createdAt: timestamp("created_at").notNull().defaultNow(),
@@ -54,3 +55,17 @@ export const chests = pgTable(
   },
   (table) => [index("chests_position_index").using("gist", table.position)]
 )
+
+export const chestOpenings = pgTable("chest_openings", {
+  id: uuid().defaultRandom().primaryKey().notNull(),
+  userId: uuid()
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  chestId: uuid()
+    .notNull()
+    .references(() => chests.id, { onDelete: "cascade" }),
+  huntId: uuid()
+    .notNull()
+    .references(() => hunts.id, { onDelete: "cascade" }),
+  obtainedAt: timestamp("obtained_at").notNull().defaultNow(),
+})

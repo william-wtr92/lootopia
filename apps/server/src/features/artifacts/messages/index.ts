@@ -10,6 +10,11 @@ export const artifactNotFound = {
   key: "artifactNotFound",
 } as const
 
+export const userArtifactNotFound = {
+  result: "User artifact not found",
+  key: "userArtifactNotFound",
+} as const
+
 // SUCCESS MESSAGES
 
 export const artifactCreated = {

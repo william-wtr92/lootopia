@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 "use client"
 
 import { format, getMonth, getYear, setMonth, setYear } from "date-fns"

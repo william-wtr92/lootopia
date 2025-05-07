@@ -4,14 +4,14 @@ import { AnimatePresence } from "framer-motion"
 import { useTranslations } from "next-intl"
 
 import PasswordCheckItem from "./PasswordCheckItem"
-import type { PasswordStrength } from "@client/web/utils/passwordChecker"
+import type { PasswordStrength } from "@client/web/utils/helpers/passwordChecker"
 
 type Props = {
   passwordStrength: PasswordStrength
 }
 
 const PasswordStrengthChecker = ({ passwordStrength }: Props) => {
-  const t = useTranslations("Components.PasswordStrengthChecker")
+  const t = useTranslations("Components.Utils.Helpers.PasswordStrengthChecker")
 
   return (
     <div className="mt-2 space-y-1">

@@ -37,11 +37,16 @@ const InputOTPSlot = React.forwardRef<
   const inputOTPContext = React.useContext(OTPInputContext)
   const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index]
 
+  const isLeftEdge = index === 0 || index === 3
+  const isRightEdge = index === 2 || index === 5
+
   return (
     <div
       ref={ref}
       className={cn(
-        "border-input relative flex h-9 w-9 items-center justify-center border-y border-r text-sm shadow-sm transition-all first:rounded-l-md first:border-l last:rounded-r-md",
+        "text-primary border-input border-primary/20 relative flex size-12 items-center justify-center border-y border-r text-sm shadow-sm transition-all",
+        isLeftEdge && "rounded-l-md border-l",
+        isRightEdge && "rounded-r-md",
         isActive && "ring-ring z-10 ring-1",
         className
       )}
@@ -63,7 +68,7 @@ const InputOTPSeparator = React.forwardRef<
   React.ComponentPropsWithoutRef<"div">
 >(({ ...props }, ref) => (
   <div ref={ref} role="separator" {...props}>
-    <Minus />
+    <Minus className="text-primary/50 mx-2 size-5" />
   </div>
 ))
 InputOTPSeparator.displayName = "InputOTPSeparator"

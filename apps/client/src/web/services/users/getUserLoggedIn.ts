@@ -1,13 +1,22 @@
+import type { InferResponseType } from "hono"
+
 import { client } from "@client/web/utils/client"
 
-export const getUserLoggedIn = async () => {
-  const response = await client.users.me.$get()
+const $get = client.users.me.$get
+export type UserLoggedInResponse = Exclude<
+  InferResponseType<typeof $get>["result"],
+  string
+>
 
-  if (response.ok) {
-    const data = await response.json()
+export const getUserLoggedIn =
+  async (): Promise<UserLoggedInResponse | null> => {
+    const response = await $get()
 
-    return data.result
+    if (response.ok) {
+      const data = await response.json()
+
+      return data.result
+    }
+
+    return null
   }
-
-  return null
-}

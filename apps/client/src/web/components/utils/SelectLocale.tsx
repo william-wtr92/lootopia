@@ -20,12 +20,13 @@ import {
 } from "@client/i18n/routing"
 
 const SelectLocale = () => {
+  const t = useTranslations("Components.Utils.Helpers.SelectLocale")
+
   const router = useRouter()
   const pathname = usePathname()
   const params = useParams()
   const currentLocale = useLocale()
   const [isPending, startTransition] = useTransition()
-  const t = useTranslations("Components.SelectLocale")
 
   const onSelectChange = (value: Locale) => {
     const nextLocale = value

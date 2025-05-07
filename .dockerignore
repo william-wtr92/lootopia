@@ -27,3 +27,10 @@ docker
 .github
 .vscode
 infra
+
+**playwright.config.ts
+**jest.config.ts
+**jest.setup.ts
+**tests**
+**test-results**
+**playwright-report**

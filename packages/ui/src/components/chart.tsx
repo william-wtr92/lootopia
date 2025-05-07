@@ -1,5 +1,3 @@
-/* eslint-disable complexity */
-
 "use client"
 
 import * as React from "react"
@@ -151,7 +149,7 @@ const ChartTooltipContent = React.forwardRef<
 
       if (labelFormatter) {
         return (
-          <div className={cn("font-medium", labelClassName)}>
+          <div className={cn("text-lg font-medium", labelClassName)}>
             {labelFormatter(value, payload)}
           </div>
         )
@@ -182,7 +180,7 @@ const ChartTooltipContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "border-border/50 bg-background grid min-w-[8rem] items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl",
+          "border-border/50 bg-primaryBg grid min-w-[8rem] items-start gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs shadow-xl",
           className
         )}
       >

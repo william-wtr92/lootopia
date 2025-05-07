@@ -48,6 +48,7 @@ const appConfigSchema = z
       db: z.string(),
     }),
     azure: z.object({
+      maxAgeInSeconds: z.number(),
       blob: z.object({
         connection: z.string(),
         container: z.string(),
@@ -64,6 +65,10 @@ const appConfigSchema = z
         reactivateAccount: z.string(),
         deactivateAccount: z.string(),
       }),
+    }),
+    stripe: z.object({
+      secret: z.string(),
+      webhook: z.string(),
     }),
   })
   .strict()
@@ -110,6 +115,7 @@ const appConfig = appConfigSchema.parse({
     db: process.env.REDIS_DB,
   },
   azure: {
+    maxAgeInSeconds: 3600,
     blob: {
       connection: process.env.AZURE_BLOB_CONNECTION,
       container: process.env.AZURE_BLOB_CONTAINER,
@@ -127,6 +133,10 @@ const appConfig = appConfigSchema.parse({
       reactivateAccount: process.env.SENDGRID_TEMPLATE_REACTIVATE_ACCOUNT,
       deactivateAccount: process.env.SENDGRID_TEMPLATE_DEACTIVATE_ACCOUNT,
     },
+  },
+  stripe: {
+    secret: process.env.STRIPE_SECRET,
+    webhook: process.env.STRIPE_WEBHOOK_SECRET,
   },
 })
 

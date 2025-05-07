@@ -1,8 +1,8 @@
 import type { UpdateUser } from "@lootopia/common"
 import { users } from "@lootopia/drizzle"
-import { db } from "@server/db/client"
+import { db } from "@server/utils/clients/postgres"
 import { nowDate, sixMonthsDate } from "@server/utils/helpers/times"
-import { eq } from "drizzle-orm"
+import { eq, sql } from "drizzle-orm"
 
 export const updateUser = async (
   data: UpdateUser,
@@ -19,7 +19,7 @@ export const updateUser = async (
       birthdate: new Date(data.birthdate!),
       passwordHash,
       passwordSalt,
-      updatedAt: new Date(),
+      updatedAt: sql`NOW()`,
     })
     .where(eq(users.email, data.email))
 }
@@ -73,6 +73,34 @@ export const updatePassword = async (
     .set({
       passwordHash,
       passwordSalt,
+    })
+    .where(eq(users.email, email))
+}
+
+export const updateMFASecret = async (email: string, secret: string) => {
+  return db
+    .update(users)
+    .set({
+      mfaSecret: secret,
+    })
+    .where(eq(users.email, email))
+}
+
+export const updateMFAEnable = async (email: string) => {
+  return db
+    .update(users)
+    .set({
+      mfaEnabled: true,
+    })
+    .where(eq(users.email, email))
+}
+
+export const updateMFADisable = async (email: string) => {
+  return db
+    .update(users)
+    .set({
+      mfaEnabled: false,
+      mfaSecret: null,
     })
     .where(eq(users.email, email))
 }
