@@ -145,6 +145,23 @@
         },
         "success": "Un e-mail de validation a été envoyé avec succès !"
       },
+      "ConfirmReactivateAccount": {
+        "title": "Reactiver votre compte",
+        "description": "Veuillez cliquer sur le bouton ci-dessous pour réactiver votre compte.",
+        "cta": {
+          "confirm": "Confirmer"
+        },
+        "success": "Votre compte a été réactivé avec succès !",
+        "errors": {
+          "tokenNotFound": "Jeton introuvable",
+          "tokenNotProvided": "Veuillez refaire une demande de validation.",
+          "tokenExpired": "Votre lien de validation a expiré. Veuillez refaire une demande.",
+          "userNotFound": "Le lien de validation est invalide. Veuillez refaire une demande.",
+          "accountAlreadyActive": "Votre compte est déjà actif",
+          "tokenInvalidStructure": "Le lien de validation est invalide. Veuillez refaire une demande.",
+          "tokenSignatureMismatched": "Le lien de validation est invalide. Veuillez refaire une demande."
+        }
+      },
       "Login": {
         "title": "Se connecter",
         "description": "Commencez votre aventure dès maintenant !",
@@ -154,7 +171,8 @@
             "error": "Adresse e-mail invalide"
           },
           "password": {
-            "label": "Mot de passe"
+            "label": "Mot de passe",
+            "forgotten": "Mot de passe oublié ?"
           },
           "submit": "Se connecter",
           "loading": "Connexion..."
@@ -166,7 +184,8 @@
         "success": "Vous êtes connecté !",
         "errors": {
           "incorrectPassword": "Mot de passe incorrect",
-          "userNotFound": "Cet email n'existe pas"
+          "userNotFound": "Cet email n'existe pas",
+          "accountDisabled": "Votre compte a été désactivé. Si vous souhaitez vous connecter, veuillez le réactiver."
         }
       },
       "RequestPasswordReset": {
@@ -328,7 +347,9 @@
           "invalidImage": "L'image n'est pas valide",
           "invalidExtension": "L'extension du fichier n'est pas valide",
           "waitThirtyDaysBeforeUpdatingNickname": "Veuillez patienter 30 jours avant de modifier votre pseudo.",
-          "incorrectPassword": "Mot de passe incorrect"
+          "incorrectPassword": "Mot de passe incorrect",
+          "userNotFound": "Utilisateur introuvable",
+          "accountAlreadyDisabled": "Votre compte est déjà désactivé"
         },
         "cta": {
           "logout": "Déconnexion",
@@ -336,7 +357,8 @@
           "inventory": "Inventaire",
           "townHall": "Hôtel de ventes",
           "leaderboard": "Classement",
-          "settings": "Paramètres"
+          "settings": "Paramètres",
+          "deactivateAccount": "Désactiver"
         }
       },
       "UserProfile": {
@@ -638,7 +660,8 @@
             "myPayments": "Mes paiements",
             "logout": "Déconnexion",
             "activateMfa": "Activer l'A2F",
-            "deactivateMfa": "Désactiver l'A2F"
+            "deactivateMfa": "Désactiver l'A2F",
+            "deactivateAccount": "Désactiver mon compte"
           }
         },
         "Mfa": {
@@ -795,6 +818,41 @@
             }
           }
         }
+      },
+      "ReactivateAccountRequestForm": {
+        "label": "Compte désactivé ?",
+        "trigger": "Réactiver le maintenant",
+        "title": "Réactivation du compte",
+        "form": {
+          "email": {
+            "label": "Email",
+            "error": "Adresse e-mail invalide"
+          }
+        },
+        "cta": {
+          "cancel": "Annuler",
+          "confirm": "Confirmer"
+        },
+        "errors": {
+          "emailRequired": "Vous devez saisir une adresse email pour recevoir un email de réactivation",
+          "userNotFound": "L'adresse email n'existe pas",
+          "waitBeforeResendAnotherEmail": "Un email a déjà été envoyé",
+          "accountAlreadyActive": "Votre compte est déjà actif"
+        },
+        "success": "Un email de réactivation a été envoyé."
+      },
+      "DeactivateAccountDialog": {
+        "title": "Désactivation du compte",
+        "description": "Êtes-vous sûr de vouloir désactiver votre compte ?",
+        "cta": {
+          "cancel": "Annuler",
+          "confirm": "Confirmer"
+        },
+        "errors": {
+          "userNotFound": "Vous n'êtes pas autorisé à effectuer cette action",
+          "accountDisabled": "Votre compte est déjà désactivé"
+        },
+        "success": "Votre compte a été désactivé avec succès. Il sera supprimé dans 6 mois."
       }
     },
     "Hunts": {

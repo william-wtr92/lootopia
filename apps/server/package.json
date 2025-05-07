@@ -35,6 +35,7 @@
     "@eslint/eslintrc": "^3",
     "@lootopia/eslint-config-server": "workspace:*",
     "@types/node": "^20.11.17",
+    "@types/node-cron": "^3.0.11",
     "@typescript-eslint/eslint-plugin": "^8.18.1",
     "azurite": "^3.33.0",
     "concurrently": "^9.1.2",

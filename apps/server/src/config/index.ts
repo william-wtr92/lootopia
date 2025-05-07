@@ -62,6 +62,8 @@ const appConfigSchema = z
         register: z.string(),
         emailChangeValidation: z.string(),
         passwordReset: z.string(),
+        reactivateAccount: z.string(),
+        deactivateAccount: z.string(),
       }),
     }),
     stripe: z.object({
@@ -128,6 +130,8 @@ const appConfig = appConfigSchema.parse({
       emailChangeValidation:
         process.env.SENDGRID_TEMPLATE_EMAIL_CHANGE_VALIDATION,
       passwordReset: process.env.SENDGRID_TEMPLATE_PASSWORD_RESET,
+      reactivateAccount: process.env.SENDGRID_TEMPLATE_REACTIVATE_ACCOUNT,
+      deactivateAccount: process.env.SENDGRID_TEMPLATE_DEACTIVATE_ACCOUNT,
     },
   },
   stripe: {

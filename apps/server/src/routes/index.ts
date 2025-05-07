@@ -9,6 +9,7 @@ import { artifactViewerRoute } from "./artifacts/viewer"
 import { emailValidationRoute } from "./auth/emailValidation"
 import { loginRoute } from "./auth/login"
 import { passwordResetRoute } from "./auth/passwordReset"
+import { reactivateAccountRoute } from "./auth/reactivateAccount"
 import { registerRoute } from "./auth/register"
 import { createHuntRoute } from "./hunts/create"
 import { digRoute } from "./hunts/dig"
@@ -26,6 +27,7 @@ import { offerFavoritesRoute } from "./town-hall/favorites"
 import { offersRoute } from "./town-hall/offers"
 import { offerStatsRoute } from "./town-hall/stats"
 import { offerViewsRoute } from "./town-hall/views"
+import { deactivateAccountRoute } from "./users/deactivateAccount"
 import { userListRoute } from "./users/list"
 import { profileRoute } from "./users/profile"
 import { securityRoute } from "./users/security"
@@ -37,9 +39,12 @@ const authRoutes = new Hono()
   .route(DEFAULT_PATH, emailValidationRoute)
   .route(DEFAULT_PATH, loginRoute)
   .route(DEFAULT_PATH, passwordResetRoute)
+  .route(DEFAULT_PATH, reactivateAccountRoute)
 
 const usersRoutes = new Hono()
   .use(auth)
+  .route(DEFAULT_PATH, profileRoute)
+  .route(DEFAULT_PATH, deactivateAccountRoute)
   .route(DEFAULT_PATH, userListRoute)
   .route(DEFAULT_PATH, profileRoute)
   .route(DEFAULT_PATH, securityRoute)

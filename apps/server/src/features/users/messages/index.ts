@@ -60,6 +60,26 @@ export const incorrectPassword = {
   key: "incorrectPassword",
 } as const
 
+export const accountDisabled = {
+  result: "Your account is disabled.",
+  key: "accountDisabled",
+} as const
+
+export const invalidReactivationLink = {
+  result: "The reactivation link is invalid or expired.",
+  key: "invalidReactivationLink",
+} as const
+
+export const emailRequired = {
+  result: "Email is required.",
+  key: "emailRequired",
+} as const
+
+export const accountAlreadyActive = {
+  result: "Your account is already active.",
+  key: "accountAlreadyActive",
+} as const
+
 export const waitBeforeRequestingPasswordReset = {
   result: "Wait before requesting password reset.",
   key: "waitBeforeRequestingPasswordReset",
@@ -130,6 +150,21 @@ export const updateSuccessWithEmailChange = {
 export const logoutSuccess = {
   result: "You have successfully logged out.",
   key: "logoutSuccess",
+} as const
+
+export const deactivatedAccountSuccess = {
+  result: "Your account has been deactivated and will be deleted in 6 months.",
+  key: "deactivatedAccountSuccess",
+} as const
+
+export const reactivationEmailSentSuccess = {
+  result: "Reactivation email sent successfully.",
+  key: "emailReactivationSuccess",
+} as const
+
+export const reactivatedAccountSuccess = {
+  result: "Your account has been successfully reactivated.",
+  key: "reactivatedAccountSuccess",
 } as const
 
 export const passwordResetRequestSentSuccess = {

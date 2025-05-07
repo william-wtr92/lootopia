@@ -13,6 +13,13 @@ import { sanitizeUser } from "@server/features/users/dto"
 import { db } from "@server/utils/clients/postgres"
 import { eq, ilike, count, countDistinct, desc } from "drizzle-orm"
 
+export const selectIfUserIsActive = async (email: string) => {
+  return await db.query.users.findFirst({
+    where: (users, { eq, and }) =>
+      and(eq(users.email, email), eq(users.active, true)),
+  })
+}
+
 export const selectUserByEmail = async (email: string) => {
   return db.query.users.findFirst({
     where: (users, { eq }) => eq(users.email, email),

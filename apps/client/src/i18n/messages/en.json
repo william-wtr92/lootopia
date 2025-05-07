@@ -145,6 +145,23 @@
         },
         "success": "The validation email has been sent successfully!"
       },
+      "ConfirmReactivateAccount": {
+        "title": "Account reactivation",
+        "description": "To reactivate your account, please click on the button below.",
+        "cta": {
+          "confirm": "Confirm"
+        },
+        "success": "Your account has been reactivated successfully!",
+        "errors": {
+          "tokenNotFound": "Token not found",
+          "tokenNotProvided": "Please request a new validation.",
+          "tokenExpired": "Your validation link has expired. Please request a new one.",
+          "userNotFound": "The validation link is invalid. Please request a new one.",
+          "accountAlreadyActive": "Your account is already active",
+          "tokenInvalidStructure": "The validation link is invalid. Please request a new one.",
+          "tokenSignatureMismatched": "The validation link is invalid. Please request a new one."
+        }
+      },
       "Login": {
         "title": "Log in",
         "description": "Start your adventure now!",
@@ -154,7 +171,8 @@
             "error": "Invalid email address"
           },
           "password": {
-            "label": "Password"
+            "label": "Password",
+            "forgotten": "Forgot your password ?"
           },
           "submit": "Login",
           "loading": "Connecting..."
@@ -166,7 +184,8 @@
         "success": "You are connected!",
         "errors": {
           "incorrectPassword": "Incorrect password",
-          "userNotFound": "This email does not exist"
+          "userNotFound": "This email does not exist",
+          "accountDisabled": "Your account has been deactivated. If you wish to log in, please reactivate it."
         }
       },
       "RequestPasswordReset": {
@@ -328,7 +347,9 @@
           "invalidImage": "The image is not valid",
           "invalidExtension": "The file extension is not valid",
           "waitThirtyDaysBeforeUpdatingNickname": "You must wait 30 days before changing your nickname",
-          "incorrectPassword": "Incorrect password"
+          "incorrectPassword": "Incorrect password",
+          "userNotFound": "User not found",
+          "accountAlreadyDisabled": "Your account is already disabled"
         },
         "cta": {
           "logout": "Logout",
@@ -336,7 +357,8 @@
           "inventory": "Inventory",
           "townHall": "Town hall",
           "leaderboard": "Leaderboard",
-          "settings": "Settings"
+          "settings": "Settings",
+          "deactivateAccount": "Deactivate"
         }
       },
       "UserProfile": {
@@ -638,7 +660,8 @@
             "myPayments": "My payments",
             "logout": "Logout",
             "activateMfa": "Activate MFA",
-            "deactivateMfa": "Deactivate MFA"
+            "deactivateMfa": "Deactivate MFA",
+            "deactivateAccount": "Deactivate my account"
           }
         },
         "Mfa": {
@@ -795,6 +818,41 @@
             }
           }
         }
+      },
+      "ReactivateAccountRequestForm": {
+        "label": "Disabled account?",
+        "trigger": "Reactivate it now",
+        "title": "Reactivate your account",
+        "form": {
+          "email": {
+            "label": "Email",
+            "error": "Invalid email address"
+          }
+        },
+        "cta": {
+          "cancel": "Cancel",
+          "confirm": "Confirm"
+        },
+        "errors": {
+          "emailRequired": "You must enter an email address to receive a reactivation email",
+          "userNotFound": "Email address does not exist",
+          "waitBeforeResendAnotherEmail": "Wait before resend another email",
+          "accountAlreadyActive": "Your account is already active"
+        },
+        "success": "An email has been sent to reactivate your account!"
+      },
+      "DeactivateAccountDialog": {
+        "title": "Deactivate your account",
+        "description": "Are you sure you want to deactivate your account?",
+        "cta": {
+          "cancel": "Cancel",
+          "confirm": "Confirm"
+        },
+        "errors": {
+          "userNotFound": "You are not authorized to perform this action",
+          "accountDisabled": "Your account is already disabled"
+        },
+        "success": "Your account has been deactivated and will be deleted in 6 months"
       }
     },
     "Hunts": {

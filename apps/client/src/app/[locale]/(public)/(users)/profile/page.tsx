@@ -23,6 +23,7 @@ import ArtifactOverview from "@client/web/components/features/town-hall/details/
 import PurchaseDialog from "@client/web/components/features/town-hall/purchase/PurchaseDialog"
 import TownHallDialog from "@client/web/components/features/town-hall/TownHallDialog"
 import ActionMenu from "@client/web/components/features/users/profile/ActionMenu"
+import DeactivateAccountDialog from "@client/web/components/features/users/profile/DeactivateAccountDialog"
 import EditProfileForm from "@client/web/components/features/users/profile/EditProfileForm"
 import InventoryDialog from "@client/web/components/features/users/profile/inventory/InventoryDialog"
 import MfaActivationDialog from "@client/web/components/features/users/profile/mfa/MfaActivationDialog"
@@ -59,6 +60,7 @@ const ProfilePage = () => {
   const [isPaymentsOpen, setIsPaymentsOpen] = useState(false)
   const [isMfaActivateOpen, setIsMfaActivateOpen] = useState(false)
   const [isMfaDisableOpen, setIsMfaDisableOpen] = useState(false)
+  const [isDeactivateAccountOpen, setIsDeactivateAccountOpen] = useState(false)
 
   const [showInventory, setShowInventory] = useState(false)
   const [showTownHall, setShowTownHall] = useState(false)
@@ -82,6 +84,8 @@ const ProfilePage = () => {
   const handlePayments = () => setIsPaymentsOpen((prev) => !prev)
   const handleActivateMfa = () => setIsMfaActivateOpen((prev) => !prev)
   const handleDeactivateMfa = () => setIsMfaDisableOpen((prev) => !prev)
+  const handleDeactivateAccount = () =>
+    setIsDeactivateAccountOpen((prev) => !prev)
 
   const handleShowInventory = () => setShowInventory((prev) => !prev)
   const handleShowTownHall = () => setShowTownHall((prev) => !prev)
@@ -143,6 +147,7 @@ const ProfilePage = () => {
               mfaEnabled={user?.mfaEnabled ?? false}
               onActivateMFA={handleActivateMfa}
               onDeactivateMFA={handleDeactivateMfa}
+              onDeactivateAccount={handleDeactivateAccount}
             />
 
             {user && (
@@ -167,6 +172,11 @@ const ProfilePage = () => {
             <MfaDeactivationDialog
               open={isMfaDisableOpen}
               setIsOpen={handleDeactivateMfa}
+            />
+
+            <DeactivateAccountDialog
+              open={isDeactivateAccountOpen}
+              setIsOpen={handleDeactivateAccount}
             />
           </div>
         </Card>

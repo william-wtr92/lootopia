@@ -48,6 +48,13 @@ export {
 } from "./users/auth/passwordReset"
 
 export {
+  reactivateAccountRequestSchema,
+  type ReactivateAccountRequestSchema,
+  reactivateAccountConfirmSchema,
+  type ReactivateAccountConfirmSchema,
+} from "./users/auth/reactivateAccount"
+
+export {
   MFA_ISSUER,
   mfaSchema,
   type MfaSchema,

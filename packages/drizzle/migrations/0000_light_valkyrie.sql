@@ -183,6 +183,8 @@ CREATE TABLE "users" (
 	"mfa_secret" text,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
+	"deactivation_date" timestamp,
+	"deletion_date" timestamp,
 	CONSTRAINT "users_nickname_unique" UNIQUE("nickname"),
 	CONSTRAINT "users_email_unique" UNIQUE("email"),
 	CONSTRAINT "users_phone_unique" UNIQUE("phone")

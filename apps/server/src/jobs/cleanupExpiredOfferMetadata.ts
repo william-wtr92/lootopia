@@ -37,5 +37,7 @@ export const startOfferCleanupJob = () => {
     "Europe/Paris"
   )
 
-  console.log("🕒 Daily cleanup cron scheduled at 3 AM (Europe/Paris)")
+  console.log(
+    "🕒 Daily expired offers data cleanup cron scheduled at 3 AM (Europe/Paris)"
+  )
 }

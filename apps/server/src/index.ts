@@ -10,6 +10,7 @@ import { secureHeaders } from "hono/secure-headers"
 
 import { routeNotFound, unspecifiedErrorOccurred } from "./features/global"
 import { startOfferCleanupJob } from "./jobs/cleanupExpiredOfferMetadata"
+import { startDeleteInactiveUsersJob } from "./jobs/deleteInactiveUsers"
 import { routes } from "./routes"
 import { router } from "./utils/router"
 
@@ -52,6 +53,7 @@ const appRouter = app
 
 /** Cron Jobs **/
 startOfferCleanupJob()
+startDeleteInactiveUsersJob()
 
 serve({
   fetch: app.fetch,

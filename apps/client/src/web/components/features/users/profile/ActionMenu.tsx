@@ -26,6 +26,7 @@ type Props = {
   mfaEnabled: boolean
   onActivateMFA: () => void
   onDeactivateMFA: () => void
+  onDeactivateAccount: () => void
 }
 
 const ActionMenu = ({
@@ -36,6 +37,7 @@ const ActionMenu = ({
   mfaEnabled,
   onActivateMFA,
   onDeactivateMFA,
+  onDeactivateAccount,
 }: Props) => {
   const t = useTranslations("Components.Users.Profile.ActionMenu")
 
@@ -88,6 +90,14 @@ const ActionMenu = ({
                 ? t("actions.deactivateMfa")
                 : t("actions.activateMfa")}
             </span>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator className="bg-primary/20" />
+          <DropdownMenuItem
+            className="text-error focus:bg-error cursor-pointer focus:text-white"
+            onClick={onDeactivateAccount}
+          >
+            <ShieldX className="mr-2 size-4" />
+            <span>{t("actions.deactivateAccount")}</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator className="bg-primary/20" />
           <DropdownMenuItem

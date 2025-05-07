@@ -6,6 +6,7 @@ import {
   userNotFound,
   selectUserByEmail,
   logoutSuccess,
+  accountDisabled,
   mfaInvalidToken,
   mfaSessionExpired,
   mfaRequired,
@@ -33,6 +34,10 @@ export const loginRoute = app
 
     if (!user) {
       return c.json(userNotFound, SC.errors.NOT_FOUND)
+    }
+
+    if (!user.active) {
+      return c.json(accountDisabled, SC.errors.UNAUTHORIZED)
     }
 
     const isPasswordValid = await comparePassword(

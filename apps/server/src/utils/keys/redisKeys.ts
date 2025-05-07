@@ -11,6 +11,10 @@ export const redisKeys = {
     passwordReset: (token: string) => `auth:password-reset:${token}`,
     passwordResetCooldown: (email: string) =>
       `auth:password-reset-cooldown:${email}`,
+    reactivateAccountEmail: (token: string) =>
+      `auth:reactivate-account-email:${token}`,
+    reactivateAccountEmailCooldown: (email: string) =>
+      `auth:reactivate-account-email-cooldown:${email}`,
     mfaSession: (mfaSessionId: string) => `mfa:session:${mfaSessionId}`,
   },
   users: {

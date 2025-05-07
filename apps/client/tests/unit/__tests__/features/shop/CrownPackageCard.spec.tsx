@@ -1,4 +1,4 @@
-import { crownPackageName } from "@common/shop"
+import { crownPackageName } from "@lootopia/common"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 

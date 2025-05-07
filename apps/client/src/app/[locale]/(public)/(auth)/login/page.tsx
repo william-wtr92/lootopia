@@ -26,6 +26,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 
 import { Link } from "@client/i18n/routing"
+import ReactivateAccountRequestForm from "@client/web/components/features/users/login/ReactivateAccountRequestForm"
 import MfaVerificationForm from "@client/web/components/features/users/profile/mfa/MfaVerificationForm"
 import { routes } from "@client/web/routes"
 import { login } from "@client/web/services/auth/login"
@@ -153,8 +154,16 @@ const LoginPage = () => {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-primary">
-                        {t("form.password.label")}
+                      <FormLabel className="text-primary flex items-center justify-between">
+                        <span>{t("form.password.label")}</span>
+                        <Link
+                          href={routes.auth.requestPasswordReset}
+                          tabIndex={-1}
+                        >
+                          <span className="text-secondary">
+                            {t("form.password.forgotten")}
+                          </span>
+                        </Link>
                       </FormLabel>
                       <div className="relative">
                         <FormControl>
@@ -200,17 +209,14 @@ const LoginPage = () => {
             <div className="flex gap-1">
               {t("cta.title")}
               <Link href={routes.auth.register}>
-                <span className="text-secondary">{t("cta.register")}</span>
+                <span className="text-secondary hover:font-semibold">
+                  {t("cta.register")}
+                </span>
               </Link>
             </div>
 
-            <div className="flex gap-1">
-              Vous avez oublié votre mot de passe ?
-              <Link href={routes.auth.requestPasswordReset}>
-                <span className="text-secondary">
-                  Cliquez ici pour le réinitialiser
-                </span>
-              </Link>
+            <div>
+              <ReactivateAccountRequestForm />
             </div>
           </CardFooter>
         )}

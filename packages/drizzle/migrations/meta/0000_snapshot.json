@@ -1,5 +1,5 @@
 {
-  "id": "9f3ff1bc-0129-4575-9914-9d93c171385b",
+  "id": "44d6f9b1-1091-44ce-8307-49842aa7c4ab",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -1682,6 +1682,18 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "deactivation_date": {
+          "name": "deactivation_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "deletion_date": {
+          "name": "deletion_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {
