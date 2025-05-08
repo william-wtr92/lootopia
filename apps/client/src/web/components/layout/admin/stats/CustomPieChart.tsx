@@ -39,11 +39,12 @@ const CustomPieChart = ({
                 ).pop() as [string, number]
 
                 return (
-                  <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center justify-between gap-4 text-white">
                     <div
                       className="size-4 rounded-md"
                       style={{ backgroundColor: item.payload.fill }}
                     ></div>
+
                     <div className="flex flex-col gap-1 text-base">
                       <span className="first:first-letter:uppercase">
                         {valueKey}: {value}
