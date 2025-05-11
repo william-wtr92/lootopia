@@ -33,8 +33,8 @@ const UserActions = ({ user, handleUpdateUserActive }: Props) => {
     <AlertDialog key={user.email}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <MoreHorizontal className="h-4 w-4" />
+          <Button variant="ghost" className="size-8 p-0">
+            <MoreHorizontal className="size-4" />
           </Button>
         </DropdownMenuTrigger>
 
