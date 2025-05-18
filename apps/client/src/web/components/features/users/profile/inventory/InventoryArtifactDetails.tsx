@@ -114,7 +114,7 @@ const InventoryArtifactDetails = ({ item, open, setIsOpen }: Props) => {
                 <Badge
                   className={`text-xs ${getArtifactRarityColor(item?.artifact?.rarity as ArtifactRarity)}`}
                 >
-                  {item?.artifact?.rarity}
+                  {t(`artifact.rarities.${item?.artifact?.rarity ?? "common"}`)}
                 </Badge>
               </div>
 

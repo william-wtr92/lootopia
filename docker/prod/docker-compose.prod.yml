@@ -79,6 +79,7 @@ services:
     restart: "no"
 
   db:
+    platform: linux/amd64
     image: "postgis/postgis:17-3.5-alpine"
     environment:
       POSTGRES_USER: ${DB_USER_DOCKER}
