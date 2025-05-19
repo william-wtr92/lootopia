@@ -255,7 +255,7 @@ const ArtifactDetails = ({
           </div>
         </div>
 
-        <Button className="w-full" onClick={handleBuy}>
+        <Button className="w-full" onClick={handleBuy} disabled={isOwner}>
           <DollarSign className="mr-2 size-4" />
           {t("cta.buy")}
         </Button>

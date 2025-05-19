@@ -86,12 +86,12 @@ const InventoryArtifactList = ({
                   </h3>
                   <div className="text-primary/40 mt-1 flex items-center text-xs">
                     <span className="mr-2 w-24 truncate">
-                      {t("artifacts.shaKey", {
+                      {t("artifact.shaKey", {
                         shaKey: item?.artifact?.shaKey,
                       })}
                     </span>
                     <span>
-                      {t("artifacts.obtainedAt", {
+                      {t("artifact.obtainedAt", {
                         date: formatDate(item.obtainedAt, locale),
                       })}
                     </span>
@@ -102,7 +102,7 @@ const InventoryArtifactList = ({
                 <span
                   className={`rounded-full px-2 py-1 text-xs ${getArtifactRarityColor(item?.artifact?.rarity as ArtifactRarity)}`}
                 >
-                  {item?.artifact?.rarity}
+                  {t(`artifact.rarities.${item?.artifact?.rarity ?? "common"}`)}
                 </span>
                 <span className="text-primary text-xs font-semibold">
                   {item.huntName}

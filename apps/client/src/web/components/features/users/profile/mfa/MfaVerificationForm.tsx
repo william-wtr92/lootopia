@@ -4,7 +4,6 @@ import {
   Form,
   FormField,
   FormItem,
-  FormLabel,
   FormControl,
   Button,
   InputOTP,
@@ -96,7 +95,6 @@ const MfaVerificationForm = ({ sessionId, setShowMfa }: Props) => {
             name="token"
             render={({ field }) => (
               <FormItem className="space-y-0">
-                <FormLabel>{t("form.token.label")}</FormLabel>
                 <FormControl>
                   <InputOTP
                     {...field}

@@ -1,9 +1,11 @@
 import type { ArtifactRarity } from "@lootopia/common"
 import { Card, Button, Badge } from "@lootopia/ui"
+import { useQuery } from "@tanstack/react-query"
 import { Clock, Crown, Eye, Gem, Hourglass } from "lucide-react"
 import { useLocale, useTranslations } from "next-intl"
 
 import type { ArtifactOffersResponse } from "@client/web/services/town-hall/offers/getOffers"
+import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import { getArtifactRarityGradient } from "@client/web/utils/def/colors"
 import { formatOfferCrowns } from "@client/web/utils/helpers/formatCrowns"
 import {
@@ -26,6 +28,11 @@ const ArtifactListItem = ({
 }: Props) => {
   const t = useTranslations("Components.TownHall.Search.ArtifactListItem")
   const locale = useLocale()
+
+  const { data: userLoggedIn } = useQuery({
+    queryKey: ["user"],
+    queryFn: () => getUserLoggedIn(),
+  })
 
   const handleArtifactClick = (artifactOffer: Props["artifactOffer"]) => {
     setSelectedArtifact(artifactOffer)
@@ -109,6 +116,7 @@ const ArtifactListItem = ({
           <Button
             size="sm"
             className="bg-primary hover:bg-secondary text-accent relative top-2"
+            disabled={artifactOffer.offer.sellerId === userLoggedIn?.id}
             onClick={(e) => {
               e.stopPropagation()
               setSelectedArtifact(artifactOffer)

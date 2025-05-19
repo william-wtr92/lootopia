@@ -678,9 +678,6 @@
             "title": "Authentification à deux facteurs",
             "description": "Veuillez entrer le code à 6 chiffres généré par <br></br> votre application d'authentification",
             "form": {
-              "token": {
-                "label": "Code d'authentification"
-              },
               "cta": {
                 "verify": "Vérifier"
               }
@@ -762,9 +759,16 @@
             "loading": "Chargement des artefacts...",
             "empty": "Aucun artefact trouvé",
             "clear": "Effacer la recherche",
-            "artifacts": {
+            "artifact": {
               "shaKey": "#{shaKey}",
-              "obtainedAt": "Obtenu le {date}"
+              "obtainedAt": "Obtenu le {date}",
+              "rarities": {
+                "common": "Commun",
+                "uncommon": "Peu commun",
+                "rare": "Rare",
+                "epic": "Épique",
+                "legendary": "Légendaire"
+              }
             },
             "pagination": {
               "previous": "Précédent",
@@ -778,7 +782,14 @@
               "key": "Clé publique de l'artefact",
               "rarity": "Rareté",
               "obtainedAt": "Obtenu le",
-              "hunt": "Chasse"
+              "hunt": "Chasse",
+              "rarities": {
+                "common": "Commun",
+                "uncommon": "Peu commun",
+                "rare": "Rare",
+                "epic": "Épique",
+                "legendary": "Légendaire"
+              }
             },
             "links": {
               "view": {
