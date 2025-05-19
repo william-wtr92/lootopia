@@ -1,13 +1,14 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import { Map, Settings, TrendingUp, UsersRound } from "lucide-react"
+import { Settings, TrendingUp, UsersRound } from "lucide-react"
 import { useTranslations } from "next-intl"
 import React from "react"
 
 import AdminNavbarCategories from "@client/web/components/layout/admin/navbar/AdminNavbarCategories"
 import AdminNavbarUser from "@client/web/components/layout/admin/navbar/AdminNavbarUser"
 import Logo from "@client/web/components/layout/Logo"
+import { routes } from "@client/web/routes"
 import { getUserLoggedIn } from "@client/web/services/users/getUserLoggedIn"
 import { useAuthStore } from "@client/web/store/useAuthStore"
 
@@ -27,17 +28,12 @@ const AdminNavbar = () => {
     {
       icon: <TrendingUp />,
       label: t("main-menu-category.links.dashboard.label"),
-      href: "#",
+      href: routes.admin.dashboard,
     },
     {
       icon: <UsersRound />,
       label: t("main-menu-category.links.users.label"),
-      href: "#",
-    },
-    {
-      icon: <Map />,
-      label: t("main-menu-category.links.hunts.label"),
-      href: "#",
+      href: routes.admin.users,
     },
   ]
 

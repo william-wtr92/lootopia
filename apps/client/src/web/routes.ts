@@ -2,6 +2,7 @@ export const routes = {
   home: "/",
   admin: {
     dashboard: "/admin",
+    users: "/admin/users",
   },
   auth: {
     register: "/register",

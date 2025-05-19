@@ -61,9 +61,9 @@ const CurrentStatsBlock = ({
           </motion.div>
         </TooltipTrigger>
 
-        {lastMonthValue && (
+        {lastMonthValue !== null && (
           <TooltipContent>
-            <span className="text-base">
+            <span className="text-base text-white">
               {`${t("previousMonth")} : ${
                 displayCurrency
                   ? formatCurrency(lastMonthValue)

@@ -1,4 +1,4 @@
-import { defaultLevel, defaultXP } from "@lootopia/common"
+import { defaultLevel, defaultXP, type SortingType } from "@lootopia/common"
 import {
   crowns,
   huntParticipations,
@@ -11,7 +11,7 @@ import {
 } from "@lootopia/drizzle"
 import { sanitizeUser } from "@server/features/users/dto"
 import { db } from "@server/utils/clients/postgres"
-import { eq, ilike, count, countDistinct, desc } from "drizzle-orm"
+import { eq, ilike, count, countDistinct, desc, asc } from "drizzle-orm"
 
 export const selectUserByEmail = async (email: string) => {
   return db.query.users.findFirst({
@@ -96,9 +96,11 @@ export const selectUserById = async (id: string) => {
 export const selectUsers = async (
   limit: number,
   page: number,
-  search: string
+  search: string,
+  order: SortingType = { key: "id", type: "asc" },
+  privateInfo = false
 ) => {
-  const rows = await db
+  const query = db
     .select({
       user: users,
       level: userLevels.level,
@@ -108,6 +110,22 @@ export const selectUsers = async (
     .where(search ? ilike(users.nickname, `%${search}%`) : undefined)
     .limit(limit)
     .offset(page * limit)
+
+  if (order.key === "id") {
+    query.orderBy(order.type === "asc" ? asc(users.id) : desc(users.id))
+  }
+
+  if (order.key === "nickname") {
+    query.orderBy(
+      order.type === "asc" ? asc(users.nickname) : desc(users.nickname)
+    )
+  }
+
+  if (order.key === "email") {
+    query.orderBy(order.type === "asc" ? asc(users.email) : desc(users.email))
+  }
+
+  const rows = await query
 
   if (rows.length === 0) {
     return []
@@ -122,8 +140,8 @@ export const selectUsers = async (
           experience: defaultXP,
         },
       },
-      ["avatar"],
-      { private: false }
+      ["avatar", "active"],
+      { private: privateInfo }
     ),
   }))
 }
