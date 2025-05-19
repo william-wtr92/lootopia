@@ -7,6 +7,7 @@ export const router = {
   shop: "/shop",
   townHall: "/town-hall",
   stats: "/stats",
+  admin: "/admin",
 } as const
 
 export const clientRoutes = {

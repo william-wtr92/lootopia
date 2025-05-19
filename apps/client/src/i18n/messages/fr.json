@@ -416,6 +416,38 @@
           "treasure_hunter_pack": "Pack du Chasseur de Trésors",
           "legendary_pack": "Pack Légendaire"
         }
+      },
+      "Users": {
+        "title": "Gestion des utilisateurs",
+        "headers": {
+          "id": "ID",
+          "level": "Niveau",
+          "nickname": "Pseudo",
+          "email": "Email",
+          "phone": "Numéro de téléphone",
+          "birthdate": "Date de naissance",
+          "active": "Actif",
+          "actions": "Actions"
+        },
+        "actions": {
+          "title": "Actions",
+          "userActiveUpdate": {
+            "triggerActivate": "Réactiver l'utilisateur",
+            "triggerDeactivate": "Désactiver l'utilisateur",
+            "dialog": {
+              "title": "Êtes-vous sur de vouloir désactiver l'utilisateur ",
+              "description": "Cette action désactivera le compte de l'utilisateur et il ne pourra plus se connecter si aucune action n'est faite dans les 30 jours qui suivent.",
+              "cancel": "Annuler",
+              "confirm": "Confirmer"
+            }
+          }
+        },
+        "success": {
+          "userActiveUpdate": "Status actif de l'utilisateur mis à jour avec succès!"
+        },
+        "errors": {
+          "userNotFound": "Utilisateur introuvable"
+        }
       }
     }
   },
@@ -1637,6 +1669,29 @@
             "settings": {
               "label": "Paramètres"
             }
+          }
+        }
+      },
+      "CustomTable": {
+        "noResults": "Aucun résultats.",
+        "inputPlaceholder": "Rechercher...",
+        "pagination": {
+          "rowsSelected": {
+            "of": "sur",
+            "endOfLine": "ligne(s) selectionnées."
+          },
+          "rowsPerPage": {
+            "label": "Lignes par page"
+          },
+          "currentPage": {
+            "label": "Page",
+            "of": "sur"
+          },
+          "controls": {
+            "previous": "Aller à la page précédente",
+            "next": "Aller à la page suivante",
+            "first": "Aller à la première page",
+            "last": "Aller à la dernière page"
           }
         }
       }

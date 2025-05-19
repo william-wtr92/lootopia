@@ -1,0 +1,19 @@
+meta {
+  name: Get all users
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{localhost}}/admin/users/list?limit=10&page=0&sortingKey=id&sortingType=asc
+  body: none
+  auth: none
+}
+
+query {
+  limit: 10
+  page: 0
+  search: 
+  sortingKey: id
+  sortingType: asc
+}

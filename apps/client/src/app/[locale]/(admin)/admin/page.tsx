@@ -135,12 +135,14 @@ const AdminPage = () => {
           displayCurrency={true}
         />
 
-        <StatsChart
-          type={chartType.pie}
-          title={t("mainStats.popularPackages.title")}
-          description={t("mainStats.popularPackages.description")}
-          data={computedPopularPackages}
-        />
+        {computedPopularPackages.length > 0 && (
+          <StatsChart
+            type={chartType.pie}
+            title={t("mainStats.popularPackages.title")}
+            description={t("mainStats.popularPackages.description")}
+            data={computedPopularPackages}
+          />
+        )}
       </div>
     </main>
   )

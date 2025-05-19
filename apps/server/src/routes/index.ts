@@ -1,5 +1,7 @@
 import { auth } from "@server/middlewares/auth"
 import { isAdmin } from "@server/middlewares/isAdmin"
+import { adminUsersListRoute } from "@server/routes/admin/users/list"
+import { adminUsersUpdateRoute } from "@server/routes/admin/users/update"
 import { Hono } from "hono"
 
 import { artifactHistoryRoute } from "./artifacts/history"
@@ -78,10 +80,12 @@ const townHallRoutes = new Hono()
   .route(DEFAULT_PATH, offerFavoritesRoute)
   .route(DEFAULT_PATH, offerStatsRoute)
 
-const statsRoutes = new Hono()
+const adminRoutes = new Hono()
   .use(auth)
   .use(isAdmin)
   .route(DEFAULT_PATH, overviewRoute)
+  .route(DEFAULT_PATH, adminUsersListRoute)
+  .route(DEFAULT_PATH, adminUsersUpdateRoute)
 
 export const routes = {
   auth: authRoutes,
@@ -91,5 +95,5 @@ export const routes = {
   reports: reportsRoutes,
   shop: shopRoutes,
   townHall: townHallRoutes,
-  stats: statsRoutes,
+  admin: adminRoutes,
 }

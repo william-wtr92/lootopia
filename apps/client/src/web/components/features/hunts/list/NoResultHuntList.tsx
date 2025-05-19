@@ -10,13 +10,14 @@ import { routes } from "@client/web/routes"
 import anim from "@client/web/utils/anim"
 
 type Props = {
-  inputValue: string
+  searchValue: string
   handleInputValue: (value: string) => void
+  handleSearchValue: (value: string) => void
   refetch: () => void
 }
 
 const NoResultHuntList = (props: Props) => {
-  const { inputValue, handleInputValue, refetch } = props
+  const { searchValue, handleInputValue, handleSearchValue, refetch } = props
 
   const t = useTranslations("Pages.Hunts.List")
   const router = useRouter()
@@ -27,6 +28,7 @@ const NoResultHuntList = (props: Props) => {
 
   const deleteSearch = () => {
     handleInputValue("")
+    handleSearchValue("")
 
     setTimeout(() => {
       refetch()
@@ -79,20 +81,20 @@ const NoResultHuntList = (props: Props) => {
       </div>
 
       <span className="text-primary text-xl font-semibold">
-        {inputValue.length === 0
+        {searchValue.length === 0
           ? t("no-hunts-available")
           : t("no-hunts-search")}
-        <span className="text-secondary">{inputValue}</span>.
+        <span className="text-secondary">{searchValue}</span>.
       </span>
 
       <span className="text-secondary text-center">
-        {inputValue.length === 0
+        {searchValue.length === 0
           ? t("no-hunts-hint")
           : t("no-hunts-search-hint")}
       </span>
 
       <div className="space-x-2">
-        {inputValue.length === 0 ? (
+        {searchValue.length === 0 ? (
           <Button variant={"default"} onClick={refreshHunts}>
             <RefreshCcw /> {t("cta.refresh")}
           </Button>

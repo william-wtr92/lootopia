@@ -2,7 +2,7 @@ import type { InferResponseType } from "hono"
 
 import { client } from "@client/web/utils/client"
 
-const $get = client.stats.overview["top-data"].$get
+const $get = client.admin.overview["top-data"].$get
 export type TopStatsResponse = InferResponseType<typeof $get>
 export type TopStat = Exclude<TopStatsResponse["result"], string>
 

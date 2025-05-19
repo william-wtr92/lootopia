@@ -62,7 +62,7 @@ const EditProfileForm = (props: Props) => {
     resolver: zodResolver(updateSchema),
     mode: "onBlur",
     defaultValues: {
-      avatar: user?.avatar as AvatarType,
+      avatar: user?.avatar === null ? undefined : (user.avatar as AvatarType),
       nickname: user?.nickname,
       email: user?.email,
       phone: user?.phone,

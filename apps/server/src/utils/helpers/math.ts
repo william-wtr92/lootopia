@@ -2,7 +2,7 @@
 // from a previous value to the new one
 export const computeProgressPercentage = (curr: number, prev: number) => {
   if (prev === 0) {
-    return null
+    return 0
   }
 
   const pct = ((curr - prev) / prev) * 100

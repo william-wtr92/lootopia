@@ -61,6 +61,10 @@ const HuntsListPage = () => {
     setInputValue(value)
   }
 
+  const handleSearchValue = (value: string) => {
+    setSearchValue(value)
+  }
+
   const handleHuntFilterType = (value: HuntFilterType) => {
     setHuntFilterType(value)
     setInputValue("")
@@ -119,8 +123,9 @@ const HuntsListPage = () => {
         </div>
       ) : (
         <NoResultHuntList
-          inputValue={inputValue}
+          searchValue={searchValue}
           handleInputValue={handleInputValue}
+          handleSearchValue={handleSearchValue}
           refetch={refetch}
         />
       )}

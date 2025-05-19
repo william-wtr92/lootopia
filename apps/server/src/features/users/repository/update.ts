@@ -81,3 +81,7 @@ export const updateMFADisable = async (email: string) => {
     })
     .where(eq(users.email, email))
 }
+
+export const updateUserActive = async (email: string, active: boolean) => {
+  await db.update(users).set({ active }).where(eq(users.email, email))
+}
